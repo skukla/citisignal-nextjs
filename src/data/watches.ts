@@ -1,218 +1,128 @@
-export interface Watch {
-  id: string;
-  name: string;
-  brand: string;
-  price: number;
-  originalPrice?: number;
-  rating: number;
-  reviews: number;
-  image: string;
-  category: string;
-  sizes: string[];
-  colors: string[];
-  features: string[];
-  inStock: boolean;
-  isNew: boolean;
-  isSale: boolean;
-  connectivity: string;
-  batteryLife: string;
-  waterResistant: string;
-  compatibility: string[];
-}
-
-export const watches: Watch[] = [
-  {
-    id: 'apple-watch-series-9',
-    name: 'Apple Watch Series 9',
-    brand: 'Apple',
-    price: 399,
-    originalPrice: 449,
-    rating: 4.8,
-    reviews: 1850,
-    image: '/watches/apple-watch-series-9.jpg',
-    category: 'watches',
-    sizes: ['41mm', '45mm'],
-    colors: ['Pink', 'Midnight', 'Starlight', 'Silver', 'Product Red'],
-    features: ['Double Tap Gesture', 'S9 Chip', 'Always-On Retina', 'Blood Oxygen'],
-    inStock: true,
-    isNew: true,
-    isSale: true,
-    connectivity: 'GPS + Cellular',
-    batteryLife: '18 hours',
-    waterResistant: '50 meters',
-    compatibility: ['iPhone']
-  },
-  {
-    id: 'apple-watch-ultra-2',
-    name: 'Apple Watch Ultra 2',
-    brand: 'Apple',
-    price: 799,
-    rating: 4.9,
-    reviews: 950,
-    image: '/watches/apple-watch-ultra-2.jpg',
-    category: 'watches',
-    sizes: ['49mm'],
-    colors: ['Natural', 'Blue', 'Orange'],
-    features: ['Titanium Build', 'Action Button', 'Siren', 'Precision Finding'],
-    inStock: true,
-    isNew: true,
-    isSale: false,
-    connectivity: 'GPS + Cellular',
-    batteryLife: '36 hours',
-    waterResistant: '100 meters',
-    compatibility: ['iPhone']
-  },
-  {
-    id: 'samsung-galaxy-watch-6',
-    name: 'Galaxy Watch 6',
-    brand: 'Samsung',
-    price: 329,
-    originalPrice: 379,
-    rating: 4.6,
-    reviews: 1240,
-    image: '/watches/galaxy-watch-6.jpg',
-    category: 'watches',
-    sizes: ['40mm', '44mm'],
-    colors: ['Graphite', 'Silver', 'Gold'],
-    features: ['Body Composition', 'Sleep Tracking', 'GPS', 'Samsung Pay'],
-    inStock: true,
-    isNew: false,
-    isSale: true,
-    connectivity: 'Bluetooth + WiFi',
-    batteryLife: '40 hours',
-    waterResistant: '50 meters',
-    compatibility: ['Android', 'iPhone']
-  },
-  {
-    id: 'samsung-galaxy-watch-6-classic',
-    name: 'Galaxy Watch 6 Classic',
-    brand: 'Samsung',
-    price: 429,
-    rating: 4.7,
-    reviews: 780,
-    image: '/watches/galaxy-watch-6-classic.jpg',
-    category: 'watches',
-    sizes: ['43mm', '47mm'],
-    colors: ['Black', 'Silver'],
-    features: ['Rotating Bezel', 'Premium Design', 'Advanced Health', 'Long Battery'],
-    inStock: true,
-    isNew: false,
-    isSale: false,
-    connectivity: 'Bluetooth + WiFi',
-    batteryLife: '40 hours',
-    waterResistant: '50 meters',
-    compatibility: ['Android', 'iPhone']
-  },
-  {
-    id: 'fitbit-sense-2',
-    name: 'Fitbit Sense 2',
-    brand: 'Fitbit',
-    price: 249,
-    originalPrice: 299,
-    rating: 4.3,
-    reviews: 1560,
-    image: '/watches/fitbit-sense-2.jpg',
-    category: 'watches',
-    sizes: ['One Size'],
-    colors: ['Shadow Grey', 'Lunar White', 'Soft Gold'],
-    features: ['Stress Management', 'ECG App', 'SpO2', '6+ Day Battery'],
-    inStock: true,
-    isNew: false,
-    isSale: true,
-    connectivity: 'Bluetooth + WiFi',
-    batteryLife: '6+ days',
-    waterResistant: '50 meters',
-    compatibility: ['Android', 'iPhone']
-  },
-  {
-    id: 'garmin-venu-3',
-    name: 'Garmin Venu 3',
-    brand: 'Garmin',
-    price: 449,
-    rating: 4.5,
-    reviews: 890,
-    image: '/watches/garmin-venu-3.jpg',
-    category: 'watches',
-    sizes: ['41mm', '45mm'],
-    colors: ['Slate', 'Sage', 'Ivory'],
-    features: ['Voice Calling', 'Built-in Speaker', 'Health Insights', 'Sports Apps'],
-    inStock: false,
-    isNew: true,
-    isSale: false,
-    connectivity: 'Bluetooth + WiFi',
-    batteryLife: '14 days',
-    waterResistant: '50 meters',
-    compatibility: ['Android', 'iPhone']
-  },
-  {
-    id: 'apple-watch-se',
-    name: 'Apple Watch SE',
-    brand: 'Apple',
-    price: 249,
-    originalPrice: 279,
-    rating: 4.4,
-    reviews: 2340,
-    image: '/watches/apple-watch-se.jpg',
-    category: 'watches',
-    sizes: ['40mm', '44mm'],
-    colors: ['Midnight', 'Starlight', 'Silver'],
-    features: ['Fall Detection', 'Crash Detection', 'Heart Rate', 'Always-On'],
-    inStock: true,
-    isNew: false,
-    isSale: true,
-    connectivity: 'GPS',
-    batteryLife: '18 hours',
-    waterResistant: '50 meters',
-    compatibility: ['iPhone']
-  },
-  {
-    id: 'amazfit-gts-4',
-    name: 'Amazfit GTS 4',
-    brand: 'Amazfit',
-    price: 199,
-    rating: 4.2,
-    reviews: 670,
-    image: '/watches/amazfit-gts-4.jpg',
-    category: 'watches',
-    sizes: ['42mm'],
-    colors: ['Infinite Black', 'Rosebud Pink', 'Autumn Brown', 'Misty White'],
-    features: ['Alexa Built-in', 'GPS', 'Health Tracking', 'Long Battery'],
-    inStock: true,
-    isNew: false,
-    isSale: false,
-    connectivity: 'Bluetooth + WiFi',
-    batteryLife: '8 days',
-    waterResistant: '50 meters',
-    compatibility: ['Android', 'iPhone']
-  }
-];
+import { Watch, colorOptions } from '@/types/commerce';
 
 export const watchFilterOptions = {
-  brand: [
-    { id: 'apple', name: 'Apple', count: 3 },
-    { id: 'samsung', name: 'Samsung', count: 2 },
-    { id: 'fitbit', name: 'Fitbit', count: 1 },
-    { id: 'garmin', name: 'Garmin', count: 1 },
-    { id: 'amazfit', name: 'Amazfit', count: 1 }
+  manufacturer: [
+    { id: 'apple', name: 'Apple' },
+    { id: 'samsung', name: 'Samsung' },
+    { id: 'citisignal', name: 'CitiSignal' }
   ],
+  sizes: [
+    { id: '41mm', name: '41mm' },
+    { id: '45mm', name: '45mm' },
+    { id: '49mm', name: '49mm' }
+  ],
+  colors: colorOptions,
   price: [
-    { id: 'under-300', name: 'Under $300', count: 3 },
-    { id: '300-500', name: '$300 - $500', count: 4 },
-    { id: 'over-500', name: 'Over $500', count: 1 }
-  ],
-  compatibility: [
-    { id: 'iphone', name: 'iPhone', count: 6 },
-    { id: 'android', name: 'Android', count: 5 }
+    { id: 'under-300', name: 'Under $300' },
+    { id: '300-500', name: '$300 - $500' },
+    { id: 'over-500', name: 'Over $500' }
   ],
   features: [
-    { id: 'gps', name: 'GPS', count: 7 },
-    { id: 'cellular', name: 'Cellular', count: 2 },
-    { id: 'health-tracking', name: 'Health Tracking', count: 8 },
-    { id: 'voice-assistant', name: 'Voice Assistant', count: 3 }
-  ],
-  batteryLife: [
-    { id: 'under-24h', name: 'Under 24 hours', count: 3 },
-    { id: '1-7-days', name: '1-7 days', count: 3 },
-    { id: 'over-7-days', name: 'Over 7 days', count: 2 }
+    { id: 'cellular', name: 'Cellular' },
+    { id: 'gps', name: 'GPS' },
+    { id: 'health-tracking', name: 'Health Tracking' },
+    { id: 'voice-assistant', name: 'Voice Assistant' }
   ]
-}; 
+};
+
+// Mock data matching Commerce API structure
+export const watches: Watch[] = [
+  {
+    id: '1',
+    sku: 'WATCH-APPLE-S9-41',
+    name: 'Apple Watch Series 9',
+    url_key: 'apple-watch-series-9',
+    description: 'The most advanced Apple Watch with S9 chip, Double Tap gesture, and advanced health features.',
+    price: 399,
+    original_price: 429,
+    currency: 'USD',
+    rating_summary: 92,
+    review_count: 85,
+    media_gallery: [
+      {
+        url: '/watches/apple-watch-s9.jpg',
+        label: 'Apple Watch Series 9 Midnight Aluminum',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'watches',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'Apple',
+    sizes: ['41mm', '45mm'],
+    connectivity: 'GPS + Cellular',
+    battery_life: 'Up to 18 hours',
+    water_resistant: '50m',
+    available_colors: [
+      { name: 'Midnight', hex: '#2B323B' },
+      { name: 'Starlight', hex: '#E7E1DC' },
+      { name: 'Silver', hex: '#F1F3EE' },
+      { name: 'Pink', hex: '#FDE2DE' }
+    ],
+    isNew: true,
+    isSale: true
+  },
+  {
+    id: '2',
+    sku: 'WATCH-SAMSUNG-GW6-45',
+    name: 'Galaxy Watch 6 Classic',
+    url_key: 'galaxy-watch-6-classic',
+    description: 'Premium smartwatch with rotating bezel, advanced health tracking, and Wear OS.',
+    price: 399,
+    original_price: 449,
+    currency: 'USD',
+    rating_summary: 88,
+    review_count: 65,
+    media_gallery: [
+      {
+        url: '/watches/galaxy-watch-6.jpg',
+        label: 'Galaxy Watch 6 Classic Black',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'watches',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'Samsung',
+    sizes: ['43mm', '47mm'],
+    connectivity: 'GPS + Cellular',
+    battery_life: 'Up to 40 hours',
+    water_resistant: '5ATM + IP68',
+    available_colors: [
+      { name: 'Black', hex: '#000000' },
+      { name: 'Silver', hex: '#F1F3EE' }
+    ],
+    isNew: true,
+    isSale: true
+  },
+  {
+    id: '3',
+    sku: 'WATCH-CS-SMART-1',
+    name: 'CitiSignal SmartWatch Pro',
+    url_key: 'citisignal-smartwatch-pro',
+    description: 'Feature-rich smartwatch with extended battery life and comprehensive health tracking.',
+    price: 299,
+    currency: 'USD',
+    rating_summary: 85,
+    review_count: 32,
+    media_gallery: [
+      {
+        url: '/watches/citisignal-watch.jpg',
+        label: 'CitiSignal SmartWatch Pro Graphite',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'watches',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'CitiSignal',
+    sizes: ['45mm'],
+    connectivity: 'GPS + Cellular',
+    battery_life: 'Up to 7 days',
+    water_resistant: '10ATM',
+    available_colors: [
+      { name: 'Graphite', hex: '#5F5E5A' },
+      { name: 'Navy', hex: '#1F2330' },
+      { name: 'Gold', hex: '#F8E8D1' }
+    ],
+    isNew: true,
+    isSale: false
+  }
+]; 

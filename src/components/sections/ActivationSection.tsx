@@ -5,7 +5,7 @@ export default function ActivationSection() {
     {
       icon: PhoneIcon,
       title: 'Choose Your Device',
-      description: 'Select from our wide range of smartphones, tablets, and smartwatches.',
+      description: 'Select from our wide range of smartphones, tablets, and watches.',
       details: ['Latest iPhone and Android models', 'Certified refurbished options', 'Trade-in credit available']
     },
     {

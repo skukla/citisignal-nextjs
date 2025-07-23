@@ -1,90 +1,37 @@
 'use client';
 
-import { useState, useMemo } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
 import ProductCard from '@/components/ui/ProductCard';
 import FilterSidebar from '@/components/ui/FilterSidebar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
+import PageHeader from '@/components/ui/PageHeader';
+import SearchSortBar from '@/components/ui/SearchSortBar';
 import { giftCards, giftCardFilterOptions } from '@/data/giftCards';
-import { MagnifyingGlassIcon, AdjustmentsHorizontalIcon, Bars3Icon, GiftIcon } from '@heroicons/react/24/outline';
-
-type SortOption = 'popular' | 'price-low' | 'price-high' | 'rating' | 'newest';
+import { Bars3Icon, GiftIcon } from '@heroicons/react/24/outline';
+import { useProductList } from '@/hooks/useProductList';
+import { SORT_OPTIONS } from '@/lib/constants';
 
 export default function GiftCardsPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState<SortOption>('popular');
-  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const {
+    searchQuery,
+    setSearchQuery,
+    sortBy,
+    setSortBy,
+    activeFilters,
+    showMobileFilters,
+    setShowMobileFilters,
+    handleFilterChange,
+    handleClearFilters,
+    filteredAndSortedProducts
+  } = useProductList({ products: giftCards });
 
   const filters = [
     { title: 'Card Type', key: 'type', options: giftCardFilterOptions.type, type: 'checkbox' as const },
     { title: 'Amount', key: 'amount', options: giftCardFilterOptions.amount, type: 'checkbox' as const },
-    { title: 'Delivery', key: 'deliveryTime', options: giftCardFilterOptions.deliveryTime, type: 'checkbox' as const },
-    { title: 'Purpose', key: 'purpose', options: giftCardFilterOptions.purpose, type: 'checkbox' as const }
+    { title: 'Delivery', key: 'delivery_time', options: giftCardFilterOptions.delivery_time, type: 'checkbox' as const }
   ];
-
-  const filteredAndSortedProducts = useMemo(() => {
-    const filtered = giftCards.filter(product => {
-      if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-      if (activeFilters.type?.length > 0 && !activeFilters.type.includes(product.type)) return false;
-      
-      if (activeFilters.amount?.length > 0) {
-        const amountInRange = activeFilters.amount.some(range => {
-          switch (range) {
-            case 'under-50': return product.amount < 50;
-            case '50-100': return product.amount >= 50 && product.amount < 100;
-            case '100-200': return product.amount >= 100 && product.amount < 200;
-            case 'over-200': return product.amount >= 200;
-            default: return false;
-          }
-        });
-        if (!amountInRange) return false;
-      }
-
-      if (activeFilters.deliveryTime?.length > 0) {
-        const hasDeliveryType = activeFilters.deliveryTime.some(delivery => {
-          if (delivery === 'instant') return product.deliveryTime.toLowerCase().includes('instant');
-          if (delivery === 'physical') return product.deliveryTime.includes('business days');
-          return false;
-        });
-        if (!hasDeliveryType) return false;
-      }
-
-      return true;
-    });
-
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'price-low': return a.amount - b.amount;
-        case 'price-high': return b.amount - a.amount;
-        case 'rating': return b.rating - a.rating;
-        case 'newest': return b.isNew ? 1 : -1;
-        default: return b.reviews - a.reviews;
-      }
-    });
-
-    return filtered;
-  }, [searchQuery, activeFilters, sortBy]);
-
-  const handleFilterChange = (filterKey: string, value: string, checked: boolean) => {
-    setActiveFilters(prev => {
-      const newFilters = { ...prev };
-      if (checked) {
-        newFilters[filterKey] = [...(newFilters[filterKey] || []), value];
-      } else {
-        newFilters[filterKey] = (newFilters[filterKey] || []).filter(v => v !== value);
-        if (newFilters[filterKey].length === 0) delete newFilters[filterKey];
-      }
-      return newFilters;
-    });
-  };
-
-  const handleClearFilters = () => {
-    setActiveFilters({});
-    setSearchQuery('');
-  };
 
   const breadcrumbItems = [{ name: 'Shop', href: '/shop' }, { name: 'Gift Cards' }];
 
@@ -96,57 +43,20 @@ export default function GiftCardsPage() {
           <Breadcrumb items={breadcrumbItems} />
         </div>
 
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <GiftIcon className="w-8 h-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-900">Gift Cards</h1>
-          </div>
-          <p className="text-lg text-gray-600 max-w-3xl">
-            Give the gift of choice with CitiSignal gift cards. Perfect for devices, accessories, 
-            service plans, or letting someone choose exactly what they want.
-          </p>
-        </div>
+        <PageHeader
+          title="Gift Cards"
+          description="Give the gift of choice with CitiSignal gift cards. Perfect for devices, accessories, service plans, or letting someone choose exactly what they want."
+          icon={GiftIcon}
+        />
 
-        <div className="flex flex-col lg:flex-row gap-4 mb-8">
-          <div className="relative flex-1">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search gift cards..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 focus:outline-none transition-all duration-200 text-gray-900 placeholder-gray-400"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="appearance-none w-48 px-4 pr-10 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 focus:outline-none transition-all duration-200 text-gray-900 cursor-pointer"
-              >
-                <option value="popular">Most Popular</option>
-                <option value="price-low">Amount: Low to High</option>
-                <option value="price-high">Amount: High to Low</option>
-                <option value="rating">Highest Rated</option>
-                <option value="newest">Newest</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="lg:hidden flex items-center gap-2 px-4 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm hover:bg-gray-50 hover:border-purple-300 transition-all duration-200 text-gray-900"
-            >
-              <AdjustmentsHorizontalIcon className="w-5 h-5" />
-              Filters
-            </button>
-          </div>
-        </div>
+        <SearchSortBar
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          sortBy={sortBy}
+          onSortChange={setSortBy}
+          sortOptions={SORT_OPTIONS}
+          searchPlaceholder="Search gift cards..."
+        />
 
         <div className="mb-6">
           <p className="text-gray-600">
@@ -179,16 +89,13 @@ export default function GiftCardsPage() {
                   id={product.id}
                   name={product.name}
                   brand="CitiSignal"
-                  price={product.amount}
-                  rating={product.rating}
-                  reviews={product.reviews}
-                  image={product.image}
+                  price={product.price}
+                  originalPrice={product.original_price}
+                  image={product.media_gallery[0]?.url || ''}
                   category={product.category}
-                  features={product.features}
-                  colors={[]}
-                  inStock={true}
+                  inStock={product.stock_status === 'IN_STOCK'}
                   isNew={product.isNew}
-                  isSale={false}
+                  isSale={product.original_price !== undefined && product.original_price > product.price}
                 />
               ))}
             </div>

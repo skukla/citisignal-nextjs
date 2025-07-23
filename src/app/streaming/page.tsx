@@ -1,94 +1,41 @@
 'use client';
 
-import { useState, useMemo } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
 import ProductCard from '@/components/ui/ProductCard';
 import FilterSidebar from '@/components/ui/FilterSidebar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
+import PageHeader from '@/components/ui/PageHeader';
+import SearchSortBar from '@/components/ui/SearchSortBar';
 import { streamingServices, streamingFilterOptions } from '@/data/streaming';
-import { MagnifyingGlassIcon, AdjustmentsHorizontalIcon, Bars3Icon, PlayIcon } from '@heroicons/react/24/outline';
-
-type SortOption = 'popular' | 'price-low' | 'price-high' | 'rating' | 'newest';
+import { PlayIcon, Bars3Icon } from '@heroicons/react/24/outline';
+import { SORT_OPTIONS } from '@/lib/constants';
+import { useProductList } from '@/hooks/useProductList';
 
 export default function StreamingPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState<SortOption>('popular');
-  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const {
+    searchQuery,
+    setSearchQuery,
+    sortBy,
+    setSortBy,
+    activeFilters,
+    showMobileFilters,
+    setShowMobileFilters,
+    handleFilterChange,
+    handleClearFilters,
+    filteredAndSortedProducts
+  } = useProductList({
+    products: streamingServices
+  });
 
   const filters = [
     { title: 'Provider', key: 'provider', options: streamingFilterOptions.provider, type: 'checkbox' as const },
     { title: 'Price Range', key: 'price', options: streamingFilterOptions.price, type: 'checkbox' as const },
-    { title: 'Content Type', key: 'contentType', options: streamingFilterOptions.contentType, type: 'checkbox' as const },
-    { title: 'Video Quality', key: 'videoQuality', options: streamingFilterOptions.videoQuality, type: 'checkbox' as const },
+    { title: 'Content Type', key: 'contentType', options: streamingFilterOptions.content_type, type: 'checkbox' as const },
+    { title: 'Video Quality', key: 'videoQuality', options: streamingFilterOptions.video_quality, type: 'checkbox' as const },
     { title: 'Features', key: 'features', options: streamingFilterOptions.features, type: 'checkbox' as const }
   ];
-
-  const filteredAndSortedProducts = useMemo(() => {
-    const filtered = streamingServices.filter(product => {
-      if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) return false;
-      if (activeFilters.provider?.length > 0 && !activeFilters.provider.includes(product.provider.toLowerCase().replace(' ', '-'))) return false;
-      
-      if (activeFilters.price?.length > 0) {
-        const priceInRange = activeFilters.price.some(range => {
-          switch (range) {
-            case 'under-10': return product.price < 10;
-            case '10-15': return product.price >= 10 && product.price < 15;
-            case 'over-15': return product.price >= 15;
-            default: return false;
-          }
-        });
-        if (!priceInRange) return false;
-      }
-
-      if (activeFilters.features?.length > 0) {
-        const hasFeature = activeFilters.features.some(feature => {
-          switch (feature) {
-            case 'no-ads': return !product.adsIncluded;
-            case 'downloads': return product.downloadAllowed;
-            case 'live-tv': return product.features.some(f => f.toLowerCase().includes('live'));
-            case 'family-friendly': return product.content.some(c => c.toLowerCase().includes('kids') || c.toLowerCase().includes('family'));
-            default: return false;
-          }
-        });
-        if (!hasFeature) return false;
-      }
-
-      return true;
-    });
-
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'price-low': return a.price - b.price;
-        case 'price-high': return b.price - a.price;
-        case 'rating': return b.rating - a.rating;
-        case 'newest': return b.isNew ? 1 : -1;
-        default: return b.reviews - a.reviews;
-      }
-    });
-
-    return filtered;
-  }, [searchQuery, activeFilters, sortBy]);
-
-  const handleFilterChange = (filterKey: string, value: string, checked: boolean) => {
-    setActiveFilters(prev => {
-      const newFilters = { ...prev };
-      if (checked) {
-        newFilters[filterKey] = [...(newFilters[filterKey] || []), value];
-      } else {
-        newFilters[filterKey] = (newFilters[filterKey] || []).filter(v => v !== value);
-        if (newFilters[filterKey].length === 0) delete newFilters[filterKey];
-      }
-      return newFilters;
-    });
-  };
-
-  const handleClearFilters = () => {
-    setActiveFilters({});
-    setSearchQuery('');
-  };
 
   const breadcrumbItems = [{ name: 'Shop', href: '/shop' }, { name: 'Streaming' }];
 
@@ -100,57 +47,20 @@ export default function StreamingPage() {
           <Breadcrumb items={breadcrumbItems} />
         </div>
 
-        <div className="mb-8">
-          <div className="flex items-center gap-3 mb-4">
-            <PlayIcon className="w-8 h-8 text-blue-600" />
-            <h1 className="text-3xl font-bold text-gray-900">Streaming Services</h1>
-          </div>
-          <p className="text-lg text-gray-600 max-w-3xl">
-            Add premium streaming services to your CitiSignal plan. Enjoy your favorite shows, movies, 
-            music, and live sports with our exclusive bundles and discounted rates.
-          </p>
-        </div>
+        <PageHeader
+          title="Streaming"
+          description="Add premium streaming services to your CitiSignal plan. Enjoy your favorite shows, movies, music, and live sports with our exclusive bundles and discounted rates."
+          icon={PlayIcon}
+        />
 
-        <div className="flex flex-col lg:flex-row gap-4 mb-8">
-          <div className="relative flex-1">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search streaming services..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 focus:outline-none transition-all duration-200 text-gray-900 placeholder-gray-400"
-            />
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="appearance-none w-48 px-4 pr-10 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 focus:outline-none transition-all duration-200 text-gray-900 cursor-pointer"
-              >
-                <option value="popular">Most Popular</option>
-                <option value="price-low">Price: Low to High</option>
-                <option value="price-high">Price: High to Low</option>
-                <option value="rating">Highest Rated</option>
-                <option value="newest">Newest</option>
-              </select>
-              <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-                <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-                </svg>
-              </div>
-            </div>
-
-            <button
-              onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="lg:hidden flex items-center gap-2 px-4 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm hover:bg-gray-50 hover:border-purple-300 transition-all duration-200 text-gray-900"
-            >
-              <AdjustmentsHorizontalIcon className="w-5 h-5" />
-              Filters
-            </button>
-          </div>
-        </div>
+        <SearchSortBar
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          sortBy={sortBy}
+          onSortChange={(value) => setSortBy(value)}
+          sortOptions={SORT_OPTIONS}
+          searchPlaceholder="Search streaming services..."
+        />
 
         <div className="mb-6">
           <p className="text-gray-600">
@@ -184,16 +94,13 @@ export default function StreamingPage() {
                   name={product.name}
                   brand={product.provider}
                   price={product.price}
-                  originalPrice={product.originalPrice}
-                  rating={product.rating}
-                  reviews={product.reviews}
-                  image={`/streaming/${product.id}.jpg`}
+                  originalPrice={product.original_price}
+                  image={product.media_gallery[0]?.url || ''}
                   category={product.category}
-                  features={product.features}
-                  colors={[]}
-                  inStock={true}
+                  features={[...product.video_quality, `${product.device_limit}`]}
+                  inStock={product.stock_status === 'IN_STOCK'}
                   isNew={product.isNew}
-                  isSale={product.isSale}
+                  isSale={product.original_price !== undefined && product.original_price > product.price}
                 />
               ))}
             </div>

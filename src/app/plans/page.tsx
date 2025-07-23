@@ -1,22 +1,31 @@
 'use client';
 
-import { useState, useMemo } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
 import PlanCard from '@/components/ui/PlanCard';
 import FilterSidebar from '@/components/ui/FilterSidebar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
+import PageHeader from '@/components/ui/PageHeader';
+import SearchSortBar from '@/components/ui/SearchSortBar';
 import { plans, planFilterOptions } from '@/data/plans';
-import { MagnifyingGlassIcon, AdjustmentsHorizontalIcon, Bars3Icon } from '@heroicons/react/24/outline';
-
-type SortOption = 'popular' | 'price-low' | 'price-high' | 'rating' | 'newest';
+import { SignalIcon, Bars3Icon } from '@heroicons/react/24/outline';
+import { useProductList } from '@/hooks/useProductList';
+import { SORT_OPTIONS } from '@/lib/constants';
 
 export default function PlansPage() {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [sortBy, setSortBy] = useState<SortOption>('popular');
-  const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const {
+    searchQuery,
+    setSearchQuery,
+    sortBy,
+    setSortBy,
+    activeFilters,
+    showMobileFilters,
+    setShowMobileFilters,
+    handleFilterChange,
+    handleClearFilters,
+    filteredAndSortedProducts
+  } = useProductList({ products: plans });
 
   // Filter configuration
   const filters = [
@@ -43,129 +52,8 @@ export default function PlansPage() {
       key: 'features',
       options: planFilterOptions.features,
       type: 'checkbox' as const
-    },
-    {
-      title: 'Network Priority',
-      key: 'networkPriority',
-      options: planFilterOptions.networkPriority,
-      type: 'checkbox' as const
     }
   ];
-
-  // Filter and sort products
-  const filteredAndSortedProducts = useMemo(() => {
-    const filtered = plans.filter(product => {
-      // Search filter
-      if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) {
-        return false;
-      }
-
-      // Type filter
-      if (activeFilters.type?.length > 0) {
-        if (!activeFilters.type.includes(product.type)) {
-          return false;
-        }
-      }
-
-      // Price filter
-      if (activeFilters.price?.length > 0) {
-        const priceInRange = activeFilters.price.some(range => {
-          switch (range) {
-            case 'under-50':
-              return product.price < 50;
-            case '50-100':
-              return product.price >= 50 && product.price < 100;
-            case 'over-100':
-              return product.price >= 100;
-            default:
-              return false;
-          }
-        });
-        if (!priceInRange) return false;
-      }
-
-      // Data filter
-      if (activeFilters.data?.length > 0) {
-        const hasDataType = activeFilters.data.some(dataType => {
-          switch (dataType) {
-            case 'unlimited':
-              return product.data.toLowerCase().includes('unlimited');
-            case 'limited':
-              return !product.data.toLowerCase().includes('unlimited');
-            default:
-              return false;
-          }
-        });
-        if (!hasDataType) return false;
-      }
-
-      // Features filter
-      if (activeFilters.features?.length > 0) {
-        const hasFeature = activeFilters.features.some(feature => {
-          switch (feature) {
-            case '5g':
-              return product.features.some(f => f.toLowerCase().includes('5g'));
-            case 'hotspot':
-              return product.hotspot !== 'None';
-            case 'streaming':
-              return product.streaming.length > 0;
-            case 'no-contract':
-              return !product.contractRequired;
-            default:
-              return false;
-          }
-        });
-        if (!hasFeature) return false;
-      }
-
-      // Network Priority filter
-      if (activeFilters.networkPriority?.length > 0) {
-        if (!activeFilters.networkPriority.includes(product.networkPriority)) {
-          return false;
-        }
-      }
-
-      return true;
-    });
-
-    // Sort products
-    filtered.sort((a, b) => {
-      switch (sortBy) {
-        case 'price-low':
-          return a.price - b.price;
-        case 'price-high':
-          return b.price - a.price;
-        case 'rating':
-          return b.rating - a.rating;
-        case 'newest':
-          return b.isNew ? 1 : -1;
-        default: // popular
-          return b.reviews - a.reviews;
-      }
-    });
-
-    return filtered;
-  }, [searchQuery, activeFilters, sortBy]);
-
-  const handleFilterChange = (filterKey: string, value: string, checked: boolean) => {
-    setActiveFilters(prev => {
-      const newFilters = { ...prev };
-      if (checked) {
-        newFilters[filterKey] = [...(newFilters[filterKey] || []), value];
-      } else {
-        newFilters[filterKey] = (newFilters[filterKey] || []).filter(v => v !== value);
-        if (newFilters[filterKey].length === 0) {
-          delete newFilters[filterKey];
-        }
-      }
-      return newFilters;
-    });
-  };
-
-  const handleClearFilters = () => {
-    setActiveFilters({});
-    setSearchQuery('');
-  };
 
   const breadcrumbItems = [
     { name: 'Shop', href: '/shop' },
@@ -182,53 +70,20 @@ export default function PlansPage() {
           <Breadcrumb items={breadcrumbItems} />
         </div>
 
-        {/* Page Header */}
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Wireless Plans</h1>
-          <p className="text-lg text-gray-600 max-w-3xl">
-            Choose the perfect wireless plan for your needs. From unlimited data to family plans, 
-            we have flexible options with no hidden fees and the reliability of our nationwide network.
-          </p>
-        </div>
+        <PageHeader
+          title="Wireless Plans"
+          description="Choose the perfect wireless plan for your needs. From unlimited data to family plans, we have flexible options with no hidden fees and the reliability of our nationwide network."
+          icon={SignalIcon}
+        />
 
-        {/* Search and Sort Bar */}
-        <div className="flex flex-col lg:flex-row gap-4 mb-8">
-          {/* Search */}
-          <div className="relative flex-1">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search plans..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 focus:outline-none transition-all duration-200 text-gray-900 placeholder-gray-400"
-            />
-          </div>
-
-          {/* Sort */}
-          <div className="flex items-center gap-4">
-            <select
-              value={sortBy}
-              onChange={(e) => setSortBy(e.target.value as SortOption)}
-              className="px-4 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 focus:outline-none transition-all duration-200 text-gray-900"
-            >
-              <option value="popular">Most Popular</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="rating">Highest Rated</option>
-              <option value="newest">Newest</option>
-            </select>
-
-            {/* Mobile Filter Toggle */}
-            <button
-              onClick={() => setShowMobileFilters(!showMobileFilters)}
-              className="lg:hidden flex items-center gap-2 px-4 py-3 border border-gray-300 rounded-lg hover:bg-gray-50"
-            >
-              <AdjustmentsHorizontalIcon className="w-5 h-5" />
-              Filters
-            </button>
-          </div>
-        </div>
+        <SearchSortBar
+          searchQuery={searchQuery}
+          onSearchChange={setSearchQuery}
+          sortBy={sortBy}
+          onSortChange={setSortBy}
+          sortOptions={SORT_OPTIONS}
+          searchPlaceholder="Search plans..."
+        />
 
         {/* Results Count */}
         <div className="mb-6">
@@ -278,25 +133,29 @@ export default function PlansPage() {
               {filteredAndSortedProducts.map((plan) => (
                 <PlanCard
                   key={plan.id}
-                  id={plan.id}
                   name={plan.name}
                   type={plan.type}
                   price={plan.price}
-                  originalPrice={plan.originalPrice}
-                  rating={plan.rating}
-                  reviews={plan.reviews}
-                  category={plan.category}
+                  originalPrice={plan.original_price}
+                  rating={plan.rating_summary}
+                  reviews={plan.review_count}
                   data={plan.data}
                   talk={plan.talk}
                   text={plan.text}
-                  features={plan.features}
+                  features={[
+                    `${plan.data} Data`,
+                    `${plan.hotspot} Mobile Hotspot`,
+                    ...plan.streaming,
+                    plan.contract_required ? 'Contract Required' : 'No Contract Required',
+                    `${plan.network_priority.charAt(0).toUpperCase() + plan.network_priority.slice(1)} Network Priority`
+                  ]}
                   hotspot={plan.hotspot}
                   streaming={plan.streaming}
-                  isPopular={plan.isPopular}
-                  isNew={plan.isNew}
-                  isSale={plan.isSale}
-                  contractRequired={plan.contractRequired}
-                  networkPriority={plan.networkPriority}
+                  isPopular={plan.type === 'unlimited'}
+                  isNew={Boolean(plan.isNew)}
+                  isSale={plan.original_price !== undefined && plan.original_price > plan.price}
+                  contractRequired={plan.contract_required}
+                  networkPriority={plan.network_priority}
                 />
               ))}
             </div>

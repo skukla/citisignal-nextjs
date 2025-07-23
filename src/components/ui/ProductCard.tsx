@@ -1,7 +1,11 @@
+'use client';
+
 import Link from 'next/link';
-import { StarIcon, HeartIcon } from '@heroicons/react/24/solid';
+import { HeartIcon } from '@heroicons/react/24/solid';
 import { HeartIcon as HeartOutlineIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
+import ProductBadge from './ProductBadge';
+import ProductImagePlaceholder from './ProductImagePlaceholder';
 
 interface ProductCardProps {
   id: string | number;
@@ -9,12 +13,13 @@ interface ProductCardProps {
   brand: string;
   price: number;
   originalPrice?: number;
-  rating: number;
-  reviews: number;
   image: string;
   category: string;
   features?: string[];
-  colors?: string[];
+  colors?: {
+    name: string;
+    hex: string;
+  }[];
   inStock?: boolean;
   isNew?: boolean;
   isSale?: boolean;
@@ -26,8 +31,6 @@ export default function ProductCard({
   brand,
   price,
   originalPrice,
-  rating,
-  reviews,
   image,
   category,
   features = [],
@@ -37,41 +40,33 @@ export default function ProductCard({
   isSale = false
 }: ProductCardProps) {
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const discount = originalPrice ? Math.round(((originalPrice - price) / originalPrice) * 100) : 0;
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 group">
       {/* Product Image */}
       <div className="relative p-6">
-        <div className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
-          <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-            <span className="text-gray-500 text-sm">{category}</span>
-          </div>
-        </div>
+        <ProductImagePlaceholder 
+          image={image ? { url: image, label: name } : undefined}
+          category={category}
+        />
         
         {/* Badges */}
-        <div className="absolute top-2 left-2 flex flex-col gap-1">
-          {isNew && (
-            <span className="bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">
-              NEW
-            </span>
+        <div className="absolute top-8 left-8 flex flex-col gap-1">
+          {isNew && <ProductBadge variant="new" />}
+          {isSale && originalPrice && originalPrice > price && (
+            <ProductBadge 
+              variant="discount" 
+              originalPrice={originalPrice} 
+              price={price} 
+            />
           )}
-          {isSale && discount > 0 && (
-            <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-              -{discount}%
-            </span>
-          )}
-          {!inStock && (
-            <span className="bg-gray-500 text-white text-xs font-bold px-2 py-1 rounded">
-              OUT OF STOCK
-            </span>
-          )}
+          {!inStock && <ProductBadge variant="out-of-stock" />}
         </div>
         
         {/* Wishlist Button */}
         <button
           onClick={() => setIsWishlisted(!isWishlisted)}
-          className="absolute top-2 right-2 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
+          className="absolute top-8 right-8 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
         >
           {isWishlisted ? (
             <HeartIcon className="w-4 h-4 text-red-500" />
@@ -88,34 +83,10 @@ export default function ProductCard({
           {name}
         </h3>
         
-        {/* Rating */}
-        <div className="flex items-center mb-3">
-          <div className="flex items-center">
-            {[...Array(5)].map((_, i) => (
-              <StarIcon
-                key={i}
-                className={`w-4 h-4 ${
-                  i < Math.floor(rating) 
-                    ? 'text-yellow-400' 
-                    : 'text-gray-300'
-                }`}
-              />
-            ))}
-          </div>
-          <span className="text-sm text-gray-600 ml-2">
-            {rating} ({reviews})
-          </span>
-        </div>
-
-        {/* Features */}
+        {/* Storage */}
         {features.length > 0 && (
-          <div className="space-y-1 mb-4">
-            {features.slice(0, 3).map((feature, index) => (
-              <div key={index} className="flex items-center text-sm text-gray-600">
-                <div className="w-1.5 h-1.5 bg-green-500 rounded-full mr-2"></div>
-                {feature}
-              </div>
-            ))}
+          <div className="text-sm text-gray-600 mb-4 truncate">
+            {features.join(', ')}
           </div>
         )}
 
@@ -123,16 +94,17 @@ export default function ProductCard({
         {colors.length > 0 && (
           <div className="mb-4">
             <div className="text-sm text-gray-600 mb-2">Available Colors:</div>
-            <div className="flex space-x-2">
+            <div className="flex flex-wrap gap-2">
               {colors.slice(0, 4).map((color, index) => (
                 <div
                   key={index}
-                  className="w-6 h-6 rounded-full border-2 border-gray-300 bg-gradient-to-br from-gray-200 to-gray-400"
-                  title={color}
-                ></div>
+                  className="w-6 h-6 rounded-full border border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition-transform"
+                  style={{ backgroundColor: color.hex }}
+                  title={color.name}
+                />
               ))}
               {colors.length > 4 && (
-                <div className="text-xs text-gray-500 flex items-center">
+                <div className="w-6 h-6 rounded-full border border-gray-200 bg-gray-50 flex items-center justify-center text-xs text-gray-500 font-medium">
                   +{colors.length - 4}
                 </div>
               )}
@@ -140,44 +112,42 @@ export default function ProductCard({
           </div>
         )}
 
-        {/* Pricing */}
-        <div className="mb-4">
-          <div className="flex items-center space-x-2">
-            <span className="text-2xl font-bold text-gray-900">
-              ${price}
-            </span>
-            {originalPrice && originalPrice > price && (
-              <span className="text-lg text-gray-500 line-through">
-                ${originalPrice}
+        {/* Pricing and Buttons Container */}
+        <div className="mt-auto">
+          {/* Pricing */}
+          <div className="mb-4">
+            <div className="flex items-center space-x-2">
+              <span className="text-2xl font-bold text-gray-900">
+                ${price}
               </span>
-            )}
-          </div>
-          {originalPrice && originalPrice > price && (
-            <div className="text-sm text-green-600 font-medium">
-              Save ${originalPrice - price}
+              {originalPrice && originalPrice > price && (
+                <span className="text-lg text-gray-500 line-through">
+                  ${originalPrice}
+                </span>
+              )}
             </div>
-          )}
-        </div>
+          </div>
 
-        {/* Action Buttons */}
-        <div className="space-y-2">
-          <Link
-            href={`/${category}/${id}`}
-            className={`block w-full text-center py-3 rounded-lg font-medium transition-colors ${
-              inStock
-                ? 'text-white hover:opacity-90'
-                : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}
-            style={inStock ? { backgroundColor: '#8821f4' } : {}}
-          >
-            {inStock ? 'Add to Cart' : 'Out of Stock'}
-          </Link>
-          <Link
-            href={`/${category}/${id}`}
-            className="block w-full border border-gray-300 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-50 transition-colors"
-          >
-            View Details
-          </Link>
+          {/* Action Buttons */}
+          <div className="space-y-2">
+            <Link
+              href={`/${category}/${id}`}
+              className={`block w-full text-center py-3 rounded-lg font-medium transition-colors ${
+                inStock
+                  ? 'text-white hover:opacity-90'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
+              style={inStock ? { backgroundColor: '#8821f4' } : {}}
+            >
+              {inStock ? 'Add to Cart' : 'Out of Stock'}
+            </Link>
+            <Link
+              href={`/${category}/${id}`}
+              className="block w-full border border-gray-300 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-50 transition-colors"
+            >
+              View Details
+            </Link>
+          </div>
         </div>
       </div>
     </div>

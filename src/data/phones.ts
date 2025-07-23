@@ -1,220 +1,160 @@
-export interface Phone {
-  id: string;
-  name: string;
-  brand: string;
-  price: number;
-  originalPrice?: number;
-  rating: number;
-  reviews: number;
-  image: string;
-  category: string;
-  storage: string[];
-  colors: string[];
-  features: string[];
-  inStock: boolean;
-  isNew: boolean;
-  isSale: boolean;
-  os: string;
-  screenSize: string;
-  camera: string;
-  battery: string;
-}
-
-export const phones: Phone[] = [
-  {
-    id: 'iphone-15-pro-max',
-    name: 'iPhone 15 Pro Max',
-    brand: 'Apple',
-    price: 1199,
-    originalPrice: 1299,
-    rating: 4.8,
-    reviews: 2850,
-    image: '/phones/iphone-15-pro-max.jpg',
-    category: 'phones',
-    storage: ['128GB', '256GB', '512GB', '1TB'],
-    colors: ['Natural Titanium', 'Blue Titanium', 'White Titanium', 'Black Titanium'],
-    features: ['5G Ready', 'A17 Pro Chip', 'Pro Camera System', 'Titanium Design'],
-    inStock: true,
-    isNew: true,
-    isSale: true,
-    os: 'iOS',
-    screenSize: '6.7"',
-    camera: '48MP Main',
-    battery: 'All Day'
-  },
-  {
-    id: 'iphone-15-pro',
-    name: 'iPhone 15 Pro',
-    brand: 'Apple',
-    price: 999,
-    originalPrice: 1099,
-    rating: 4.7,
-    reviews: 1950,
-    image: '/phones/iphone-15-pro.jpg',
-    category: 'phones',
-    storage: ['128GB', '256GB', '512GB', '1TB'],
-    colors: ['Natural Titanium', 'Blue Titanium', 'White Titanium', 'Black Titanium'],
-    features: ['5G Ready', 'A17 Pro Chip', 'Pro Camera System', 'Titanium Design'],
-    inStock: true,
-    isNew: true,
-    isSale: true,
-    os: 'iOS',
-    screenSize: '6.1"',
-    camera: '48MP Main',
-    battery: 'All Day'
-  },
-  {
-    id: 'iphone-15',
-    name: 'iPhone 15',
-    brand: 'Apple',
-    price: 699,
-    originalPrice: 799,
-    rating: 4.6,
-    reviews: 3200,
-    image: '/phones/iphone-15.jpg',
-    category: 'phones',
-    storage: ['128GB', '256GB', '512GB'],
-    colors: ['Pink', 'Yellow', 'Green', 'Blue', 'Black'],
-    features: ['5G Ready', 'A16 Bionic', 'Advanced Camera', 'USB-C'],
-    inStock: true,
-    isNew: false,
-    isSale: true,
-    os: 'iOS',
-    screenSize: '6.1"',
-    camera: '48MP Main',
-    battery: 'All Day'
-  },
-  {
-    id: 'samsung-galaxy-s24-ultra',
-    name: 'Galaxy S24 Ultra',
-    brand: 'Samsung',
-    price: 1199,
-    originalPrice: 1299,
-    rating: 4.7,
-    reviews: 1840,
-    image: '/phones/galaxy-s24-ultra.jpg',
-    category: 'phones',
-    storage: ['256GB', '512GB', '1TB'],
-    colors: ['Titanium Black', 'Titanium Gray', 'Titanium Violet', 'Titanium Yellow'],
-    features: ['S Pen Included', '200MP Camera', '5G Ultra', 'AI Features'],
-    inStock: true,
-    isNew: true,
-    isSale: true,
-    os: 'Android',
-    screenSize: '6.8"',
-    camera: '200MP Main',
-    battery: '5000mAh'
-  },
-  {
-    id: 'samsung-galaxy-s24',
-    name: 'Galaxy S24',
-    brand: 'Samsung',
-    price: 799,
-    rating: 4.5,
-    reviews: 1250,
-    image: '/phones/galaxy-s24.jpg',
-    category: 'phones',
-    storage: ['128GB', '256GB'],
-    colors: ['Onyx Black', 'Marble Gray', 'Cobalt Violet', 'Amber Yellow'],
-    features: ['5G Ready', 'AI Camera', 'Fast Charging', 'Premium Display'],
-    inStock: true,
-    isNew: false,
-    isSale: false,
-    os: 'Android',
-    screenSize: '6.2"',
-    camera: '50MP Main',
-    battery: '4000mAh'
-  },
-  {
-    id: 'google-pixel-8-pro',
-    name: 'Pixel 8 Pro',
-    brand: 'Google',
-    price: 899,
-    originalPrice: 999,
-    rating: 4.6,
-    reviews: 980,
-    image: '/phones/pixel-8-pro.jpg',
-    category: 'phones',
-    storage: ['128GB', '256GB', '512GB'],
-    colors: ['Obsidian', 'Porcelain', 'Bay'],
-    features: ['AI Photography', 'Pure Android', 'Magic Eraser', 'Titan M Security'],
-    inStock: true,
-    isNew: false,
-    isSale: true,
-    os: 'Android',
-    screenSize: '6.7"',
-    camera: '50MP Main',
-    battery: '5050mAh'
-  },
-  {
-    id: 'oneplus-12',
-    name: 'OnePlus 12',
-    brand: 'OnePlus',
-    price: 699,
-    rating: 4.4,
-    reviews: 567,
-    image: '/phones/oneplus-12.jpg',
-    category: 'phones',
-    storage: ['256GB', '512GB'],
-    colors: ['Silky Black', 'Flowy Emerald'],
-    features: ['Snapdragon 8 Gen 3', '100W Fast Charging', 'Hasselblad Camera', 'OxygenOS'],
-    inStock: false,
-    isNew: false,
-    isSale: false,
-    os: 'Android',
-    screenSize: '6.82"',
-    camera: '50MP Main',
-    battery: '5400mAh'
-  },
-  {
-    id: 'iphone-14',
-    name: 'iPhone 14',
-    brand: 'Apple',
-    price: 599,
-    originalPrice: 699,
-    rating: 4.5,
-    reviews: 4200,
-    image: '/phones/iphone-14.jpg',
-    category: 'phones',
-    storage: ['128GB', '256GB', '512GB'],
-    colors: ['Blue', 'Purple', 'Midnight', 'Starlight', 'Product Red'],
-    features: ['5G Ready', 'A15 Bionic', 'Dual Camera', 'Crash Detection'],
-    inStock: true,
-    isNew: false,
-    isSale: true,
-    os: 'iOS',
-    screenSize: '6.1"',
-    camera: '12MP Main',
-    battery: 'All Day'
-  }
-];
+import { Phone, colorOptions } from '@/types/commerce';
 
 export const phoneFilterOptions = {
-  brand: [
-    { id: 'apple', name: 'Apple', count: 4 },
-    { id: 'samsung', name: 'Samsung', count: 2 },
-    { id: 'google', name: 'Google', count: 1 },
-    { id: 'oneplus', name: 'OnePlus', count: 1 }
+  manufacturer: [
+    { id: 'apple', name: 'Apple' },
+    { id: 'samsung', name: 'Samsung' },
+    { id: 'citisignal', name: 'CitiSignal' }
   ],
-  os: [
-    { id: 'ios', name: 'iOS', count: 4 },
-    { id: 'android', name: 'Android', count: 4 }
+  memory: [
+    { id: '128gb', name: '128GB' },
+    { id: '256gb', name: '256GB' },
+    { id: '512gb', name: '512GB' },
+    { id: '1tb', name: '1TB' }
   ],
-  storage: [
-    { id: '128gb', name: '128GB', count: 5 },
-    { id: '256gb', name: '256GB', count: 7 },
-    { id: '512gb', name: '512GB', count: 6 },
-    { id: '1tb', name: '1TB', count: 2 }
-  ],
+  colors: colorOptions,
   price: [
-    { id: 'under-700', name: 'Under $700', count: 3 },
-    { id: '700-1000', name: '$700 - $1000', count: 3 },
-    { id: 'over-1000', name: 'Over $1000', count: 2 }
+    { id: 'under-700', name: 'Under $700' },
+    { id: '700-1000', name: '$700 - $1000' },
+    { id: 'over-1000', name: 'Over $1000' }
   ],
   features: [
-    { id: '5g', name: '5G Ready', count: 6 },
-    { id: 'wireless-charging', name: 'Wireless Charging', count: 8 },
-    { id: 'face-id', name: 'Face ID', count: 4 },
-    { id: 'fast-charging', name: 'Fast Charging', count: 8 }
+    { id: 'extended-capacity-5g', name: 'Extended Capacity 5G' },
+    { id: 'extended-range-5g', name: 'Extended Range 5G' }
   ]
-}; 
+};
+
+// Mock data matching Commerce API structure
+export const phones: Phone[] = [
+  {
+    id: '1',
+    sku: 'PHONE-IPHONE-15-PRO-128',
+    name: 'iPhone 15 Pro',
+    url_key: 'iphone-15-pro',
+    description: 'The most advanced iPhone ever with A17 Pro chip, titanium design, and advanced camera system.',
+    price: 999,
+    original_price: 1099,
+    currency: 'USD',
+    rating_summary: 90,
+    review_count: 125,
+    media_gallery: [
+      {
+        url: '/phones/iphone-15-pro.jpg',
+        label: 'iPhone 15 Pro Natural Titanium',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'phones',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'Apple',
+    memory: ['128GB', '256GB', '512GB', '1TB'],
+    extended_capacity_5g: true,
+    extended_range_5g: true,
+    available_colors: [
+      { name: 'Natural Titanium', hex: '#9FA1A3' },
+      { name: 'Blue Titanium', hex: '#515B6F' },
+      { name: 'White Titanium', hex: '#F5F5F0' },
+      { name: 'Black Titanium', hex: '#3D3C41' }
+    ],
+    isNew: true,
+    isSale: true
+  },
+  {
+    id: '2',
+    sku: 'PHONE-S24-ULTRA-256',
+    name: 'Galaxy S24 Ultra',
+    url_key: 'galaxy-s24-ultra',
+    description: 'The ultimate Galaxy experience with AI features, S Pen, and advanced camera system.',
+    price: 1199,
+    original_price: 1299,
+    currency: 'USD',
+    rating_summary: 88,
+    review_count: 95,
+    media_gallery: [
+      {
+        url: '/phones/galaxy-s24-ultra.jpg',
+        label: 'Galaxy S24 Ultra Titanium Black',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'phones',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'Samsung',
+    memory: ['256GB', '512GB', '1TB'],
+    extended_capacity_5g: true,
+    extended_range_5g: true,
+    available_colors: [
+      { name: 'Titanium Black', hex: '#2A2A2C' },
+      { name: 'Titanium Gray', hex: '#7C7C7E' },
+      { name: 'Titanium Violet', hex: '#7B6C7E' },
+      { name: 'Titanium Yellow', hex: '#F3E0B6' }
+    ],
+    isNew: true,
+    isSale: true
+  },
+  {
+    id: '3',
+    sku: 'PHONE-CS-ULTRA-5G',
+    name: 'CitiSignal Ultra 5G',
+    url_key: 'citisignal-ultra-5g',
+    description: 'Experience the power of CitiSignal with advanced 5G capabilities and premium features.',
+    price: 899,
+    currency: 'USD',
+    rating_summary: 85,
+    review_count: 45,
+    media_gallery: [
+      {
+        url: '/phones/citisignal-ultra.jpg',
+        label: 'CitiSignal Ultra 5G Midnight Blue',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'phones',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'CitiSignal',
+    memory: ['128GB', '256GB'],
+    extended_capacity_5g: true,
+    extended_range_5g: true,
+    available_colors: [
+      { name: 'Midnight Blue', hex: '#1F2330' },
+      { name: 'Silver', hex: '#F1F3EE' },
+      { name: 'Graphite', hex: '#5F5E5A' }
+    ],
+    isNew: true,
+    isSale: false
+  },
+  {
+    id: '4',
+    sku: 'PHONE-IPHONE-15-128',
+    name: 'iPhone 15',
+    url_key: 'iphone-15',
+    description: 'The powerful iPhone 15 with A16 Bionic chip, Dynamic Island, and advanced camera system.',
+    price: 799,
+    original_price: 899,
+    currency: 'USD',
+    rating_summary: 92,
+    review_count: 210,
+    media_gallery: [
+      {
+        url: '/phones/iphone-15.jpg',
+        label: 'iPhone 15 Pink',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'phones',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'Apple',
+    memory: ['128GB', '256GB', '512GB'],
+    extended_capacity_5g: true,
+    extended_range_5g: true,
+    available_colors: [
+      { name: 'Pink', hex: '#F8D7D9' },
+      { name: 'Yellow', hex: '#F3E3B6' },
+      { name: 'Green', hex: '#A7C1B5' },
+      { name: 'Blue', hex: '#B4C4DE' },
+      { name: 'Black', hex: '#3F3F3D' }
+    ],
+    isNew: true,
+    isSale: true
+  }
+]; 
