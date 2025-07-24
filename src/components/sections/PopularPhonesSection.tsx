@@ -1,8 +1,6 @@
 import Link from 'next/link';
 import { phones } from '@/data/phones';
 import ProductCard from '@/components/ui/ProductCard';
-import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
 
 export default function PopularPhonesSection() {
   // Get 4 popular phones (those with highest review count)
@@ -12,7 +10,7 @@ export default function PopularPhonesSection() {
 
   return (
     <section className="py-20 bg-white">
-      <div className="section-container">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -25,7 +23,7 @@ export default function PopularPhonesSection() {
         </div>
 
         {/* Phones Grid */}
-        <div className="product-grid">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {popularPhones.map((phone) => (
             <ProductCard
               key={phone.sku}
@@ -34,6 +32,8 @@ export default function PopularPhonesSection() {
               brand={phone.manufacturer}
               price={phone.price}
               originalPrice={phone.original_price}
+              rating={phone.rating_summary / 20}
+              reviews={phone.review_count}
               image={phone.media_gallery?.[0]?.url || ''}
               category={phone.category}
               features={phone.memory}
@@ -49,13 +49,12 @@ export default function PopularPhonesSection() {
         <div className="text-center mt-12">
           <Link
             href="/phones"
-            className={clsx(
-              'btn btn-secondary',
-              'inline-flex items-center px-8 py-3'
-            )}
+            className="inline-flex items-center px-8 py-3 bg-gray-100 text-gray-900 font-medium rounded-lg hover:bg-gray-200 transition-colors"
           >
             View All Phones
-            <ArrowRightIcon className="ml-2 w-5 h-5" />
+            <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
       </div>

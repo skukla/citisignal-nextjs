@@ -1,5 +1,4 @@
 import { PhoneIcon, WifiIcon, CheckCircleIcon, CogIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
 
 export default function ActivationSection() {
   const steps = [
@@ -31,7 +30,7 @@ export default function ActivationSection() {
 
   return (
     <section className="py-20 bg-white">
-      <div className="section-container">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -49,22 +48,18 @@ export default function ActivationSection() {
             <div key={index} className="relative">
               {/* Connection Line - Hidden on mobile */}
               {index < steps.length - 1 && (
-                <div className="hidden lg:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-primary-400 to-primary-200 transform translate-x-4 -translate-y-1/2"></div>
+                <div className="hidden lg:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-purple-400 to-purple-200 transform translate-x-4 -translate-y-1/2"></div>
               )}
               
               {/* Step Card */}
               <div className="text-center">
                 {/* Icon Circle */}
-                <div className={clsx(
-                  'mx-auto w-16 h-16 rounded-full',
-                  'flex items-center justify-center mb-4',
-                  'bg-primary-600'
-                )}>
+                <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#8821f4' }}>
                   <step.icon className="w-8 h-8 text-white" />
                 </div>
                 
                 {/* Step Number */}
-                <div className="text-sm font-bold text-primary-600 mb-2">STEP {index + 1}</div>
+                <div className="text-sm font-bold text-purple-600 mb-2">STEP {index + 1}</div>
                 
                 {/* Title */}
                 <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
@@ -76,7 +71,7 @@ export default function ActivationSection() {
                 <ul className="text-sm text-gray-500 space-y-1">
                   {step.details.map((detail, detailIndex) => (
                     <li key={detailIndex} className="flex items-center justify-center">
-                      <div className="w-1 h-1 bg-primary-400 rounded-full mr-2"></div>
+                      <div className="w-1 h-1 bg-purple-400 rounded-full mr-2"></div>
                       {detail}
                     </li>
                   ))}
@@ -87,7 +82,7 @@ export default function ActivationSection() {
         </div>
 
         {/* Call to Action */}
-        <div className="bg-gradient-to-r from-primary-50 to-primary-100 rounded-2xl p-8 md:p-12">
+        <div className="bg-gradient-to-r from-purple-50 to-purple-100 rounded-2xl p-8 md:p-12">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
@@ -115,11 +110,7 @@ export default function ActivationSection() {
             
             <div className="text-center lg:text-left">
               <div className="space-y-4">
-                <button className={clsx(
-                  'btn btn-primary',
-                  'w-full lg:w-auto px-8 py-4',
-                  'text-lg'
-                )}>
+                <button className="w-full lg:w-auto px-8 py-4 text-white font-bold rounded-lg hover:opacity-90 transition-colors text-lg" style={{ backgroundColor: '#8821f4' }}>
                   Start Your Activation
                 </button>
                 <div className="text-center lg:text-left">

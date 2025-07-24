@@ -1,6 +1,5 @@
-import { BriefcaseIcon, HomeIcon, RocketLaunchIcon, HeartIcon, CheckIcon } from '@heroicons/react/24/outline';
+import { BriefcaseIcon, HomeIcon, RocketLaunchIcon, HeartIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import clsx from 'clsx';
 
 export default function LifestyleSolutionsSection() {
   const solutions = [
@@ -36,7 +35,7 @@ export default function LifestyleSolutionsSection() {
 
   return (
     <section className="py-20 bg-gray-50">
-      <div className="section-container">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -51,21 +50,11 @@ export default function LifestyleSolutionsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {solutions.map((solution, index) => (
             <Link key={index} href={solution.link}>
-              <div className={clsx(
-                'card p-6 h-full',
-                'hover:shadow-md transition-all',
-                'group cursor-pointer'
-              )}>
-                <div className={clsx(
-                  'w-12 h-12 rounded-lg bg-primary-50',
-                  'flex items-center justify-center mb-6'
-                )}>
-                  <solution.icon className="w-6 h-6 text-primary-600" />
+              <div className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow group cursor-pointer h-full">
+                <div className="w-12 h-12 rounded-lg bg-purple-50 flex items-center justify-center mb-6">
+                  <solution.icon className="w-6 h-6 text-purple-600" />
                 </div>
-                <h3 className={clsx(
-                  'text-xl font-bold text-gray-900 mb-2',
-                  'group-hover:text-primary-600 transition-colors'
-                )}>
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
                   {solution.title}
                 </h3>
                 <p className="text-gray-600 mb-4">
@@ -74,7 +63,9 @@ export default function LifestyleSolutionsSection() {
                 <ul className="space-y-2">
                   {solution.features.map((feature, featureIndex) => (
                     <li key={featureIndex} className="flex items-center text-sm text-gray-600">
-                      <CheckIcon className="w-4 h-4 text-green-500 mr-2" />
+                      <svg className="w-4 h-4 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
                       {feature}
                     </li>
                   ))}
@@ -88,10 +79,8 @@ export default function LifestyleSolutionsSection() {
         <div className="mt-16 text-center">
           <Link
             href="/solutions"
-            className={clsx(
-              'btn btn-primary',
-              'inline-flex items-center px-8 py-4'
-            )}
+            className="inline-flex items-center px-8 py-4 text-white font-medium rounded-lg transition-colors"
+            style={{ backgroundColor: '#8821f4' }}
           >
             Find Your Perfect Solution
           </Link>

@@ -1,46 +1,24 @@
-import Image from 'next/image';
-import clsx from 'clsx';
-
+// TODO: Use next/image when implementing real Commerce API images
 interface ProductImagePlaceholderProps {
   image?: {
     url: string;
     label: string;
   };
   category: string;
-  className?: string;
 }
 
-export default function ProductImagePlaceholder({ 
-  image, 
-  category,
-  className 
-}: ProductImagePlaceholderProps) {
+export default function ProductImagePlaceholder({ image, category }: ProductImagePlaceholderProps) {
   return (
-    <div className={clsx(
-      'aspect-square rounded-lg mb-4',
-      'flex items-center justify-center overflow-hidden',
-      'bg-gray-100',
-      className
-    )}>
+    <div className="aspect-square bg-gray-100 rounded-lg mb-4 flex items-center justify-center overflow-hidden">
       {image ? (
-        <Image 
+        <img 
           src={image.url}
           alt={image.label}
-          fill
-          className={clsx(
-            'object-cover',
-            'transition-transform duration-300',
-            'group-hover:scale-105'
-          )}
-          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="w-full h-full object-cover"
         />
       ) : (
-        <div className={clsx(
-          'w-full h-full',
-          'flex items-center justify-center',
-          'bg-gradient-to-br from-gray-100 to-gray-200'
-        )}>
-          <span className="text-gray-500 text-sm font-medium">{category}</span>
+        <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
+          <span className="text-gray-500 text-sm">{category}</span>
         </div>
       )}
     </div>

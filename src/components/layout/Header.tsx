@@ -3,38 +3,29 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { MagnifyingGlassIcon, UserIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
-import CartButton from '@/components/ui/CartButton';
-import SearchInput from '@/components/ui/SearchInput';
+import { MagnifyingGlassIcon, ShoppingCartIcon, UserIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
-
-  const handleSearch = () => {
-    // TODO: Implement search functionality
-    console.log('Searching for:', searchQuery);
-  };
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
       {/* Top utility bar - Black background with white text */}
       <div className="bg-black border-b border-gray-800">
-        <div className="section-container py-2">
-          <div className="flex justify-between items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-between items-center py-2">
             <div className="text-sm text-white">
               Free shipping on orders over $99
             </div>
-            <div className="flex items-center gap-4">
-              <Link href="/signin" className="text-sm text-white hover:text-primary-300 transition-colors">
+            <div className="flex items-center space-x-4">
+              <Link href="/signin" className="text-sm text-white hover:text-purple-300 transition-colors">
                 Sign In
               </Link>
-              <Link href="/signup" className="text-sm text-white hover:text-primary-300 transition-colors">
+              <Link href="/signup" className="text-sm text-white hover:text-purple-300 transition-colors">
                 Create Account
               </Link>
-              <div className="flex items-center gap-1">
+              <div className="flex items-center space-x-1">
                 <span className="text-sm text-gray-300">Support:</span>
                 <span className="text-sm font-medium text-white">1-800-CITI-SIG</span>
               </div>
@@ -44,13 +35,13 @@ export default function Header() {
       </div>
 
       {/* Main header */}
-      <div className="section-container">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
-          {/* Logo */}
+          {/* Logo - Using official CitiSignal logo */}
           <div className="flex items-center">
             <Link href="/" className="flex items-center">
               <Image
-                src="/logo.svg"
+                src="/csLogo.png"
                 alt="CitiSignal"
                 width={160}
                 height={50}
@@ -60,41 +51,48 @@ export default function Header() {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center gap-8">
-            <Link href="/phones" className="nav-link">Phones</Link>
-            <Link href="/watches" className="nav-link">Watches</Link>
-            <Link href="/accessories" className="nav-link">Accessories</Link>
-            <Link href="/gift-cards" className="nav-link">Gift Cards</Link>
-            <Link href="/plans" className="nav-link">Plans</Link>
-            <Link href="/streaming" className="nav-link">Streaming</Link>
-            <Link href="/internet-deals" className="nav-link">Internet Deals</Link>
+          <nav className="hidden lg:flex items-center space-x-8">
+            <Link href="/phones" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">
+              Phones
+            </Link>
+            <Link href="/watches" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">
+              Watches
+            </Link>
+            <Link href="/accessories" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">
+              Accessories
+            </Link>
+            <Link href="/gift-cards" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">
+              Gift Cards
+            </Link>
+            <Link href="/plans" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">
+              Plans
+            </Link>
+            <Link href="/streaming" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">
+              Streaming
+            </Link>
+            <Link href="/internet-deals" className="text-gray-700 hover:text-purple-600 font-medium transition-colors">
+              Internet Deals
+            </Link>
           </nav>
 
           {/* Search, Cart, and User Actions */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center space-x-4">
             {/* Search */}
             <div className="relative">
               <button
                 onClick={() => setIsSearchOpen(!isSearchOpen)}
-                className={clsx(
-                  'icon-button',
-                  isSearchOpen && 'text-primary-600'
-                )}
+                className="p-2 text-gray-700 hover:text-purple-600 transition-colors"
               >
-                <span className="absolute -inset-1.5" />
-                <span className="sr-only">Search</span>
-                <MagnifyingGlassIcon className="h-6 w-6" aria-hidden="true" />
+                <MagnifyingGlassIcon className="w-6 h-6" />
               </button>
               {isSearchOpen && (
-                <div className="absolute right-0 top-full mt-2 w-80 card z-50">
+                <div className="absolute right-0 top-full mt-2 w-80 bg-white border border-gray-200 rounded-lg shadow-lg z-50">
                   <div className="p-4">
-                    <SearchInput
-                      value={searchQuery}
-                      onChange={setSearchQuery}
-                      onSubmit={handleSearch}
+                    <input
+                      type="text"
                       placeholder="Search phones, plans, accessories..."
+                      className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       autoFocus
-                      color="purple"
                     />
                   </div>
                 </div>
@@ -102,32 +100,27 @@ export default function Header() {
             </div>
 
             {/* Cart */}
-            <CartButton />
+            <Link href="/cart" className="relative p-2 text-gray-700 hover:text-purple-600 transition-colors">
+              <ShoppingCartIcon className="w-6 h-6" />
+              <span className="absolute -top-1 -right-1 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center" style={{ backgroundColor: '#8821f4' }}>
+                2
+              </span>
+            </Link>
 
             {/* User Account */}
-            <Link
-              href="/account"
-              className="icon-button"
-            >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">Account</span>
-              <UserIcon className="h-6 w-6" aria-hidden="true" />
+            <Link href="/account" className="p-2 text-gray-700 hover:text-purple-600 transition-colors">
+              <UserIcon className="w-6 h-6" />
             </Link>
 
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className={clsx(
-                'lg:hidden icon-button',
-                isMenuOpen && 'text-primary-600'
-              )}
+              className="lg:hidden p-2 text-gray-700 hover:text-purple-600 transition-colors"
             >
-              <span className="absolute -inset-1.5" />
-              <span className="sr-only">Menu</span>
               {isMenuOpen ? (
-                <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+                <XMarkIcon className="w-6 h-6" />
               ) : (
-                <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+                <Bars3Icon className="w-6 h-6" />
               )}
             </button>
           </div>
@@ -137,14 +130,28 @@ export default function Header() {
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <div className="lg:hidden bg-white border-t border-gray-200">
-          <nav className="section-container py-4 space-y-4">
-            <Link href="/phones" className="block nav-link py-2">Phones</Link>
-            <Link href="/watches" className="block nav-link py-2">Watches</Link>
-            <Link href="/accessories" className="block nav-link py-2">Accessories</Link>
-            <Link href="/gift-cards" className="block nav-link py-2">Gift Cards</Link>
-            <Link href="/plans" className="block nav-link py-2">Plans</Link>
-            <Link href="/streaming" className="block nav-link py-2">Streaming</Link>
-            <Link href="/internet-deals" className="block nav-link py-2">Internet Deals</Link>
+          <nav className="px-4 py-4 space-y-4">
+            <Link href="/phones" className="block text-gray-700 hover:text-purple-600 font-medium py-2">
+              Phones
+            </Link>
+            <Link href="/watches" className="block text-gray-700 hover:text-purple-600 font-medium py-2">
+              Watches
+            </Link>
+            <Link href="/accessories" className="block text-gray-700 hover:text-purple-600 font-medium py-2">
+              Accessories
+            </Link>
+            <Link href="/gift-cards" className="block text-gray-700 hover:text-purple-600 font-medium py-2">
+              Gift Cards
+            </Link>
+            <Link href="/plans" className="block text-gray-700 hover:text-purple-600 font-medium py-2">
+              Plans
+            </Link>
+            <Link href="/streaming" className="block text-gray-700 hover:text-purple-600 font-medium py-2">
+              Streaming
+            </Link>
+            <Link href="/internet-deals" className="block text-gray-700 hover:text-purple-600 font-medium py-2">
+              Internet Deals
+            </Link>
           </nav>
         </div>
       )}

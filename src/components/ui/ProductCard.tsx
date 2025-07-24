@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { HeartIcon } from '@heroicons/react/24/solid';
 import { HeartIcon as HeartOutlineIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
-import clsx from 'clsx';
 import ProductBadge from './ProductBadge';
 import ProductImagePlaceholder from './ProductImagePlaceholder';
 
@@ -43,7 +42,7 @@ export default function ProductCard({
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   return (
-    <div className="card group hover:shadow-lg transition-all duration-300">
+    <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 group">
       {/* Product Image */}
       <div className="relative p-6">
         <ProductImagePlaceholder 
@@ -67,15 +66,12 @@ export default function ProductCard({
         {/* Wishlist Button */}
         <button
           onClick={() => setIsWishlisted(!isWishlisted)}
-          className={clsx(
-            'icon-button absolute top-8 right-8',
-            isWishlisted && 'text-red-500'
-          )}
+          className="absolute top-8 right-8 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
         >
           {isWishlisted ? (
-            <HeartIcon className="w-4 h-4" />
+            <HeartIcon className="w-4 h-4 text-red-500" />
           ) : (
-            <HeartOutlineIcon className="w-4 h-4" />
+            <HeartOutlineIcon className="w-4 h-4 text-gray-400" />
           )}
         </button>
       </div>
@@ -83,11 +79,11 @@ export default function ProductCard({
       {/* Product Info */}
       <div className="px-6 pb-6">
         <div className="text-sm text-gray-500 mb-1">{brand}</div>
-        <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+        <h3 className="text-lg font-semibold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
           {name}
         </h3>
         
-        {/* Features */}
+        {/* Storage */}
         {features.length > 0 && (
           <div className="text-sm text-gray-600 mb-4 truncate">
             {features.join(', ')}
@@ -120,7 +116,7 @@ export default function ProductCard({
         <div className="mt-auto">
           {/* Pricing */}
           <div className="mb-4">
-            <div className="flex items-center gap-2">
+            <div className="flex items-center space-x-2">
               <span className="text-2xl font-bold text-gray-900">
                 ${price}
               </span>
@@ -136,16 +132,18 @@ export default function ProductCard({
           <div className="space-y-2">
             <Link
               href={`/${category}/${id}`}
-              className={clsx(
-                'btn w-full',
-                inStock ? 'btn-primary' : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              )}
+              className={`block w-full text-center py-3 rounded-lg font-medium transition-colors ${
+                inStock
+                  ? 'text-white hover:opacity-90'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
+              style={inStock ? { backgroundColor: '#8821f4' } : {}}
             >
               {inStock ? 'Add to Cart' : 'Out of Stock'}
             </Link>
             <Link
               href={`/${category}/${id}`}
-              className="btn btn-secondary w-full"
+              className="block w-full border border-gray-300 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-50 transition-colors"
             >
               View Details
             </Link>

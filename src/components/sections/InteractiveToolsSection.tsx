@@ -31,7 +31,7 @@ export default function InteractiveToolsSection() {
 
   return (
     <section className="py-20 bg-white">
-      <div className="section-container">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
@@ -46,11 +46,11 @@ export default function InteractiveToolsSection() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {tools.map((tool, index) => (
             <Link key={index} href={tool.link}>
-              <div className="card p-6 border-2 border-gray-100 hover:border-primary-200 transition-colors group cursor-pointer">
-                <div className="w-16 h-16 rounded-lg bg-primary-50 flex items-center justify-center mb-6 group-hover:bg-primary-100 transition-colors">
-                  <tool.icon className="w-8 h-8 text-primary-600" />
+              <div className="bg-white rounded-xl border-2 border-gray-100 p-6 hover:border-purple-200 transition-colors group cursor-pointer">
+                <div className="w-16 h-16 rounded-lg bg-purple-50 flex items-center justify-center mb-6 group-hover:bg-purple-100 transition-colors">
+                  <tool.icon className="w-8 h-8 text-purple-600" />
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-primary-600 transition-colors">
+                <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
                   {tool.title}
                 </h3>
                 <p className="text-gray-600">
@@ -62,7 +62,7 @@ export default function InteractiveToolsSection() {
         </div>
 
         {/* Featured Tool */}
-        <div className="mt-16 bg-gradient-to-br from-primary-50 to-primary-100 rounded-2xl p-8 md:p-12">
+        <div className="mt-16 bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 md:p-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
             <div>
               <h3 className="text-2xl font-bold text-gray-900 mb-4">
@@ -73,13 +73,14 @@ export default function InteractiveToolsSection() {
               </p>
               <Link
                 href="/tools/plan-optimizer"
-                className="btn-primary inline-flex items-center px-6 py-3"
+                className="inline-flex items-center px-6 py-3 text-white font-medium rounded-lg transition-colors"
+                style={{ backgroundColor: '#8821f4' }}
               >
                 Start Optimization
                 <ArrowRightIcon className="w-5 h-5 ml-2" />
               </Link>
             </div>
-            <div className="card p-6">
+            <div className="bg-white rounded-xl p-6 shadow-sm">
               <div className="space-y-4">
                 <div className="flex items-center">
                   <div className="w-8 h-8 rounded-full bg-green-100 flex items-center justify-center mr-4">

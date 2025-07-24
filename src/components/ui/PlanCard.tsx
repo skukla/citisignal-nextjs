@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { StarIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { HeartIcon } from '@heroicons/react/24/outline';
-import clsx from 'clsx';
 
 interface PlanCardProps {
   name: string;
@@ -47,14 +46,13 @@ export default function PlanCard({
   const [isSaved, setIsSaved] = useState(false);
 
   return (
-    <div className={clsx(
-      'card h-full flex flex-col',
-      isPopular && 'border-primary-600 ring-2 ring-primary-600 ring-opacity-20'
-    )}>
+    <div className={`bg-white border rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 relative h-full flex flex-col ${
+      isPopular ? 'border-purple-500 ring-2 ring-purple-500 ring-opacity-20' : 'border-gray-200'
+    }`}>
       {/* Popular Badge */}
       {isPopular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-          <span className="badge badge-primary">
+          <span className="text-white text-xs font-bold px-3 py-1 rounded-full" style={{ backgroundColor: '#8821f4' }}>
             MOST POPULAR
           </span>
         </div>
@@ -69,12 +67,12 @@ export default function PlanCard({
               <div className="flex items-center gap-2 flex-wrap">
                 <p className="text-sm text-gray-600 capitalize">{type} Plan</p>
                 {isNew && (
-                  <span className="badge badge-success">
+                  <span className="bg-green-500 text-white text-[11px] font-bold px-1.5 py-0.5 rounded">
                     NEW
                   </span>
                 )}
                 {isSale && originalPrice && (
-                  <span className="badge badge-danger">
+                  <span className="bg-red-500 text-white text-[11px] font-bold px-1.5 py-0.5 rounded">
                     {Math.round(((originalPrice - price) / originalPrice) * 100)}% OFF
                   </span>
                 )}
@@ -82,12 +80,9 @@ export default function PlanCard({
             </div>
             <button
               onClick={() => setIsSaved(!isSaved)}
-              className={clsx(
-                'icon-button',
-                isSaved && 'text-red-500'
-              )}
+              className="p-1 hover:bg-gray-50 rounded-full transition-colors flex-shrink-0"
             >
-              <HeartIcon className="w-5 h-5" />
+              <HeartIcon className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
             </button>
           </div>
         </div>
@@ -106,10 +101,7 @@ export default function PlanCard({
             {[...Array(5)].map((_, i) => (
               <StarIcon
                 key={i}
-                className={clsx(
-                  'w-4 h-4',
-                  i < Math.floor(rating / 20) ? 'text-yellow-400' : 'text-gray-300'
-                )}
+                className={`w-4 h-4 ${i < Math.floor(rating / 20) ? 'text-yellow-400' : 'text-gray-300'}`}
               />
             ))}
           </div>
@@ -174,7 +166,7 @@ export default function PlanCard({
               {streaming.map((service, index) => (
                 <span
                   key={index}
-                  className="badge badge-primary-light"
+                  className="bg-purple-50 text-purple-700 text-[11px] font-medium px-1.5 py-0.5 rounded"
                 >
                   {service}
                 </span>
@@ -184,10 +176,15 @@ export default function PlanCard({
 
           {/* Action Buttons */}
           <div className="space-y-2 mt-8">
-            <button className="btn btn-primary w-full">
+            <button
+              className="block w-full text-white text-center py-2.5 rounded-lg hover:opacity-90 transition-all font-medium"
+              style={{ backgroundColor: '#8821f4' }}
+            >
               Select Plan
             </button>
-            <button className="btn btn-secondary w-full">
+            <button
+              className="block w-full border border-gray-300 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-50 transition-colors"
+            >
               Learn More
             </button>
           </div>
