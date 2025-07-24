@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 
 interface FilterOption {
   id: string;
@@ -43,14 +44,14 @@ export default function FilterSidebar({
   const hasActiveFilters = Object.values(activeFilters).some(values => values.length > 0);
 
   return (
-    <div className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg p-6">
+    <div className="card w-full lg:w-64 p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
         {hasActiveFilters && (
           <button
             onClick={onClearFilters}
-            className="text-sm text-purple-600 hover:text-purple-700 font-medium"
+            className="text-sm text-primary-600 hover:text-primary-700 font-medium"
           >
             Clear All
           </button>
@@ -82,7 +83,10 @@ export default function FilterSidebar({
                       name={section.type === 'radio' ? section.key : undefined}
                       checked={activeFilters[section.key]?.includes(option.id) || false}
                       onChange={(e) => onFilterChange(section.key, option.id, e.target.checked)}
-                      className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+                      className={clsx(
+                        'w-4 h-4 border-gray-300 rounded',
+                        'text-primary-600 focus:ring-primary-500'
+                      )}
                     />
                     <span className="ml-3 text-sm text-gray-700 flex-1">
                       {option.name}
@@ -112,12 +116,12 @@ export default function FilterSidebar({
                 return (
                   <div
                     key={`${filterKey}-${value}`}
-                    className="flex items-center justify-between bg-blue-50 px-3 py-1 rounded-full"
+                    className="badge badge-primary flex items-center justify-between px-3 py-1"
                   >
-                    <span className="text-sm text-blue-800">{option.name}</span>
+                    <span className="text-sm">{option.name}</span>
                     <button
                       onClick={() => onFilterChange(filterKey, value, false)}
-                      className="text-blue-600 hover:text-blue-800 ml-2"
+                      className="ml-2 hover:opacity-80"
                     >
                       ×
                     </button>

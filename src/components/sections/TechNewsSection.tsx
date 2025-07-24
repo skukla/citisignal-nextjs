@@ -28,7 +28,7 @@ export default function TechNewsSection() {
 
   return (
     <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="section-container">
         {/* Section Header */}
         <div className="flex justify-between items-end mb-12">
           <div>
@@ -41,7 +41,7 @@ export default function TechNewsSection() {
           </div>
           <Link
             href="/blog"
-            className="hidden md:flex items-center text-purple-600 hover:text-purple-700 font-medium"
+            className="hidden md:flex items-center text-primary-600 hover:text-primary-700 font-medium"
           >
             View All Articles
             <ArrowRightIcon className="w-5 h-5 ml-2" />
@@ -53,18 +53,18 @@ export default function TechNewsSection() {
           {articles.map((article, index) => (
             <div key={index} className="group cursor-pointer">
               {/* Article Image */}
-              <div className="aspect-video bg-purple-50 rounded-xl mb-4 overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">
-                  <span className="text-purple-600 font-medium">Article Image</span>
+              <div className="aspect-video bg-primary-50 rounded-xl mb-4 overflow-hidden">
+                <div className="w-full h-full bg-gradient-to-br from-primary-100 to-primary-50 flex items-center justify-center">
+                  <span className="text-primary-600 font-medium">Article Image</span>
                 </div>
               </div>
 
               {/* Article Content */}
               <div>
-                <div className="text-sm font-medium text-purple-600 mb-2">
+                <div className="text-sm font-medium text-primary-600 mb-2">
                   {article.category} • {article.readTime}
                 </div>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">
+                <h3 className="text-xl font-bold text-gray-900 group-hover:text-primary-600 transition-colors mb-2">
                   {article.title}
                 </h3>
                 <p className="text-gray-600">
@@ -79,7 +79,7 @@ export default function TechNewsSection() {
         <div className="md:hidden text-center">
           <Link
             href="/blog"
-            className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
+            className="inline-flex items-center text-primary-600 hover:text-primary-700 font-medium"
           >
             View All Articles
             <ArrowRightIcon className="w-5 h-5 ml-2" />

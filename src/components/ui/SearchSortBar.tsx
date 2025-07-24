@@ -1,7 +1,9 @@
 'use client';
 
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { SortOption } from '@/lib/constants';
+import SearchInput from './SearchInput';
+import { ChevronDownIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 
 interface SearchSortBarProps {
   searchQuery: string;
@@ -13,6 +15,7 @@ interface SearchSortBarProps {
     readonly label: string;
   }>;
   searchPlaceholder?: string;
+  color?: 'purple' | 'yellow' | 'blue';
 }
 
 export default function SearchSortBar({
@@ -21,25 +24,29 @@ export default function SearchSortBar({
   sortBy,
   onSortChange,
   sortOptions,
-  searchPlaceholder = 'Search...'
+  searchPlaceholder = 'Search...',
+  color = 'blue'
 }: SearchSortBarProps) {
   return (
     <div className="flex flex-col lg:flex-row gap-4 mb-8">
       <div className="relative flex-1">
-        <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-        <input
-          type="text"
-          placeholder={searchPlaceholder}
+        <SearchInput
           value={searchQuery}
-          onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 focus:outline-none transition-all duration-200 text-gray-900 placeholder-gray-400"
+          onChange={onSearchChange}
+          placeholder={searchPlaceholder}
+          color={color}
         />
       </div>
-      <div className="flex items-center">
+      <div className="flex items-center relative">
         <select
           value={sortBy}
           onChange={(e) => onSortChange(e.target.value as SortOption)}
-          className="appearance-none w-48 px-4 pr-10 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 focus:outline-none transition-all duration-200 text-gray-900 cursor-pointer"
+          className={clsx(
+            'input-base w-48 pr-10 appearance-none',
+            color === 'purple' && 'input-purple',
+            color === 'yellow' && 'input-yellow',
+            color === 'blue' && 'input-blue'
+          )}
         >
           {sortOptions.map(option => (
             <option key={option.value} value={option.value}>
@@ -47,10 +54,8 @@ export default function SearchSortBar({
             </option>
           ))}
         </select>
-        <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-gray-500">
-          <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
-          </svg>
+        <div className="pointer-events-none absolute right-0 flex items-center px-4 text-gray-500">
+          <ChevronDownIcon className="h-4 w-4" />
         </div>
       </div>
     </div>

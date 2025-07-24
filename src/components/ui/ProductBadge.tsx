@@ -1,3 +1,5 @@
+import clsx from 'clsx';
+
 interface ProductBadgeProps {
   variant: 'new' | 'discount' | 'out-of-stock';
   originalPrice?: number;
@@ -20,21 +22,21 @@ export default function ProductBadge({ variant, originalPrice, price }: ProductB
     }
   };
 
-  const getBackgroundColor = () => {
+  const getBadgeStyle = () => {
     switch (variant) {
       case 'new':
-        return 'bg-green-500';
+        return 'badge-success';
       case 'discount':
-        return 'bg-red-500';
+        return 'badge-danger';
       case 'out-of-stock':
-        return 'bg-gray-500';
+        return 'badge-gray';
       default:
-        return 'bg-gray-500';
+        return 'badge-gray';
     }
   };
 
   return (
-    <span className={`${getBackgroundColor()} text-white text-xs font-bold px-2 py-1 rounded`}>
+    <span className={clsx('badge', getBadgeStyle())}>
       {getContent()}
     </span>
   );

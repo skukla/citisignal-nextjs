@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/24/outline';
+import clsx from 'clsx';
 
 interface BreadcrumbItem {
   name: string;
@@ -13,10 +14,17 @@ interface BreadcrumbProps {
 export default function Breadcrumb({ items }: BreadcrumbProps) {
   return (
     <nav className="flex" aria-label="Breadcrumb">
-      <ol className="flex items-center space-x-2">
+      <ol className="flex items-center gap-2">
         {/* Home Link */}
         <li>
-          <Link href="/" className="text-gray-500 hover:text-gray-700 transition-colors">
+          <Link 
+            href="/" 
+            className={clsx(
+              'nav-link text-gray-500',
+              'hover:text-primary-600 transition-colors',
+              'flex items-center'
+            )}
+          >
             <HomeIcon className="w-4 h-4" />
             <span className="sr-only">Home</span>
           </Link>
@@ -29,12 +37,16 @@ export default function Breadcrumb({ items }: BreadcrumbProps) {
             {item.href && index < items.length - 1 ? (
               <Link
                 href={item.href}
-                className="text-gray-500 hover:text-gray-700 transition-colors text-sm font-medium"
+                className={clsx(
+                  'nav-link text-sm font-medium',
+                  'text-gray-500 hover:text-primary-600',
+                  'transition-colors'
+                )}
               >
                 {item.name}
               </Link>
             ) : (
-              <span className="text-gray-900 text-sm font-medium">
+              <span className="text-sm font-medium text-gray-900">
                 {item.name}
               </span>
             )}
