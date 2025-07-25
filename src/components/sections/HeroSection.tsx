@@ -23,6 +23,7 @@ export default function HeroSection() {
         <div>
           <PromoTag
             text="Our lowest-priced plans ever"
+            bgColor="bg-purple-900"
             className="mb-6"
           />
 
