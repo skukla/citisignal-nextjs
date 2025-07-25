@@ -1,5 +1,5 @@
 interface ProductBadgeProps {
-  variant: 'new' | 'discount' | 'out-of-stock';
+  variant: 'new' | 'discount' | 'out-of-stock' | 'popular';
   originalPrice?: number;
   price?: number;
 }
@@ -15,6 +15,8 @@ export default function ProductBadge({ variant, originalPrice, price }: ProductB
         return `-${discount}%`;
       case 'out-of-stock':
         return 'OUT OF STOCK';
+      case 'popular':
+        return 'POPULAR';
       default:
         return '';
     }
@@ -28,6 +30,8 @@ export default function ProductBadge({ variant, originalPrice, price }: ProductB
         return 'bg-red-500';
       case 'out-of-stock':
         return 'bg-gray-500';
+      case 'popular':
+        return 'bg-purple-500';
       default:
         return 'bg-gray-500';
     }

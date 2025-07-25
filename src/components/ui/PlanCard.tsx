@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { StarIcon, CheckIcon, HeartIcon } from '@heroicons/react/24/solid';
 import Button from './Button';
+import ProductBadge from './ProductBadge';
 
 interface PlanCardProps {
   name: string;
@@ -52,9 +53,7 @@ export default function PlanCard({
       {/* Popular Badge */}
       {isPopular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
-          <span className="text-white text-xs font-bold px-3 py-1 rounded-full" style={{ backgroundColor: '#8821f4' }}>
-            MOST POPULAR
-          </span>
+          <ProductBadge variant="popular" />
         </div>
       )}
 
@@ -66,15 +65,13 @@ export default function PlanCard({
               <h3 className="text-xl font-bold text-gray-900 mb-1">{name}</h3>
               <div className="flex items-center gap-2 flex-wrap">
                 <p className="text-sm text-gray-600 capitalize">{type} Plan</p>
-                {isNew && (
-                  <span className="bg-green-500 text-white text-[11px] font-bold px-1.5 py-0.5 rounded">
-                    NEW
-                  </span>
-                )}
+                {isNew && <ProductBadge variant="new" />}
                 {isSale && originalPrice && (
-                  <span className="bg-red-500 text-white text-[11px] font-bold px-1.5 py-0.5 rounded">
-                    {Math.round(((originalPrice - price) / originalPrice) * 100)}% OFF
-                  </span>
+                  <ProductBadge
+                    variant="discount"
+                    originalPrice={originalPrice}
+                    price={price}
+                  />
                 )}
               </div>
             </div>
