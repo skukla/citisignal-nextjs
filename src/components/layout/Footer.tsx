@@ -5,39 +5,7 @@ import FooterLogo from './FooterLogo';
 import SocialLinks from './SocialLinks';
 import FooterLinkGroup from './FooterLinkGroup';
 import FooterBottom from './FooterBottom';
-
-const socialLinks = [
-  { name: 'Facebook', href: '#', icon: 'facebook' },
-  { name: 'Twitter', href: '#', icon: 'twitter' },
-  { name: 'Instagram', href: '#', icon: 'instagram' }
-];
-
-const shopLinks = [
-  { href: '/phones', label: 'Phones' },
-  { href: '/watches', label: 'Watches' },
-  { href: '/accessories', label: 'Accessories' },
-  { href: '/gift-cards', label: 'Gift Cards' },
-  { href: '/plans', label: 'Plans' },
-  { href: '/deals', label: 'Deals & Offers' }
-];
-
-const supportLinks = [
-  { href: '/support', label: 'Customer Service' },
-  { href: '/store-locator', label: 'Store Locator' },
-  { href: '/coverage', label: 'Coverage Map' },
-  { href: '/device-support', label: 'Device Support' },
-  { href: '/billing', label: 'Billing' },
-  { href: '/contact', label: 'Contact Us' }
-];
-
-const legalLinks = [
-  { href: '/privacy', label: 'Privacy Policy' },
-  { href: '/terms', label: 'Terms of Service' },
-  { href: '/accessibility', label: 'Accessibility' },
-  { href: '/open-internet', label: 'Open Internet' },
-  { href: '/about', label: 'About CitiSignal' },
-  { href: '/careers', label: 'Careers' }
-];
+import { socialLinks, footerLinks } from '@/data/navigation';
 
 export default function Footer() {
   return (
@@ -53,17 +21,17 @@ export default function Footer() {
 
           <FooterLinkGroup
             title="Shop"
-            links={shopLinks}
+            links={footerLinks.shop}
           />
 
           <FooterLinkGroup
             title="Support"
-            links={supportLinks}
+            links={footerLinks.support}
           />
 
           <FooterLinkGroup
             title="Legal"
-            links={legalLinks}
+            links={footerLinks.legal}
           />
         </div>
 

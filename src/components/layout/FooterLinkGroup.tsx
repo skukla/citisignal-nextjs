@@ -3,13 +3,13 @@
 import Link from 'next/link';
 
 interface FooterLink {
-  href: string;
-  label: string;
+  readonly href: string;
+  readonly label: string;
 }
 
 interface FooterLinkGroupProps {
   title: string;
-  links: FooterLink[];
+  links: readonly FooterLink[];
   className?: string;
 }
 
