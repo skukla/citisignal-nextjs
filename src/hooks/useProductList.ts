@@ -7,8 +7,17 @@ interface Product {
   id: string;
   name: string;
   price: number;
+  manufacturer?: string;
+  memory?: string[];
+  available_colors?: { name: string; hex: string; }[];
+  features?: string[];
   isNew?: boolean;
   review_count?: number;
+  sku?: string;
+  original_price?: number;
+  media_gallery?: { url: string; }[];
+  category?: string;
+  stock_status?: string;
 }
 
 interface UseProductListProps<T extends Product> {
@@ -20,9 +29,8 @@ interface UseProductListReturn<T> {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   sortBy: SortOption;
-  setSortBy: (sort: SortOption) => void;
+  handleSortChange: (value: string) => void;
   activeFilters: Record<string, string[]>;
-  setActiveFilters: (filters: Record<string, string[]>) => void;
   showMobileFilters: boolean;
   setShowMobileFilters: (show: boolean) => void;
   handleFilterChange: (filterKey: string, value: string, checked: boolean) => void;
@@ -38,6 +46,10 @@ export function useProductList<T extends Product>({
   const [sortBy, setSortBy] = useState<SortOption>(initialSort);
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+
+  const handleSortChange = (value: string) => {
+    setSortBy(value as SortOption);
+  };
 
   const handleFilterChange = (filterKey: string, value: string, checked: boolean) => {
     setActiveFilters(prev => {
@@ -60,12 +72,30 @@ export function useProductList<T extends Product>({
   };
 
   const filteredAndSortedProducts = useMemo(() => {
-    // First filter
-    const filtered = products.filter(product => {
+    // First filter by search
+    let filtered = products.filter(product => {
       if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) {
         return false;
       }
       return true;
+    });
+
+    // Then filter by active filters
+    filtered = filtered.filter(product => {
+      return Object.entries(activeFilters).every(([key, values]) => {
+        switch (key) {
+          case 'manufacturer':
+            return values.includes(product.manufacturer || '');
+          case 'memory':
+            return values.some(value => product.memory?.includes(value));
+          case 'colors':
+            return values.some(value => product.available_colors?.some(color => color.name === value));
+          case 'features':
+            return values.some(value => product.features?.includes(value));
+          default:
+            return true;
+        }
+      });
     });
 
     // Then sort
@@ -76,20 +106,19 @@ export function useProductList<T extends Product>({
         case 'price-high':
           return b.price - a.price;
         case 'newest':
-          return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
+          return ((b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
         default: // popular
-          return (b.review_count || 0) - (a.review_count || 0);
+          return ((b.review_count || 0) - (a.review_count || 0));
       }
     });
-  }, [products, searchQuery, sortBy]);
+  }, [products, searchQuery, sortBy, activeFilters]);
 
   return {
     searchQuery,
     setSearchQuery,
     sortBy,
-    setSortBy,
+    handleSortChange,
     activeFilters,
-    setActiveFilters,
     showMobileFilters,
     setShowMobileFilters,
     handleFilterChange,
