@@ -1,7 +1,8 @@
 'use client';
 
-import { twMerge } from 'tailwind-merge';
 import TechReviewCard from './TechReviewCard';
+import BaseGrid from './layout/BaseGrid';
+import type { GridColumns } from './layout/BaseGrid';
 
 interface TechReview {
   title: string;
@@ -12,12 +13,7 @@ interface TechReview {
 
 interface TechReviewGridProps {
   reviews: TechReview[];
-  columns?: {
-    sm?: number;
-    md?: number;
-    lg?: number;
-    xl?: number;
-  };
+  columns?: GridColumns;
   gap?: 'sm' | 'md' | 'lg';
   className?: string;
 }
@@ -32,28 +28,12 @@ export default function TechReviewGrid({
   gap = 'lg',
   className
 }: TechReviewGridProps) {
-  const gapClasses = {
-    sm: 'gap-4',
-    md: 'gap-6',
-    lg: 'gap-8'
-  };
-
-  const getColumnsClass = () => {
-    const classes = [];
-    if (columns.sm) classes.push(`grid-cols-${columns.sm}`);
-    if (columns.md) classes.push(`md:grid-cols-${columns.md}`);
-    if (columns.lg) classes.push(`lg:grid-cols-${columns.lg}`);
-    if (columns.xl) classes.push(`xl:grid-cols-${columns.xl}`);
-    return classes.join(' ');
-  };
-
   return (
-    <div className={twMerge(
-      'grid',
-      getColumnsClass(),
-      gapClasses[gap],
-      className
-    )}>
+    <BaseGrid
+      columns={columns}
+      gap={gap}
+      className={className}
+    >
       {reviews.map((review, index) => (
         <TechReviewCard
           key={index}
@@ -63,6 +43,6 @@ export default function TechReviewGrid({
           href={review.href}
         />
       ))}
-    </div>
+    </BaseGrid>
   );
 } 

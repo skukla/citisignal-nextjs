@@ -1,7 +1,8 @@
 'use client';
 
-import { twMerge } from 'tailwind-merge';
 import BenefitCard from './BenefitCard';
+import BaseGrid from './layout/BaseGrid';
+import type { GridColumns } from './layout/BaseGrid';
 
 interface Benefit {
   emoji: string;
@@ -11,15 +12,10 @@ interface Benefit {
 
 interface BenefitGridProps {
   benefits: Benefit[];
-  columns?: {
-    sm?: number;
-    md?: number;
-    lg?: number;
-  };
+  columns?: GridColumns;
   gap?: 'sm' | 'md' | 'lg';
-  titleColor?: string;
-  descriptionColor?: string;
-  badgeOpacity?: number;
+  titleColor?: `text-${string}`;
+  descriptionColor?: `text-${string}`;
   className?: string;
 }
 
@@ -27,35 +23,21 @@ export default function BenefitGrid({
   benefits,
   columns = {
     sm: 1,
-    md: 3
+    md: 3,
+    lg: 3
   },
   gap = 'md',
   titleColor,
   descriptionColor,
-  badgeOpacity,
   className
 }: BenefitGridProps) {
-  const gapClasses = {
-    sm: 'gap-4',
-    md: 'gap-6',
-    lg: 'gap-8'
-  };
-
-  const getColumnsClass = () => {
-    const classes = [];
-    if (columns.sm) classes.push(`grid-cols-${columns.sm}`);
-    if (columns.md) classes.push(`md:grid-cols-${columns.md}`);
-    if (columns.lg) classes.push(`lg:grid-cols-${columns.lg}`);
-    return classes.join(' ');
-  };
-
   return (
-    <div className={twMerge(
-      'grid',
-      getColumnsClass(),
-      gapClasses[gap],
-      className
-    )}>
+    <BaseGrid
+      columns={columns}
+      gap={gap}
+      centered
+      className={className}
+    >
       {benefits.map((benefit, index) => (
         <BenefitCard
           key={index}
@@ -64,9 +46,8 @@ export default function BenefitGrid({
           description={benefit.description}
           titleColor={titleColor}
           descriptionColor={descriptionColor}
-          badgeOpacity={badgeOpacity}
         />
       ))}
-    </div>
+    </BaseGrid>
   );
 } 

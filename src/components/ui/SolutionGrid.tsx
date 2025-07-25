@@ -1,7 +1,8 @@
 'use client';
 
-import { twMerge } from 'tailwind-merge';
 import SolutionCard from './SolutionCard';
+import BaseGrid from './layout/BaseGrid';
+import type { GridColumns } from './layout/BaseGrid';
 import type { HeroIcon } from '@/types/hero-icons';
 
 interface Solution {
@@ -14,12 +15,7 @@ interface Solution {
 
 interface SolutionGridProps {
   solutions: Solution[];
-  columns?: {
-    sm?: number;
-    md?: number;
-    lg?: number;
-    xl?: number;
-  };
+  columns?: GridColumns;
   gap?: 'sm' | 'md' | 'lg';
   className?: string;
 }
@@ -34,28 +30,12 @@ export default function SolutionGrid({
   gap = 'lg',
   className
 }: SolutionGridProps) {
-  const gapClasses = {
-    sm: 'gap-4',
-    md: 'gap-6',
-    lg: 'gap-8'
-  };
-
-  const getColumnsClass = () => {
-    const classes = [];
-    if (columns.sm) classes.push(`grid-cols-${columns.sm}`);
-    if (columns.md) classes.push(`md:grid-cols-${columns.md}`);
-    if (columns.lg) classes.push(`lg:grid-cols-${columns.lg}`);
-    if (columns.xl) classes.push(`xl:grid-cols-${columns.xl}`);
-    return classes.join(' ');
-  };
-
   return (
-    <div className={twMerge(
-      'grid',
-      getColumnsClass(),
-      gapClasses[gap],
-      className
-    )}>
+    <BaseGrid
+      columns={columns}
+      gap={gap}
+      className={className}
+    >
       {solutions.map((solution, index) => (
         <SolutionCard
           key={index}
@@ -66,6 +46,6 @@ export default function SolutionGrid({
           href={solution.link}
         />
       ))}
-    </div>
+    </BaseGrid>
   );
 } 
