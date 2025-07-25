@@ -4,30 +4,70 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
 import PlanCard from '@/components/ui/PlanCard';
-import FilterSidebar from '@/components/ui/FilterSidebar';
-import Breadcrumb from '@/components/ui/Breadcrumb';
-import PageHeader from '@/components/ui/PageHeader';
-import SearchSortBar from '@/components/ui/SearchSortBar';
+import PlanGrid from '@/components/ui/PlanGrid';
+import getPlanFeatures from '@/components/ui/PlanFeatureList';
+import LoadMore from '@/components/ui/LoadMore';
+import ProductListLayout from '@/components/layout/ProductListLayout';
+import PlanComparison from '@/components/sections/PlanComparison';
 import { plans, planFilterOptions } from '@/data/plans';
 import { SignalIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
-import { SORT_OPTIONS } from '@/lib/constants';
+
+const planTypes = [
+  { id: 'basic', name: 'Basic' },
+  { id: 'premium', name: 'Premium' },
+  { id: 'unlimited', name: 'Unlimited' }
+];
+
+const planFeatures = [
+  {
+    name: 'Unlimited Talk & Text',
+    description: 'Unlimited nationwide calling and messaging',
+    availableIn: ['basic', 'premium', 'unlimited']
+  },
+  {
+    name: 'Mobile Hotspot',
+    description: 'Share your data with other devices',
+    availableIn: ['premium', 'unlimited']
+  },
+  {
+    name: 'Premium Data',
+    description: 'No data slowdowns regardless of usage',
+    availableIn: ['unlimited']
+  },
+  {
+    name: 'International Features',
+    description: 'Text and data in 200+ countries',
+    availableIn: ['premium', 'unlimited']
+  },
+  {
+    name: 'Streaming Quality',
+    description: 'HD streaming on supported services',
+    availableIn: ['premium', 'unlimited']
+  },
+  {
+    name: 'Network Priority',
+    description: 'Priority during network congestion',
+    availableIn: ['unlimited']
+  }
+];
 
 export default function PlansPage() {
   const {
     searchQuery,
     setSearchQuery,
     sortBy,
-    setSortBy,
+    handleSortChange,
     activeFilters,
     showMobileFilters,
     setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
+    handleLoadMore,
+    hasMoreItems,
     filteredAndSortedProducts
   } = useProductList({ products: plans });
 
-  // Filter configuration
   const filters = [
     {
       title: 'Plan Type',
@@ -61,127 +101,74 @@ export default function PlansPage() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen">
       <Header />
       
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {/* Breadcrumb */}
-        <div className="mb-6">
-          <Breadcrumb items={breadcrumbItems} />
-        </div>
+      <ProductListLayout
+        title="Wireless Plans"
+        description="Choose the perfect wireless plan for your needs. From unlimited data to family plans, we have flexible options with no hidden fees and the reliability of our nationwide network."
+        icon={SignalIcon}
+        breadcrumbItems={breadcrumbItems}
+        filters={filters}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+        sortBy={sortBy}
+        onSortChange={handleSortChange}
+        activeFilters={activeFilters}
+        onFilterChange={handleFilterChange}
+        onClearFilters={handleClearFilters}
+        showMobileFilters={showMobileFilters}
+        setShowMobileFilters={setShowMobileFilters}
+        totalCount={plans.length}
+        filteredCount={filteredAndSortedProducts.length}
+        emptyStateIcon={Bars3Icon}
+      >
+        <div className="space-y-12">
+          <PlanGrid>
+            {filteredAndSortedProducts.map((plan) => (
+              <PlanCard
+                key={plan.id}
+                name={plan.name}
+                type={plan.type}
+                price={plan.price}
+                originalPrice={plan.original_price}
+                rating={plan.rating_summary}
+                reviews={plan.review_count}
+                data={plan.data}
+                talk={plan.talk}
+                text={plan.text}
+                features={getPlanFeatures({
+                  data: plan.data,
+                  hotspot: plan.hotspot,
+                  streaming: plan.streaming,
+                  contractRequired: plan.contract_required,
+                  networkPriority: plan.network_priority
+                })}
+                hotspot={plan.hotspot}
+                streaming={plan.streaming}
+                isPopular={plan.type === 'unlimited'}
+                isNew={Boolean(plan.isNew)}
+                isSale={plan.original_price ? plan.original_price > plan.price : false}
+                contractRequired={plan.contract_required}
+                networkPriority={plan.network_priority}
+              />
+            ))}
+          </PlanGrid>
 
-        <PageHeader
-          title="Wireless Plans"
-          description="Choose the perfect wireless plan for your needs. From unlimited data to family plans, we have flexible options with no hidden fees and the reliability of our nationwide network."
-          icon={SignalIcon}
-        />
+          <LoadMore
+            onLoadMore={handleLoadMore}
+            isVisible={hasMoreItems}
+          />
 
-        <SearchSortBar
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
-          sortBy={sortBy}
-          onSortChange={setSortBy}
-          sortOptions={SORT_OPTIONS}
-          searchPlaceholder="Search plans..."
-        />
-
-        {/* Results Count */}
-        <div className="mb-6">
-          <p className="text-gray-600">
-            Showing {filteredAndSortedProducts.length} of {plans.length} plans
-          </p>
-        </div>
-
-        {/* Main Content */}
-        <div className="flex flex-col lg:flex-row gap-8">
-          {/* Mobile Filters Overlay */}
-          {showMobileFilters && (
-            <div className="lg:hidden fixed inset-0 z-50 bg-black bg-opacity-50">
-              <div className="bg-white w-80 h-full overflow-y-auto p-6">
-                <div className="flex justify-between items-center mb-6">
-                  <h3 className="text-lg font-semibold">Filters</h3>
-                  <button
-                    onClick={() => setShowMobileFilters(false)}
-                    className="text-gray-500 hover:text-gray-700"
-                  >
-                    ×
-                  </button>
-                </div>
-                <FilterSidebar
-                  filters={filters}
-                  activeFilters={activeFilters}
-                  onFilterChange={handleFilterChange}
-                  onClearFilters={handleClearFilters}
-                />
-              </div>
-            </div>
-          )}
-
-          {/* Desktop Filters */}
-          <div className="hidden lg:block flex-shrink-0">
-            <FilterSidebar
-              filters={filters}
-              activeFilters={activeFilters}
-              onFilterChange={handleFilterChange}
-              onClearFilters={handleClearFilters}
+          {/* Only show comparison when we have products */}
+          {filteredAndSortedProducts.length > 0 && (
+            <PlanComparison
+              planTypes={planTypes}
+              features={planFeatures}
             />
-          </div>
-
-          {/* Plans Grid */}
-          <div className="flex-1">
-            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
-              {filteredAndSortedProducts.map((plan) => (
-                <PlanCard
-                  key={plan.id}
-                  name={plan.name}
-                  type={plan.type}
-                  price={plan.price}
-                  originalPrice={plan.original_price}
-                  rating={plan.rating_summary}
-                  reviews={plan.review_count}
-                  data={plan.data}
-                  talk={plan.talk}
-                  text={plan.text}
-                  features={[
-                    `${plan.data} Data`,
-                    `${plan.hotspot} Mobile Hotspot`,
-                    ...plan.streaming,
-                    plan.contract_required ? 'Contract Required' : 'No Contract Required',
-                    `${plan.network_priority.charAt(0).toUpperCase() + plan.network_priority.slice(1)} Network Priority`
-                  ]}
-                  hotspot={plan.hotspot}
-                  streaming={plan.streaming}
-                  isPopular={plan.type === 'unlimited'}
-                  isNew={Boolean(plan.isNew)}
-                  isSale={plan.original_price !== undefined && plan.original_price > plan.price}
-                  contractRequired={plan.contract_required}
-                  networkPriority={plan.network_priority}
-                />
-              ))}
-            </div>
-
-            {/* No Results */}
-            {filteredAndSortedProducts.length === 0 && (
-              <div className="text-center py-12">
-                <div className="w-24 h-24 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Bars3Icon className="w-8 h-8 text-gray-400" />
-                </div>
-                <h3 className="text-lg font-medium text-gray-900 mb-2">No plans found</h3>
-                <p className="text-gray-600 mb-4">
-                  Try adjusting your search or filter criteria to find what you&apos;re looking for.
-                </p>
-                <button
-                  onClick={handleClearFilters}
-                  className="text-white px-6 py-2 rounded-lg hover:opacity-90 transition-colors"
-                  style={{ backgroundColor: '#8821f4' }}
-                >
-                  Clear all filters
-                </button>
-              </div>
-            )}
-          </div>
+          )}
         </div>
-      </main>
+      </ProductListLayout>
 
       <NewsletterSection />
       <Footer />

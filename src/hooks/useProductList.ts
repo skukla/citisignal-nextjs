@@ -23,6 +23,7 @@ interface Product {
 interface UseProductListProps<T extends Product> {
   products: T[];
   initialSort?: SortOption;
+  pageSize?: number;
 }
 
 interface UseProductListReturn<T> {
@@ -35,17 +36,21 @@ interface UseProductListReturn<T> {
   setShowMobileFilters: (show: boolean) => void;
   handleFilterChange: (filterKey: string, value: string, checked: boolean) => void;
   handleClearFilters: () => void;
+  handleLoadMore: () => void;
+  hasMoreItems: boolean;
   filteredAndSortedProducts: T[];
 }
 
 export function useProductList<T extends Product>({ 
   products,
-  initialSort = 'popular'
+  initialSort = 'popular',
+  pageSize = 12
 }: UseProductListProps<T>): UseProductListReturn<T> {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>(initialSort);
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
   const [showMobileFilters, setShowMobileFilters] = useState(false);
+  const [displayCount, setDisplayCount] = useState(pageSize);
 
   const handleSortChange = (value: string) => {
     setSortBy(value as SortOption);
@@ -69,6 +74,10 @@ export function useProductList<T extends Product>({
   const handleClearFilters = () => {
     setActiveFilters({});
     setSearchQuery('');
+  };
+
+  const handleLoadMore = () => {
+    setDisplayCount(prev => prev + pageSize);
   };
 
   const filteredAndSortedProducts = useMemo(() => {
@@ -99,7 +108,7 @@ export function useProductList<T extends Product>({
     });
 
     // Then sort
-    return [...filtered].sort((a, b) => {
+    const sorted = [...filtered].sort((a, b) => {
       switch (sortBy) {
         case 'price-low':
           return a.price - b.price;
@@ -111,7 +120,12 @@ export function useProductList<T extends Product>({
           return ((b.review_count || 0) - (a.review_count || 0));
       }
     });
-  }, [products, searchQuery, sortBy, activeFilters]);
+
+    // Then paginate
+    return sorted.slice(0, displayCount);
+  }, [products, searchQuery, sortBy, activeFilters, displayCount]);
+
+  const hasMoreItems = filteredAndSortedProducts.length < products.length;
 
   return {
     searchQuery,
@@ -123,6 +137,8 @@ export function useProductList<T extends Product>({
     setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
+    handleLoadMore,
+    hasMoreItems,
     filteredAndSortedProducts,
   };
 } 
