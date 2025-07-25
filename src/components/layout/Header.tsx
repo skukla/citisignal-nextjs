@@ -5,34 +5,19 @@ import TopBar from './TopBar';
 import Logo from './Logo';
 import NavigationMenu from './NavigationMenu';
 import HeaderActions from './HeaderActions';
-
-const navItems = [
-  { href: '/phones', label: 'Phones' },
-  { href: '/watches', label: 'Watches' },
-  { href: '/accessories', label: 'Accessories' },
-  { href: '/gift-cards', label: 'Gift Cards' },
-  { href: '/plans', label: 'Plans' },
-  { href: '/streaming', label: 'Streaming' },
-  { href: '/internet-deals', label: 'Internet Deals' }
-];
+import { mainNavItems, authLinks } from '@/data/navigation';
+import { useGlobalSearch } from '@/hooks/useGlobalSearch';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  const handleSearch = (value: string) => {
-    // TODO: Implement search functionality
-    console.log('Search:', value);
-  };
+  const { handleSearch, isSearching } = useGlobalSearch();
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
       <TopBar
         announcement="Free shipping on orders over $99"
         supportPhone="1-800-CITI-SIG"
-        authLinks={[
-          { href: '/signin', label: 'Sign In' },
-          { href: '/signup', label: 'Create Account' }
-        ]}
+        authLinks={authLinks}
       />
 
       {/* Main header */}
@@ -45,12 +30,13 @@ export default function Header() {
           />
 
           {/* Desktop Navigation */}
-          <NavigationMenu items={navItems} variant="desktop" />
+          <NavigationMenu items={mainNavItems} variant="desktop" />
 
           {/* Search, Cart, and User Actions */}
           <HeaderActions
             cartCount={2}
             onSearch={handleSearch}
+            isSearching={isSearching}
             isMenuOpen={isMenuOpen}
             onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
           />
@@ -58,7 +44,7 @@ export default function Header() {
       </div>
 
       {/* Mobile Navigation */}
-      {isMenuOpen && <NavigationMenu items={navItems} variant="mobile" />}
+      {isMenuOpen && <NavigationMenu items={mainNavItems} variant="mobile" />}
     </header>
   );
 } 
