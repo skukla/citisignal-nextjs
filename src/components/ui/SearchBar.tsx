@@ -8,7 +8,6 @@ import { useSearchBar } from '@/hooks/useSearchBar';
 interface SearchBarProps {
   placeholder?: string;
   onSearch?: (value: string) => void;
-  isLoading?: boolean;
   className?: string;
   autoFocus?: boolean;
 }
@@ -16,7 +15,6 @@ interface SearchBarProps {
 export default function SearchBar({
   placeholder = 'Search...',
   onSearch,
-  isLoading = false,
   className = '',
   autoFocus = false
 }: SearchBarProps) {
@@ -48,7 +46,6 @@ export default function SearchBar({
               onChange={(e) => setSearchValue(e.target.value)}
               placeholder={placeholder}
               leftIcon={MagnifyingGlassIcon}
-              isLoading={isLoading}
               autoFocus={autoFocus}
               className={className}
             />

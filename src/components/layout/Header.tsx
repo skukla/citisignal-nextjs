@@ -10,7 +10,7 @@ import { useGlobalSearch } from '@/hooks/useGlobalSearch';
 
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { handleSearch, isSearching } = useGlobalSearch();
+  const { handleSearch } = useGlobalSearch();
 
   return (
     <header className="bg-white shadow-sm border-b border-gray-200">
@@ -36,7 +36,6 @@ export default function Header() {
           <HeaderActions
             cartCount={2}
             onSearch={handleSearch}
-            isSearching={isSearching}
             isMenuOpen={isMenuOpen}
             onMenuToggle={() => setIsMenuOpen(!isMenuOpen)}
           />

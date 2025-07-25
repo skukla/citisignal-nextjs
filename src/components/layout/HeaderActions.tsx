@@ -9,7 +9,6 @@ import Button from '@/components/ui/Button';
 interface HeaderActionsProps {
   cartCount: number;
   onSearch: (value: string) => void;
-  isSearching: boolean;
   isMenuOpen: boolean;
   onMenuToggle: () => void;
   className?: string;
@@ -18,7 +17,6 @@ interface HeaderActionsProps {
 export default function HeaderActions({
   cartCount,
   onSearch,
-  isSearching,
   isMenuOpen,
   onMenuToggle,
   className
@@ -29,7 +27,6 @@ export default function HeaderActions({
       <SearchBar
         placeholder="Search phones, plans, accessories..."
         onSearch={onSearch}
-        isLoading={isSearching}
         autoFocus
       />
 
