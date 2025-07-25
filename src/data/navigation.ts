@@ -6,7 +6,7 @@ interface NavItem {
 interface SocialLink {
   name: string;
   href: string;
-  icon: string;
+  icon: 'facebook' | 'twitter' | 'instagram';
 }
 
 export const mainNavItems: NavItem[] = [
