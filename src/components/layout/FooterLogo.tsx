@@ -4,11 +4,15 @@ import Image from 'next/image';
 
 interface FooterLogoProps {
   description?: string;
+  width?: number;
+  height?: number;
   className?: string;
 }
 
 export default function FooterLogo({
   description,
+  width = 160,
+  height = 50,
   className = ''
 }: FooterLogoProps) {
   return (
@@ -17,8 +21,8 @@ export default function FooterLogo({
         <Image
           src="/logo-white.svg"
           alt="CitiSignal"
-          width={160}
-          height={50}
+          width={width}
+          height={height}
           className="object-contain"
         />
       </div>
