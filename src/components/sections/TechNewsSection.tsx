@@ -1,91 +1,62 @@
-import Link from 'next/link';
+'use client';
+
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import Button from '@/components/ui/Button';
+import SectionContainer from '@/components/ui/SectionContainer';
+import SectionHeader from '@/components/ui/SectionHeader';
+import ArticleGrid from '@/components/ui/ArticleGrid';
 
 export default function TechNewsSection() {
   const articles = [
     {
-      category: "5G Technology",
-      title: "The Future of 5G: What's Next for Mobile Connectivity",
-      excerpt: "Explore how 5G is revolutionizing everything from gaming to remote work, and what's coming next.",
-      readTime: "5 min read",
-      image: "/blog/5g-future.jpg"
+      category: '5G',
+      readTime: '5 min read',
+      title: 'Understanding 5G: The Future of Mobile Connectivity',
+      excerpt: 'Learn how 5G technology is revolutionizing mobile communications and what it means for your daily digital experience.'
     },
     {
-      category: "Smart Living",
-      title: "Connected Home: Essential Smart Devices for 2024",
-      excerpt: "Discover the must-have smart home devices that work seamlessly with your mobile plan.",
-      readTime: "4 min read",
-      image: "/blog/smart-home.jpg"
+      category: 'Tips',
+      readTime: '3 min read',
+      title: 'Top 10 Ways to Extend Your Phone\'s Battery Life',
+      excerpt: 'Simple yet effective strategies to make your smartphone battery last longer throughout the day.'
     },
     {
-      category: "Tips & Tricks",
-      title: "Maximize Your Phone's Battery Life: Expert Tips",
-      excerpt: "Learn how to extend your phone's battery life with these proven techniques.",
-      readTime: "3 min read",
-      image: "/blog/battery-tips.jpg"
+      category: 'Security',
+      readTime: '4 min read',
+      title: 'Essential Mobile Security Tips for 2024',
+      excerpt: 'Protect your mobile device and personal data with these up-to-date security practices and recommendations.'
     }
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="flex justify-between items-end mb-12">
-          <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Latest Tech News & Insights
-            </h2>
-            <p className="text-xl text-gray-600 max-w-2xl">
-              Stay informed about the latest technology trends and get expert tips to enhance your mobile experience.
-            </p>
-          </div>
-          <Link
+    <SectionContainer bgColor="bg-gray-50">
+      <SectionHeader
+        title="Latest Tech News & Insights"
+        description="Stay informed about the latest technology trends and get expert tips to enhance your mobile experience."
+        action={
+          <Button
             href="/blog"
-            className="hidden md:flex items-center text-purple-600 hover:text-purple-700 font-medium"
+            variant="secondary"
+            rightIcon={ArrowRightIcon}
+            className="hidden md:inline-flex"
           >
             View All Articles
-            <ArrowRightIcon className="w-5 h-5 ml-2" />
-          </Link>
-        </div>
+          </Button>
+        }
+        className="mb-12"
+      />
 
-        {/* Articles Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {articles.map((article, index) => (
-            <div key={index} className="group cursor-pointer">
-              {/* Article Image */}
-              <div className="aspect-video bg-purple-50 rounded-xl mb-4 overflow-hidden">
-                <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">
-                  <span className="text-purple-600 font-medium">Article Image</span>
-                </div>
-              </div>
+      <ArticleGrid articles={articles} className="mb-8" />
 
-              {/* Article Content */}
-              <div>
-                <div className="text-sm font-medium text-purple-600 mb-2">
-                  {article.category} • {article.readTime}
-                </div>
-                <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">
-                  {article.title}
-                </h3>
-                <p className="text-gray-600">
-                  {article.excerpt}
-                </p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Mobile View All Link */}
-        <div className="md:hidden text-center">
-          <Link
-            href="/blog"
-            className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
-          >
-            View All Articles
-            <ArrowRightIcon className="w-5 h-5 ml-2" />
-          </Link>
-        </div>
+      <div className="md:hidden text-center">
+        <Button
+          href="/blog"
+          variant="secondary"
+          rightIcon={ArrowRightIcon}
+        >
+          View All Articles
+        </Button>
       </div>
-    </section>
+    </SectionContainer>
   );
 } 

@@ -1,13 +1,13 @@
 'use client';
 
-import Link from 'next/link';
-import { twMerge } from 'tailwind-merge';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import { twMerge } from 'tailwind-merge';
+import Button from './Button';
 
 interface LinkButtonProps {
   href: string;
   text: string;
-  variant?: 'primary' | 'secondary' | 'outline';
+  variant?: 'primary' | 'secondary' | 'outline' | 'yellow' | 'ghost' | 'subtle' | 'white-outline';
   size?: 'sm' | 'md' | 'lg';
   showArrow?: boolean;
   centered?: boolean;
@@ -23,35 +23,19 @@ export default function LinkButton({
   centered = false,
   className
 }: LinkButtonProps) {
-  const variantClasses = {
-    primary: 'text-white hover:opacity-90',
-    secondary: 'bg-purple-100 text-purple-700 hover:bg-purple-200',
-    outline: 'border-2 border-purple-600 text-purple-600 hover:bg-purple-50'
-  };
-
-  const sizeClasses = {
-    sm: 'px-4 py-2 text-sm',
-    md: 'px-6 py-3',
-    lg: 'px-8 py-4'
-  };
-
   return (
     <div className={twMerge(
       centered && 'text-center',
       className
     )}>
-      <Link
+      <Button
         href={href}
-        className={twMerge(
-          'inline-flex items-center font-medium rounded-lg transition-colors',
-          variantClasses[variant],
-          sizeClasses[size],
-          variant === 'primary' && 'bg-[#8821f4]'
-        )}
+        variant={variant}
+        size={size}
+        rightIcon={showArrow ? ArrowRightIcon : undefined}
       >
         {text}
-        {showArrow && <ArrowRightIcon className="w-5 h-5 ml-2" />}
-      </Link>
+      </Button>
     </div>
   );
 } 

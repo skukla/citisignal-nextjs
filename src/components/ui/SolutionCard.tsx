@@ -37,6 +37,7 @@ export default function SolutionCard({
       )}>
         <div className={twMerge(
           'w-12 h-12 rounded-lg bg-purple-50 flex items-center justify-center mb-6',
+          'group-hover:bg-purple-100 transition-colors',
           iconContainerClassName
         )}>
           <Icon className={twMerge(

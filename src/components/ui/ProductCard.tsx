@@ -1,11 +1,11 @@
 'use client';
 
-import Link from 'next/link';
 import { HeartIcon } from '@heroicons/react/24/solid';
 import { HeartIcon as HeartOutlineIcon } from '@heroicons/react/24/outline';
 import { useState } from 'react';
 import ProductBadge from './ProductBadge';
 import ProductImagePlaceholder from './ProductImagePlaceholder';
+import Button from './Button';
 
 interface ProductCardProps {
   id: string | number;
@@ -64,16 +64,16 @@ export default function ProductCard({
         </div>
         
         {/* Wishlist Button */}
-        <button
+        <Button
           onClick={() => setIsWishlisted(!isWishlisted)}
-          className="absolute top-8 right-8 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 transition-colors"
-        >
-          {isWishlisted ? (
-            <HeartIcon className="w-4 h-4 text-red-500" />
-          ) : (
-            <HeartOutlineIcon className="w-4 h-4 text-gray-400" />
-          )}
-        </button>
+          variant="ghost"
+          size="sm"
+          className={`absolute top-8 right-8 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 ${
+            isWishlisted ? 'text-red-500' : 'text-gray-400'
+          }`}
+          leftIcon={isWishlisted ? HeartIcon : HeartOutlineIcon}
+          aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
+        />
       </div>
 
       {/* Product Info */}
@@ -130,23 +130,22 @@ export default function ProductCard({
 
           {/* Action Buttons */}
           <div className="space-y-2">
-            <Link
+            <Button
               href={`/${category}/${id}`}
-              className={`block w-full text-center py-3 rounded-lg font-medium transition-colors ${
-                inStock
-                  ? 'text-white hover:opacity-90'
-                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              }`}
-              style={inStock ? { backgroundColor: '#8821f4' } : {}}
+              variant="primary"
+              fullWidth
+              disabled={!inStock}
+              className={!inStock ? 'bg-gray-300 text-gray-500' : ''}
             >
               {inStock ? 'Add to Cart' : 'Out of Stock'}
-            </Link>
-            <Link
+            </Button>
+            <Button
               href={`/${category}/${id}`}
-              className="block w-full border border-gray-300 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-50 transition-colors"
+              variant="outline"
+              fullWidth
             >
               View Details
-            </Link>
+            </Button>
           </div>
         </div>
       </div>

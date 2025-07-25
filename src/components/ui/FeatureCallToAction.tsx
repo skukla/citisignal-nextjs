@@ -2,6 +2,7 @@
 
 import { ElementType } from 'react';
 import { twMerge } from 'tailwind-merge';
+import Button from './Button';
 
 interface Feature {
   text: string;
@@ -68,13 +69,15 @@ export default function FeatureCallToAction({
         
         <div className="text-center lg:text-left">
           <div className="space-y-4">
-            <button
+            <Button
               onClick={buttonAction}
-              className="w-full lg:w-auto px-8 py-4 text-white font-bold rounded-lg hover:opacity-90 transition-colors text-lg"
-              style={{ backgroundColor: buttonColor }}
+              variant="primary"
+              size="lg"
+              className="w-full lg:w-auto"
+              customColor={buttonColor}
             >
               {buttonText}
-            </button>
+            </Button>
             {(supportText || supportPhone) && (
               <div className="text-center lg:text-left">
                 <p className="text-sm text-gray-500">

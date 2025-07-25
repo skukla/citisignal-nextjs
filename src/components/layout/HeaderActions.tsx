@@ -4,6 +4,7 @@ import { UserIcon, Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import SearchBar from '@/components/ui/SearchBar';
 import CartButton from '@/components/ui/CartButton';
 import IconLink from '@/components/ui/IconLink';
+import Button from '@/components/ui/Button';
 
 interface HeaderActionsProps {
   cartCount: number;
@@ -40,18 +41,15 @@ export default function HeaderActions({
       />
 
       {/* Mobile Menu Button */}
-      <button
+      <Button
         onClick={onMenuToggle}
-        className="lg:hidden p-2 text-gray-700 hover:text-purple-600 transition-colors"
+        variant="ghost"
+        size="sm"
+        className="lg:hidden text-gray-700 hover:text-purple-600 hover:bg-transparent p-2"
+        leftIcon={isMenuOpen ? XMarkIcon : Bars3Icon}
         aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
         aria-expanded={isMenuOpen}
-      >
-        {isMenuOpen ? (
-          <XMarkIcon className="w-6 h-6" />
-        ) : (
-          <Bars3Icon className="w-6 h-6" />
-        )}
-      </button>
+      />
     </div>
   );
 } 

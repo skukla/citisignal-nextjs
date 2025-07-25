@@ -1,12 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import GradientSection from '@/components/ui/GradientSection';
 import PromoTag from '@/components/ui/PromoTag';
 import FeatureList from '@/components/ui/FeatureList';
 import PhoneMockup from '@/components/ui/PhoneMockup';
 import SimplePlanCard from '@/components/ui/SimplePlanCard';
+import Button from '@/components/ui/Button';
 
 export default function HeroSection() {
   const features = [
@@ -38,19 +38,19 @@ export default function HeroSection() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
-            <Link
+            <Button
               href="/plans"
-              className="inline-flex items-center justify-center px-8 py-4 bg-yellow-400 text-gray-900 font-bold rounded-lg hover:bg-yellow-300 transition-colors"
+              variant="yellow"
+              rightIcon={ArrowRightIcon}
             >
               Shop Plans
-              <ArrowRightIcon className="ml-2 w-5 h-5" />
-            </Link>
-            <Link
+            </Button>
+            <Button
               href="/phones"
-              className="inline-flex items-center justify-center px-8 py-4 border border-white text-white font-medium rounded-lg hover:bg-white hover:text-purple-600 transition-colors"
+              variant="white-outline"
             >
               Shop Phones
-            </Link>
+            </Button>
           </div>
 
           {/* Features */}
