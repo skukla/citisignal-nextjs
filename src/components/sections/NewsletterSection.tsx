@@ -55,39 +55,47 @@ export default function NewsletterSection() {
     <SectionContainer 
       bgColor="bg-gradient-to-br from-[#8821f4] via-[#6a1b9a] to-[#4a148c]"
     >
-      <div className="text-center">
-        <IconBadge
-          icon={<EnvelopeIcon />}
-          bgColor="bg-white"
-          iconColor="text-purple-600"
-          size="lg"
-          className="mx-auto mb-8"
-        />
+      <div className="max-w-6xl mx-auto">
+        <div className="text-center mb-12">
+          <IconBadge
+            icon={<EnvelopeIcon />}
+            bgColor="bg-white"
+            iconColor="text-purple-600"
+            size="lg"
+            className="mx-auto mb-8"
+          />
 
-        <SectionHeader
-          title="Stay Connected with CitiSignal"
-          description="Get exclusive deals, new device launches, and special offers delivered straight to your inbox."
-          centered
+          <SectionHeader
+            title="Stay Connected with CitiSignal"
+            description="Get exclusive deals, new device launches, and special offers delivered straight to your inbox."
+            centered
+            titleColor="text-white"
+            descriptionColor="text-purple-100"
+            className="mb-12"
+          />
+        </div>
+
+        <BenefitGrid 
+          benefits={benefits}
+          columns={{ sm: 1, md: 3, lg: 3, xl: 3 }}
+          gap="md"
           titleColor="text-white"
           descriptionColor="text-purple-100"
           className="mb-12"
         />
 
-        <BenefitGrid 
-          benefits={benefits}
-          className="mb-12"
-        />
+        <div className="text-center">
+          <NewsletterForm
+            onSubmit={handleSubmit}
+            className="mx-auto mb-4"
+          />
 
-        <NewsletterForm
-          onSubmit={handleSubmit}
-          className="mx-auto mb-4"
-        />
-
-        <PrivacyNotice
-          text="We respect your privacy. Unsubscribe at any time."
-          linkText="Privacy Policy"
-          linkHref="/privacy"
-        />
+          <PrivacyNotice
+            text="We respect your privacy. Unsubscribe at any time."
+            linkText="Privacy Policy"
+            linkHref="/privacy"
+          />
+        </div>
       </div>
     </SectionContainer>
   );
