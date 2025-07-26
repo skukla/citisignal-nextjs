@@ -2,36 +2,33 @@
 
 import BuyingGuideCard from './BuyingGuideCard';
 import BaseGrid from './layout/BaseGrid';
-import type { GridColumns } from './layout/BaseGrid';
-import type { ElementType } from 'react';
+import type { BaseGridProps } from '@/types/grid';
+import type { HeroIcon } from '@/types/hero-icons';
+import { GRID_CONFIGS } from '@/types/grid';
 
 interface BuyingGuide {
-  icon: ElementType;
+  icon: HeroIcon;
   title: string;
   description: string;
   href: string;
 }
 
-interface BuyingGuideGridProps {
+type BuyingGuideGridProps = Omit<BaseGridProps, 'children'> & {
   guides: BuyingGuide[];
-  columns?: GridColumns;
-  gap?: 'sm' | 'md' | 'lg';
-  className?: string;
-}
+};
 
 export default function BuyingGuideGrid({
   guides,
-  columns = {
-    sm: 1,
-    md: 2
-  },
+  columns = GRID_CONFIGS.buyingGuide,
   gap = 'lg',
+  centered,
   className
 }: BuyingGuideGridProps) {
   return (
     <BaseGrid
       columns={columns}
       gap={gap}
+      centered={centered}
       className={className}
     >
       {guides.map((guide, index) => (
