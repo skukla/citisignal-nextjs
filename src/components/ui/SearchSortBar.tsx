@@ -14,7 +14,7 @@ interface SearchSortBarProps {
   onSearchChange: (value: string) => void;
   sortBy: string;
   onSortChange: (value: string) => void;
-  sortOptions: SortOption[];
+  sortOptions: readonly SortOption[];
   searchPlaceholder?: string;
 }
 

@@ -1,7 +1,7 @@
 'use client';
 
-import { useState } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
+import useExpandableSections from '@/hooks/useExpandableSections';
 
 interface FilterOption {
   id: string;
@@ -29,16 +29,10 @@ export default function FilterSidebar({
   onFilterChange,
   onClearFilters
 }: FilterSidebarProps) {
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(
-    filters.reduce((acc, filter) => ({ ...acc, [filter.key]: true }), {})
-  );
-
-  const toggleSection = (key: string) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
-  };
+  const { isExpanded, toggleSection } = useExpandableSections({
+    sections: filters.map(filter => filter.key),
+    defaultExpanded: true
+  });
 
   const hasActiveFilters = Object.values(activeFilters).some(values => values.length > 0);
 
@@ -66,14 +60,14 @@ export default function FilterSidebar({
               className="flex items-center justify-between w-full text-left mb-4"
             >
               <span className="font-medium text-gray-900">{section.title}</span>
-              {expandedSections[section.key] ? (
+              {isExpanded(section.key) ? (
                 <ChevronUpIcon className="w-5 h-5 text-gray-500" />
               ) : (
                 <ChevronDownIcon className="w-5 h-5 text-gray-500" />
               )}
             </button>
 
-            {expandedSections[section.key] && (
+            {isExpanded(section.key) && (
               <div className="space-y-3">
                 {section.options.map((option) => (
                   <label key={option.id} className="flex items-center cursor-pointer">

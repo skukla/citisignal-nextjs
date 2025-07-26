@@ -2,6 +2,8 @@
 
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
+import ImagePlaceholder from './ImagePlaceholder';
+import ArticleMeta from './ArticleMeta';
 
 interface ArticleCardProps {
   category: string;
@@ -28,26 +30,22 @@ export default function ArticleCard({
         'group cursor-pointer',
         className
       )}>
-        {/* Article Image */}
-        <div className="aspect-video bg-purple-50 rounded-xl mb-4 overflow-hidden">
-          {image ? (
-            <img
-              src={image}
-              alt={title}
-              className="w-full h-full object-cover"
-            />
-          ) : (
-            <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">
-              <span className="text-purple-600 font-medium">Article Image</span>
-            </div>
-          )}
-        </div>
+        <ImagePlaceholder
+          image={image ? { url: image, label: title } : undefined}
+          aspectRatio="video"
+          placeholderText="Article Image"
+          gradientFrom="from-purple-100"
+          gradientTo="to-purple-50"
+          textColor="text-purple-600"
+          className="mb-4"
+        />
 
-        {/* Article Content */}
         <div>
-          <div className="text-sm font-medium text-purple-600 mb-2">
-            {category} • {readTime}
-          </div>
+          <ArticleMeta
+            category={category}
+            readTime={readTime}
+            className="mb-2"
+          />
           <h3 className="text-xl font-bold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">
             {title}
           </h3>

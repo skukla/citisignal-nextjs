@@ -2,10 +2,10 @@
 
 import { HeartIcon } from '@heroicons/react/24/solid';
 import { HeartIcon as HeartOutlineIcon } from '@heroicons/react/24/outline';
-import { useState } from 'react';
 import ProductBadge from './ProductBadge';
 import ProductImagePlaceholder from './ProductImagePlaceholder';
 import Button from './Button';
+import useWishlist from '@/hooks/useWishlist';
 
 interface ProductCardProps {
   id: string | number;
@@ -23,6 +23,7 @@ interface ProductCardProps {
   inStock?: boolean;
   isNew?: boolean;
   isSale?: boolean;
+  onWishlistChange?: (productId: string | number, isWishlisted: boolean) => void;
 }
 
 export default function ProductCard({
@@ -37,9 +38,13 @@ export default function ProductCard({
   colors = [],
   inStock = true,
   isNew = false,
-  isSale = false
+  isSale = false,
+  onWishlistChange
 }: ProductCardProps) {
-  const [isWishlisted, setIsWishlisted] = useState(false);
+  const { isWishlisted, toggleWishlist } = useWishlist({
+    productId: id,
+    onWishlistChange
+  });
 
   return (
     <div className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 group">
@@ -65,7 +70,7 @@ export default function ProductCard({
         
         {/* Wishlist Button */}
         <Button
-          onClick={() => setIsWishlisted(!isWishlisted)}
+          onClick={toggleWishlist}
           variant="ghost"
           size="sm"
           className={`absolute top-8 right-8 p-2 bg-white rounded-full shadow-md hover:bg-gray-50 ${

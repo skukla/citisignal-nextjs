@@ -1,13 +1,16 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import IconContainer from './IconContainer';
+import CardContent from './CardContent';
+import type { ThemeTextColor } from '@/types/theme';
 
 interface BenefitCardProps {
   emoji: string;
   title: string;
   description: string;
-  titleColor?: `text-${string}`;
-  descriptionColor?: `text-${string}`;
+  titleColor?: ThemeTextColor;
+  descriptionColor?: ThemeTextColor;
   className?: string;
 }
 
@@ -20,16 +23,22 @@ export default function BenefitCard({
   className
 }: BenefitCardProps) {
   return (
-    <div className={twMerge('text-center w-72', className)}>
-      <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+    <div className={twMerge('w-72', className)}>
+      <IconContainer
+        bgColor="bg-white"
+        bgOpacity="bg-opacity-50"
+        size="lg"
+        className="mb-3"
+      >
         <span className="text-2xl leading-none">{emoji}</span>
-      </div>
-      <h3 className={twMerge('text-base font-semibold mb-1', titleColor)}>
-        {title}
-      </h3>
-      <p className={twMerge('text-sm leading-relaxed', descriptionColor)}>
-        {description}
-      </p>
+      </IconContainer>
+      <CardContent
+        title={title}
+        description={description}
+        titleColor={titleColor}
+        descriptionColor={descriptionColor}
+        centered
+      />
     </div>
   );
 } 

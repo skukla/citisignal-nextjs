@@ -1,9 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { StarIcon, CheckIcon, HeartIcon } from '@heroicons/react/24/solid';
 import Button from './Button';
 import ProductBadge from './ProductBadge';
+import useWishlist from '@/hooks/useWishlist';
 
 interface PlanCardProps {
   name: string;
@@ -23,6 +23,7 @@ interface PlanCardProps {
   isSale: boolean;
   contractRequired: boolean;
   networkPriority: string;
+  onWishlistChange?: (planId: string, isWishlisted: boolean) => void;
 }
 
 export default function PlanCard({
@@ -42,9 +43,13 @@ export default function PlanCard({
   isNew,
   isSale,
   contractRequired,
-  networkPriority
+  networkPriority,
+  onWishlistChange
 }: PlanCardProps) {
-  const [isSaved, setIsSaved] = useState(false);
+  const { isWishlisted, toggleWishlist } = useWishlist({
+    productId: name, // Using name as ID since plans don't have explicit IDs
+    onWishlistChange: onWishlistChange && ((id, isWishlisted) => onWishlistChange(id.toString(), isWishlisted))
+  });
 
   return (
     <div className={`bg-white border rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 relative h-full flex flex-col ${
@@ -76,10 +81,10 @@ export default function PlanCard({
               </div>
             </div>
             <button
-              onClick={() => setIsSaved(!isSaved)}
+              onClick={toggleWishlist}
               className="p-1 hover:bg-gray-50 rounded-full transition-colors flex-shrink-0"
             >
-              <HeartIcon className={`w-5 h-5 ${isSaved ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
+              <HeartIcon className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
             </button>
           </div>
         </div>
