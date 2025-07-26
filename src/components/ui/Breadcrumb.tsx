@@ -1,5 +1,9 @@
-import Link from 'next/link';
-import { ChevronRightIcon, HomeIcon } from '@heroicons/react/24/outline';
+'use client';
+
+import { twMerge } from 'tailwind-merge';
+import BreadcrumbItem from './BreadcrumbItem';
+import HomeLink from './HomeLink';
+import type { ThemeTextColor } from '@/types/theme';
 
 interface BreadcrumbItem {
   name: string;
@@ -8,37 +12,48 @@ interface BreadcrumbItem {
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];
+  textColor?: ThemeTextColor;
+  hoverColor?: ThemeTextColor;
+  separatorColor?: ThemeTextColor;
+  className?: string;
 }
 
-export default function Breadcrumb({ items }: BreadcrumbProps) {
+export default function Breadcrumb({
+  items,
+  textColor = 'text-gray-500',
+  hoverColor = 'text-gray-700',
+  separatorColor = 'text-gray-400',
+  className
+}: BreadcrumbProps) {
   return (
-    <nav className="flex" aria-label="Breadcrumb">
-      <ol className="flex items-center space-x-2">
-        {/* Home Link */}
-        <li>
-          <Link href="/" className="text-gray-500 hover:text-gray-700 transition-colors">
-            <HomeIcon className="w-4 h-4" />
-            <span className="sr-only">Home</span>
-          </Link>
+    <nav
+      className={twMerge('flex', className)}
+      aria-label="Breadcrumb"
+      itemScope
+      itemType="https://schema.org/BreadcrumbList"
+    >
+      <ol className="flex items-center space-x-2" itemProp="itemListElement">
+        <li itemScope itemType="https://schema.org/ListItem" itemProp="itemListElement">
+          <HomeLink
+            textColor={textColor}
+            hoverColor={hoverColor}
+          />
+          <meta itemProp="position" content="1" />
+          <meta itemProp="name" content="Home" />
+          <meta itemProp="item" content="/" />
         </li>
 
-        {/* Breadcrumb Items */}
         {items.map((item, index) => (
-          <li key={index} className="flex items-center">
-            <ChevronRightIcon className="w-4 h-4 text-gray-400 mx-2" />
-            {item.href && index < items.length - 1 ? (
-              <Link
-                href={item.href}
-                className="text-gray-500 hover:text-gray-700 transition-colors text-sm font-medium"
-              >
-                {item.name}
-              </Link>
-            ) : (
-              <span className="text-gray-900 text-sm font-medium">
-                {item.name}
-              </span>
-            )}
-          </li>
+          <BreadcrumbItem
+            key={index}
+            name={item.name}
+            href={item.href}
+            isLast={index === items.length - 1}
+            textColor={textColor}
+            hoverColor={hoverColor}
+            separatorColor={separatorColor}
+            position={index + 2}
+          />
         ))}
       </ol>
     </nav>
