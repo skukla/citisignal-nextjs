@@ -32,8 +32,6 @@ interface UseProductListReturn<T> {
   sortBy: SortOption;
   handleSortChange: (value: string) => void;
   activeFilters: Record<string, string[]>;
-  showMobileFilters: boolean;
-  setShowMobileFilters: (show: boolean) => void;
   handleFilterChange: (filterKey: string, value: string, checked: boolean) => void;
   handleClearFilters: () => void;
   handleLoadMore: () => void;
@@ -49,7 +47,6 @@ export function useProductList<T extends Product>({
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>(initialSort);
   const [activeFilters, setActiveFilters] = useState<Record<string, string[]>>({});
-  const [showMobileFilters, setShowMobileFilters] = useState(false);
   const [displayCount, setDisplayCount] = useState(pageSize);
 
   const handleSortChange = (value: string) => {
@@ -133,8 +130,6 @@ export function useProductList<T extends Product>({
     sortBy,
     handleSortChange,
     activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
     handleLoadMore,
