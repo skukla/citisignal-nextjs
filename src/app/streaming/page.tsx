@@ -18,8 +18,6 @@ export default function StreamingPage() {
     sortBy,
     handleSortChange,
     activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
     handleLoadMore,
@@ -62,11 +60,6 @@ export default function StreamingPage() {
     }
   ];
 
-  const breadcrumbItems = [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Streaming' }
-  ];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -75,7 +68,6 @@ export default function StreamingPage() {
         title="Streaming"
         description="Add premium streaming services to your CitiSignal plan. Enjoy your favorite shows, movies, music, and live sports with our exclusive bundles and discounted rates."
         icon={PlayIcon}
-        breadcrumbItems={breadcrumbItems}
         filters={filters}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -84,8 +76,6 @@ export default function StreamingPage() {
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         onClearFilters={handleClearFilters}
-        showMobileFilters={showMobileFilters}
-        setShowMobileFilters={setShowMobileFilters}
         totalCount={streamingServices.length}
         filteredCount={filteredAndSortedProducts.length}
         emptyStateIcon={Bars3Icon}

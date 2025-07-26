@@ -18,8 +18,6 @@ export default function WatchesPage() {
     sortBy,
     handleSortChange,
     activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
     handleLoadMore,
@@ -54,11 +52,6 @@ export default function WatchesPage() {
     }
   ];
 
-  const breadcrumbItems = [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Watches' }
-  ];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -67,7 +60,6 @@ export default function WatchesPage() {
         title="Watches"
         description="Stay connected and track your health with the latest smartwatches. From Apple Watch to Samsung Galaxy Watch, find the perfect wearable device to complement your lifestyle."
         icon={ClockIcon}
-        breadcrumbItems={breadcrumbItems}
         filters={filters}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -76,8 +68,6 @@ export default function WatchesPage() {
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         onClearFilters={handleClearFilters}
-        showMobileFilters={showMobileFilters}
-        setShowMobileFilters={setShowMobileFilters}
         totalCount={watches.length}
         filteredCount={filteredAndSortedProducts.length}
         emptyStateIcon={Bars3Icon}

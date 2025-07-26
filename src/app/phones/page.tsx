@@ -22,8 +22,6 @@ export default function PhonesPage() {
     sortBy,
     handleSortChange,
     activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
     handleLoadMore,
@@ -121,11 +119,6 @@ export default function PhonesPage() {
     }
   ];
 
-  const breadcrumbItems = [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Phones' }
-  ];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -134,7 +127,6 @@ export default function PhonesPage() {
         title="Phones"
         description="Find your perfect phone from our wide selection of the latest smartphones. From flagship models to budget-friendly options, we have the right device for you."
         icon={DevicePhoneMobileIcon}
-        breadcrumbItems={breadcrumbItems}
         filters={filters}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -143,8 +135,6 @@ export default function PhonesPage() {
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         onClearFilters={handleClearFilters}
-        showMobileFilters={showMobileFilters}
-        setShowMobileFilters={setShowMobileFilters}
         totalCount={phones.length}
         filteredCount={filteredAndSortedProducts.length}
         emptyStateIcon={Bars3Icon}

@@ -8,7 +8,7 @@ import PlanGrid from '@/components/ui/PlanGrid';
 import getPlanFeatures from '@/components/ui/PlanFeatureList';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
-import PlanComparison from '@/components/sections/PlanComparison';
+import PlanComparison from '@/components/sections/PlanComparisonSection';
 import { plans, planFilterOptions } from '@/data/plans';
 import { SignalIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
@@ -59,8 +59,6 @@ export default function PlansPage() {
     sortBy,
     handleSortChange,
     activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
     handleLoadMore,
@@ -95,11 +93,6 @@ export default function PlansPage() {
     }
   ];
 
-  const breadcrumbItems = [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Plans' }
-  ];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -108,7 +101,6 @@ export default function PlansPage() {
         title="Wireless Plans"
         description="Choose the perfect wireless plan for your needs. From unlimited data to family plans, we have flexible options with no hidden fees and the reliability of our nationwide network."
         icon={SignalIcon}
-        breadcrumbItems={breadcrumbItems}
         filters={filters}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -117,8 +109,6 @@ export default function PlansPage() {
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         onClearFilters={handleClearFilters}
-        showMobileFilters={showMobileFilters}
-        setShowMobileFilters={setShowMobileFilters}
         totalCount={plans.length}
         filteredCount={filteredAndSortedProducts.length}
         emptyStateIcon={Bars3Icon}

@@ -18,8 +18,6 @@ export default function InternetDealsPage() {
     sortBy,
     handleSortChange,
     activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
     handleLoadMore,
@@ -60,11 +58,6 @@ export default function InternetDealsPage() {
     }
   ];
 
-  const breadcrumbItems = [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Internet Deals' }
-  ];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -73,7 +66,6 @@ export default function InternetDealsPage() {
         title="Internet Deals"
         description="Get connected with high-speed internet from CitiSignal. From fiber to 5G home internet, find the perfect connection for your home or business with competitive pricing and reliable service."
         icon={WifiIcon}
-        breadcrumbItems={breadcrumbItems}
         filters={filters}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -82,8 +74,6 @@ export default function InternetDealsPage() {
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         onClearFilters={handleClearFilters}
-        showMobileFilters={showMobileFilters}
-        setShowMobileFilters={setShowMobileFilters}
         totalCount={internetDeals.length}
         filteredCount={filteredAndSortedProducts.length}
         emptyStateIcon={Bars3Icon}

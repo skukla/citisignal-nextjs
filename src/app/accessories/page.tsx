@@ -18,8 +18,6 @@ export default function AccessoriesPage() {
     sortBy,
     handleSortChange,
     activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
     handleLoadMore,
@@ -54,11 +52,6 @@ export default function AccessoriesPage() {
     }
   ];
 
-  const breadcrumbItems = [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Accessories' }
-  ];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -67,7 +60,6 @@ export default function AccessoriesPage() {
         title="Accessories"
         description="Enhance your devices with our wide range of accessories. From cases and chargers to headphones and more, find everything you need to get the most out of your technology."
         icon={Square3Stack3DIcon}
-        breadcrumbItems={breadcrumbItems}
         filters={filters}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -76,8 +68,6 @@ export default function AccessoriesPage() {
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         onClearFilters={handleClearFilters}
-        showMobileFilters={showMobileFilters}
-        setShowMobileFilters={setShowMobileFilters}
         totalCount={accessories.length}
         filteredCount={filteredAndSortedProducts.length}
         emptyStateIcon={Bars3Icon}

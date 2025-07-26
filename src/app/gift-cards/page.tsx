@@ -18,8 +18,6 @@ export default function GiftCardsPage() {
     sortBy,
     handleSortChange,
     activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
     handleFilterChange,
     handleClearFilters,
     handleLoadMore,
@@ -48,11 +46,6 @@ export default function GiftCardsPage() {
     }
   ];
 
-  const breadcrumbItems = [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Gift Cards' }
-  ];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -61,7 +54,6 @@ export default function GiftCardsPage() {
         title="Gift Cards"
         description="Give the gift of choice with CitiSignal gift cards. Perfect for devices, accessories, service plans, or letting someone choose exactly what they want."
         icon={GiftIcon}
-        breadcrumbItems={breadcrumbItems}
         filters={filters}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
@@ -70,8 +62,6 @@ export default function GiftCardsPage() {
         activeFilters={activeFilters}
         onFilterChange={handleFilterChange}
         onClearFilters={handleClearFilters}
-        showMobileFilters={showMobileFilters}
-        setShowMobileFilters={setShowMobileFilters}
         totalCount={giftCards.length}
         filteredCount={filteredAndSortedProducts.length}
         emptyStateIcon={Bars3Icon}
