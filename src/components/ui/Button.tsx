@@ -1,23 +1,47 @@
 'use client';
 
-import { ElementType } from 'react';
+import { ElementType, MouseEvent } from 'react';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
+import type { ButtonVariant, ButtonSize } from '@/types/theme';
 
 interface ButtonProps {
   children?: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline' | 'yellow' | 'ghost' | 'subtle' | 'white-outline' | 'light-subtle' | 'link';
-  size?: 'sm' | 'md' | 'lg';
+  variant?: ButtonVariant;
+  size?: ButtonSize;
   fullWidth?: boolean;
   leftIcon?: ElementType;
   rightIcon?: ElementType;
   href?: string;
   loading?: boolean;
   disabled?: boolean;
-  onClick?: () => void;
+  onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
   className?: string;
   customColor?: string;
 }
+
+const sizeClasses: Record<ButtonSize, { base: string; link: string }> = {
+  sm: { base: 'px-4 py-2 text-sm', link: 'text-sm' },
+  md: { base: 'px-6 py-3 text-base', link: 'text-base' },
+  lg: { base: 'px-8 py-4 text-lg', link: 'text-lg' }
+};
+
+const variantClasses: Record<ButtonVariant, string> = {
+  primary: 'bg-[#8821f4] text-white shadow-lg hover:shadow-xl hover:opacity-80',
+  secondary: 'bg-purple-100 text-purple-700 hover:bg-purple-200',
+  outline: 'border-2 border-gray-300 text-gray-700 hover:bg-gray-100',
+  yellow: 'bg-yellow-400 text-gray-900 font-bold shadow-lg hover:shadow-xl hover:bg-yellow-300',
+  ghost: 'hover:bg-gray-100',
+  subtle: 'bg-gray-100 text-gray-900 hover:bg-gray-200 border-0',
+  'white-outline': 'border-2 border-white text-white hover:bg-white hover:text-purple-600',
+  'light-subtle': 'bg-white text-gray-700 hover:bg-gray-100 border-0 shadow-sm hover:shadow-md',
+  link: 'text-purple-600 hover:text-purple-700 p-0'
+};
+
+const iconClasses = {
+  base: 'w-5 h-5',
+  link: 'w-4 h-4'
+};
 
 export default function Button({
   children,
@@ -41,24 +65,14 @@ export default function Button({
     fullWidth && 'w-full',
     'cursor-pointer',
     
-    // Sizes
+    // Size & Shape
     variant !== 'link' && 'rounded-lg',
-    size === 'sm' && (variant === 'link' ? 'text-sm' : 'px-4 py-2 text-sm'),
-    size === 'md' && (variant === 'link' ? 'text-base' : 'px-6 py-3'),
-    size === 'lg' && (variant === 'link' ? 'text-lg' : 'px-8 py-4 text-lg'),
+    variant === 'link' ? sizeClasses[size].link : sizeClasses[size].base,
     
-    // Variants
-    variant === 'primary' && !customColor && 'bg-[#8821f4] text-white shadow-lg hover:shadow-xl hover:opacity-80',
-    variant === 'secondary' && 'bg-purple-100 text-purple-700 hover:bg-purple-200',
-    variant === 'outline' && 'border-2 border-gray-300 text-gray-700 hover:bg-gray-100',
-    variant === 'yellow' && 'bg-yellow-400 text-gray-900 font-bold shadow-lg hover:shadow-xl hover:bg-yellow-300',
-    variant === 'ghost' && 'hover:bg-gray-100',
-    variant === 'subtle' && 'bg-gray-100 text-gray-900 hover:bg-gray-200 border-0',
-    variant === 'white-outline' && 'border-2 border-white text-white hover:bg-white hover:text-purple-600',
-    variant === 'light-subtle' && 'bg-white text-gray-700 hover:bg-gray-100 border-0 shadow-sm hover:shadow-md',
-    variant === 'link' && 'text-purple-600 hover:text-purple-700 p-0',
+    // Variant
+    !customColor && variantClasses[variant],
     
-    // Custom color styles
+    // Custom color override for primary variant
     variant === 'primary' && customColor && 'text-white shadow-lg hover:shadow-xl hover:opacity-80',
     
     className
@@ -71,13 +85,13 @@ export default function Button({
       ) : (
         <>
           {LeftIcon && <LeftIcon className={twMerge(
-            'w-5 h-5',
-            variant === 'link' && 'w-4 h-4'
+            iconClasses.base,
+            variant === 'link' && iconClasses.link
           )} />}
           {children}
           {RightIcon && <RightIcon className={twMerge(
-            'w-5 h-5',
-            variant === 'link' && 'w-4 h-4'
+            iconClasses.base,
+            variant === 'link' && iconClasses.link
           )} />}
         </>
       )}
