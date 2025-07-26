@@ -1,52 +1,26 @@
 'use client';
 
-import ArticleCard from './ArticleCard';
 import BaseGrid from './layout/BaseGrid';
-import type { GridColumns } from './layout/BaseGrid';
+import type { BaseGridProps } from '@/types/grid';
+import { GRID_CONFIGS } from '@/types/grid';
 
-interface Article {
-  category: string;
-  readTime: string;
-  title: string;
-  excerpt: string;
-  image?: string;
-  href?: string;
-}
-
-interface ArticleGridProps {
-  articles: Article[];
-  columns?: GridColumns;
-  gap?: 'sm' | 'md' | 'lg';
-  className?: string;
-}
+type ArticleGridProps = BaseGridProps;
 
 export default function ArticleGrid({
-  articles,
-  columns = {
-    sm: 1,
-    md: 2,
-    lg: 3
-  },
+  children,
+  columns = GRID_CONFIGS.article,
   gap = 'lg',
+  centered,
   className
 }: ArticleGridProps) {
   return (
     <BaseGrid
       columns={columns}
       gap={gap}
+      centered={centered}
       className={className}
     >
-      {articles.map((article, index) => (
-        <ArticleCard
-          key={index}
-          category={article.category}
-          readTime={article.readTime}
-          title={article.title}
-          excerpt={article.excerpt}
-          image={article.image}
-          href={article.href || '/blog'}
-        />
-      ))}
+      {children}
     </BaseGrid>
   );
 } 

@@ -1,6 +1,7 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import type { GridGap } from '@/types/grid';
 
 export interface GridColumns {
   sm?: number;
@@ -12,12 +13,12 @@ export interface GridColumns {
 interface BaseGridProps {
   children: React.ReactNode;
   columns?: GridColumns;
-  gap?: 'sm' | 'md' | 'lg';
+  gap?: GridGap;
   centered?: boolean;
   className?: string;
 }
 
-const gapClasses = {
+const gapClasses: Record<GridGap, string> = {
   sm: 'gap-4',
   md: 'gap-6',
   lg: 'gap-8'

@@ -1,47 +1,26 @@
 'use client';
 
-import FeatureCard from './FeatureCard';
 import BaseGrid from './layout/BaseGrid';
-import type { GridColumns } from './layout/BaseGrid';
-import type { ElementType } from 'react';
+import type { BaseGridProps } from '@/types/grid';
+import { GRID_CONFIGS } from '@/types/grid';
 
-interface Feature {
-  icon: ElementType;
-  title: string;
-  description: string;
-}
-
-interface FeatureGridProps {
-  features: Feature[];
-  columns?: GridColumns;
-  gap?: 'sm' | 'md' | 'lg';
-  className?: string;
-}
+type FeatureGridProps = BaseGridProps;
 
 export default function FeatureGrid({
-  features,
-  columns = {
-    sm: 1,
-    md: 2,
-    lg: 4
-  },
+  children,
+  columns = GRID_CONFIGS.feature,
   gap = 'lg',
+  centered,
   className
 }: FeatureGridProps) {
   return (
     <BaseGrid
       columns={columns}
       gap={gap}
+      centered={centered}
       className={className}
     >
-      {features.map((feature, index) => (
-        <FeatureCard
-          key={index}
-          icon={feature.icon}
-          title={feature.title}
-          description={feature.description}
-        />
-      ))}
+      {children}
     </BaseGrid>
   );
 } 

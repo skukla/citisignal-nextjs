@@ -1,51 +1,26 @@
 'use client';
 
-import SolutionCard from './SolutionCard';
 import BaseGrid from './layout/BaseGrid';
-import type { GridColumns } from './layout/BaseGrid';
-import type { HeroIcon } from '@/types/hero-icons';
+import type { BaseGridProps } from '@/types/grid';
+import { GRID_CONFIGS } from '@/types/grid';
 
-interface Solution {
-  icon: HeroIcon;
-  title: string;
-  description: string;
-  features: string[];
-  link: string;
-}
-
-interface SolutionGridProps {
-  solutions: Solution[];
-  columns?: GridColumns;
-  gap?: 'sm' | 'md' | 'lg';
-  className?: string;
-}
+type SolutionGridProps = BaseGridProps;
 
 export default function SolutionGrid({
-  solutions,
-  columns = {
-    sm: 1,
-    md: 2,
-    lg: 4
-  },
+  children,
+  columns = GRID_CONFIGS.solution,
   gap = 'lg',
+  centered,
   className
 }: SolutionGridProps) {
   return (
     <BaseGrid
       columns={columns}
       gap={gap}
+      centered={centered}
       className={className}
     >
-      {solutions.map((solution, index) => (
-        <SolutionCard
-          key={index}
-          icon={solution.icon}
-          title={solution.title}
-          description={solution.description}
-          features={solution.features}
-          href={solution.link}
-        />
-      ))}
+      {children}
     </BaseGrid>
   );
 } 

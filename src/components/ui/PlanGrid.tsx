@@ -1,29 +1,23 @@
 'use client';
 
 import BaseGrid from './layout/BaseGrid';
-import type { GridColumns } from './layout/BaseGrid';
+import type { BaseGridProps } from '@/types/grid';
+import { GRID_CONFIGS } from '@/types/grid';
 
-interface PlanGridProps {
-  children: React.ReactNode;
-  columns?: GridColumns;
-  gap?: 'sm' | 'md' | 'lg';
-  className?: string;
-}
+type PlanGridProps = BaseGridProps;
 
 export default function PlanGrid({
   children,
-  columns = {
-    sm: 1,
-    lg: 2,
-    xl: 3
-  },
+  columns = GRID_CONFIGS.plan,
   gap = 'md',
+  centered,
   className
 }: PlanGridProps) {
   return (
     <BaseGrid
       columns={columns}
       gap={gap}
+      centered={centered}
       className={className}
     >
       {children}

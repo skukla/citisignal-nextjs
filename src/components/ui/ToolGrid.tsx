@@ -1,49 +1,26 @@
 'use client';
 
-import ToolCard from './ToolCard';
 import BaseGrid from './layout/BaseGrid';
-import type { GridColumns } from './layout/BaseGrid';
-import type { HeroIcon } from '@/types/hero-icons';
+import type { BaseGridProps } from '@/types/grid';
+import { GRID_CONFIGS } from '@/types/grid';
 
-interface Tool {
-  icon: HeroIcon;
-  title: string;
-  description: string;
-  link: string;
-}
-
-interface ToolGridProps {
-  tools: Tool[];
-  columns?: GridColumns;
-  gap?: 'sm' | 'md' | 'lg';
-  className?: string;
-}
+type ToolGridProps = BaseGridProps;
 
 export default function ToolGrid({
-  tools,
-  columns = {
-    sm: 1,
-    md: 2,
-    lg: 4
-  },
+  children,
+  columns = GRID_CONFIGS.tool,
   gap = 'lg',
+  centered,
   className
 }: ToolGridProps) {
   return (
     <BaseGrid
       columns={columns}
       gap={gap}
+      centered={centered}
       className={className}
     >
-      {tools.map((tool, index) => (
-        <ToolCard
-          key={index}
-          icon={tool.icon}
-          title={tool.title}
-          description={tool.description}
-          href={tool.link}
-        />
-      ))}
+      {children}
     </BaseGrid>
   );
 } 

@@ -1,34 +1,15 @@
 'use client';
 
-import BenefitCard from './BenefitCard';
 import BaseGrid from './layout/BaseGrid';
-import type { GridColumns } from './layout/BaseGrid';
+import type { BaseGridProps } from '@/types/grid';
+import { GRID_CONFIGS } from '@/types/grid';
 
-interface Benefit {
-  emoji: string;
-  title: string;
-  description: string;
-}
-
-interface BenefitGridProps {
-  benefits: Benefit[];
-  columns?: GridColumns;
-  gap?: 'sm' | 'md' | 'lg';
-  titleColor?: `text-${string}`;
-  descriptionColor?: `text-${string}`;
-  className?: string;
-}
+type BenefitGridProps = Omit<BaseGridProps, 'centered'>;
 
 export default function BenefitGrid({
-  benefits,
-  columns = {
-    sm: 1,
-    md: 3,
-    lg: 3
-  },
-  gap = 'md',
-  titleColor,
-  descriptionColor,
+  children,
+  columns = GRID_CONFIGS.benefit,
+  gap = 'lg',
   className
 }: BenefitGridProps) {
   return (
@@ -38,16 +19,7 @@ export default function BenefitGrid({
       centered
       className={className}
     >
-      {benefits.map((benefit, index) => (
-        <BenefitCard
-          key={index}
-          emoji={benefit.emoji}
-          title={benefit.title}
-          description={benefit.description}
-          titleColor={titleColor}
-          descriptionColor={descriptionColor}
-        />
-      ))}
+      {children}
     </BaseGrid>
   );
 } 
