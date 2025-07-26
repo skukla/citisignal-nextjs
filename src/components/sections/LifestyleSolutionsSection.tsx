@@ -1,63 +1,44 @@
 'use client';
 
-import { BriefcaseIcon, HomeIcon, RocketLaunchIcon, HeartIcon } from '@heroicons/react/24/outline';
-import SectionContainer from '@/components/ui/SectionContainer';
-import SectionHeader from '@/components/ui/SectionHeader';
+import BaseSection from '@/components/ui/layout/BaseSection';
 import SolutionGrid from '@/components/ui/SolutionGrid';
-import LinkButton from '@/components/ui/LinkButton';
+import SolutionCard from '@/components/ui/SolutionCard';
+import Button from '@/components/ui/Button';
+import { lifestyleSolutions } from '@/data/solutions';
 
 export default function LifestyleSolutionsSection() {
-  const solutions = [
-    {
-      icon: BriefcaseIcon,
-      title: "Business Pro",
-      description: "Stay connected with reliable service for remote work and business travel.",
-      features: ["Unlimited 5G", "Mobile Hotspot", "International Roaming"],
-      link: "/solutions/business"
-    },
-    {
-      icon: HomeIcon,
-      title: "Family Connect",
-      description: "Keep the whole family connected with shared data and parental controls.",
-      features: ["Family Location", "Content Filters", "Usage Alerts"],
-      link: "/solutions/family"
-    },
-    {
-      icon: RocketLaunchIcon,
-      title: "Student Essential",
-      description: "Perfect for students with streaming, studying, and staying in touch.",
-      features: ["Student Discount", "Unlimited Data", "Free Streaming"],
-      link: "/solutions/student"
-    },
-    {
-      icon: HeartIcon,
-      title: "Senior Friendly",
-      description: "Simple plans with large text and easy-to-use features for seniors.",
-      features: ["24/7 Support", "Simple Interface", "Health Features"],
-      link: "/solutions/senior"
-    }
-  ];
-
   return (
-    <SectionContainer bgColor="bg-gray-50">
-      <SectionHeader
-        title="Solutions for Every Lifestyle"
-        description="Discover tailored mobile solutions designed to fit your unique lifestyle and needs."
-        centered
-        className="mb-16"
-      />
-
-      <SolutionGrid solutions={solutions} />
-
-      <div className="mt-16">
-        <LinkButton
-          href="/solutions"
-          text="Find Your Perfect Solution"
-          variant="primary"
-          size="lg"
-          centered
-        />
-      </div>
-    </SectionContainer>
+    <BaseSection
+      bgColor="bg-gray-50"
+      header={{
+        title: "Solutions for Every Lifestyle",
+        description: "Discover tailored mobile solutions designed to fit your unique lifestyle and needs.",
+        centered: true
+      }}
+      footer={
+        <div className="text-center">
+          <Button
+            href="/solutions"
+            variant="primary"
+            size="lg"
+          >
+            Find Your Perfect Solution
+          </Button>
+        </div>
+      }
+    >
+      <SolutionGrid>
+        {lifestyleSolutions.map((solution, index) => (
+          <SolutionCard
+            key={index}
+            icon={solution.icon}
+            title={solution.title}
+            description={solution.description}
+            features={solution.features}
+            href={solution.link}
+          />
+        ))}
+      </SolutionGrid>
+    </BaseSection>
   );
 } 

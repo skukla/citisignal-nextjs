@@ -2,23 +2,18 @@
 
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import GradientSection from '@/components/ui/GradientSection';
+import BaseGrid from '@/components/ui/layout/BaseGrid';
 import PromoTag from '@/components/ui/PromoTag';
 import FeatureList from '@/components/ui/FeatureList';
 import PhoneMockup from '@/components/ui/PhoneMockup';
 import SimplePlanCard from '@/components/ui/SimplePlanCard';
 import Button from '@/components/ui/Button';
+import { heroFeatures, heroPlan } from '@/data/hero';
 
 export default function HeroSection() {
-  const features = [
-    {
-      highlight: 'Max coverage, Super speed.',
-      details: 'Our prepaid plans use the same great CitiSignal 5G network that covers more than 200 million Americans nationwide.'
-    }
-  ];
-
   return (
     <GradientSection>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <BaseGrid columns={{ sm: 1, lg: 2 }} gap="lg" className="items-center">
         {/* Content */}
         <div>
           <PromoTag
@@ -59,7 +54,7 @@ export default function HeroSection() {
             Plus taxes & fees. Domestic use only.
           </div>
           
-          <FeatureList features={features} />
+          <FeatureList features={heroFeatures} />
         </div>
 
         {/* Visual */}
@@ -69,9 +64,9 @@ export default function HeroSection() {
               <div className="space-y-6">
                 <PhoneMockup />
                 <SimplePlanCard
-                  price="$10/month"
-                  title="Unlimited Talk & Text"
-                  subtitle="+ 2.5GB High-Speed Data"
+                  price={heroPlan.price}
+                  title={heroPlan.title}
+                  subtitle={heroPlan.subtitle}
                 />
               </div>
             </div>
@@ -81,7 +76,7 @@ export default function HeroSection() {
           <div className="absolute top-0 right-0 w-72 h-72 bg-purple-800 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-pulse"></div>
           <div className="absolute bottom-0 left-0 w-72 h-72 bg-purple-900 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-pulse delay-1000"></div>
         </div>
-      </div>
+      </BaseGrid>
     </GradientSection>
   );
 } 

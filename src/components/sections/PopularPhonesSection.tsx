@@ -1,30 +1,45 @@
 'use client';
 
 import { ChevronRightIcon } from '@heroicons/react/24/outline';
-import { phones } from '@/data/phones';
 import ProductCard from '@/components/ui/ProductCard';
-import SectionContainer from '@/components/ui/SectionContainer';
-import SectionHeader from '@/components/ui/SectionHeader';
+import BaseSection from '@/components/ui/layout/BaseSection';
 import ProductGrid from '@/components/ui/ProductGrid';
 import Button from '@/components/ui/Button';
+import usePopularProducts from '@/hooks/usePopularProducts';
 
 export default function PopularPhonesSection() {
-  // Get 4 popular phones (those with highest review count)
-  const popularPhones = phones
-    .sort((a, b) => b.review_count - a.review_count)
-    .slice(0, 4);
+  const { popularProducts, isLoading, error } = usePopularProducts(4);
+
+  if (error) {
+    return null;
+  }
+
+  if (isLoading) {
+    return (
+      <BaseSection
+        header={{
+          title: "Popular Phones",
+          description: "Loading popular phones...",
+          centered: true
+        }}
+      >
+        <div className="h-96 flex items-center justify-center">
+          <div className="w-8 h-8 border-4 border-purple-600 border-t-transparent rounded-full animate-spin" />
+        </div>
+      </BaseSection>
+    );
+  }
 
   return (
-    <SectionContainer>
-      <SectionHeader
-        title="Popular Phones"
-        description="Discover the latest smartphones with exclusive CitiSignal deals. Get the phone you want with flexible payment options."
-        centered
-        className="mb-16"
-      />
-
+    <BaseSection
+      header={{
+        title: "Popular Phones",
+        description: "Discover the latest smartphones with exclusive CitiSignal deals. Get the phone you want with flexible payment options.",
+        centered: true
+      }}
+    >
       <ProductGrid>
-        {popularPhones.map((phone) => (
+        {popularProducts.map((phone) => (
           <ProductCard
             key={phone.sku}
             id={phone.id}
@@ -52,6 +67,6 @@ export default function PopularPhonesSection() {
           View All Phones
         </Button>
       </div>
-    </SectionContainer>
+    </BaseSection>
   );
 } 

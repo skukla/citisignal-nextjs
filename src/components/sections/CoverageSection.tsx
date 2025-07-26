@@ -1,56 +1,46 @@
 'use client';
 
-import { MapPinIcon, SignalIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline';
+import BaseSection from '@/components/ui/layout/BaseSection';
+import BaseGrid from '@/components/ui/layout/BaseGrid';
 import StatsCard from '@/components/ui/StatsCard';
 import ProgressBar from '@/components/ui/ProgressBar';
 import StatsList from '@/components/ui/StatsList';
+import { coverageStats, networkStats, coverageIcon, networkIcon } from '@/data/coverage';
 
 export default function CoverageSection() {
-  const coverageStats = [
-    { label: 'Population Coverage', value: 99 },
-    { label: 'Geographic Coverage', value: 92 }
-  ];
-
-  const networkStats = [
-    { icon: MapPinIcon, text: '450,000+ Cell Towers' },
-    { icon: MapPinIcon, text: '98% 4G LTE Coverage' },
-    { icon: MapPinIcon, text: 'Expanding 5G Ultra Capacity' }
-  ];
-
   return (
-    <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Network Coverage</h2>
-          <p className="text-lg text-gray-600">Experience our nationwide 5G network coverage</p>
-        </div>
+    <BaseSection
+      header={{
+        title: "Network Coverage",
+        description: "Experience our nationwide 5G network coverage",
+        centered: true
+      }}
+    >
+      <BaseGrid columns={{ sm: 1, md: 2 }} gap="lg">
+        {/* Coverage Stats */}
+        <StatsCard
+          icon={coverageIcon}
+          title="5G Coverage"
+        >
+          <div className="space-y-4">
+            {coverageStats.map((stat, index) => (
+              <ProgressBar
+                key={index}
+                label={stat.label}
+                value={stat.value}
+              />
+            ))}
+          </div>
+        </StatsCard>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Coverage Stats */}
-          <StatsCard
-            icon={SignalIcon}
-            title="5G Coverage"
-          >
-            <div className="space-y-4">
-              {coverageStats.map((stat, index) => (
-                <ProgressBar
-                  key={index}
-                  label={stat.label}
-                  value={stat.value}
-                />
-              ))}
-            </div>
-          </StatsCard>
-
-          {/* Network Stats */}
-          <StatsCard
-            icon={GlobeAmericasIcon}
-            title="Network Stats"
-          >
-            <StatsList items={networkStats} />
-          </StatsCard>
-        </div>
-      </div>
-    </section>
+        {/* Network Stats */}
+        <StatsCard
+          icon={networkIcon}
+          title="Network Stats"
+        >
+          <StatsList items={networkStats} />
+        </StatsCard>
+      </BaseGrid>
+    </BaseSection>
   );
 } 

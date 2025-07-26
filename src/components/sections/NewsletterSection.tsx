@@ -1,59 +1,36 @@
 'use client';
 
-import { useState } from 'react';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
-import SectionContainer from '@/components/ui/SectionContainer';
-import SectionHeader from '@/components/ui/SectionHeader';
+import BaseSection from '@/components/ui/layout/BaseSection';
 import IconBadge from '@/components/ui/IconBadge';
 import BenefitGrid from '@/components/ui/BenefitGrid';
+import BenefitCard from '@/components/ui/BenefitCard';
 import NewsletterForm from '@/components/ui/NewsletterForm';
 import PrivacyNotice from '@/components/ui/PrivacyNotice';
 import SuccessMessage from '@/components/ui/SuccessMessage';
+import useNewsletterForm from '@/hooks/useNewsletterForm';
+import { newsletterBenefits } from '@/data/benefits';
 
 export default function NewsletterSection() {
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const benefits = [
-    {
-      emoji: "📱",
-      title: "Exclusive Deals",
-      description: "First access to limited-time offers and discounts"
-    },
-    {
-      emoji: "🚀",
-      title: "New Releases",
-      description: "Be the first to know about new device launches"
-    },
-    {
-      emoji: "💡",
-      title: "Tips & Updates",
-      description: "Network updates and helpful tech tips"
-    }
-  ];
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const handleSubmit = async (email: string) => {
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    setIsSubmitted(true);
-  };
+  const { isSubmitted, handleSubmit, reset } = useNewsletterForm();
 
   if (isSubmitted) {
     return (
-      <SectionContainer bgColor="bg-gradient-to-br from-green-50 to-emerald-100">
+      <BaseSection bgColor="bg-gradient-to-br from-green-50 to-emerald-100">
         <SuccessMessage
           title="Thanks for subscribing!"
           description="You'll receive the latest deals and updates in your inbox."
           buttonText="Subscribe another email"
-          onButtonClick={() => setIsSubmitted(false)}
+          onButtonClick={reset}
         />
-      </SectionContainer>
+      </BaseSection>
     );
   }
 
   return (
-    <SectionContainer 
+    <BaseSection 
       bgColor="bg-gradient-to-br from-[#8821f4] via-[#6a1b9a] to-[#4a148c]"
+      maxWidth={false}
     >
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-12">
@@ -65,24 +42,32 @@ export default function NewsletterSection() {
             className="mx-auto mb-8"
           />
 
-          <SectionHeader
-            title="Stay Connected with CitiSignal"
-            description="Get exclusive deals, new device launches, and special offers delivered straight to your inbox."
-            centered
-            titleColor="text-white"
-            descriptionColor="text-purple-100"
-            className="mb-12"
-          />
+          <div className="mb-12">
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Stay Connected with CitiSignal
+            </h2>
+            <p className="text-purple-100 text-lg">
+              Get exclusive deals, new device launches, and special offers delivered straight to your inbox.
+            </p>
+          </div>
         </div>
 
         <BenefitGrid 
-          benefits={benefits}
-          columns={{ sm: 1, md: 3, lg: 3, xl: 3 }}
+          columns={{ sm: 1, md: 3, lg: 3 }}
           gap="md"
-          titleColor="text-white"
-          descriptionColor="text-purple-100"
           className="mb-12"
-        />
+        >
+          {newsletterBenefits.map((benefit, index) => (
+            <BenefitCard
+              key={index}
+              emoji={benefit.emoji}
+              title={benefit.title}
+              description={benefit.description}
+              titleColor="text-white"
+              descriptionColor="text-purple-100"
+            />
+          ))}
+        </BenefitGrid>
 
         <div className="text-center">
           <NewsletterForm
@@ -97,6 +82,6 @@ export default function NewsletterSection() {
           />
         </div>
       </div>
-    </SectionContainer>
+    </BaseSection>
   );
 } 

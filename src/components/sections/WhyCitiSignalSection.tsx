@@ -1,44 +1,30 @@
 'use client';
 
-import { ShieldCheckIcon, SignalIcon, CurrencyDollarIcon, UserGroupIcon } from '@heroicons/react/24/outline';
-import SectionContainer from '@/components/ui/SectionContainer';
-import SectionHeader from '@/components/ui/SectionHeader';
+import BaseSection from '@/components/ui/layout/BaseSection';
 import FeatureGrid from '@/components/ui/FeatureGrid';
+import FeatureCard from '@/components/ui/FeatureCard';
+import { whyCitiSignalFeatures } from '@/data/features';
 
 export default function WhyCitiSignalSection() {
-  const features = [
-    {
-      icon: SignalIcon,
-      title: 'Superior Coverage',
-      description: 'Nationwide 5G network with 99% population coverage and growing'
-    },
-    {
-      icon: ShieldCheckIcon,
-      title: 'Reliable Security',
-      description: 'Advanced network security and data protection for peace of mind'
-    },
-    {
-      icon: CurrencyDollarIcon,
-      title: 'Competitive Pricing',
-      description: 'Flexible plans and transparent pricing to fit your budget'
-    },
-    {
-      icon: UserGroupIcon,
-      title: '24/7 Support',
-      description: 'Expert customer service available around the clock'
-    }
-  ];
-
   return (
-    <SectionContainer bgColor="bg-gray-50">
-      <SectionHeader
-        title="Why Choose CitiSignal"
-        description="Experience the difference with our industry-leading service"
-        centered
-        className="mb-12"
-      />
-
-      <FeatureGrid features={features} />
-    </SectionContainer>
+    <BaseSection
+      bgColor="bg-gray-50"
+      header={{
+        title: "Why Choose CitiSignal",
+        description: "Experience the difference with our industry-leading service",
+        centered: true
+      }}
+    >
+      <FeatureGrid>
+        {whyCitiSignalFeatures.map((feature, index) => (
+          <FeatureCard
+            key={index}
+            icon={feature.icon}
+            title={feature.title}
+            description={feature.description}
+          />
+        ))}
+      </FeatureGrid>
+    </BaseSection>
   );
 } 
