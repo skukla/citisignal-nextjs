@@ -59,9 +59,17 @@ export default function BreadcrumbItem({
       )}
       {position && (
         <>
-          <meta itemProp="position" content={String(position)} />
-          <meta itemProp="name" content={name} />
-          {href && <meta itemProp="item" content={href} />}
+          <meta 
+            itemProp="position" 
+            content={String(position)} 
+          />
+          <meta 
+            itemProp="name" 
+            content={name} 
+          />
+          {href && <meta 
+                    itemProp="item" 
+                    content={href} />}
         </>
       )}
     </li>

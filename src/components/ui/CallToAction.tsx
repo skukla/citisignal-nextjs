@@ -1,6 +1,5 @@
 'use client';
 
-import { ElementType } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Button from './Button';
 import FeatureItem from './FeatureItem';

@@ -38,7 +38,10 @@ export default function ComparisonRow({
         <div className={twMerge('text-sm', descriptionColor)}>{description}</div>
       </td>
       {values.map((isAvailable, index) => (
-        <td key={index} className="py-4 px-6 text-center">
+        <td 
+          key={index} 
+          className="py-4 px-6 text-center"
+        >
           {isAvailable ? (
             <CheckIcon className={twMerge(iconSizes[size], 'mx-auto', checkColor)} />
           ) : (

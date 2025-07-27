@@ -1,4 +1,4 @@
-import type { ThemeTextSize, ThemeSize } from './theme';
+import type { ThemeSize } from './theme';
 
 export interface ComparisonHeader {
   label: React.ReactNode;
@@ -26,7 +26,7 @@ export const GRID_CONFIGS = {
     columns: {
       sm: 1,
       md: 2,
-      lg: 3
+      lg: 4
     },
     gap: 'lg' as GridGap
   },

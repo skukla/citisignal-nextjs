@@ -1,7 +1,8 @@
-import type { GridColumns } from '@/components/ui/layout/BaseGrid';
+import type { GridColumns } from '@/types/layout';
+import type { ThemeSize } from '@/types/theme';
 
 // Grid gap sizes (in Tailwind units)
-export type GridGap = 'sm' | 'md' | 'lg' | 'xl';
+export type GridGap = ThemeSize;
 
 export interface BaseGridProps {
   children: React.ReactNode;

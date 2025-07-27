@@ -1,26 +1,20 @@
-import { Accessory, colorOptions } from '@/types/commerce';
+import { Accessory } from '@/types/commerce';
+import { AccessoryFilterOptions } from '@/types/filters';
+import { commonManufacturers, commonPriceRanges, colorFilters } from './common-filters';
 
-export const accessoryFilterOptions = {
-  manufacturer: [
-    { id: 'apple', name: 'Apple' },
-    { id: 'samsung', name: 'Samsung' },
-    { id: 'citisignal', name: 'CitiSignal' },
+export const accessoryFilterOptions: AccessoryFilterOptions = {
+  manufacturer: commonManufacturers.concat([
     { id: 'belkin', name: 'Belkin' },
     { id: 'anker', name: 'Anker' }
-  ],
+  ]),
   compatibility: [
     { id: 'iphone', name: 'iPhone' },
     { id: 'samsung', name: 'Samsung' },
     { id: 'android', name: 'Android' },
     { id: 'universal', name: 'Universal' }
   ],
-  colors: colorOptions,
-  price: [
-    { id: 'under-25', name: 'Under $25' },
-    { id: '25-50', name: '$25 - $50' },
-    { id: '50-100', name: '$50 - $100' },
-    { id: 'over-100', name: 'Over $100' }
-  ]
+  colors: colorFilters,
+  price: commonPriceRanges.accessories
 };
 
 // Mock data matching Commerce API structure

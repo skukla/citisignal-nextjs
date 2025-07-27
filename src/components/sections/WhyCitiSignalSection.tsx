@@ -15,8 +15,8 @@ export default function WhyCitiSignalSection() {
         centered: true
       }}
     >
-      <FeatureGrid>
-        {whyCitiSignalFeatures.map((feature, index) => (
+      <FeatureGrid
+        features={whyCitiSignalFeatures.map((feature, index) => (
           <FeatureCard
             key={index}
             icon={feature.icon}
@@ -24,7 +24,7 @@ export default function WhyCitiSignalSection() {
             description={feature.description}
           />
         ))}
-      </FeatureGrid>
+      />
     </BaseSection>
   );
 } 

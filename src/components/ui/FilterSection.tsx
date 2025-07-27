@@ -56,7 +56,10 @@ export default function FilterSection({
       {isExpanded && (
         <div className="space-y-3">
           {options.map((option) => (
-            <label key={option.id} className="flex items-center cursor-pointer">
+            <label 
+              key={option.id} 
+              className="flex items-center cursor-pointer"
+            >
               <input
                 type={type}
                 name={type === 'radio' ? name : undefined}
