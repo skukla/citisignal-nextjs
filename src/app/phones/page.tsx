@@ -1,5 +1,6 @@
 'use client';
 
+import { type ReactElement } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
@@ -18,7 +19,7 @@ import TechReviewGrid from '@/components/ui/TechReviewGrid';
 import BuyingGuideGrid from '@/components/ui/BuyingGuideGrid';
 import TipGrid from '@/components/ui/TipGrid';
 
-export default function PhonesPage() {
+export default function PhonesPage(): ReactElement {
   const {
     searchQuery,
     setSearchQuery,
@@ -56,7 +57,6 @@ export default function PhonesPage() {
           <ProductGrid 
             columns={{ sm: 1, md: 2, lg: 3 }} 
             gap="md"
-            className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
           >
             {filteredAndSortedProducts.map((product) => (
               <ProductCard

@@ -1,5 +1,5 @@
 import { Phone } from '@/types/commerce';
-import { PhoneFilterOptions } from '@/types/filters';
+import { PhoneFilterOptions, FilterSection } from '@/types/filters';
 import { commonManufacturers, commonFeatures, colorFilters } from './common-filters';
 
 export const phoneFilterOptions: PhoneFilterOptions = {
@@ -21,36 +21,36 @@ export const phoneFilterOptions: PhoneFilterOptions = {
 };
 
 // Filter sections for product list
-export const phoneFilters = [
+export const phoneFilters: FilterSection[] = [
   {
     title: 'Manufacturer',
     key: 'manufacturer',
     options: phoneFilterOptions.manufacturer,
-    type: 'checkbox'
+    type: 'checkbox' as const
   },
   {
     title: 'Memory',
     key: 'memory',
     options: phoneFilterOptions.memory,
-    type: 'checkbox'
+    type: 'checkbox' as const
   },
   {
     title: 'Price Range',
     key: 'price',
     options: phoneFilterOptions.price,
-    type: 'checkbox'
+    type: 'checkbox' as const
   },
   {
     title: 'Colors',
     key: 'colors',
     options: phoneFilterOptions.colors,
-    type: 'checkbox'
+    type: 'checkbox' as const
   },
   {
     title: '5G Features',
     key: 'features',
     options: phoneFilterOptions.features,
-    type: 'checkbox'
+    type: 'checkbox' as const
   }
 ];
 

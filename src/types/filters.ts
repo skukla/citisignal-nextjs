@@ -11,6 +11,14 @@ export interface FilterSection {
   type: 'checkbox' | 'radio';
 }
 
+export interface PhoneFilterOptions {
+  manufacturer: FilterOption[];
+  memory: FilterOption[];
+  price: FilterOption[];
+  features: FilterOption[];
+  colors: FilterOption[];
+}
+
 export const accessoryFilters: FilterSection[] = [
   {
     title: 'Category',

@@ -1,5 +1,6 @@
 'use client';
 
+import { type ReactElement } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
@@ -8,12 +9,12 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { giftCards, giftCardFilterOptions } from '@/data/gift-cards';
-import { giftCardFilters } from '@/data/filters';
+import { giftCardFilters } from '@/types/filters';
 import type { FilterOption } from '@/types/filters';
 import { Bars3Icon, GiftIcon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
-export default function GiftCardsPage() {
+export default function GiftCardsPage(): ReactElement {
   const {
     searchQuery,
     setSearchQuery,
