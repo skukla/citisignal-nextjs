@@ -29,8 +29,7 @@ export default function IconContainer({
   return (
     <div className={twMerge(
       'rounded-full flex items-center justify-center',
-      bgColor,
-      bgOpacity,
+      `${bgColor} ${bgOpacity}`,
       sizeClasses[size],
       centered && 'mx-auto',
       className
