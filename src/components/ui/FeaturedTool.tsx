@@ -61,11 +61,12 @@ export default function FeaturedTool({
           </p>
           <LinkButton
             href={buttonHref}
-            text={buttonText}
             variant={buttonVariant}
             size={buttonSize}
             showArrow
-          />
+          >
+            {buttonText}
+          </LinkButton>
         </div>
         <div className="bg-white rounded-xl p-6 shadow-sm">
           <CheckmarkFeatureList 
