@@ -3,17 +3,12 @@
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
 import type { ThemeTextColor } from '@/types/theme';
-
-interface FilterOption {
-  id: string;
-  name: string;
-  count?: number;
-}
+import type { FilterOption, FilterType } from '@/types/filters';
 
 interface FilterSectionProps {
   title: string;
   options: FilterOption[];
-  type: 'checkbox' | 'radio';
+  type: FilterType;
   name?: string;
   isExpanded: boolean;
   onToggle: () => void;
