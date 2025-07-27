@@ -8,6 +8,8 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { watches, watchFilterOptions } from '@/data/watches';
+import { watchFilters } from '@/data/filters';
+import { FilterOption } from '@/types/filters';
 import { ClockIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
@@ -25,32 +27,11 @@ export default function WatchesPage() {
     filteredAndSortedProducts
   } = useProductList({ products: watches });
 
-  const filters = [
-    {
-      title: 'Brand',
-      key: 'brand',
-      options: watchFilterOptions.manufacturer,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: watchFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Size',
-      key: 'size',
-      options: watchFilterOptions.sizes,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Features',
-      key: 'features',
-      options: watchFilterOptions.features,
-      type: 'checkbox' as const
-    }
-  ];
+  // Populate filter options from watchFilterOptions
+  const filters = watchFilters.map(filter => ({
+    ...filter,
+    options: (watchFilterOptions[filter.key as keyof typeof watchFilterOptions] || []) as FilterOption[]
+  }));
 
   return (
     <div className="min-h-screen">

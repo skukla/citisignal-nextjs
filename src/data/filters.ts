@@ -112,4 +112,31 @@ export const streamingFilters: FilterSection[] = [
     options: [],  // Will be populated from streamingFilterOptions.features
     type: 'checkbox'
   }
+];
+
+export const watchFilters: FilterSection[] = [
+  {
+    title: 'Brand',
+    key: 'brand',
+    options: [],  // Will be populated from watchFilterOptions.manufacturer
+    type: 'checkbox'
+  },
+  {
+    title: 'Price Range',
+    key: 'price',
+    options: [],  // Will be populated from watchFilterOptions.price
+    type: 'checkbox'
+  },
+  {
+    title: 'Size',
+    key: 'size',
+    options: [],  // Will be populated from watchFilterOptions.size
+    type: 'checkbox'
+  },
+  {
+    title: 'Features',
+    key: 'features',
+    options: [],  // Will be populated from watchFilterOptions.features
+    type: 'checkbox'
+  }
 ]; 
