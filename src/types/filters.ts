@@ -13,6 +13,13 @@ export interface FilterSection {
   type: FilterType;
 }
 
+export interface AccessoryFilterOptions {
+  manufacturer: FilterOption[];
+  compatibility: FilterOption[];
+  colors: FilterOption[];
+  price: FilterOption[];
+}
+
 export interface PhoneFilterOptions {
   manufacturer: FilterOption[];
   memory: FilterOption[];

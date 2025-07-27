@@ -3,8 +3,7 @@
 import { twMerge } from 'tailwind-merge';
 import type { ThemeTextColor, ThemeSize } from '@/types/theme';
 import type { HighlightFeature } from '@/types/features';
-
-type FeatureSpacing = 'sm' | 'md' | 'lg';
+import type { FeatureSpacing } from '@/types/layout';
 
 interface FeatureListProps {
   features: HighlightFeature[];

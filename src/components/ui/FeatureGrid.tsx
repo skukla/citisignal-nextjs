@@ -1,26 +1,31 @@
 'use client';
 
+import { twMerge } from 'tailwind-merge';
 import BaseGrid from './layout/BaseGrid';
-import type { BaseGridProps } from '@/types/grid';
-import { GRID_CONFIGS } from '@/types/grid';
+import type { GridConfig } from '@/types/layout';
+import { GRID_CONFIGS } from '@/types/layout';
 
-type FeatureGridProps = BaseGridProps;
+interface FeatureGridProps {
+  features: React.ReactNode[];
+  config?: GridConfig;
+  centered?: boolean;
+  className?: string;
+}
 
 export default function FeatureGrid({
-  children,
-  columns = GRID_CONFIGS.feature,
-  gap = 'lg',
+  features,
+  config = GRID_CONFIGS.features,
   centered,
   className
 }: FeatureGridProps) {
   return (
     <BaseGrid
-      columns={columns}
-      gap={gap}
+      columns={config.columns}
+      gap={config.gap}
       centered={centered}
-      className={className}
+      className={twMerge('w-full', className)}
     >
-      {children}
+      {features}
     </BaseGrid>
   );
 } 

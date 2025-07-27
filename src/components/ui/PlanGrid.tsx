@@ -1,24 +1,29 @@
 'use client';
 
+import { twMerge } from 'tailwind-merge';
 import BaseGrid from './layout/BaseGrid';
-import type { BaseGridProps } from '@/types/grid';
-import { GRID_CONFIGS } from '@/types/grid';
+import type { GridConfig } from '@/types/layout';
+import { GRID_CONFIGS } from '@/types/layout';
 
-type PlanGridProps = BaseGridProps;
+interface PlanGridProps {
+  children: React.ReactNode;
+  config?: GridConfig;
+  centered?: boolean;
+  className?: string;
+}
 
 export default function PlanGrid({
   children,
-  columns = GRID_CONFIGS.plan,
-  gap = 'md',
+  config = GRID_CONFIGS.plans,
   centered,
   className
 }: PlanGridProps) {
   return (
     <BaseGrid
-      columns={columns}
-      gap={gap}
+      columns={config.columns}
+      gap={config.gap}
       centered={centered}
-      className={className}
+      className={twMerge('w-full', className)}
     >
       {children}
     </BaseGrid>

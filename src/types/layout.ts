@@ -11,15 +11,44 @@ export interface GridColumns {
   xl?: number;
 }
 
+export type GridGap = 'sm' | 'md' | 'lg';
+export type FeatureSpacing = 'sm' | 'md' | 'lg';
+
 export interface GridConfig {
   columns: GridColumns;
-  gap?: 'sm' | 'md' | 'lg';
-  centered?: boolean;
+  gap: GridGap;
 }
 
+export const GRID_CONFIGS = {
+  features: {
+    columns: {
+      sm: 1,
+      md: 2,
+      lg: 3
+    },
+    gap: 'lg' as GridGap
+  },
+  articles: {
+    columns: {
+      sm: 1,
+      md: 2,
+      lg: 3
+    },
+    gap: 'lg' as GridGap
+  },
+  plans: {
+    columns: {
+      sm: 1,
+      md: 2,
+      lg: 3
+    },
+    gap: 'lg' as GridGap
+  }
+} as const;
+
 export interface SectionConfig {
+  bgColor?: string;
   maxWidth?: boolean;
   padding?: boolean;
-  bgColor?: string;
   className?: string;
 } 

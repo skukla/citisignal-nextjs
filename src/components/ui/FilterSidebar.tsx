@@ -6,22 +6,10 @@ import useFilters from '@/hooks/useFilters';
 import FilterSection from './FilterSection';
 import FilterTag from './FilterTag';
 import type { ThemeTextColor } from '@/types/theme';
-
-interface FilterOption {
-  id: string;
-  name: string;
-  count?: number;
-}
-
-interface FilterSection {
-  title: string;
-  key: string;
-  options: FilterOption[];
-  type: 'checkbox' | 'radio';
-}
+import type { FilterSection as FilterSectionType } from '@/types/filters';
 
 interface FilterSidebarProps {
-  filters: FilterSection[];
+  filters: FilterSectionType[];
   activeFilters: Record<string, string[]>;
   onFilterChange: (newFilters: Record<string, string[]>) => void;
   titleColor?: ThemeTextColor;

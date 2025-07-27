@@ -1,8 +1,10 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
 import type { SectionConfig } from '@/types/layout';
+import { ThemeTextSize } from '@/types/theme';
 
 interface BaseSectionProps extends SectionConfig {
   children: React.ReactNode;
@@ -11,8 +13,8 @@ interface BaseSectionProps extends SectionConfig {
     description?: string;
     action?: React.ReactNode;
     centered?: boolean;
-    titleSize?: 'sm' | 'md' | 'lg';
-    descriptionSize?: 'sm' | 'md' | 'lg';
+    titleSize?: ThemeTextSize;
+    descriptionSize?: ThemeTextSize;
     className?: string;
   };
   footer?: React.ReactNode;
