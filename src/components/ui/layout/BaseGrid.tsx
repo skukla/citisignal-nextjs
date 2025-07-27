@@ -18,12 +18,6 @@ interface BaseGridProps {
   className?: string;
 }
 
-const gapClasses: Record<GridGap, string> = {
-  sm: 'gap-4',
-  md: 'gap-6',
-  lg: 'gap-8'
-} as const;
-
 export default function BaseGrid({
   children,
   columns = {
@@ -35,6 +29,13 @@ export default function BaseGrid({
   centered = false,
   className
 }: BaseGridProps) {
+  const gapClasses = {
+    sm: 'gap-2',
+    md: 'gap-4',
+    lg: 'gap-6',
+    xl: 'gap-8'
+  };
+
   const getColumnsClass = () => {
     const classes = [];
     if (columns.sm) classes.push(`grid-cols-${columns.sm}`);

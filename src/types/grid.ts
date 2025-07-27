@@ -1,6 +1,7 @@
 import type { GridColumns } from '@/components/ui/layout/BaseGrid';
 
-export type GridGap = 'sm' | 'md' | 'lg';
+// Grid gap sizes (in Tailwind units)
+export type GridGap = 'sm' | 'md' | 'lg' | 'xl';
 
 export interface BaseGridProps {
   children: React.ReactNode;
@@ -12,6 +13,7 @@ export interface BaseGridProps {
 
 // Common grid configurations
 export const GRID_CONFIGS = {
+  // Content grids (3 columns max)
   article: {
     sm: 1,
     md: 2,
@@ -26,29 +28,23 @@ export const GRID_CONFIGS = {
     sm: 1,
     md: 2
   },
-  product: {
-    sm: 1,
-    md: 2,
-    lg: 4
-  },
+  // Feature grids (4 columns max)
   feature: {
     sm: 1,
     md: 2,
     lg: 4
   },
+  // Plan grids (3 columns max with xl breakpoint)
   plan: {
     sm: 1,
     lg: 2,
     xl: 3
-  },
-  solution: {
-    sm: 1,
-    md: 2,
-    lg: 4
-  },
-  tool: {
-    sm: 1,
-    md: 2,
-    lg: 4
   }
+} as const;
+
+// Aliases for common grid configurations
+export const GRID_ALIASES = {
+  product: GRID_CONFIGS.feature,
+  solution: GRID_CONFIGS.feature,
+  tool: GRID_CONFIGS.feature
 } as const; 
