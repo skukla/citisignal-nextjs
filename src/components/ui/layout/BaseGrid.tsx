@@ -1,19 +1,12 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-import type { GridGap } from '@/types/grid';
-
-export interface GridColumns {
-  sm?: number;
-  md?: number;
-  lg?: number;
-  xl?: number;
-}
+import type { GridColumns } from '@/types/layout';
 
 interface BaseGridProps {
   children: React.ReactNode;
   columns?: GridColumns;
-  gap?: GridGap;
+  gap?: 'sm' | 'md' | 'lg';
   centered?: boolean;
   className?: string;
 }

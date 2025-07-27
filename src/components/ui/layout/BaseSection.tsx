@@ -1,10 +1,10 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
+import type { SectionConfig } from '@/types/layout';
 
-interface BaseSectionProps {
+interface BaseSectionProps extends SectionConfig {
   children: React.ReactNode;
   header?: {
     title: string;
@@ -16,10 +16,6 @@ interface BaseSectionProps {
     className?: string;
   };
   footer?: React.ReactNode;
-  bgColor?: string;
-  maxWidth?: boolean;
-  padding?: boolean;
-  className?: string;
 }
 
 export default function BaseSection({
