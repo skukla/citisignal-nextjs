@@ -1,6 +1,9 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import type { ThemeTextColor, ThemeSize } from '@/types/theme';
+
+type FeatureSpacing = 'sm' | 'md' | 'lg';
 
 interface Feature {
   highlight: string;
@@ -10,10 +13,10 @@ interface Feature {
 
 interface FeatureListProps {
   features: Feature[];
-  textColor?: string;
-  detailsColor?: string;
-  dotSize?: 'sm' | 'md' | 'lg';
-  spacing?: 'sm' | 'md' | 'lg';
+  textColor?: ThemeTextColor;
+  detailsColor?: ThemeTextColor;
+  dotSize?: ThemeSize;
+  spacing?: FeatureSpacing;
   detailsIndent?: string;
   className?: string;
 }
