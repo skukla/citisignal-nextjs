@@ -25,6 +25,9 @@ export default function ActivationSection() {
         buttonText="Start Your Activation"
         supportText="Questions? Call us at"
         supportPhone="1-800-CITI-SIG"
+        gradient="from-purple-50 to-purple-100"
+        buttonColor="#8821f4"
+        iconColor="text-green-500"
       />
     </BaseSection>
   );

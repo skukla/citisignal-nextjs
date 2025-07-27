@@ -3,6 +3,9 @@
 import { ElementType } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Button from './Button';
+import FeatureItem from './FeatureItem';
+import SupportText from './SupportText';
+import { ThemeGradient, ThemeTextColor } from '../../types/theme';
 
 interface Feature {
   text: string;
@@ -17,9 +20,9 @@ interface CallToActionProps {
   buttonAction?: () => void;
   supportText?: string;
   supportPhone?: string;
-  gradient?: string;
+  gradient?: ThemeGradient;
   buttonColor?: string;
-  iconColor?: string;
+  iconColor?: ThemeTextColor;
   className?: string;
 }
 
@@ -56,12 +59,12 @@ export default function CallToAction({
           {features.length > 0 && (
             <ul className="space-y-2 text-gray-600">
               {features.map((feature, index) => (
-                <li key={index} className="flex items-center">
-                  {feature.icon && (
-                    <feature.icon className={`w-5 h-5 ${iconColor} mr-3`} />
-                  )}
-                  {feature.text}
-                </li>
+                <FeatureItem
+                  key={index}
+                  text={feature.text}
+                  icon={feature.icon}
+                  iconColor={iconColor}
+                />
               ))}
             </ul>
           )}
@@ -78,18 +81,10 @@ export default function CallToAction({
             >
               {buttonText}
             </Button>
-            {(supportText || supportPhone) && (
-              <div className="text-center lg:text-left">
-                <p className="text-sm text-gray-500">
-                  {supportText}
-                  {supportPhone && (
-                    <span className="font-medium text-gray-900">
-                      {supportText ? ' ' : ''}{supportPhone}
-                    </span>
-                  )}
-                </p>
-              </div>
-            )}
+            <SupportText
+              text={supportText}
+              phone={supportPhone}
+            />
           </div>
         </div>
       </div>
