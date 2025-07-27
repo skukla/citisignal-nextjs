@@ -1,8 +1,15 @@
 'use client';
 
-import { StarIcon, CheckIcon, HeartIcon } from '@heroicons/react/24/solid';
-import Button from './Button';
+import { twMerge } from 'tailwind-merge';
 import ProductBadge from './ProductBadge';
+import PlanCardHeader from './PlanCardHeader';
+import PlanCardPricing from './PlanCardPricing';
+import RatingStars from './RatingStars';
+import CoreFeatures from './CoreFeatures';
+import PlanDetails from './PlanDetails';
+import CheckmarkFeatureList from './CheckmarkFeatureList';
+import StreamingServices from './StreamingServices';
+import PlanCardActions from './PlanCardActions';
 import useWishlist from '@/hooks/useWishlist';
 
 interface PlanCardProps {
@@ -24,6 +31,9 @@ interface PlanCardProps {
   contractRequired: boolean;
   networkPriority: string;
   onWishlistChange?: (planId: string, isWishlisted: boolean) => void;
+  onSelect?: () => void;
+  onLearnMore?: () => void;
+  className?: string;
 }
 
 export default function PlanCard({
@@ -44,17 +54,34 @@ export default function PlanCard({
   isSale,
   contractRequired,
   networkPriority,
-  onWishlistChange
+  onWishlistChange,
+  onSelect,
+  onLearnMore,
+  className
 }: PlanCardProps) {
   const { isWishlisted, toggleWishlist } = useWishlist({
-    productId: name, // Using name as ID since plans don't have explicit IDs
+    productId: name,
     onWishlistChange: onWishlistChange && ((id, isWishlisted) => onWishlistChange(id.toString(), isWishlisted))
   });
 
+  const coreFeatures = [
+    { value: data, label: 'Data' },
+    { value: talk, label: 'Talk' },
+    { value: text, label: 'Text' }
+  ];
+
+  const planDetails = [
+    { label: 'Mobile Hotspot', value: hotspot },
+    { label: 'Network Priority', value: networkPriority },
+    { label: 'Contract Required', value: contractRequired ? 'Yes' : 'No' }
+  ];
+
   return (
-    <div className={`bg-white border rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 relative h-full flex flex-col ${
-      isPopular ? 'border-purple-500 ring-2 ring-purple-500 ring-opacity-20' : 'border-gray-200'
-    }`}>
+    <div className={twMerge(
+      'bg-white border rounded-xl shadow-sm hover:shadow-lg transition-shadow duration-300 relative h-full flex flex-col',
+      isPopular ? 'border-purple-500 ring-2 ring-purple-500 ring-opacity-20' : 'border-gray-200',
+      className
+    )}>
       {/* Popular Badge */}
       {isPopular && (
         <div className="absolute -top-3 left-1/2 transform -translate-x-1/2">
@@ -62,137 +89,63 @@ export default function PlanCard({
         </div>
       )}
 
-      {/* Header */}
+      {/* Header Section */}
       <div className="p-6 border-b border-gray-100">
-        <div className="h-[100px] flex flex-col mb-6">
-          <div className="flex justify-between items-start gap-4">
-            <div>
-              <h3 className="text-xl font-bold text-gray-900 mb-1">{name}</h3>
-              <div className="flex items-center gap-2 flex-wrap">
-                <p className="text-sm text-gray-600 capitalize">{type} Plan</p>
-                {isNew && <ProductBadge variant="new" />}
-                {isSale && originalPrice && (
-                  <ProductBadge
-                    variant="discount"
-                    originalPrice={originalPrice}
-                    price={price}
-                  />
-                )}
-              </div>
-            </div>
-            <button
-              onClick={toggleWishlist}
-              className="p-1 hover:bg-gray-50 rounded-full transition-colors flex-shrink-0"
-            >
-              <HeartIcon className={`w-5 h-5 ${isWishlisted ? 'fill-red-500 text-red-500' : 'text-gray-400'}`} />
-            </button>
-          </div>
-        </div>
+        <PlanCardHeader
+          name={name}
+          type={type}
+          isNew={isNew}
+          isSale={isSale}
+          originalPrice={originalPrice}
+          price={price}
+          isWishlisted={isWishlisted}
+          onWishlistToggle={toggleWishlist}
+          className="mb-6"
+        />
 
-        {/* Pricing */}
-        <div className="h-[48px] mb-6 flex flex-col justify-end">
-          <div className="flex items-baseline">
-            <span className="text-3xl font-bold text-gray-900">${price}</span>
-            <span className="text-gray-600 ml-1">/month</span>
-          </div>
-        </div>
+        <PlanCardPricing
+          price={price}
+          className="mb-6"
+        />
 
-        {/* Rating */}
-        <div className="flex items-center">
-          <div className="flex items-center gap-0.5">
-            {[...Array(5)].map((_, i) => (
-              <StarIcon
-                key={i}
-                className={`w-4 h-4 ${i < Math.floor(rating / 20) ? 'text-yellow-400' : 'text-gray-300'}`}
-              />
-            ))}
-          </div>
-          <span className="text-sm text-gray-600 ml-2">
-            {(rating / 20).toFixed(1)} ({reviews} reviews)
-          </span>
-        </div>
+        <RatingStars
+          rating={rating}
+          reviews={reviews}
+        />
       </div>
 
-      {/* Plan Details */}
+      {/* Plan Details Section */}
       <div className="p-6 flex-grow flex flex-col">
-        {/* Core Features */}
-        <div className="grid grid-cols-3 gap-2 mb-4 text-center h-[52px]">
-          <div className="flex flex-col justify-center">
-            <div className="text-sm font-bold text-gray-900">{data}</div>
-            <div className="text-[11px] text-gray-600 mt-0.5">Data</div>
-          </div>
-          <div className="flex flex-col justify-center">
-            <div className="text-sm font-bold text-gray-900">{talk}</div>
-            <div className="text-[11px] text-gray-600 mt-0.5">Talk</div>
-          </div>
-          <div className="flex flex-col justify-center">
-            <div className="text-sm font-bold text-gray-900">{text}</div>
-            <div className="text-[11px] text-gray-600 mt-0.5">Text</div>
-          </div>
-        </div>
+        <CoreFeatures
+          features={coreFeatures}
+          className="mb-4"
+        />
 
-        {/* Additional Details */}
-        <div className="space-y-1.5 mb-4 text-sm">
-          <div className="flex justify-between">
-            <span className="text-gray-600">Mobile Hotspot</span>
-            <span className="text-gray-900">{hotspot}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">Network Priority</span>
-            <span className="text-gray-900 capitalize">{networkPriority}</span>
-          </div>
-          <div className="flex justify-between">
-            <span className="text-gray-600">Contract Required</span>
-            <span className="text-gray-900">{contractRequired ? 'Yes' : 'No'}</span>
-          </div>
-        </div>
+        <PlanDetails
+          details={planDetails}
+          className="mb-4"
+        />
 
-        {/* Features */}
-        <div className="mb-4">
-          <h4 className="font-semibold text-gray-900 mb-2">Included Features</h4>
-          <ul className="space-y-1.5">
-            {features.map((feature, index) => (
-              <li key={index} className="flex items-start text-sm text-gray-600">
-                <CheckIcon className="w-3.5 h-3.5 text-green-500 mr-1.5 flex-shrink-0 mt-0.5" />
-                <span className="leading-5">{feature}</span>
-              </li>
-            ))}
-          </ul>
-        </div>
+        <CheckmarkFeatureList
+          features={features.map(feature => ({
+            title: feature,
+            description: ''
+          }))}
+          size="sm"
+          titleColor="text-gray-600"
+          className="mb-4"
+        />
 
-        {/* Streaming Services */}
         <div className="mt-auto">
-          <div className="mb-4">
-            <h4 className="font-semibold text-gray-900 mb-2">Streaming Included</h4>
-            <div className="flex flex-wrap gap-1">
-              {streaming.map((service, index) => (
-                <span
-                  key={index}
-                  className="bg-purple-50 text-purple-700 text-[11px] font-medium px-1.5 py-0.5 rounded"
-                >
-                  {service}
-                </span>
-              ))}
-            </div>
-          </div>
+          <StreamingServices
+            services={streaming}
+            className="mb-8"
+          />
 
-          {/* Action Buttons */}
-          <div className="space-y-2 mt-8">
-            <Button
-              variant="primary"
-              fullWidth
-              size="md"
-            >
-              Select Plan
-            </Button>
-            <Button
-              variant="outline"
-              fullWidth
-              size="md"
-            >
-              Learn More
-            </Button>
-          </div>
+          <PlanCardActions
+            onPrimaryClick={onSelect}
+            onSecondaryClick={onLearnMore}
+          />
         </div>
       </div>
     </div>

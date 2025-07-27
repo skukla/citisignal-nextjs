@@ -9,51 +9,14 @@ import getPlanFeatures from '@/components/ui/PlanFeatureList';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import PlanComparison from '@/components/sections/PlanComparisonSection';
-import { plans, planFilterOptions } from '@/data/plans';
 import { SignalIcon, Bars3Icon } from '@heroicons/react/24/outline';
-import { useProductList } from '@/hooks/useProductList';
-
-const planTypes = [
-  { id: 'basic', name: 'Basic' },
-  { id: 'premium', name: 'Premium' },
-  { id: 'unlimited', name: 'Unlimited' }
-];
-
-const planFeatures = [
-  {
-    name: 'Unlimited Talk & Text',
-    description: 'Unlimited nationwide calling and messaging',
-    availableIn: ['basic', 'premium', 'unlimited']
-  },
-  {
-    name: 'Mobile Hotspot',
-    description: 'Share your data with other devices',
-    availableIn: ['premium', 'unlimited']
-  },
-  {
-    name: 'Premium Data',
-    description: 'No data slowdowns regardless of usage',
-    availableIn: ['unlimited']
-  },
-  {
-    name: 'International Features',
-    description: 'Text and data in 200+ countries',
-    availableIn: ['premium', 'unlimited']
-  },
-  {
-    name: 'Streaming Quality',
-    description: 'HD streaming on supported services',
-    availableIn: ['premium', 'unlimited']
-  },
-  {
-    name: 'Network Priority',
-    description: 'Priority during network congestion',
-    availableIn: ['unlimited']
-  }
-];
+import { usePlans } from '@/hooks/usePlans';
+import { planTypes, planFeatures, planFilters } from '@/data/plans';
 
 export default function PlansPage() {
   const {
+    plans,
+    filteredPlans,
     searchQuery,
     setSearchQuery,
     sortBy,
@@ -63,35 +26,10 @@ export default function PlansPage() {
     handleClearFilters,
     handleLoadMore,
     hasMoreItems,
-    filteredAndSortedProducts
-  } = useProductList({ products: plans });
-
-  const filters = [
-    {
-      title: 'Plan Type',
-      key: 'type',
-      options: planFilterOptions.type,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: planFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Data Amount',
-      key: 'data',
-      options: planFilterOptions.data,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Features',
-      key: 'features',
-      options: planFilterOptions.features,
-      type: 'checkbox' as const
-    }
-  ];
+    handleWishlistChange,
+    handleSelectPlan,
+    handleLearnMore
+  } = usePlans();
 
   return (
     <div className="min-h-screen">
@@ -101,7 +39,7 @@ export default function PlansPage() {
         title="Wireless Plans"
         description="Choose the perfect wireless plan for your needs. From unlimited data to family plans, we have flexible options with no hidden fees and the reliability of our nationwide network."
         icon={SignalIcon}
-        filters={filters}
+        filters={planFilters}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         sortBy={sortBy}
@@ -110,12 +48,12 @@ export default function PlansPage() {
         onFilterChange={handleFilterChange}
         onClearFilters={handleClearFilters}
         totalCount={plans.length}
-        filteredCount={filteredAndSortedProducts.length}
+        filteredCount={filteredPlans.length}
         emptyStateIcon={Bars3Icon}
       >
         <div className="space-y-12">
           <PlanGrid>
-            {filteredAndSortedProducts.map((plan) => (
+            {filteredPlans.map((plan) => (
               <PlanCard
                 key={plan.id}
                 name={plan.name}
@@ -141,6 +79,9 @@ export default function PlansPage() {
                 isSale={plan.original_price ? plan.original_price > plan.price : false}
                 contractRequired={plan.contract_required}
                 networkPriority={plan.network_priority}
+                onWishlistChange={handleWishlistChange}
+                onSelect={() => handleSelectPlan(plan.id)}
+                onLearnMore={() => handleLearnMore(plan.id)}
               />
             ))}
           </PlanGrid>
@@ -151,7 +92,7 @@ export default function PlansPage() {
           />
 
           {/* Only show comparison when we have products */}
-          {filteredAndSortedProducts.length > 0 && (
+          {filteredPlans.length > 0 && (
             <PlanComparison
               planTypes={planTypes}
               features={planFeatures}
