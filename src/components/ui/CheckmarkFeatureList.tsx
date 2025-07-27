@@ -3,14 +3,10 @@
 import { twMerge } from 'tailwind-merge';
 import { CheckIcon } from '@heroicons/react/24/outline';
 import type { ThemeTextColor, ThemeBgColor, ThemeSize } from '@/types/theme';
-
-interface Feature {
-  title: string;
-  description: string;
-}
+import type { CheckmarkFeature } from '@/types/features';
 
 interface CheckmarkFeatureListProps {
-  features: Feature[];
+  features: CheckmarkFeature[];
   size?: ThemeSize;
   iconColor?: ThemeTextColor;
   iconBgColor?: ThemeBgColor;
@@ -43,7 +39,10 @@ export default function CheckmarkFeatureList({
   return (
     <div className={twMerge('space-y-4', className)}>
       {features.map((feature, index) => (
-        <div key={index} className="flex items-center">
+        <div 
+          key={index} 
+          className="flex items-center"
+        >
           <div className={twMerge(
             'rounded-full flex items-center justify-center mr-4',
             containerSizes[size],

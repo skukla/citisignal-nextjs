@@ -5,17 +5,13 @@ import { twMerge } from 'tailwind-merge';
 import Button from './Button';
 import FeatureItem from './FeatureItem';
 import SupportText from './SupportText';
-import { ThemeGradient, ThemeTextColor } from '../../types/theme';
-
-interface Feature {
-  text: string;
-  icon?: ElementType;
-}
+import type { ThemeGradient, ThemeTextColor } from '@/types/theme';
+import type { CallToActionFeature } from '@/types/features';
 
 interface CallToActionProps {
   title: string;
   description: string;
-  features?: Feature[];
+  features?: CallToActionFeature[];
   buttonText: string;
   buttonAction?: () => void;
   supportText?: string;

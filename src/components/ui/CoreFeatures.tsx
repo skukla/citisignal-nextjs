@@ -1,13 +1,9 @@
 import { twMerge } from 'tailwind-merge';
 import type { ThemeTextColor } from '@/types/theme';
-
-interface Feature {
-  value: string;
-  label: string;
-}
+import type { CoreFeature } from '@/types/features';
 
 interface CoreFeaturesProps {
-  features: Feature[];
+  features: CoreFeature[];
   valueColor?: ThemeTextColor;
   labelColor?: ThemeTextColor;
   className?: string;
@@ -25,7 +21,10 @@ export default function CoreFeatures({
       className
     )}>
       {features.map((feature, index) => (
-        <div key={index} className="flex flex-col justify-center">
+        <div 
+          key={index} 
+          className="flex flex-col justify-center"
+        >
           <div className={twMerge('text-sm font-bold', valueColor)}>
             {feature.value}
           </div>

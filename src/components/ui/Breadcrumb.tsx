@@ -4,14 +4,10 @@ import { twMerge } from 'tailwind-merge';
 import BreadcrumbItem from './BreadcrumbItem';
 import HomeLink from './HomeLink';
 import type { ThemeTextColor } from '@/types/theme';
-
-interface BreadcrumbItem {
-  name: string;
-  href?: string;
-}
+import type { BreadcrumbItem as BreadcrumbItemType } from '@/types/navigation';
 
 interface BreadcrumbProps {
-  items: BreadcrumbItem[];
+  items: BreadcrumbItemType[];
   textColor?: ThemeTextColor;
   hoverColor?: ThemeTextColor;
   separatorColor?: ThemeTextColor;
@@ -32,15 +28,30 @@ export default function Breadcrumb({
       itemScope
       itemType="https://schema.org/BreadcrumbList"
     >
-      <ol className="flex items-center space-x-2" itemProp="itemListElement">
-        <li itemScope itemType="https://schema.org/ListItem" itemProp="itemListElement">
+      <ol 
+        className="flex items-center space-x-2" 
+        itemProp="itemListElement">
+        <li 
+          itemScope 
+          itemType="https://schema.org/ListItem" 
+          itemProp="itemListElement"
+        >
           <HomeLink
             textColor={textColor}
             hoverColor={hoverColor}
           />
-          <meta itemProp="position" content="1" />
-          <meta itemProp="name" content="Home" />
-          <meta itemProp="item" content="/" />
+          <meta 
+          itemProp="position" 
+          content="1" 
+          />
+          <meta 
+          itemProp="name" 
+          content="Home" 
+          />
+          <meta 
+          itemProp="item" 
+          content="/" 
+          />
         </li>
 
         {items.map((item, index) => (
