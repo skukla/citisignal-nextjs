@@ -34,8 +34,7 @@ export default function ArticleCard({
           image={image ? { url: image, label: title } : undefined}
           aspectRatio="video"
           placeholderText="Article Image"
-          gradientFrom="from-purple-100"
-          gradientTo="to-purple-50"
+          bgColor="bg-purple-100"
           textColor="text-purple-600"
           className="mb-4"
         />

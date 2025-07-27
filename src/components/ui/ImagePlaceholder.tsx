@@ -6,7 +6,7 @@ import type {
   ThemeGradient, 
   ThemeGradientDirection,
   ThemeAspectRatio,
-  ThemeTextSize 
+  ThemeTextSize,
 } from '@/types/theme';
 
 interface ImagePlaceholderProps {
@@ -28,7 +28,7 @@ export default function ImagePlaceholder({
   aspectRatio = 'square',
   placeholderText,
   textSize = 'sm',
-  gradient = 'from-gray-200 to-gray-300',
+  gradient = 'from-purple-100 to-purple-200',
   gradientDirection = 'to-br',
   textColor = 'text-gray-500',
   className
