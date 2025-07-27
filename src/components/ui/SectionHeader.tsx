@@ -1,15 +1,16 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import type { ThemeSize, ThemeTextColor } from '@/types/theme';
 
 interface SectionHeaderProps {
   title: string;
   description?: string;
   centered?: boolean;
-  titleSize?: 'sm' | 'md' | 'lg';
-  descriptionSize?: 'sm' | 'md' | 'lg';
-  titleColor?: string;
-  descriptionColor?: string;
+  titleSize?: ThemeSize;
+  descriptionSize?: ThemeSize;
+  titleColor?: ThemeTextColor;
+  descriptionColor?: ThemeTextColor;
   action?: React.ReactNode;
   className?: string;
 }

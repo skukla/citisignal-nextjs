@@ -3,20 +3,11 @@
 import { twMerge } from 'tailwind-merge';
 import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
-import type { SectionConfig } from '@/types/layout';
-import { ThemeTextSize } from '@/types/theme';
+import type { SectionConfig, SectionHeaderConfig } from '@/types/layout';
 
 interface BaseSectionProps extends SectionConfig {
   children: React.ReactNode;
-  header?: {
-    title: string;
-    description?: string;
-    action?: React.ReactNode;
-    centered?: boolean;
-    titleSize?: ThemeTextSize;
-    descriptionSize?: ThemeTextSize;
-    className?: string;
-  };
+  header?: SectionHeaderConfig;
   footer?: React.ReactNode;
 }
 

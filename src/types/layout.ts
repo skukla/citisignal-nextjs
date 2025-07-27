@@ -1,3 +1,5 @@
+import type { ThemeTextSize, ThemeSize } from './theme';
+
 export interface ComparisonHeader {
   label: React.ReactNode;
   width?: number;
@@ -11,8 +13,8 @@ export interface GridColumns {
   xl?: number;
 }
 
-export type GridGap = 'sm' | 'md' | 'lg';
-export type FeatureSpacing = 'sm' | 'md' | 'lg';
+export type GridGap = ThemeSize;
+export type FeatureSpacing = ThemeSize;
 
 export interface GridConfig {
   columns: GridColumns;
@@ -45,6 +47,16 @@ export const GRID_CONFIGS = {
     gap: 'lg' as GridGap
   }
 } as const;
+
+export interface SectionHeaderConfig {
+  title: string;
+  description?: string;
+  action?: React.ReactNode;
+  centered?: boolean;
+  titleSize?: ThemeSize;
+  descriptionSize?: ThemeSize;
+  className?: string;
+}
 
 export interface SectionConfig {
   bgColor?: string;
