@@ -5,9 +5,9 @@ import SearchBar from '@/components/ui/SearchBar';
 import CartButton from '@/components/ui/CartButton';
 import IconLink from '@/components/ui/IconLink';
 import Button from '@/components/ui/Button';
+import useCart from '@/hooks/useCart';
 
 interface HeaderActionsProps {
-  cartCount: number;
   onSearch: (value: string) => void;
   isMenuOpen: boolean;
   onMenuToggle: () => void;
@@ -15,12 +15,13 @@ interface HeaderActionsProps {
 }
 
 export default function HeaderActions({
-  cartCount,
   onSearch,
   isMenuOpen,
   onMenuToggle,
   className
 }: HeaderActionsProps) {
+  const { itemCount } = useCart();
+
   return (
     <div className={`flex items-center space-x-4 ${className || ''}`}>
       {/* Search */}
@@ -31,7 +32,7 @@ export default function HeaderActions({
       />
 
       {/* Cart */}
-      <CartButton itemCount={cartCount} />
+      <CartButton itemCount={itemCount} />
 
       {/* User Account */}
       <IconLink
