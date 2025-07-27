@@ -7,8 +7,11 @@ import ProductCard from '@/components/ui/ProductCard';
 import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
-import { phones, phoneFilterOptions } from '@/data/phones';
-import { DevicePhoneMobileIcon, Bars3Icon, DevicePhoneMobileIcon as PhoneIcon, CreditCardIcon } from '@heroicons/react/24/outline';
+import { phones, phoneFilters } from '@/data/phones';
+import { techReviews } from '@/data/tech-reviews';
+import { buyingGuides } from '@/data/buying-guides';
+import { phoneTips } from '@/data/tips';
+import { DevicePhoneMobileIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 import ContentSection from '@/components/ui/ContentSection';
 import TechReviewGrid from '@/components/ui/TechReviewGrid';
@@ -29,96 +32,6 @@ export default function PhonesPage() {
     filteredAndSortedProducts
   } = useProductList({ products: phones });
 
-  const reviews = [
-    {
-      title: 'iPhone 15 Pro vs Galaxy S24 Ultra: The Ultimate Camera Showdown',
-      description: 'We put these flagship phones head-to-head in real-world photography tests. See which one comes out on top in our detailed comparison.',
-      href: '/blog/iphone-15-pro-vs-galaxy-s24-ultra'
-    },
-    {
-      title: 'The Best Budget Phones of 2024',
-      description: 'Amazing phones don\'t have to break the bank. Discover our top picks for phones under $500 that deliver incredible value.',
-      href: '/blog/best-budget-phones-2024'
-    },
-    {
-      title: '5G Speed Test: Real World Results',
-      description: 'We tested 5G speeds across different phones and locations. See which devices offer the fastest connectivity in your area.',
-      href: '/blog/5g-speed-test-results'
-    }
-  ];
-
-  const guides = [
-    {
-      icon: PhoneIcon,
-      title: 'How to Choose Your Perfect Phone',
-      description: 'From screen size to battery life, learn what features matter most for your needs.',
-      href: '/guides/choosing-phone'
-    },
-    {
-      icon: CreditCardIcon,
-      title: 'Understanding Phone Financing',
-      description: 'Compare payment plans, trade-in options, and find the best way to finance your new phone.',
-      href: '/guides/phone-financing'
-    }
-  ];
-
-  const tips = [
-    {
-      category: 'Photography',
-      title: 'Master Your Phone\'s Camera',
-      description: 'Pro tips for taking stunning photos with any smartphone camera.',
-      href: '/tips/master-phone-camera',
-      categoryColor: 'purple'
-    },
-    {
-      category: 'Battery Life',
-      title: 'Extend Your Battery Life',
-      description: 'Simple tricks to make your phone\'s battery last all day and beyond.',
-      href: '/tips/extend-battery-life',
-      categoryColor: 'green'
-    },
-    {
-      category: 'Security',
-      title: 'Keep Your Phone Secure',
-      description: 'Essential security settings and practices for protecting your device.',
-      href: '/tips/phone-security',
-      categoryColor: 'blue'
-    }
-  ];
-
-  const filters = [
-    {
-      title: 'Manufacturer',
-      key: 'manufacturer',
-      options: phoneFilterOptions.manufacturer,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Memory',
-      key: 'memory',
-      options: phoneFilterOptions.memory,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: phoneFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Colors',
-      key: 'colors',
-      options: phoneFilterOptions.colors,
-      type: 'checkbox' as const
-    },
-    {
-      title: '5G Features',
-      key: 'features',
-      options: phoneFilterOptions.features,
-      type: 'checkbox' as const
-    }
-  ];
-
   return (
     <div className="min-h-screen">
       <Header />
@@ -127,7 +40,7 @@ export default function PhonesPage() {
         title="Phones"
         description="Find your perfect phone from our wide selection of the latest smartphones. From flagship models to budget-friendly options, we have the right device for you."
         icon={DevicePhoneMobileIcon}
-        filters={filters}
+        filters={phoneFilters}
         searchQuery={searchQuery}
         onSearchChange={setSearchQuery}
         sortBy={sortBy}
@@ -140,7 +53,11 @@ export default function PhonesPage() {
         emptyStateIcon={Bars3Icon}
       >
         <div className="space-y-12">
-          <ProductGrid columns={{ sm: 1, md: 2, lg: 3 }} gap="md">
+          <ProductGrid 
+            columns={{ sm: 1, md: 2, lg: 3 }} 
+            gap="md"
+            className="grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4"
+          >
             {filteredAndSortedProducts.map((product) => (
               <ProductCard
                 key={product.sku}
@@ -171,8 +88,10 @@ export default function PhonesPage() {
               {/* Featured Tech Reviews */}
               <ContentSection
                 title="Latest Tech Reviews"
+                titleColor="text-gray-900"
+                spacing="lg"
               >
-                <TechReviewGrid reviews={reviews} />
+                <TechReviewGrid reviews={techReviews} />
               </ContentSection>
 
               {/* Buying Guides */}
@@ -180,8 +99,10 @@ export default function PhonesPage() {
                 title="Phone Buying Guides"
                 actionLabel='View All Guides'
                 actionHref='/guides'
+                buttonVariant="primary"
+                spacing="lg"
               >
-                <BuyingGuideGrid guides={guides} />
+                <BuyingGuideGrid guides={buyingGuides} />
               </ContentSection>
 
               {/* Tips & Tricks */}
@@ -189,8 +110,10 @@ export default function PhonesPage() {
                 title="Tips & Tricks"
                 actionLabel="View All Tips"
                 actionHref="/tips"
+                buttonVariant="secondary"
+                spacing="lg"
               >
-                <TipGrid tips={tips} />
+                <TipGrid tips={phoneTips} />
               </ContentSection>
             </div>
           )}
