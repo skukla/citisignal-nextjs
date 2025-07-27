@@ -1,32 +1,27 @@
-import { Phone, colorOptions } from '@/types/commerce';
-import type { FilterSection } from '@/types/phones';
+import { Phone } from '@/types/commerce';
+import { PhoneFilterOptions } from '@/types/filters';
+import { commonManufacturers, commonFeatures, colorFilters } from './common-filters';
 
-export const phoneFilterOptions = {
-  manufacturer: [
-    { id: 'apple', name: 'Apple' },
-    { id: 'samsung', name: 'Samsung' },
-    { id: 'citisignal', name: 'CitiSignal' }
-  ],
+export const phoneFilterOptions: PhoneFilterOptions = {
+  manufacturer: commonManufacturers,
   memory: [
     { id: '128gb', name: '128GB' },
     { id: '256gb', name: '256GB' },
     { id: '512gb', name: '512GB' },
     { id: '1tb', name: '1TB' }
   ],
-  colors: colorOptions,
   price: [
-    { id: 'under-700', name: 'Under $700' },
-    { id: '700-1000', name: '$700 - $1000' },
+    { id: 'under-500', name: 'Under $500' },
+    { id: '500-800', name: '$500 - $800' },
+    { id: '800-1000', name: '$800 - $1000' },
     { id: 'over-1000', name: 'Over $1000' }
   ],
-  features: [
-    { id: 'extended-capacity-5g', name: 'Extended Capacity 5G' },
-    { id: 'extended-range-5g', name: 'Extended Range 5G' }
-  ]
+  features: commonFeatures.phones,
+  colors: colorFilters
 };
 
 // Filter sections for product list
-export const phoneFilters: FilterSection[] = [
+export const phoneFilters = [
   {
     title: 'Manufacturer',
     key: 'manufacturer',

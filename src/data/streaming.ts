@@ -1,4 +1,6 @@
 import { BaseProduct } from '@/types/commerce';
+import { StreamingFilterOptions } from '@/types/filters';
+import { commonPriceRanges } from './common-filters';
 
 export interface StreamingService extends BaseProduct {
   provider: string;
@@ -10,18 +12,14 @@ export interface StreamingService extends BaseProduct {
   content: string[];
 }
 
-export const streamingFilterOptions = {
+export const streamingFilterOptions: StreamingFilterOptions = {
   provider: [
     { id: 'netflix', name: 'Netflix' },
     { id: 'disney', name: 'Disney+' },
     { id: 'hbo', name: 'HBO Max' },
     { id: 'citisignal', name: 'CitiSignal+' }
   ],
-  price: [
-    { id: 'under-10', name: 'Under $10' },
-    { id: '10-15', name: '$10 - $15' },
-    { id: 'over-15', name: 'Over $15' }
-  ],
+  price: commonPriceRanges.streaming,
   content_type: [
     { id: 'movies', name: 'Movies' },
     { id: 'tv-shows', name: 'TV Shows' },

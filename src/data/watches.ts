@@ -1,28 +1,25 @@
-import { Watch, colorOptions } from '@/types/commerce';
+import { Watch } from '@/types/commerce';
+import { WatchFilterOptions } from '@/types/filters';
+import { commonManufacturers, commonFeatures, colorFilters } from './common-filters';
 
-export const watchFilterOptions = {
-  manufacturer: [
-    { id: 'apple', name: 'Apple' },
-    { id: 'samsung', name: 'Samsung' },
-    { id: 'citisignal', name: 'CitiSignal' }
-  ],
-  sizes: [
+export const watchFilterOptions: WatchFilterOptions = {
+  manufacturer: commonManufacturers,
+  size: [
     { id: '41mm', name: '41mm' },
-    { id: '45mm', name: '45mm' },
-    { id: '49mm', name: '49mm' }
+    { id: '45mm', name: '45mm' }
   ],
-  colors: colorOptions,
+  connectivity: [
+    { id: 'gps', name: 'GPS' },
+    { id: 'cellular', name: 'GPS + Cellular' }
+  ],
   price: [
     { id: 'under-300', name: 'Under $300' },
     { id: '300-500', name: '$300 - $500' },
-    { id: 'over-500', name: 'Over $500' }
+    { id: '500-700', name: '$500 - $700' },
+    { id: 'over-700', name: 'Over $700' }
   ],
-  features: [
-    { id: 'cellular', name: 'Cellular' },
-    { id: 'gps', name: 'GPS' },
-    { id: 'health-tracking', name: 'Health Tracking' },
-    { id: 'voice-assistant', name: 'Voice Assistant' }
-  ]
+  features: commonFeatures.watches,
+  colors: colorFilters
 };
 
 // Mock data matching Commerce API structure
