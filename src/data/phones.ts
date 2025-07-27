@@ -1,4 +1,5 @@
 import { Phone, colorOptions } from '@/types/commerce';
+import type { FilterSection } from '@/types/phones';
 
 export const phoneFilterOptions = {
   manufacturer: [
@@ -23,6 +24,40 @@ export const phoneFilterOptions = {
     { id: 'extended-range-5g', name: 'Extended Range 5G' }
   ]
 };
+
+// Filter sections for product list
+export const phoneFilters: FilterSection[] = [
+  {
+    title: 'Manufacturer',
+    key: 'manufacturer',
+    options: phoneFilterOptions.manufacturer,
+    type: 'checkbox'
+  },
+  {
+    title: 'Memory',
+    key: 'memory',
+    options: phoneFilterOptions.memory,
+    type: 'checkbox'
+  },
+  {
+    title: 'Price Range',
+    key: 'price',
+    options: phoneFilterOptions.price,
+    type: 'checkbox'
+  },
+  {
+    title: 'Colors',
+    key: 'colors',
+    options: phoneFilterOptions.colors,
+    type: 'checkbox'
+  },
+  {
+    title: '5G Features',
+    key: 'features',
+    options: phoneFilterOptions.features,
+    type: 'checkbox'
+  }
+];
 
 // Mock data matching Commerce API structure
 export const phones: Phone[] = [
