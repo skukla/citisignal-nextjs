@@ -1,3 +1,5 @@
+export type FilterType = 'checkbox' | 'radio';
+
 export interface FilterOption {
   id: string;
   name: string;
@@ -8,7 +10,7 @@ export interface FilterSection {
   title: string;
   key: string;
   options: FilterOption[];
-  type: 'checkbox' | 'radio';
+  type: FilterType;
 }
 
 export interface PhoneFilterOptions {
