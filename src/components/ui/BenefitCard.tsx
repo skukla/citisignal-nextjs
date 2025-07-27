@@ -24,12 +24,7 @@ export default function BenefitCard({
 }: BenefitCardProps) {
   return (
     <div className={twMerge('w-72', className)}>
-      <IconContainer
-        bgColor="bg-white"
-        bgOpacity="bg-opacity-20"
-        size="lg"
-        className="mb-3"
-      >
+      <IconContainer>
         <span className="text-2xl leading-none">{emoji}</span>
       </IconContainer>
       <CardContent
