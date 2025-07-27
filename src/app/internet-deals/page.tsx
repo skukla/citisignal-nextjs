@@ -7,7 +7,7 @@ import ProductCard from '@/components/ui/ProductCard';
 import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
-import { internetDeals, internetDealsFilterOptions } from '@/data/internetDeals';
+import { internetDeals, internetDealsFilterOptions } from '@/data/internet-deals';
 import { internetFilters } from '@/data/filters';
 import type { FilterOption } from '@/types/filters';
 import { WifiIcon, Bars3Icon } from '@heroicons/react/24/outline';
@@ -65,7 +65,14 @@ export default function InternetDealsPage() {
                 originalPrice={product.original_price}
                 image={product.media_gallery?.[0]?.url || ''}
                 category={product.category}
-                features={[product.speed, product.data_limit]}
+                features={[
+                  `Speed: ${product.speed}`,
+                  `Data: ${product.data_limit}`,
+                  `Contract: ${product.contract_length}`,
+                  ...(product.equipment_included ? ['Equipment Included'] : []),
+                  ...(product.setup_fee === 0 ? ['No Setup Fee'] : [`Setup Fee: $${product.setup_fee}`]),
+                  ...product.features
+                ]}
                 inStock={product.stock_status === 'IN_STOCK'}
                 isNew={product.isNew}
                 isSale={product.original_price ? product.original_price > product.price : false}

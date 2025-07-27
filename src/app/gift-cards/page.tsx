@@ -7,7 +7,7 @@ import ProductCard from '@/components/ui/ProductCard';
 import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
-import { giftCards, giftCardFilterOptions } from '@/data/giftCards';
+import { giftCards, giftCardFilterOptions } from '@/data/gift-cards';
 import { giftCardFilters } from '@/data/filters';
 import type { FilterOption } from '@/types/filters';
 import { Bars3Icon, GiftIcon } from '@heroicons/react/24/outline';
@@ -65,6 +65,12 @@ export default function GiftCardsPage() {
                 originalPrice={product.original_price}
                 image={product.media_gallery?.[0]?.url || ''}
                 category={product.category}
+                features={[
+                  `Type: ${product.type === 'digital' ? 'Digital Card' : 'Physical Card'}`,
+                  `Delivery: ${product.delivery_time}`,
+                  ...(product.customizable ? ['Customizable'] : []),
+                  `Valid for ${product.expiration}`
+                ]}
                 inStock={product.stock_status === 'IN_STOCK'}
                 isNew={product.isNew}
                 isSale={product.original_price ? product.original_price > product.price : false}
