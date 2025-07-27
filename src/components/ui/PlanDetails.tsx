@@ -1,13 +1,9 @@
 import { twMerge } from 'tailwind-merge';
 import type { ThemeTextColor } from '@/types/theme';
-
-interface Detail {
-  label: string;
-  value: string;
-}
+import type { PlanDetail } from '@/types/features';
 
 interface PlanDetailsProps {
-  details: Detail[];
+  details: PlanDetail[];
   labelColor?: ThemeTextColor;
   valueColor?: ThemeTextColor;
   className?: string;

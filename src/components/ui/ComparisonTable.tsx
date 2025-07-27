@@ -2,12 +2,7 @@
 
 import { twMerge } from 'tailwind-merge';
 import type { ThemeTextColor, ThemeTextSize } from '@/types/theme';
-
-export interface ComparisonHeader {
-  label: React.ReactNode;
-  width?: number;
-  align?: 'left' | 'center' | 'right';
-}
+import type { ComparisonHeader } from '@/types/layout';
 
 interface ComparisonTableProps {
   headers: ComparisonHeader[];

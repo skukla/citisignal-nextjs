@@ -4,18 +4,14 @@ import { twMerge } from 'tailwind-merge';
 import CheckmarkFeatureList from './CheckmarkFeatureList';
 import LinkButton from './LinkButton';
 import type { ThemeGradient, ThemeTextColor, LinkButtonVariant, ButtonSize, ThemeSize } from '@/types/theme';
-
-interface Feature {
-  title: string;
-  description: string;
-}
+import type { FeaturedToolFeature } from '@/types/features';
 
 interface FeaturedToolProps {
   title: string;
   description: string;
   buttonText: string;
   buttonHref: string;
-  features: Feature[];
+  features: FeaturedToolFeature[];
   titleColor?: ThemeTextColor;
   descriptionColor?: ThemeTextColor;
   buttonVariant?: LinkButtonVariant;

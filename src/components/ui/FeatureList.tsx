@@ -2,17 +2,12 @@
 
 import { twMerge } from 'tailwind-merge';
 import type { ThemeTextColor, ThemeSize } from '@/types/theme';
+import type { HighlightFeature } from '@/types/features';
 
 type FeatureSpacing = 'sm' | 'md' | 'lg';
 
-interface Feature {
-  highlight: string;
-  details?: string;
-  dotColor?: string;
-}
-
 interface FeatureListProps {
-  features: Feature[];
+  features: HighlightFeature[];
   textColor?: ThemeTextColor;
   detailsColor?: ThemeTextColor;
   dotSize?: ThemeSize;

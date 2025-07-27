@@ -3,15 +3,8 @@
 import BuyingGuideCard from './BuyingGuideCard';
 import BaseGrid from './layout/BaseGrid';
 import type { BaseGridProps } from '@/types/grid';
-import type { HeroIcon } from '@/types/hero-icons';
+import type { BuyingGuide } from '@/types/features';
 import { GRID_CONFIGS } from '@/types/grid';
-
-interface BuyingGuide {
-  icon: HeroIcon;
-  title: string;
-  description: string;
-  href: string;
-}
 
 type BuyingGuideGridProps = Omit<BaseGridProps, 'children'> & {
   guides: BuyingGuide[];
