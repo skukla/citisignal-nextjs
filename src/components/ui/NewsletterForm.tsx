@@ -4,9 +4,15 @@ import { twMerge } from 'tailwind-merge';
 import Input from './Input';
 import Button from './Button';
 import useForm from '@/hooks/useForm';
+import { validateEmail } from '@/lib/validation';
+import type { ButtonVariant, InputVariant } from '@/types/theme';
 
 interface NewsletterFormProps {
   onSubmit: (email: string) => Promise<void>;
+  buttonText?: string;
+  buttonVariant?: ButtonVariant;
+  inputVariant?: InputVariant;
+  placeholder?: string;
   inputClassName?: string;
   buttonClassName?: string;
   className?: string;
@@ -14,18 +20,21 @@ interface NewsletterFormProps {
 
 type NewsletterFormValues = Record<'email', string>;
 
-const validateEmail = (values: NewsletterFormValues) => {
+const validate = (values: NewsletterFormValues) => {
   const errors: Partial<Record<keyof NewsletterFormValues, string>> = {};
-  if (!values.email) {
-    errors.email = 'Email is required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(values.email)) {
-    errors.email = 'Invalid email address';
+  const emailError = validateEmail(values.email);
+  if (emailError) {
+    errors.email = emailError;
   }
   return errors;
 };
 
 export default function NewsletterForm({
   onSubmit,
+  buttonText = 'Subscribe',
+  buttonVariant = 'yellow',
+  inputVariant = 'newsletter',
+  placeholder = 'Enter your email address',
   inputClassName,
   buttonClassName,
   className
@@ -41,20 +50,23 @@ export default function NewsletterForm({
     onSubmit: async (values) => {
       await onSubmit(values.email);
     },
-    validate: validateEmail
+    validate
   });
 
   return (
-    <form onSubmit={handleSubmit} className={twMerge('max-w-md', className)}>
+    <form 
+      onSubmit={handleSubmit} 
+      className={twMerge('max-w-md', className)}
+      >
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1">
           <Input
             type="email"
             value={values.email}
             onChange={(e) => handleChange('email', e.target.value)}
-            placeholder="Enter your email address"
+            placeholder={placeholder}
             required
-            variant="newsletter"
+            variant={inputVariant}
             className={twMerge(
               errors.email && 'border-red-500 focus:border-red-500 focus:ring-red-200',
               inputClassName
@@ -67,12 +79,12 @@ export default function NewsletterForm({
           )}
         </div>
         <Button
-          variant="yellow"
+          variant={buttonVariant}
           loading={isSubmitting}
           disabled={isSubmitting}
           className={buttonClassName}
         >
-          Subscribe
+          {buttonText}
         </Button>
       </div>
     </form>

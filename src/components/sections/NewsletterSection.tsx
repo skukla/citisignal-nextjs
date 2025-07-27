@@ -72,6 +72,10 @@ export default function NewsletterSection() {
         <div className="text-center">
           <NewsletterForm
             onSubmit={handleSubmit}
+            buttonText="Subscribe Now"
+            buttonVariant="yellow"
+            inputVariant="newsletter"
+            placeholder="Enter your email address"
             className="mx-auto mb-4"
           />
 

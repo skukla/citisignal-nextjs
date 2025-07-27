@@ -1,6 +1,8 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import { CheckIcon } from '@heroicons/react/24/outline';
+import type { ThemeTextColor, ThemeBgColor, ThemeSize } from '@/types/theme';
 
 interface Feature {
   title: string;
@@ -9,44 +11,51 @@ interface Feature {
 
 interface CheckmarkFeatureListProps {
   features: Feature[];
-  iconColor?: string;
-  iconBgColor?: string;
+  size?: ThemeSize;
+  iconColor?: ThemeTextColor;
+  iconBgColor?: ThemeBgColor;
+  titleColor?: ThemeTextColor;
+  descriptionColor?: ThemeTextColor;
   className?: string;
 }
 
 export default function CheckmarkFeatureList({
   features,
+  size = 'md',
   iconColor = 'text-green-500',
   iconBgColor = 'bg-green-100',
+  titleColor = 'text-gray-900',
+  descriptionColor = 'text-gray-600',
   className
 }: CheckmarkFeatureListProps) {
+  const containerSizes = {
+    sm: 'w-6 h-6',
+    md: 'w-8 h-8',
+    lg: 'w-10 h-10'
+  };
+
+  const iconSizes = {
+    sm: 'w-4 h-4',
+    md: 'w-5 h-5',
+    lg: 'w-6 h-6'
+  };
+
   return (
     <div className={twMerge('space-y-4', className)}>
       {features.map((feature, index) => (
         <div key={index} className="flex items-center">
           <div className={twMerge(
-            'w-8 h-8 rounded-full flex items-center justify-center mr-4',
+            'rounded-full flex items-center justify-center mr-4',
+            containerSizes[size],
             iconBgColor
           )}>
-            <svg 
-              className={twMerge('w-5 h-5', iconColor)} 
-              fill="none" 
-              stroke="currentColor" 
-              viewBox="0 0 24 24"
-            >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth="2" 
-                d="M5 13l4 4L19 7" 
-              />
-            </svg>
+            <CheckIcon className={twMerge(iconSizes[size], iconColor)} />
           </div>
           <div className="flex-1">
-            <div className="text-sm font-medium text-gray-900">
+            <div className={twMerge('text-sm font-medium', titleColor)}>
               {feature.title}
             </div>
-            <div className="text-sm text-gray-600">
+            <div className={twMerge('text-sm', descriptionColor)}>
               {feature.description}
             </div>
           </div>

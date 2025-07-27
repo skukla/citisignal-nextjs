@@ -1,11 +1,12 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import type { ContainerWidth, ContainerPadding } from '@/types/theme';
 
 interface ContainerProps {
   children: React.ReactNode;
-  maxWidth?: string;
-  padding?: string;
+  maxWidth?: ContainerWidth;
+  padding?: ContainerPadding | string;
   className?: string;
 }
 

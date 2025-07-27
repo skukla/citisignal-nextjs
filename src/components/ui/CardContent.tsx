@@ -1,13 +1,13 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-import type { ThemeTextColor } from '@/types/theme';
+import type { ThemeTextColor, ThemeTextSize } from '@/types/theme';
 
 interface CardContentProps {
   title: string;
   description: string;
-  titleSize?: 'sm' | 'base' | 'lg' | 'xl';
-  descriptionSize?: 'sm' | 'base' | 'lg';
+  titleSize?: ThemeTextSize;
+  descriptionSize?: Exclude<ThemeTextSize, 'xl'>;
   titleColor?: ThemeTextColor;
   descriptionColor?: ThemeTextColor;
   centered?: boolean;

@@ -1,13 +1,14 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import type { ThemeSize, ThemeBgColor, ThemeTextColor, ThemeBgOpacity } from '@/types/theme';
 
 interface IconBadgeProps {
   icon?: React.ReactNode;
-  bgColor?: string;
-  iconColor?: string;
-  size?: 'sm' | 'md' | 'lg';
-  opacity?: number;
+  bgColor?: ThemeBgColor;
+  iconColor?: ThemeTextColor;
+  size?: ThemeSize;
+  bgOpacity?: ThemeBgOpacity;
   className?: string;
 }
 
@@ -16,7 +17,7 @@ export default function IconBadge({
   bgColor = 'bg-purple-50',
   iconColor = 'text-purple-600',
   size = 'md',
-  opacity = 100,
+  bgOpacity,
   className
 }: IconBadgeProps) {
   const sizeClasses = {
@@ -36,7 +37,7 @@ export default function IconBadge({
       'rounded-full flex items-center justify-center',
       sizeClasses[size],
       bgColor,
-      opacity < 100 && `bg-opacity-${opacity}`,
+      bgOpacity,
       className
     )}>
       {icon && (

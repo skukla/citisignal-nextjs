@@ -1,7 +1,7 @@
 'use client';
 
 import BaseSection from '@/components/ui/layout/BaseSection';
-import ComparisonTable from '@/components/ui/ComparisonTable';
+import ComparisonTable, { ComparisonHeader } from '@/components/ui/ComparisonTable';
 import ComparisonRow from '@/components/ui/ComparisonRow';
 
 interface PlanType {
@@ -30,6 +30,15 @@ export default function PlanComparison({
   features,
   className
 }: PlanComparisonProps) {
+  const headers: ComparisonHeader[] = [
+    { label: 'Feature', width: 280, align: 'left' },
+    ...planTypes.map(type => ({
+      label: type.name,
+      width: 140,
+      align: 'center' as const
+    }))
+  ];
+
   return (
     <BaseSection
       header={{
@@ -39,9 +48,7 @@ export default function PlanComparison({
       }}
       className={className}
     >
-      <ComparisonTable
-        headers={['Feature', ...planTypes.map(type => type.name)]}
-      >
+      <ComparisonTable headers={headers}>
         {features.map((feature) => (
           <ComparisonRow
             key={feature.name}
