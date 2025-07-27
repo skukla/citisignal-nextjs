@@ -11,6 +11,12 @@ const compat = new FlatCompat({
 
 const eslintConfig = [
   ...compat.extends("next/core-web-vitals", "next/typescript"),
+  {
+    rules: {
+      "react/jsx-max-props-per-line": [1, { maximum: 1 }],
+      "react/jsx-first-prop-new-line": [2, "multiline-multiprop"]
+    }
+  }
 ];
 
 export default eslintConfig;
