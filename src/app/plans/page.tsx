@@ -1,5 +1,6 @@
 'use client';
 
+import { type ReactElement } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
@@ -13,7 +14,7 @@ import { SignalIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { usePlans } from '@/hooks/usePlans';
 import { planTypes, planFeatures, planFilters } from '@/data/plans';
 
-export default function PlansPage() {
+export default function PlansPage(): ReactElement {
   const {
     plans,
     filteredPlans,

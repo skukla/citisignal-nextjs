@@ -1,5 +1,6 @@
 'use client';
 
+import { type ReactElement } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
@@ -8,12 +9,12 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { streamingServices, streamingFilterOptions } from '@/data/streaming';
-import { streamingFilters } from '@/data/filters';
+import { streamingFilters } from '@/types/filters';
 import type { FilterOption } from '@/types/filters';
 import { PlayIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
-export default function StreamingPage() {
+export default function StreamingPage(): ReactElement {
   const {
     searchQuery,
     setSearchQuery,

@@ -1,6 +1,17 @@
 import { Plan } from '@/types/commerce';
-import { PlanFilterOptions } from '@/types/filters';
+import { PlanFilterOptions, FilterSection } from '@/types/filters';
 import { commonPriceRanges, commonFeatures } from './common-filters';
+
+export interface PlanType {
+  id: string;
+  name: string;
+}
+
+export interface PlanFeature {
+  name: string;
+  description: string;
+  availableIn: string[];
+}
 
 export const planFilterOptions: PlanFilterOptions = {
   type: [
@@ -22,6 +33,75 @@ export const planFilterOptions: PlanFilterOptions = {
     { id: 'no-contract', name: 'No Contract' }
   ]
 };
+
+// Plan types
+export const planTypes: PlanType[] = [
+  { id: 'basic', name: 'Basic' },
+  { id: 'premium', name: 'Premium' },
+  { id: 'unlimited', name: 'Unlimited' }
+];
+
+// Plan features
+export const planFeatures: PlanFeature[] = [
+  {
+    name: 'Unlimited Talk & Text',
+    description: 'Unlimited nationwide calling and messaging',
+    availableIn: ['basic', 'premium', 'unlimited']
+  },
+  {
+    name: 'Mobile Hotspot',
+    description: 'Share your data with other devices',
+    availableIn: ['premium', 'unlimited']
+  },
+  {
+    name: 'Premium Data',
+    description: 'No data slowdowns regardless of usage',
+    availableIn: ['unlimited']
+  },
+  {
+    name: 'International Features',
+    description: 'Text and data in 200+ countries',
+    availableIn: ['premium', 'unlimited']
+  },
+  {
+    name: 'Streaming Quality',
+    description: 'HD streaming on supported services',
+    availableIn: ['premium', 'unlimited']
+  },
+  {
+    name: 'Network Priority',
+    description: 'Priority during network congestion',
+    availableIn: ['unlimited']
+  }
+];
+
+// Filter sections
+export const planFilters: FilterSection[] = [
+  {
+    title: 'Plan Type',
+    key: 'type',
+    options: planFilterOptions.type,
+    type: 'checkbox' as const
+  },
+  {
+    title: 'Price Range',
+    key: 'price',
+    options: planFilterOptions.price,
+    type: 'checkbox' as const
+  },
+  {
+    title: 'Data Amount',
+    key: 'data',
+    options: planFilterOptions.data,
+    type: 'checkbox' as const
+  },
+  {
+    title: 'Features',
+    key: 'features',
+    options: planFilterOptions.features,
+    type: 'checkbox' as const
+  }
+];
 
 // Mock data matching Commerce API structure
 export const plans: Plan[] = [

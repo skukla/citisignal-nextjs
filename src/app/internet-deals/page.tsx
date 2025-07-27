@@ -1,5 +1,6 @@
 'use client';
 
+import { type ReactElement } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
@@ -8,12 +9,12 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { internetDeals, internetDealsFilterOptions } from '@/data/internet-deals';
-import { internetFilters } from '@/data/filters';
+import { internetFilters } from '@/types/filters';
 import type { FilterOption } from '@/types/filters';
 import { WifiIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
-export default function InternetDealsPage() {
+export default function InternetDealsPage(): ReactElement {
   const {
     searchQuery,
     setSearchQuery,

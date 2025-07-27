@@ -1,5 +1,6 @@
 'use client';
 
+import { type ReactElement } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
@@ -8,12 +9,12 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { watches, watchFilterOptions } from '@/data/watches';
-import { watchFilters } from '@/data/filters';
-import { FilterOption } from '@/types/filters';
+import { watchFilters } from '@/types/filters';
+import type { FilterOption } from '@/types/filters';
 import { ClockIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
-export default function WatchesPage() {
+export default function WatchesPage(): ReactElement {
   const {
     searchQuery,
     setSearchQuery,

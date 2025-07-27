@@ -1,5 +1,6 @@
 'use client';
 
+import { type ReactElement } from 'react';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
@@ -8,12 +9,12 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { accessories, accessoryFilterOptions } from '@/data/accessories';
-import { accessoryFilters } from '@/data/filters';
+import { accessoryFilters } from '@/types/filters';
 import type { FilterOption } from '@/types/filters';
 import { Square3Stack3DIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
-export default function AccessoriesPage() {
+export default function AccessoriesPage(): ReactElement {
   const {
     searchQuery,
     setSearchQuery,

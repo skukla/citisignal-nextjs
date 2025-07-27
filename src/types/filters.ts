@@ -19,6 +19,14 @@ export interface PhoneFilterOptions {
   colors: FilterOption[];
 }
 
+export interface PlanFilterOptions {
+  type: FilterOption[];
+  data: FilterOption[];
+  price: FilterOption[];
+  features: FilterOption[];
+  contract: FilterOption[];
+}
+
 export const accessoryFilters: FilterSection[] = [
   {
     title: 'Category',
