@@ -26,7 +26,7 @@ export default function BenefitCard({
     <div className={twMerge('w-72', className)}>
       <IconContainer
         bgColor="bg-white"
-        bgOpacity="bg-opacity-50"
+        bgOpacity="bg-opacity-20"
         size="lg"
         className="mb-3"
       >
