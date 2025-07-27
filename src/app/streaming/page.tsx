@@ -8,6 +8,8 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { streamingServices, streamingFilterOptions } from '@/data/streaming';
+import { streamingFilters } from '@/data/filters';
+import type { FilterOption } from '@/types/filters';
 import { PlayIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
@@ -27,38 +29,11 @@ export default function StreamingPage() {
     products: streamingServices
   });
 
-  const filters = [
-    {
-      title: 'Provider',
-      key: 'provider',
-      options: streamingFilterOptions.provider,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: streamingFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Content Type',
-      key: 'contentType',
-      options: streamingFilterOptions.content_type,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Video Quality',
-      key: 'videoQuality',
-      options: streamingFilterOptions.video_quality,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Features',
-      key: 'features',
-      options: streamingFilterOptions.features,
-      type: 'checkbox' as const
-    }
-  ];
+  // Populate filter options from streamingFilterOptions
+  const filters = streamingFilters.map(filter => ({
+    ...filter,
+    options: (streamingFilterOptions[filter.key as keyof typeof streamingFilterOptions] || []) as FilterOption[]
+  }));
 
   return (
     <div className="min-h-screen">

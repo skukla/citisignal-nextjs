@@ -8,6 +8,8 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { giftCards, giftCardFilterOptions } from '@/data/giftCards';
+import { giftCardFilters } from '@/data/filters';
+import type { FilterOption } from '@/types/filters';
 import { Bars3Icon, GiftIcon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
@@ -25,26 +27,11 @@ export default function GiftCardsPage() {
     filteredAndSortedProducts
   } = useProductList({ products: giftCards });
 
-  const filters = [
-    {
-      title: 'Card Type',
-      key: 'type',
-      options: giftCardFilterOptions.type,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Amount',
-      key: 'amount',
-      options: giftCardFilterOptions.amount,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Delivery',
-      key: 'delivery_time',
-      options: giftCardFilterOptions.delivery_time,
-      type: 'checkbox' as const
-    }
-  ];
+  // Populate filter options from giftCardFilterOptions
+  const filters = giftCardFilters.map(filter => ({
+    ...filter,
+    options: (giftCardFilterOptions[filter.key as keyof typeof giftCardFilterOptions] || []) as FilterOption[]
+  }));
 
   return (
     <div className="min-h-screen">

@@ -8,6 +8,8 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { accessories, accessoryFilterOptions } from '@/data/accessories';
+import { accessoryFilters } from '@/data/filters';
+import type { FilterOption } from '@/types/filters';
 import { Square3Stack3DIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
@@ -25,32 +27,11 @@ export default function AccessoriesPage() {
     filteredAndSortedProducts
   } = useProductList({ products: accessories });
 
-  const filters = [
-    {
-      title: 'Category',
-      key: 'subcategory',
-      options: accessoryFilterOptions.manufacturer,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Brand',
-      key: 'brand',
-      options: accessoryFilterOptions.manufacturer,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: accessoryFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Compatibility',
-      key: 'compatibility',
-      options: accessoryFilterOptions.compatibility,
-      type: 'checkbox' as const
-    }
-  ];
+  // Populate filter options from accessoryFilterOptions
+  const filters = accessoryFilters.map(filter => ({
+    ...filter,
+    options: (accessoryFilterOptions[filter.key as keyof typeof accessoryFilterOptions] || []) as FilterOption[]
+  }));
 
   return (
     <div className="min-h-screen">

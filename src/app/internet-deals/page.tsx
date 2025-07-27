@@ -8,6 +8,8 @@ import ProductGrid from '@/components/ui/ProductGrid';
 import LoadMore from '@/components/ui/LoadMore';
 import ProductListLayout from '@/components/layout/ProductListLayout';
 import { internetDeals, internetDealsFilterOptions } from '@/data/internetDeals';
+import { internetFilters } from '@/data/filters';
+import type { FilterOption } from '@/types/filters';
 import { WifiIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 
@@ -25,38 +27,11 @@ export default function InternetDealsPage() {
     filteredAndSortedProducts
   } = useProductList({ products: internetDeals });
 
-  const filters = [
-    {
-      title: 'Connection Type',
-      key: 'type',
-      options: internetDealsFilterOptions.type,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Speed Range',
-      key: 'speed',
-      options: internetDealsFilterOptions.speed,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: internetDealsFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Contract Length',
-      key: 'contractLength',
-      options: internetDealsFilterOptions.contract_length,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Features',
-      key: 'features',
-      options: internetDealsFilterOptions.features,
-      type: 'checkbox' as const
-    }
-  ];
+  // Populate filter options from internetDealsFilterOptions
+  const filters = internetFilters.map(filter => ({
+    ...filter,
+    options: (internetDealsFilterOptions[filter.key as keyof typeof internetDealsFilterOptions] || []) as FilterOption[]
+  }));
 
   return (
     <div className="min-h-screen">
