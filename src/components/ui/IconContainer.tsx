@@ -1,12 +1,12 @@
 'use client';
 
-import { twMerge } from 'tailwind-merge';
+import { clsx } from 'clsx';
 import type { ThemeBgColor, ThemeBgOpacity, ThemeSize } from '@/types/theme';
 
 interface IconContainerProps {
   children: React.ReactNode;
   size?: ThemeSize;
-  bgColor?: ThemeBgColor | 'bg-white' | 'bg-black';
+  bgColor?: ThemeBgColor;
   bgOpacity?: ThemeBgOpacity;
   centered?: boolean;
   className?: string;
@@ -16,9 +16,9 @@ export default function IconContainer({
   children,
   size = 'md',
   bgColor = 'bg-white',
-  bgOpacity = 'bg-opacity-20',
+  bgOpacity = 'bg-opacity-25',
   centered = true,
-  className
+  className = 'mb-3'
 }: IconContainerProps) {
   const sizeClasses = {
     sm: 'w-10 h-10',
@@ -27,9 +27,10 @@ export default function IconContainer({
   };
 
   return (
-    <div className={twMerge(
+    <div className={clsx(
       'rounded-full flex items-center justify-center',
-      `${bgColor} ${bgOpacity}`,
+      bgColor,
+      bgOpacity,
       sizeClasses[size],
       centered && 'mx-auto',
       className
