@@ -1,6 +1,5 @@
 'use client';
 
-import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
 import ProductCard from '@/components/ui/ProductCard';
@@ -68,7 +67,6 @@ export default function PhonesPage() {
 
   return (
     <div className="min-h-screen bg-gray-50">
-      <Header />
       
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         {/* Breadcrumb */}
