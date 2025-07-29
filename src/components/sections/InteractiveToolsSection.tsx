@@ -11,7 +11,7 @@ export default function InteractiveToolsSection() {
     {
       icon: MapIcon,
       title: "Coverage Checker",
-      description: "Check 5G coverage and network strength at your location",
+      description: "Check 5G coverage and network strength",
       link: "/tools/coverage"
     },
     {
