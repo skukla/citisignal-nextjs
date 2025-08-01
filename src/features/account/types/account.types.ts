@@ -25,13 +25,13 @@ export interface AccountContextValue extends BasePanelContextValue {
 }
 
 // Component props
-export interface AccountRootProps extends BaseComponentProps {}
-export interface AccountIconProps extends BasePanelProps {}
-export interface AccountPanelProps extends BasePanelProps {}
+export type AccountRootProps = BaseComponentProps;
+export type AccountIconProps = BasePanelProps;
+export type AccountPanelProps = BasePanelProps;
 
 // Compound component type
-export type AccountComponent = CompoundComponent<
-  AccountRootProps,
-  AccountIconProps,
-  AccountPanelProps
->;
+export interface AccountComponent {
+  Root: React.FC<AccountRootProps>;
+  Icon: React.FC<AccountIconProps>;
+  Panel: React.FC<AccountPanelProps>;
+}

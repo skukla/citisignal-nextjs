@@ -18,11 +18,13 @@ export interface SearchContextValue extends BasePanelContextValue {
 }
 
 // Component props
-export interface SearchRootProps extends BaseComponentProps {}
-export interface SearchTriggerProps extends BasePanelProps {}
-export interface SearchPanelProps extends BasePanelProps {}
-export interface SearchInputProps extends BasePanelProps {}
-export interface SearchResultsProps extends BaseComponentProps {}
+export type SearchRootProps = BaseComponentProps;
+export type SearchTriggerProps = BasePanelProps;
+export type SearchPanelProps = BasePanelProps;
+export interface SearchInputProps extends BasePanelProps {
+  placeholder?: string;
+}
+export type SearchResultsProps = BaseComponentProps;
 
 // Compound component type
 export type SearchComponent = CompoundComponent<
@@ -33,4 +35,4 @@ export type SearchComponent = CompoundComponent<
     Input: React.FC<SearchInputProps>;
     Results: React.FC<SearchResultsProps>;
   }
->; 
+>;

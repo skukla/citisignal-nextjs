@@ -1,4 +1,4 @@
-import type { ReactNode, RefObject } from 'react';
+import type { ElementType, ReactNode, RefObject } from 'react';
 
 // Base props shared by all components
 export interface BaseComponentProps {
@@ -58,11 +58,58 @@ export interface LogoProps {
   linkClassName?: string;
 }
 
+// Button types
+export type ButtonVariant = 
+  | 'primary'
+  | 'secondary'
+  | 'outline'
+  | 'yellow'
+  | 'ghost'
+  | 'subtle'
+  | 'white-outline'
+  | 'light-subtle';
+
+export type ButtonSize = 'sm' | 'md' | 'lg';
+
+export interface ButtonProps extends BaseComponentProps {
+  variant?: ButtonVariant;
+  size?: ButtonSize;
+  fullWidth?: boolean;
+  leftIcon?: ElementType;
+  rightIcon?: ElementType;
+  href?: string;
+  loading?: boolean;
+  disabled?: boolean;
+  onClick?: () => void;
+  customColor?: string;
+  'aria-label'?: string;
+  'aria-expanded'?: boolean;
+  'aria-controls'?: string;
+  'aria-describedby'?: string;
+}
+
 // TopBar types
 export interface TopBarProps extends BaseUIProps {
   announcement: string;
   supportPhone: string;
   authLinks: readonly AuthLink[];
+}
+
+// Spinner types
+export type SpinnerSize = 'sm' | 'md' | 'lg';
+
+export interface SpinnerProps extends BaseComponentProps {
+  size?: SpinnerSize;
+  'aria-label'?: string;
+}
+
+// Icon types
+export type IconSize = 'sm' | 'md' | 'lg';
+
+export interface IconWrapperProps extends BaseComponentProps {
+  icon: ElementType;
+  size?: IconSize;
+  'aria-hidden'?: boolean;
 }
 
 // TopBar compound component type

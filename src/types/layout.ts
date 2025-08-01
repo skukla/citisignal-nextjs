@@ -1,33 +1,20 @@
-import type { ReactNode, ReactElement } from 'react';
+import { ComponentPropsWithoutRef, ElementType, ReactNode } from 'react';
 
-// Base types for layout components
-export interface BaseLayoutProps {
+/**
+ * Container component props with polymorphic 'as' prop
+ */
+export type ContainerProps<T extends ElementType = 'div'> = {
   children: ReactNode;
+  as?: T;
+  fullWidth?: boolean;
+  noPadding?: boolean;
   className?: string;
+} & Omit<ComponentPropsWithoutRef<T>, 'children' | 'className'>;
+
+/**
+ * Section component props extending container functionality
+ */
+export interface SectionProps extends Omit<ContainerProps<'section'>, 'as'> {
+  background?: string;
+  gradient?: string;
 }
-
-// Header types
-export interface HeaderProps {
-  children: ReactNode;
-  className?: string;
-}
-
-export type HeaderSectionProps = BaseLayoutProps;
-
-export interface HeaderLogoProps {
-  src: string;
-  alt: string;
-  className?: string;
-}
-
-export type HeaderActionsProps = BaseLayoutProps;
-
-// Compound component types
-export type HeaderComponent = {
-  (props: HeaderProps): ReactElement;
-  Top: (props: HeaderSectionProps) => ReactElement;
-  Main: (props: HeaderSectionProps) => ReactElement;
-  Logo: (props: HeaderLogoProps) => ReactElement;
-  Actions: (props: HeaderActionsProps) => ReactElement;
-  Mobile: (props: HeaderSectionProps) => ReactElement;
-}; 

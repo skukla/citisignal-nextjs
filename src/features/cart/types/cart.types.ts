@@ -19,13 +19,13 @@ export interface CartContextValue extends BasePanelContextValue {
 }
 
 // Component props
-export interface CartRootProps extends BaseComponentProps {}
-export interface CartIconProps extends BasePanelProps {}
-export interface CartPanelProps extends BasePanelProps {}
+export type CartRootProps = BaseComponentProps;
+export type CartIconProps = BasePanelProps;
+export type CartPanelProps = BasePanelProps;
 
 // Compound component type
-export type CartComponent = CompoundComponent<
-  CartRootProps,
-  CartIconProps,
-  CartPanelProps
->; 
+export interface CartComponent {
+  Root: React.FC<CartRootProps>;
+  Icon: React.FC<CartIconProps>;
+  Panel: React.FC<CartPanelProps>;
+} 

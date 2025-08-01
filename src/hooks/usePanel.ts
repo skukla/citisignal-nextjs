@@ -2,26 +2,48 @@
 
 import { useState, useCallback, useEffect, useRef } from 'react';
 
+interface UsePanelOptions {
+  isOpen?: boolean;
+  onOpenChange?: (isOpen: boolean) => void;
+}
+
 export interface UsePanelReturn {
   isOpen: boolean;
+  setIsOpen: (isOpen: boolean) => void;
   toggle: () => void;
   close: () => void;
   panelRef: React.RefObject<HTMLDivElement | null>;
+  triggerRef: React.RefObject<HTMLButtonElement | null>;
 }
 
-export function usePanel(): UsePanelReturn {
-  const [isOpen, setIsOpen] = useState(false);
+export function usePanel(options: UsePanelOptions = {}): UsePanelReturn {
+  const { isOpen: controlledIsOpen, onOpenChange } = options;
+  
+  // Handle controlled/uncontrolled state
+  const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false);
+  const isOpen = controlledIsOpen ?? uncontrolledIsOpen;
+  
   const panelRef = useRef<HTMLDivElement | null>(null);
+  const triggerRef = useRef<HTMLButtonElement | null>(null);
 
-  const toggle = useCallback(() => setIsOpen(prev => !prev), []);
-  const close = useCallback(() => setIsOpen(false), []);
+  const setIsOpen = useCallback((newIsOpen: boolean) => {
+    setUncontrolledIsOpen(newIsOpen);
+    onOpenChange?.(newIsOpen);
+  }, [onOpenChange]);
+
+  const toggle = useCallback(() => setIsOpen(!isOpen), [isOpen, setIsOpen]);
+  const close = useCallback(() => setIsOpen(false), [setIsOpen]);
 
   // Handle click outside
   useEffect(() => {
     if (!isOpen) return;
 
     const handleClickOutside = (event: MouseEvent) => {
-      if (panelRef.current && !panelRef.current.contains(event.target as Node)) {
+      if (
+        panelRef.current &&
+        !panelRef.current.contains(event.target as Node) &&
+        !triggerRef.current?.contains(event.target as Node)
+      ) {
         close();
       }
     };
@@ -46,8 +68,10 @@ export function usePanel(): UsePanelReturn {
 
   return {
     isOpen,
+    setIsOpen,
     toggle,
     close,
-    panelRef
+    panelRef,
+    triggerRef
   };
 }
