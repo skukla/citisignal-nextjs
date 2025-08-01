@@ -131,29 +131,19 @@ export default function PlansPage() {
               {filteredAndSortedProducts.map((plan) => (
                 <PlanCard
                   key={plan.id}
-                  name={plan.name}
-                  type={plan.type}
-                  price={plan.price}
-                  originalPrice={plan.original_price}
-                  rating={plan.rating_summary}
-                  reviews={plan.review_count}
-                  data={plan.data}
-                  talk={plan.talk}
-                  text={plan.text}
-                  features={[
-                    `${plan.data} Data`,
-                    `${plan.hotspot} Mobile Hotspot`,
-                    ...plan.streaming,
-                    plan.contract_required ? 'Contract Required' : 'No Contract Required',
-                    `${plan.network_priority.charAt(0).toUpperCase() + plan.network_priority.slice(1)} Network Priority`
-                  ]}
-                  hotspot={plan.hotspot}
-                  streaming={plan.streaming}
-                  isPopular={plan.type === 'unlimited'}
-                  isNew={Boolean(plan.isNew)}
-                  isSale={plan.original_price !== undefined && plan.original_price > plan.price}
-                  contractRequired={plan.contract_required}
-                  networkPriority={plan.network_priority}
+                  plan={plan}
+                  onSelectPlan={(planId) => {
+                    // TODO: Navigate to checkout with selected plan
+                    console.log('Select plan:', planId);
+                  }}
+                  onLearnMore={(planId) => {
+                    // TODO: Navigate to plan details page
+                    console.log('Learn more about plan:', planId);
+                  }}
+                  onWishlistToggle={(planId, saved) => {
+                    // TODO: Update wishlist state
+                    console.log('Wishlist toggle:', planId, saved);
+                  }}
                 />
               ))}
             </div>
