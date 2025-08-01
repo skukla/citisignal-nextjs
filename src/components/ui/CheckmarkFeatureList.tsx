@@ -5,27 +5,34 @@ import type { DetailedFeature } from '@/types/section';
 
 interface CheckmarkFeatureListProps {
   features: DetailedFeature[];
-  iconColor?: string;
-  iconBgColor?: string;
   className?: string;
 }
 
+/**
+ * A feature list component with green checkmark icons.
+ * Displays title and description for each feature in a clean, consistent layout.
+ *
+ * @example
+ * ```tsx
+ * <CheckmarkFeatureList 
+ *   features={[
+ *     { title: "Fast Setup", description: "Get started in minutes" },
+ *     { title: "24/7 Support", description: "Always here to help" }
+ *   ]}
+ * />
+ * ```
+ */
 export default function CheckmarkFeatureList({
   features,
-  iconColor = 'text-green-500',
-  iconBgColor = 'bg-green-100',
   className
 }: CheckmarkFeatureListProps) {
   return (
     <div className={twMerge('space-y-4', className)}>
       {features.map((feature, index) => (
         <div key={index} className="flex items-center">
-          <div className={twMerge(
-            'w-8 h-8 rounded-full flex items-center justify-center mr-4',
-            iconBgColor
-          )}>
+          <div className="w-8 h-8 rounded-full flex items-center justify-center mr-4 bg-green-100">
             <svg 
-              className={twMerge('w-5 h-5', iconColor)} 
+              className="w-5 h-5 text-green-500" 
               fill="none" 
               stroke="currentColor" 
               viewBox="0 0 24 24"

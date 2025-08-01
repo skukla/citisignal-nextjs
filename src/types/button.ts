@@ -22,6 +22,7 @@ interface BaseButtonProps {
 interface ButtonAsButtonProps extends BaseButtonProps {
   href?: never;
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
+  type?: 'button' | 'submit' | 'reset';
 }
 
 interface ButtonAsLinkProps extends BaseButtonProps {

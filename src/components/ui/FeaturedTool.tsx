@@ -12,22 +12,37 @@ interface FeaturedToolProps {
   buttonHref: string;
   features: DetailedFeature[];
   className?: string;
-  gradient?: string;
 }
 
+/**
+ * A featured tool component that displays content in a two-column layout.
+ * Shows title, description, and call-to-action on the left, with feature list on the right.
+ *
+ * @example
+ * ```tsx
+ * <FeaturedTool
+ *   title="Plan Optimizer"
+ *   description="Find the perfect plan for your needs"
+ *   buttonText="Get Started"
+ *   buttonHref="/tools/optimizer"
+ *   features={[
+ *     { title: "AI-Powered", description: "Smart recommendations" },
+ *     { title: "Save Money", description: "Up to 30% savings" }
+ *   ]}
+ * />
+ * ```
+ */
 export default function FeaturedTool({
   title,
   description,
   buttonText,
   buttonHref,
   features,
-  className,
-  gradient = 'from-purple-50 to-purple-100'
+  className
 }: FeaturedToolProps) {
   return (
     <div className={twMerge(
-      'bg-gradient-to-br rounded-2xl p-8 md:p-12',
-      gradient,
+      'bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 md:p-12',
       className
     )}>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">

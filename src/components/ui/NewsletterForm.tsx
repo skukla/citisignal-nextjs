@@ -6,15 +6,25 @@ import Button from './Button';
 
 interface NewsletterFormProps {
   onSubmit: (email: string) => Promise<void>;
-  inputClassName?: string;
-  buttonClassName?: string;
   className?: string;
 }
 
+/**
+ * Newsletter subscription form with email validation and loading states.
+ * Provides a responsive layout with email input and subscribe button.
+ *
+ * @example
+ * ```tsx
+ * <NewsletterForm
+ *   onSubmit={async (email) => {
+ *     await submitToMailingList(email);
+ *   }}
+ *   className="mx-auto"
+ * />
+ * ```
+ */
 export default function NewsletterForm({
   onSubmit,
-  inputClassName,
-  buttonClassName,
   className
 }: NewsletterFormProps) {
   const [email, setEmail] = useState('');
@@ -42,14 +52,7 @@ export default function NewsletterForm({
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
             required
-            className={twMerge(
-              'w-full px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500',
-              'bg-white border-0 shadow-lg',
-              'focus:ring-4 focus:ring-yellow-400',
-              'focus:outline-none',
-              'transition-all duration-200',
-              inputClassName
-            )}
+            className="w-full px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 bg-white border-0 shadow-lg focus:ring-4 focus:ring-yellow-400 focus:outline-none transition-all duration-200"
           />
         </div>
         <Button
@@ -57,7 +60,7 @@ export default function NewsletterForm({
           disabled={isLoading}
           loading={isLoading}
           variant="yellow"
-          className={twMerge('px-8 py-3 shadow-lg', buttonClassName)}
+          className="px-8 py-3 shadow-lg"
         >
           Subscribe
         </Button>
