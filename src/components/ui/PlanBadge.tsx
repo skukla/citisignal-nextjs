@@ -1,6 +1,7 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import Badge from './Badge';
 import { calculateDiscountPercentage } from '@/lib/pricing';
 
 export type PlanBadgeVariant = 'popular' | 'new' | 'sale';
@@ -14,7 +15,7 @@ interface PlanBadgeProps {
 
 /**
  * PlanBadge component for displaying promotional badges on plans.
- * Supports popular, new, and sale badges with automatic discount calculation.
+ * Built on the base Badge component with plan-specific styling and automatic discount calculation.
  *
  * @example
  * ```tsx
@@ -29,43 +30,38 @@ export default function PlanBadge({
   salePrice,
   className
 }: PlanBadgeProps) {
-  const getBadgeContent = () => {
-    switch (variant) {
-      case 'popular':
-        return 'MOST POPULAR';
-      case 'new':
-        return 'NEW';
-      case 'sale':
-        if (originalPrice && salePrice) {
-          const discount = calculateDiscountPercentage(originalPrice, salePrice);
-          return `${discount}% OFF`;
-        }
-        return 'SALE';
-      default:
-        return '';
-    }
-  };
+  // Inline content logic - direct conditionals following established pattern
+  let content = '';
+  switch (variant) {
+    case 'popular':
+      content = 'MOST POPULAR';
+      break;
+    case 'new':
+      content = 'NEW';
+      break;
+    case 'sale':
+      if (originalPrice && salePrice) {
+        const discount = calculateDiscountPercentage(originalPrice, salePrice);
+        content = `${discount}% OFF`;
+      } else {
+        content = 'SALE';
+      }
+      break;
+  }
 
-  const getBadgeStyles = () => {
-    switch (variant) {
-      case 'popular':
-        return 'bg-purple-600 text-white';
-      case 'new':
-        return 'bg-green-500 text-white';
-      case 'sale':
-        return 'bg-red-500 text-white';
-      default:
-        return '';
-    }
-  };
+  if (!content) return null;
+
+  // Direct conditional styling following Button/ProductBadge pattern
+  const variantClasses = twMerge(
+    'text-[11px] font-bold',
+    variant === 'popular' && 'bg-purple-600 text-white',
+    variant === 'new' && 'bg-green-500 text-white',
+    variant === 'sale' && 'bg-red-500 text-white'
+  );
 
   return (
-    <span className={twMerge(
-      'text-[11px] font-bold px-1.5 py-0.5 rounded',
-      getBadgeStyles(),
-      className
-    )}>
-      {getBadgeContent()}
-    </span>
+    <Badge size="sm" className={twMerge(variantClasses, className)}>
+      {content}
+    </Badge>
   );
 }

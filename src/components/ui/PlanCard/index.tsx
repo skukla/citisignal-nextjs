@@ -5,6 +5,8 @@ import PlanCardHeader from './PlanCardHeader';
 import PlanCardFeatures from './PlanCardFeatures';
 import PlanCardActions from './PlanCardActions';
 import PlanBadge from '../PlanBadge';
+import { isPlanPopular, isPlanNew, formatPlanFeatures } from '@/lib/plan';
+import { isSalePrice } from '@/lib/pricing';
 import type { Plan } from '@/types/commerce';
 
 interface PlanCardProps {
@@ -36,14 +38,11 @@ export default function PlanCard({
   onWishlistToggle,
   className
 }: PlanCardProps) {
-  // Determine if plan is popular (unlimited type)
-  const isPopular = plan.type === 'unlimited';
-  
-  // Determine if plan is new
-  const isNew = Boolean(plan.isNew);
-  
-  // Check if plan is on sale
-  const isSale = plan.original_price !== undefined && plan.original_price > plan.price;
+  // Use extracted business logic functions
+  const isPopular = isPlanPopular(plan.type);
+  const isNew = isPlanNew(plan);
+  const isSale = isSalePrice(plan.original_price, plan.price);
+  const formattedFeatures = formatPlanFeatures(plan);
 
   const handleSelectPlan = () => {
     onSelectPlan?.(plan.id);
@@ -85,20 +84,8 @@ export default function PlanCard({
 
       {/* Features Section */}
       <PlanCardFeatures
-        data={plan.data}
-        talk={plan.talk}
-        text={plan.text}
-        hotspot={plan.hotspot}
-        networkPriority={plan.network_priority}
-        contractRequired={plan.contract_required}
-        features={[
-          `${plan.data} Data`,
-          `${plan.hotspot} Mobile Hotspot`,
-          ...plan.streaming,
-          plan.contract_required ? 'Contract Required' : 'No Contract Required',
-          `${plan.network_priority.charAt(0).toUpperCase() + plan.network_priority.slice(1)} Network Priority`
-        ]}
-        streaming={plan.streaming}
+        plan={plan}
+        features={formattedFeatures}
       />
 
       {/* Actions Section */}
