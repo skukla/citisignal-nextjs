@@ -17,9 +17,6 @@ interface BenefitGridProps {
     lg?: number;
   };
   gap?: 'sm' | 'md' | 'lg';
-  titleColor?: string;
-  descriptionColor?: string;
-  badgeOpacity?: number;
   className?: string;
 }
 
@@ -30,9 +27,6 @@ export default function BenefitGrid({
     md: 3
   },
   gap = 'md',
-  titleColor,
-  descriptionColor,
-  badgeOpacity,
   className
 }: BenefitGridProps) {
   const gapClasses = {
@@ -62,9 +56,6 @@ export default function BenefitGrid({
           emoji={benefit.emoji}
           title={benefit.title}
           description={benefit.description}
-          titleColor={titleColor}
-          descriptionColor={descriptionColor}
-          badgeOpacity={badgeOpacity}
         />
       ))}
     </div>

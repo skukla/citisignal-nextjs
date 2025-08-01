@@ -14,14 +14,30 @@ interface Step {
 interface ProcessStepsProps {
   steps: Step[];
   showConnectors?: boolean;
-  iconColor?: string;
   className?: string;
 }
 
+/**
+ * A container component for displaying a sequence of process steps.
+ * Renders steps in a responsive grid with optional connector lines.
+ * 
+ * @example
+ * ```tsx
+ * const steps = [
+ *   {
+ *     icon: PhoneIcon,
+ *     title: 'Choose Your Device',
+ *     description: 'Select from our wide range of smartphones.',
+ *     details: ['Latest models', 'Trade-in available']
+ *   }
+ * ];
+ * 
+ * <ProcessSteps steps={steps} showConnectors={true} />
+ * ```
+ */
 export default function ProcessSteps({
   steps,
   showConnectors = true,
-  iconColor = '#8821f4',
   className
 }: ProcessStepsProps) {
   const containerClasses = twMerge(
@@ -40,7 +56,6 @@ export default function ProcessSteps({
           description={step.description}
           details={step.details}
           showConnector={showConnectors && index < steps.length - 1}
-          iconColor={iconColor}
         />
       ))}
     </div>

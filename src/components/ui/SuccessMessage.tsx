@@ -2,45 +2,53 @@
 
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
+import Button from './Button';
 
 interface SuccessMessageProps {
   title: string;
   description: string;
   buttonText: string;
   onButtonClick: () => void;
-  iconColor?: string;
-  titleColor?: string;
-  descriptionColor?: string;
-  buttonColor?: string;
   className?: string;
 }
 
+/**
+ * A success message component for displaying positive feedback with an action.
+ * Features a check icon, title, description, and action button.
+ * 
+ * @example
+ * ```tsx
+ * <SuccessMessage
+ *   title="Thanks for subscribing!"
+ *   description="You'll receive updates in your inbox."
+ *   buttonText="Subscribe another email"
+ *   onButtonClick={() => setIsSubmitted(false)}
+ * />
+ * ```
+ */
 export default function SuccessMessage({
   title,
   description,
   buttonText,
   onButtonClick,
-  iconColor = 'text-green-600',
-  titleColor = 'text-gray-900',
-  descriptionColor = 'text-gray-600',
-  buttonColor = 'text-purple-600 hover:text-purple-700',
   className
 }: SuccessMessageProps) {
   return (
     <div className={twMerge('text-center', className)}>
-      <CheckCircleIcon className={twMerge('w-16 h-16 mx-auto mb-6', iconColor)} />
-      <h2 className={twMerge('text-3xl font-bold mb-4', titleColor)}>
+      <CheckCircleIcon className="w-16 h-16 mx-auto mb-6 text-green-600" />
+      <h2 className="text-3xl font-bold mb-4 text-gray-900">
         {title}
       </h2>
-      <p className={twMerge('text-xl mb-8', descriptionColor)}>
+      <p className="text-xl mb-8 text-gray-600">
         {description}
       </p>
-      <button
+      <Button
+        variant="outline"
         onClick={onButtonClick}
-        className={twMerge('font-medium', buttonColor)}
+        className="text-purple-600 border-purple-600 hover:bg-purple-50"
       >
         {buttonText}
-      </button>
+      </Button>
     </div>
   );
 } 

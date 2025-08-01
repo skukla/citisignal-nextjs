@@ -10,10 +10,25 @@ interface ProcessStepProps {
   description: string;
   details?: string[];
   showConnector?: boolean;
-  iconColor?: string;
   className?: string;
 }
 
+/**
+ * A single step component for displaying process information.
+ * Features an icon, step number, title, description, and optional details.
+ * 
+ * @example
+ * ```tsx
+ * <ProcessStep
+ *   icon={PhoneIcon}
+ *   stepNumber={1}
+ *   title="Choose Your Device"
+ *   description="Select from our wide range of smartphones."
+ *   details={['Latest models', 'Trade-in available']}
+ *   showConnector={true}
+ * />
+ * ```
+ */
 export default function ProcessStep({
   icon: Icon,
   stepNumber,
@@ -21,7 +36,6 @@ export default function ProcessStep({
   description,
   details = [],
   showConnector = false,
-  iconColor = '#8821f4',
   className
 }: ProcessStepProps) {
   const containerClasses = twMerge(
@@ -39,10 +53,7 @@ export default function ProcessStep({
       {/* Step Card */}
       <div className="text-center">
         {/* Icon Circle */}
-        <div
-          className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
-          style={{ backgroundColor: iconColor }}
-        >
+        <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-purple-600">
           <Icon className="w-8 h-8 text-white" />
         </div>
         

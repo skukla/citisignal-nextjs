@@ -6,31 +6,37 @@ interface SimplePlanCardProps {
   price: string;
   title: string;
   subtitle?: string;
-  priceColor?: string;
-  titleColor?: string;
-  subtitleColor?: string;
   className?: string;
 }
 
+/**
+ * A simple plan card component for displaying pricing information.
+ * 
+ * @example
+ * ```tsx
+ * <SimplePlanCard 
+ *   price="$10/month"
+ *   title="Unlimited Talk & Text"
+ *   subtitle="+ 2.5GB High-Speed Data"
+ * />
+ * ```
+ */
 export default function SimplePlanCard({
   price,
   title,
   subtitle,
-  priceColor = 'text-purple-600',
-  titleColor = 'text-gray-600',
-  subtitleColor = 'text-gray-500',
   className
 }: SimplePlanCardProps) {
   return (
     <div className={twMerge('text-center', className)}>
-      <div className={twMerge('text-2xl font-bold', priceColor)}>
+      <div className="text-2xl font-bold text-purple-600">
         {price}
       </div>
-      <div className={twMerge('text-sm', titleColor)}>
+      <div className="text-sm text-gray-600">
         {title}
       </div>
       {subtitle && (
-        <div className={twMerge('text-xs mt-1', subtitleColor)}>
+        <div className="text-xs mt-1 text-gray-500">
           {subtitle}
         </div>
       )}

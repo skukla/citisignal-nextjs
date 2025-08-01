@@ -1,9 +1,33 @@
+import { twMerge } from 'tailwind-merge';
+import Badge from './Badge';
+import { calculateDiscount } from '@/lib/product';
+
 interface ProductBadgeProps {
   variant: 'new' | 'discount' | 'out-of-stock';
   originalPrice?: number;
   price?: number;
 }
 
+/**
+ * A specialized badge component for displaying product status information.
+ * Built on the base Badge component with product-specific styling.
+ * 
+ * @example
+ * ```tsx
+ * // New product badge
+ * <ProductBadge variant="new" />
+ * 
+ * // Discount badge with price calculation
+ * <ProductBadge 
+ *   variant="discount" 
+ *   originalPrice={100} 
+ *   price={80} 
+ * />
+ * 
+ * // Out of stock badge
+ * <ProductBadge variant="out-of-stock" />
+ * ```
+ */
 export default function ProductBadge({ variant, originalPrice, price }: ProductBadgeProps) {
   const getContent = () => {
     switch (variant) {
@@ -11,8 +35,7 @@ export default function ProductBadge({ variant, originalPrice, price }: ProductB
         return 'NEW';
       case 'discount':
         if (!originalPrice || !price) return '';
-        const discount = Math.round(((originalPrice - price) / originalPrice) * 100);
-        return `-${discount}%`;
+        return `-${calculateDiscount(originalPrice, price)}%`;
       case 'out-of-stock':
         return 'OUT OF STOCK';
       default:
@@ -20,22 +43,20 @@ export default function ProductBadge({ variant, originalPrice, price }: ProductB
     }
   };
 
-  const getBackgroundColor = () => {
-    switch (variant) {
-      case 'new':
-        return 'bg-green-500';
-      case 'discount':
-        return 'bg-red-500';
-      case 'out-of-stock':
-        return 'bg-gray-500';
-      default:
-        return 'bg-gray-500';
-    }
-  };
+  const content = getContent();
+  if (!content) return null;
+
+  // Use consistent variant pattern like Button component
+  const variantClasses = twMerge(
+    'font-bold',
+    variant === 'new' && 'bg-green-500 text-white',
+    variant === 'discount' && 'bg-red-500 text-white',
+    variant === 'out-of-stock' && 'bg-gray-500 text-white'
+  );
 
   return (
-    <span className={`${getBackgroundColor()} text-white text-xs font-bold px-2 py-1 rounded`}>
-      {getContent()}
-    </span>
+    <Badge size="sm" className={variantClasses}>
+      {content}
+    </Badge>
   );
 } 

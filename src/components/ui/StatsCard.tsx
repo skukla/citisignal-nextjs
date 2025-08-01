@@ -21,27 +21,27 @@ export default function StatsCard({
   className,
   children
 }: StatsCardProps) {
-  const iconBgClass = variant === 'purple' ? 'bg-purple-100' :
-                     variant === 'blue' ? 'bg-blue-100' :
-                     variant === 'green' ? 'bg-green-100' :
-                     'bg-gray-100';
+  const iconBgClasses = twMerge(
+    'w-10 h-10 rounded-lg flex items-center justify-center mr-4',
+    variant === 'purple' && 'bg-purple-100',
+    variant === 'blue' && 'bg-blue-100',
+    variant === 'green' && 'bg-green-100',
+    variant === 'default' && 'bg-gray-100'
+  );
   
-  const iconColorClass = variant === 'purple' ? 'text-purple-600' :
-                        variant === 'blue' ? 'text-blue-600' :
-                        variant === 'green' ? 'text-green-600' :
-                        'text-gray-600';
+  const iconColorClasses = twMerge(
+    'w-6 h-6',
+    variant === 'purple' && 'text-purple-600',
+    variant === 'blue' && 'text-blue-600',
+    variant === 'green' && 'text-green-600',
+    variant === 'default' && 'text-gray-600'
+  );
 
   return (
     <Card className={className}>
       <div className="flex items-center mb-4 p-6 pb-0">
-        <div className={twMerge(
-          'w-10 h-10 rounded-lg flex items-center justify-center mr-4',
-          iconBgClass
-        )}>
-          <Icon className={twMerge(
-            'w-6 h-6',
-            iconColorClass
-          )} />
+        <div className={iconBgClasses}>
+          <Icon className={iconColorClasses} />
         </div>
         <h3 className="text-xl font-semibold text-gray-900">
           {title}

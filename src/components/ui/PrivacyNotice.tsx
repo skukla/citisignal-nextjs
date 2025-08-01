@@ -7,23 +7,31 @@ interface PrivacyNoticeProps {
   text: string;
   linkText: string;
   linkHref: string;
-  textColor?: string;
-  linkColor?: string;
   className?: string;
 }
 
+/**
+ * A privacy notice component with text and link.
+ * 
+ * @example
+ * ```tsx
+ * <PrivacyNotice 
+ *   text="We respect your privacy. Unsubscribe at any time."
+ *   linkText="Privacy Policy"
+ *   linkHref="/privacy"
+ * />
+ * ```
+ */
 export default function PrivacyNotice({
   text,
   linkText,
   linkHref,
-  textColor = 'text-purple-200',
-  linkColor = 'text-purple-200 hover:text-white',
   className
 }: PrivacyNoticeProps) {
   return (
-    <p className={twMerge('text-sm', textColor, className)}>
+    <p className={twMerge('text-sm text-purple-200', className)}>
       {text}{' '}
-      <Link href={linkHref} className={twMerge('underline', linkColor)}>
+      <Link href={linkHref} className="underline text-purple-200 hover:text-white">
         {linkText}
       </Link>
     </p>
