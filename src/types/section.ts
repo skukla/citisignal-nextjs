@@ -1,9 +1,16 @@
 import { ElementType } from 'react';
 import { BaseComponentProps } from './ui';
 
+// Base Feature interface
 export interface Feature {
   text: string;
   icon?: ElementType;
+}
+
+// Extended Feature interface for detailed features
+export interface DetailedFeature {
+  title: string;
+  description: string;
 }
 
 export interface FeatureListProps extends BaseComponentProps {

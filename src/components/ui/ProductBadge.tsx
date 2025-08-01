@@ -29,21 +29,22 @@ interface ProductBadgeProps {
  * ```
  */
 export default function ProductBadge({ variant, originalPrice, price }: ProductBadgeProps) {
-  const getContent = () => {
-    switch (variant) {
-      case 'new':
-        return 'NEW';
-      case 'discount':
-        if (!originalPrice || !price) return '';
-        return `-${calculateDiscount(originalPrice, price)}%`;
-      case 'out-of-stock':
-        return 'OUT OF STOCK';
-      default:
-        return '';
-    }
-  };
+  // Inline content logic - no function-in-component pattern
+  let content = '';
+  switch (variant) {
+    case 'new':
+      content = 'NEW';
+      break;
+    case 'discount':
+      if (originalPrice && price) {
+        content = `-${calculateDiscount(originalPrice, price)}%`;
+      }
+      break;
+    case 'out-of-stock':
+      content = 'OUT OF STOCK';
+      break;
+  }
 
-  const content = getContent();
   if (!content) return null;
 
   // Use consistent variant pattern like Button component

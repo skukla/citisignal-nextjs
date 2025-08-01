@@ -58,36 +58,6 @@ export interface LogoProps {
   linkClassName?: string;
 }
 
-// Button types
-export type ButtonVariant = 
-  | 'primary'
-  | 'secondary'
-  | 'outline'
-  | 'yellow'
-  | 'ghost'
-  | 'subtle'
-  | 'white-outline'
-  | 'light-subtle';
-
-export type ButtonSize = 'sm' | 'md' | 'lg';
-
-export interface ButtonProps extends BaseComponentProps {
-  variant?: ButtonVariant;
-  size?: ButtonSize;
-  fullWidth?: boolean;
-  leftIcon?: ElementType;
-  rightIcon?: ElementType;
-  href?: string;
-  loading?: boolean;
-  disabled?: boolean;
-  onClick?: () => void;
-  customColor?: string;
-  'aria-label'?: string;
-  'aria-expanded'?: boolean;
-  'aria-controls'?: string;
-  'aria-describedby'?: string;
-}
-
 // TopBar types
 export interface TopBarProps extends BaseUIProps {
   announcement: string;

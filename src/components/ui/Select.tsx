@@ -65,10 +65,6 @@ export default function Select({
     containerClassName
   );
 
-  const isOptionGroup = (item: SelectOption | SelectGroup): item is SelectGroup => {
-    return 'options' in item;
-  };
-
   return (
     <div className={containerClasses}>
       <select 
@@ -80,7 +76,8 @@ export default function Select({
         )}
         
         {options.map((item, index) => (
-          isOptionGroup(item) ? (
+          // Inline type guard - only used once
+          'options' in item ? (
             <optgroup key={index} label={item.label}>
               {item.options.map(option => (
                 <option 

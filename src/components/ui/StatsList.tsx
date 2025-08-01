@@ -25,36 +25,26 @@ export default function StatsList({
   iconSize = 'md',
   className
 }: StatsListProps) {
-  const spacingClasses = {
-    sm: 'space-y-2',
-    md: 'space-y-3',
-    lg: 'space-y-4'
-  };
-
-  const iconSizeClasses = {
-    sm: 'w-4 h-4',
-    md: 'w-5 h-5',
-    lg: 'w-6 h-6'
-  };
-
-  const listClasses = twMerge(
-    spacingClasses[spacing],
-    className
-  );
-
-  const iconClasses = twMerge(
-    iconSizeClasses[iconSize],
-    'mr-2',
-    iconColor
-  );
-
   return (
-    <ul className={listClasses}>
+    <ul className={twMerge(
+      // Spacing variants - direct conditionals following Button pattern
+      spacing === 'sm' && 'space-y-2',
+      spacing === 'md' && 'space-y-3',
+      spacing === 'lg' && 'space-y-4',
+      className
+    )}>
       {items.map((item, index) => {
         const Icon = item.icon;
         return (
           <li key={index} className="flex items-center">
-            <Icon className={iconClasses} />
+            <Icon className={twMerge(
+              // Icon size variants - direct conditionals
+              iconSize === 'sm' && 'w-4 h-4',
+              iconSize === 'md' && 'w-5 h-5',
+              iconSize === 'lg' && 'w-6 h-6',
+              'mr-2',
+              iconColor
+            )} />
             <span className={textColor}>{item.text}</span>
           </li>
         );

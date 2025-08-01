@@ -37,13 +37,6 @@ export default function ProgressBar({
   // Ensure value is between 0 and 100
   const normalizedValue = Math.min(Math.max(value, 0), 100);
 
-  // Size variants
-  const heightClasses = {
-    sm: 'h-2',
-    md: 'h-3',
-    lg: 'h-4'
-  };
-
   return (
     <div className={twMerge('space-y-1', className)}>
       <div className="flex justify-between mb-1">
@@ -59,7 +52,10 @@ export default function ProgressBar({
 
       <div className={twMerge(
         'w-full rounded-full bg-gray-200',
-        heightClasses[size]
+        // Size variants - direct conditionals following Button pattern
+        size === 'sm' && 'h-2',
+        size === 'md' && 'h-3',
+        size === 'lg' && 'h-4'
       )}>
         <div
           className="h-full rounded-full bg-purple-600 transition-all duration-300"

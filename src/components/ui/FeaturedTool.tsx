@@ -3,18 +3,14 @@
 import { twMerge } from 'tailwind-merge';
 import CheckmarkFeatureList from './CheckmarkFeatureList';
 import Link from './Link';
-
-interface Feature {
-  title: string;
-  description: string;
-}
+import type { DetailedFeature } from '@/types/section';
 
 interface FeaturedToolProps {
   title: string;
   description: string;
   buttonText: string;
   buttonHref: string;
-  features: Feature[];
+  features: DetailedFeature[];
   className?: string;
   gradient?: string;
 }

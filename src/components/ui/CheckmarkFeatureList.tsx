@@ -1,14 +1,10 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-
-interface Feature {
-  title: string;
-  description: string;
-}
+import type { DetailedFeature } from '@/types/section';
 
 interface CheckmarkFeatureListProps {
-  features: Feature[];
+  features: DetailedFeature[];
   iconColor?: string;
   iconBgColor?: string;
   className?: string;

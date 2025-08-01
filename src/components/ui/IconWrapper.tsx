@@ -3,12 +3,6 @@
 import { twMerge } from 'tailwind-merge';
 import type { IconWrapperProps } from '@/types/ui';
 
-const sizes = {
-  sm: 'w-4 h-4',
-  md: 'w-5 h-5',
-  lg: 'w-6 h-6'
-} as const;
-
 /**
  * A wrapper component for icons that provides consistent sizing and accessibility attributes.
  * Use this component to standardize icon rendering across the application.
@@ -24,7 +18,13 @@ export default function IconWrapper({
 }: IconWrapperProps) {
   return (
     <Icon 
-      className={twMerge(sizes[size], className)}
+      className={twMerge(
+        // Size variants
+        size === 'sm' && 'w-4 h-4',
+        size === 'md' && 'w-5 h-5',
+        size === 'lg' && 'w-6 h-6',
+        className
+      )}
       aria-hidden={ariaHidden}
     />
   );
