@@ -1,24 +1,30 @@
 'use client';
 
-import { ElementType } from 'react';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
+import type { ButtonProps } from '@/types/button';
+import Spinner from '@/components/ui/Spinner';
 
-interface ButtonProps {
-  children?: React.ReactNode;
-  variant?: 'primary' | 'secondary' | 'outline' | 'yellow' | 'ghost' | 'subtle' | 'white-outline' | 'light-subtle';
-  size?: 'sm' | 'md' | 'lg';
-  fullWidth?: boolean;
-  leftIcon?: ElementType;
-  rightIcon?: ElementType;
-  href?: string;
-  loading?: boolean;
-  disabled?: boolean;
-  onClick?: () => void;
-  className?: string;
-  customColor?: string;
-}
-
+/**
+ * Button component that handles both button and link variants.
+ * 
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <Button>Click Me</Button>
+ * 
+ * // As a link
+ * <Button href="/path">Go Home</Button>
+ * 
+ * // With loading state
+ * <Button loading>Processing...</Button>
+ * 
+ * // Custom styling
+ * <Button className="bg-red-500 hover:bg-red-600">
+ *   Delete
+ * </Button>
+ * ```
+ */
 export default function Button({
   children,
   variant = 'primary',
@@ -31,56 +37,54 @@ export default function Button({
   disabled = false,
   onClick,
   className,
-  customColor
+  ...props
 }: ButtonProps) {
-  const styles = twMerge(
-    // Base
-    'inline-flex items-center justify-center gap-2',
-    'rounded-lg font-medium transition-all duration-200',
-    'disabled:opacity-50 disabled:cursor-not-allowed',
-    fullWidth && 'w-full',
-    'cursor-pointer',
-    
+  // Base classes that rarely change
+  const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2';
+  
+  // Dynamic classes based on variant/size/state
+  const classes = twMerge(
+    baseClasses,
+    // Variants
+    variant === 'primary' && 'bg-purple-600 text-white hover:bg-purple-700',
+    variant === 'secondary' && 'bg-purple-100 text-purple-700 hover:bg-purple-200',
+    variant === 'outline' && 'border-2 border-gray-300 text-gray-700 hover:bg-gray-100',
+    variant === 'ghost' && 'text-gray-700 hover:bg-gray-100',
+    variant === 'yellow' && 'bg-yellow-400 text-gray-900 font-bold hover:bg-yellow-300',
     // Sizes
     size === 'sm' && 'px-4 py-2 text-sm',
     size === 'md' && 'px-6 py-3',
     size === 'lg' && 'px-8 py-4 text-lg',
-    
-    // Variants
-    variant === 'primary' && !customColor && 'bg-[#8821f4] text-white shadow-lg hover:shadow-xl hover:opacity-80',
-    variant === 'secondary' && 'bg-purple-100 text-purple-700 hover:bg-purple-200',
-    variant === 'outline' && 'border-2 border-gray-300 text-gray-700 hover:bg-gray-100',
-    variant === 'yellow' && 'bg-yellow-400 text-gray-900 font-bold shadow-lg hover:shadow-xl hover:bg-yellow-300',
-    variant === 'ghost' && 'hover:bg-gray-100',
-    variant === 'subtle' && 'bg-gray-100 text-gray-900 hover:bg-gray-200 border-0',
-    variant === 'white-outline' && 'border-2 border-white text-white hover:bg-white hover:text-purple-600',
-    variant === 'light-subtle' && 'bg-white text-gray-700 hover:bg-gray-100 border-0 shadow-sm hover:shadow-md',
-    
-    // Custom color styles
-    variant === 'primary' && customColor && 'text-white shadow-lg hover:shadow-xl hover:opacity-80',
-    
+    // States
+    (disabled || loading) && 'opacity-50 cursor-not-allowed',
+    fullWidth && 'w-full',
     className
   );
 
   const content = (
     <>
+      {LeftIcon && <LeftIcon className="w-5 h-5" aria-hidden />}
       {loading ? (
-        <div className="w-5 h-5 border-2 border-t-transparent rounded-full animate-spin" />
-      ) : (
         <>
-          {LeftIcon && <LeftIcon className="w-5 h-5" />}
-          {children}
-          {RightIcon && <RightIcon className="w-5 h-5" />}
+          <span className="sr-only">Loading</span>
+          <Spinner size="sm" aria-hidden />
         </>
+      ) : (
+        children
       )}
+      {RightIcon && <RightIcon className="w-5 h-5" aria-hidden />}
     </>
   );
 
-  const buttonStyle = customColor && variant === 'primary' ? { backgroundColor: customColor } : undefined;
-
   if (href) {
     return (
-      <Link href={href} className={styles} style={buttonStyle}>
+      <Link 
+        href={href}
+        className={classes}
+        aria-disabled={disabled || loading}
+        tabIndex={disabled ? -1 : undefined}
+        {...props}
+      >
         {content}
       </Link>
     );
@@ -88,12 +92,13 @@ export default function Button({
 
   return (
     <button
-      onClick={onClick}
+      type="button"
+      className={classes}
       disabled={disabled || loading}
-      className={styles}
-      style={buttonStyle}
+      onClick={!loading ? onClick : undefined}
+      {...props}
     >
       {content}
     </button>
   );
-} 
+}

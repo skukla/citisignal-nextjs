@@ -1,70 +1,68 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import type { ProgressBarProps } from '@/types/progress';
 
-interface ProgressBarProps {
-  label: string;
-  value: number;
-  showValue?: boolean;
-  height?: 'sm' | 'md' | 'lg';
-  barColor?: string;
-  bgColor?: string;
-  valueColor?: string;
-  labelColor?: string;
-  className?: string;
-}
-
+/**
+ * Progress bar component for displaying completion or loading status.
+ * 
+ * @example
+ * ```tsx
+ * // Basic usage
+ * <ProgressBar label="Loading" value={60} />
+ * 
+ * // Custom styling
+ * <ProgressBar
+ *   label="Storage"
+ *   value={80}
+ *   className="text-blue-600"
+ * />
+ * 
+ * // Large size without value
+ * <ProgressBar
+ *   label="Progress"
+ *   value={45}
+ *   size="lg"
+ *   showValue={false}
+ * />
+ * ```
+ */
 export default function ProgressBar({
   label,
   value,
   showValue = true,
-  height = 'sm',
-  barColor = 'bg-purple-600',
-  bgColor = 'bg-gray-200',
-  valueColor = 'text-purple-600',
-  labelColor = 'text-gray-600',
+  size = 'sm',
   className
 }: ProgressBarProps) {
   // Ensure value is between 0 and 100
   const normalizedValue = Math.min(Math.max(value, 0), 100);
 
+  // Size variants
   const heightClasses = {
     sm: 'h-2',
     md: 'h-3',
     lg: 'h-4'
   };
 
-  const containerClasses = twMerge(
-    'space-y-1',
-    className
-  );
-
-  const barContainerClasses = twMerge(
-    'w-full rounded-full',
-    bgColor,
-    heightClasses[height]
-  );
-
-  const progressBarClasses = twMerge(
-    'h-full rounded-full transition-all duration-300',
-    barColor
-  );
-
   return (
-    <div className={containerClasses}>
+    <div className={twMerge('space-y-1', className)}>
       <div className="flex justify-between mb-1">
-        <span className={labelColor}>
+        <span className="text-gray-600">
           {label}
         </span>
         {showValue && (
-          <span className={twMerge('font-semibold', valueColor)}>
+          <span className="font-semibold text-gray-700">
             {normalizedValue}%
           </span>
         )}
       </div>
-      <div className={barContainerClasses}>
+
+      <div className={twMerge(
+        'w-full rounded-full bg-gray-200',
+        heightClasses[size]
+      )}>
         <div
-          className={progressBarClasses}
+          className="h-full rounded-full bg-purple-600 transition-all duration-300"
           style={{ width: `${normalizedValue}%` }}
           role="progressbar"
           aria-valuenow={normalizedValue}
@@ -75,4 +73,4 @@ export default function ProgressBar({
       </div>
     </div>
   );
-} 
+}
