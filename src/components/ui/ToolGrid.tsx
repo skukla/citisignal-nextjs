@@ -1,6 +1,6 @@
 'use client';
 
-import { twMerge } from 'tailwind-merge';
+import Grid from './Grid';
 import ToolCard from './ToolCard';
 import type { HeroIcon } from '@/types/hero-icons';
 
@@ -23,6 +23,19 @@ interface ToolGridProps {
   className?: string;
 }
 
+/**
+ * A grid component for displaying tool cards in a responsive layout.
+ * Built on the base Grid component.
+ *
+ * @example
+ * ```tsx
+ * <ToolGrid
+ *   tools={tools}
+ *   columns={{ sm: 1, md: 2, lg: 4 }}
+ *   gap="lg"
+ * />
+ * ```
+ */
 export default function ToolGrid({
   tools,
   columns = {
@@ -33,28 +46,8 @@ export default function ToolGrid({
   gap = 'lg',
   className
 }: ToolGridProps) {
-  const gapClasses = {
-    sm: 'gap-4',
-    md: 'gap-6',
-    lg: 'gap-8'
-  };
-
-  const getColumnsClass = () => {
-    const classes = [];
-    if (columns.sm) classes.push(`grid-cols-${columns.sm}`);
-    if (columns.md) classes.push(`md:grid-cols-${columns.md}`);
-    if (columns.lg) classes.push(`lg:grid-cols-${columns.lg}`);
-    if (columns.xl) classes.push(`xl:grid-cols-${columns.xl}`);
-    return classes.join(' ');
-  };
-
   return (
-    <div className={twMerge(
-      'grid',
-      getColumnsClass(),
-      gapClasses[gap],
-      className
-    )}>
+    <Grid columns={columns} gap={gap} className={className}>
       {tools.map((tool, index) => (
         <ToolCard
           key={index}
@@ -64,6 +57,6 @@ export default function ToolGrid({
           href={tool.link}
         />
       ))}
-    </div>
+    </Grid>
   );
 } 

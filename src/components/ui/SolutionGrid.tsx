@@ -1,6 +1,6 @@
 'use client';
 
-import { twMerge } from 'tailwind-merge';
+import Grid from './Grid';
 import SolutionCard from './SolutionCard';
 import type { HeroIcon } from '@/types/hero-icons';
 
@@ -24,6 +24,19 @@ interface SolutionGridProps {
   className?: string;
 }
 
+/**
+ * A grid component for displaying solution cards in a responsive layout.
+ * Built on the base Grid component.
+ *
+ * @example
+ * ```tsx
+ * <SolutionGrid
+ *   solutions={solutions}
+ *   columns={{ sm: 1, md: 2, lg: 4 }}
+ *   gap="lg"
+ * />
+ * ```
+ */
 export default function SolutionGrid({
   solutions,
   columns = {
@@ -34,28 +47,8 @@ export default function SolutionGrid({
   gap = 'lg',
   className
 }: SolutionGridProps) {
-  const gapClasses = {
-    sm: 'gap-4',
-    md: 'gap-6',
-    lg: 'gap-8'
-  };
-
-  const getColumnsClass = () => {
-    const classes = [];
-    if (columns.sm) classes.push(`grid-cols-${columns.sm}`);
-    if (columns.md) classes.push(`md:grid-cols-${columns.md}`);
-    if (columns.lg) classes.push(`lg:grid-cols-${columns.lg}`);
-    if (columns.xl) classes.push(`xl:grid-cols-${columns.xl}`);
-    return classes.join(' ');
-  };
-
   return (
-    <div className={twMerge(
-      'grid',
-      getColumnsClass(),
-      gapClasses[gap],
-      className
-    )}>
+    <Grid columns={columns} gap={gap} className={className}>
       {solutions.map((solution, index) => (
         <SolutionCard
           key={index}
@@ -66,6 +59,6 @@ export default function SolutionGrid({
           href={solution.link}
         />
       ))}
-    </div>
+    </Grid>
   );
 } 

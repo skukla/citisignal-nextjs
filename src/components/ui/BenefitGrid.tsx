@@ -1,6 +1,6 @@
 'use client';
 
-import { twMerge } from 'tailwind-merge';
+import Grid from './Grid';
 import BenefitCard from './BenefitCard';
 
 interface Benefit {
@@ -20,6 +20,19 @@ interface BenefitGridProps {
   className?: string;
 }
 
+/**
+ * A grid component for displaying benefit cards in a responsive layout.
+ * Built on the base Grid component.
+ *
+ * @example
+ * ```tsx
+ * <BenefitGrid
+ *   benefits={benefits}
+ *   columns={{ sm: 1, md: 3, lg: 4 }}
+ *   gap="md"
+ * />
+ * ```
+ */
 export default function BenefitGrid({
   benefits,
   columns = {
@@ -29,27 +42,8 @@ export default function BenefitGrid({
   gap = 'md',
   className
 }: BenefitGridProps) {
-  const gapClasses = {
-    sm: 'gap-4',
-    md: 'gap-6',
-    lg: 'gap-8'
-  };
-
-  const getColumnsClass = () => {
-    const classes = [];
-    if (columns.sm) classes.push(`grid-cols-${columns.sm}`);
-    if (columns.md) classes.push(`md:grid-cols-${columns.md}`);
-    if (columns.lg) classes.push(`lg:grid-cols-${columns.lg}`);
-    return classes.join(' ');
-  };
-
   return (
-    <div className={twMerge(
-      'grid',
-      getColumnsClass(),
-      gapClasses[gap],
-      className
-    )}>
+    <Grid columns={columns} gap={gap} className={className}>
       {benefits.map((benefit, index) => (
         <BenefitCard
           key={index}
@@ -58,6 +52,6 @@ export default function BenefitGrid({
           description={benefit.description}
         />
       ))}
-    </div>
+    </Grid>
   );
 } 
