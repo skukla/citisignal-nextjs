@@ -30,6 +30,15 @@ function useNavigationContext() {
   return context;
 }
 
+/**
+ * Root component for the Navigation system. Provides context and state management
+ * for the navigation menu, including mobile menu state and backdrop handling.
+ *
+ * @example
+ * <NavigationRoot isOpen={isMenuOpen} onToggle={toggleMenu} onClose={closeMenu}>
+ *   <Header />
+ * </NavigationRoot>
+ */
 export const NavigationRoot: FC<NavigationRootProps> = ({ 
   children, 
   className,
@@ -52,6 +61,13 @@ export const NavigationRoot: FC<NavigationRootProps> = ({
   );
 };
 
+/**
+ * Navigation link component that handles active state styling and menu closing.
+ * Implements proper ARIA attributes for accessibility.
+ *
+ * @example
+ * <NavigationLink href="/products">Products</NavigationLink>
+ */
 export const NavigationLink: FC<NavigationLinkProps> = ({ href, className, children }) => {
   const { closeMenu } = useNavigationContext();
   const pathname = usePathname();
@@ -74,6 +90,18 @@ export const NavigationLink: FC<NavigationLinkProps> = ({ href, className, child
   );
 };
 
+/**
+ * Navigation list component that renders either desktop or mobile navigation.
+ * Handles responsive layout, animations, and accessibility requirements.
+ *
+ * @example
+ * // Desktop navigation
+ * <NavigationList items={navItems} variant="desktop" />
+ *
+ * @example
+ * // Mobile navigation with slide-over menu
+ * <NavigationList items={navItems} variant="mobile" />
+ */
 export const NavigationList: FC<NavigationListProps> = ({ items, variant, className }) => {
   const { isMenuOpen, menuRef, closeMenu } = useNavigationContext();
   
@@ -147,7 +175,16 @@ export const NavigationList: FC<NavigationListProps> = ({ items, variant, classN
   );
 };
 
-// Create the compound component namespace
+/**
+ * Navigation compound component for building responsive navigation menus.
+ * Provides desktop and mobile navigation with proper accessibility support.
+ *
+ * @example
+ * <Navigation.Root>
+ *   <Navigation.List items={navItems} variant="desktop" />
+ *   <Navigation.List items={navItems} variant="mobile" />
+ * </Navigation.Root>
+ */
 const Navigation = {
   Root: NavigationRoot,
   List: NavigationList,

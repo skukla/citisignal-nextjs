@@ -4,9 +4,13 @@ import { createContext, useContext } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import type { 
-  SearchContextValue, 
-  BaseSearchProps,
-  SearchComponent 
+  SearchContextValue,
+  SearchComponent,
+  SearchRootProps,
+  SearchTriggerProps,
+  SearchPanelProps,
+  SearchInputProps,
+  SearchResultsProps
 } from '../types/search.types';
 import { useSearch } from '../hooks/useSearch';
 
@@ -21,8 +25,20 @@ function useSearchContext() {
   return context;
 }
 
-// Individual components
-export const SearchRoot = ({ children, className }: BaseSearchProps) => {
+/**
+ * Root component for the Search feature. Provides context and state management
+ * for the search functionality.
+ *
+ * @example
+ * <Search.Root>
+ *   <Search.Trigger />
+ *   <Search.Panel>
+ *     <Search.Input />
+ *     <Search.Results />
+ *   </Search.Panel>
+ * </Search.Root>
+ */
+export const SearchRoot = ({ children, className }: SearchRootProps) => {
   const searchState = useSearch();
 
   return (
@@ -34,7 +50,14 @@ export const SearchRoot = ({ children, className }: BaseSearchProps) => {
   );
 };
 
-export const SearchTrigger = ({ className }: BaseSearchProps) => {
+/**
+ * Trigger button for opening the search panel.
+ * Renders a magnifying glass icon with hover effects.
+ *
+ * @example
+ * <Search.Trigger aria-label="Search products" />
+ */
+export const SearchTrigger = ({ className }: SearchTriggerProps) => {
   const { toggle } = useSearchContext();
 
   return (
@@ -50,7 +73,17 @@ export const SearchTrigger = ({ className }: BaseSearchProps) => {
   );
 };
 
-export const SearchPanel = ({ children, className }: BaseSearchProps) => {
+/**
+ * Panel component that displays the search interface.
+ * Handles positioning and click-outside behavior.
+ *
+ * @example
+ * <Search.Panel>
+ *   <Search.Input />
+ *   <Search.Results />
+ * </Search.Panel>
+ */
+export const SearchPanel = ({ children, className }: SearchPanelProps) => {
   const { isOpen, panelRef } = useSearchContext();
 
   if (!isOpen) return null;
@@ -69,7 +102,14 @@ export const SearchPanel = ({ children, className }: BaseSearchProps) => {
   );
 };
 
-export const SearchInput = ({ className }: BaseSearchProps) => {
+/**
+ * Search input field component with auto-focus.
+ * Provides real-time search functionality.
+ *
+ * @example
+ * <Search.Input placeholder="Search products..." />
+ */
+export const SearchInput = ({ className, placeholder = "Search phones, plans, accessories..." }: SearchInputProps) => {
   const { query, setQuery } = useSearchContext();
 
   return (
@@ -77,7 +117,7 @@ export const SearchInput = ({ className }: BaseSearchProps) => {
       type="text"
       value={query}
       onChange={(e) => setQuery(e.target.value)}
-      placeholder="Search phones, plans, accessories..."
+      placeholder={placeholder}
       className={twMerge(
         'w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 placeholder-gray-700',
         className
@@ -87,7 +127,14 @@ export const SearchInput = ({ className }: BaseSearchProps) => {
   );
 };
 
-export const SearchResults = ({ className }: BaseSearchProps) => {
+/**
+ * Results list component that displays search results.
+ * Handles loading states and empty results.
+ *
+ * @example
+ * <Search.Results />
+ */
+export const SearchResults = ({ className }: SearchResultsProps) => {
   const { results, isLoading, selectResult } = useSearchContext();
 
   if (isLoading) {
@@ -114,7 +161,19 @@ export const SearchResults = ({ className }: BaseSearchProps) => {
   );
 };
 
-// Create compound component
+/**
+ * Search compound component for building search functionality.
+ * Provides a complete search interface with trigger, panel, input, and results.
+ *
+ * @example
+ * <Search.Root>
+ *   <Search.Trigger aria-label="Search products" />
+ *   <Search.Panel>
+ *     <Search.Input />
+ *     <Search.Results />
+ *   </Search.Panel>
+ * </Search.Root>
+ */
 const Search: SearchComponent = {
   Root: SearchRoot,
   Trigger: SearchTrigger,
