@@ -1,7 +1,7 @@
 'use client';
 
 import { MapIcon, CalculatorIcon, SignalIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
-import SectionContainer from '@/components/ui/SectionContainer';
+import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ToolGrid from '@/components/ui/ToolGrid';
 import FeaturedTool from '@/components/ui/FeaturedTool';
@@ -50,7 +50,7 @@ export default function InteractiveToolsSection() {
   ];
 
   return (
-    <SectionContainer>
+    <Section>
       <SectionHeader
         title="Interactive Tools"
         description="Make informed decisions with our suite of interactive tools designed to help you get the most from your mobile service."
@@ -68,6 +68,6 @@ export default function InteractiveToolsSection() {
         features={optimizerFeatures}
         className="mt-16"
       />
-    </SectionContainer>
+    </Section>
   );
 } 
