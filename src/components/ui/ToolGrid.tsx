@@ -3,6 +3,7 @@
 import Grid from './Grid';
 import ToolCard from './ToolCard';
 import type { HeroIcon } from '@/types/hero-icons';
+import type { ResponsiveValue, GridGap } from '@/types/grid';
 
 interface Tool {
   icon: HeroIcon;
@@ -13,13 +14,8 @@ interface Tool {
 
 interface ToolGridProps {
   tools: Tool[];
-  columns?: {
-    sm?: number;
-    md?: number;
-    lg?: number;
-    xl?: number;
-  };
-  gap?: 'sm' | 'md' | 'lg';
+  columns?: ResponsiveValue<number>;
+  gap?: GridGap;
   className?: string;
 }
 

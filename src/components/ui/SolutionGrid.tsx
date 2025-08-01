@@ -3,6 +3,7 @@
 import Grid from './Grid';
 import SolutionCard from './SolutionCard';
 import type { HeroIcon } from '@/types/hero-icons';
+import type { ResponsiveValue, GridGap } from '@/types/grid';
 
 interface Solution {
   icon: HeroIcon;
@@ -14,13 +15,8 @@ interface Solution {
 
 interface SolutionGridProps {
   solutions: Solution[];
-  columns?: {
-    sm?: number;
-    md?: number;
-    lg?: number;
-    xl?: number;
-  };
-  gap?: 'sm' | 'md' | 'lg';
+  columns?: ResponsiveValue<number>;
+  gap?: GridGap;
   className?: string;
 }
 

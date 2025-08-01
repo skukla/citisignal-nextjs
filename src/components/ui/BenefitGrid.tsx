@@ -2,6 +2,7 @@
 
 import Grid from './Grid';
 import BenefitCard from './BenefitCard';
+import type { ResponsiveValue, GridGap } from '@/types/grid';
 
 interface Benefit {
   emoji: string;
@@ -11,12 +12,8 @@ interface Benefit {
 
 interface BenefitGridProps {
   benefits: Benefit[];
-  columns?: {
-    sm?: number;
-    md?: number;
-    lg?: number;
-  };
-  gap?: 'sm' | 'md' | 'lg';
+  columns?: ResponsiveValue<number>;
+  gap?: GridGap;
   className?: string;
 }
 
@@ -28,7 +25,7 @@ interface BenefitGridProps {
  * ```tsx
  * <BenefitGrid
  *   benefits={benefits}
- *   columns={{ sm: 1, md: 3, lg: 4 }}
+ *   columns={{ sm: 1, md: 3, lg: 4, xl: 6 }}
  *   gap="md"
  * />
  * ```

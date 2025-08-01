@@ -14,11 +14,10 @@ import type { GridProps } from '@/types/grid';
  *   <Card>Item 2</Card>
  * </Grid>
  * 
- * // With gap and alignment
+ * // With custom gap
  * <Grid 
  *   columns={{ sm: 1, lg: 4 }}
  *   gap="lg"
- *   align="center"
  * >
  *   <Card>Item 1</Card>
  *   <Card>Item 2</Card>
@@ -29,49 +28,24 @@ export default function Grid({
   children,
   columns,
   gap = 'md',
-  align = 'stretch',
   className
 }: GridProps) {
-  // Map gap sizes to Tailwind classes
-  const gapClasses = {
-    sm: 'gap-4',
-    md: 'gap-6',
-    lg: 'gap-8'
-  };
-
-  // Map alignment to Tailwind classes
-  const alignClasses = {
-    start: 'items-start',
-    center: 'items-center',
-    end: 'items-end',
-    stretch: 'items-stretch'
-  };
-
-  // Generate responsive column classes
-  const getColumnsClass = () => {
-    const classes = [];
-    
-    // Handle each breakpoint
-    if (columns.sm) classes.push(`grid-cols-${columns.sm}`);
-    if (columns.md) classes.push(`md:grid-cols-${columns.md}`);
-    if (columns.lg) classes.push(`lg:grid-cols-${columns.lg}`);
-    if (columns.xl) classes.push(`xl:grid-cols-${columns.xl}`);
-    
-    return classes.join(' ');
-  };
-
   return (
     <div 
       className={twMerge(
-        // Base styles
+        // Base grid styles
         'grid w-full',
         
-        // Responsive columns
-        getColumnsClass(),
+        // Responsive columns - inline logic following Button pattern
+        columns.sm && `grid-cols-${columns.sm}`,
+        columns.md && `md:grid-cols-${columns.md}`,
+        columns.lg && `lg:grid-cols-${columns.lg}`,
+        columns.xl && `xl:grid-cols-${columns.xl}`,
         
-        // Gap and alignment
-        gapClasses[gap],
-        alignClasses[align],
+        // Gap - direct conditional classes following Button pattern
+        gap === 'sm' && 'gap-4',
+        gap === 'md' && 'gap-6',
+        gap === 'lg' && 'gap-8',
         
         // Custom classes
         className
