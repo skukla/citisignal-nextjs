@@ -1,16 +1,33 @@
 import Link from 'next/link';
+import Card from '@/components/ui/Card';
 import { ProductCardRootProps } from '../types/product.types';
 import { ProductCardProvider } from '../context/ProductCardContext';
 
+/**
+ * A compound component for displaying product information.
+ * 
+ * @example
+ * ```tsx
+ * <ProductCard product={productData}>
+ *   <ProductCard.Image />
+ *   <ProductCard.Badges />
+ *   <ProductCard.Info />
+ *   <ProductCard.Price />
+ *   <ProductCard.Actions />
+ * </ProductCard>
+ * ```
+ */
 export function ProductCard({ product, className, children }: ProductCardRootProps) {
   return (
     <ProductCardProvider product={product}>
-      <Link
+      <Card
+        as={Link}
         href={`/products/${product.url_key}`}
-        className={`block rounded-lg border border-gray-200 bg-white shadow-sm transition-shadow hover:shadow-md ${className ?? ''}`}
+        interactive
+        className={className}
       >
         {children}
-      </Link>
+      </Card>
     </ProductCardProvider>
   );
 }

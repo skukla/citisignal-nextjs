@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Container from '@/components/ui/Container';
+import Section from '@/components/ui/Section';
 
 export default function TechNewsSection() {
   const articles = [
@@ -28,8 +28,7 @@ export default function TechNewsSection() {
   ];
 
   return (
-    <section className="py-20 bg-gray-50">
-      <Container>
+    <Section background="bg-gray-50">
         {/* Section Header */}
         <div className="flex justify-between items-end mb-12">
           <div>
@@ -86,7 +85,6 @@ export default function TechNewsSection() {
             <ArrowRightIcon className="w-5 h-5 ml-2" />
           </Link>
         </div>
-      </Container>
-    </section>
+    </Section>
   );
 } 

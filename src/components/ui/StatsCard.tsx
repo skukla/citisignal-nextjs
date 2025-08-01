@@ -1,64 +1,55 @@
 'use client';
 
-import { ElementType } from 'react';
 import { twMerge } from 'tailwind-merge';
+import Card from './Card';
+import type { StatsCardProps } from '@/types/stats';
 
-interface StatsCardProps {
-  icon: ElementType;
-  title: string;
-  iconBgColor?: string;
-  iconColor?: string;
-  borderColor?: string;
-  shadowSize?: 'none' | 'sm' | 'md' | 'lg';
-  className?: string;
-  children: React.ReactNode;
-}
-
+/**
+ * A card component for displaying statistical information with an icon header.
+ * 
+ * @example
+ * ```tsx
+ * <StatsCard icon={SignalIcon} title="Coverage Stats" variant="purple">
+ *   <ProgressBar label="5G Coverage" value={85} />
+ * </StatsCard>
+ * ```
+ */
 export default function StatsCard({
   icon: Icon,
   title,
-  iconBgColor = 'bg-purple-100',
-  iconColor = 'text-purple-600',
-  borderColor = 'border-gray-100',
-  shadowSize = 'sm',
+  variant = 'purple',
   className,
   children
 }: StatsCardProps) {
-  const shadowClasses = {
-    none: '',
-    sm: 'shadow-sm',
-    md: 'shadow',
-    lg: 'shadow-lg'
-  };
-
-  const containerClasses = twMerge(
-    'bg-white p-6 rounded-xl border',
-    borderColor,
-    shadowClasses[shadowSize],
-    className
-  );
-
-  const iconContainerClasses = twMerge(
-    'w-10 h-10 rounded-lg flex items-center justify-center mr-4',
-    iconBgColor
-  );
-
-  const iconClasses = twMerge(
-    'w-6 h-6',
-    iconColor
-  );
+  const iconBgClass = variant === 'purple' ? 'bg-purple-100' :
+                     variant === 'blue' ? 'bg-blue-100' :
+                     variant === 'green' ? 'bg-green-100' :
+                     'bg-gray-100';
+  
+  const iconColorClass = variant === 'purple' ? 'text-purple-600' :
+                        variant === 'blue' ? 'text-blue-600' :
+                        variant === 'green' ? 'text-green-600' :
+                        'text-gray-600';
 
   return (
-    <div className={containerClasses}>
-      <div className="flex items-center mb-4">
-        <div className={iconContainerClasses}>
-          <Icon className={iconClasses} />
+    <Card className={className}>
+      <div className="flex items-center mb-4 p-6 pb-0">
+        <div className={twMerge(
+          'w-10 h-10 rounded-lg flex items-center justify-center mr-4',
+          iconBgClass
+        )}>
+          <Icon className={twMerge(
+            'w-6 h-6',
+            iconColorClass
+          )} />
         </div>
         <h3 className="text-xl font-semibold text-gray-900">
           {title}
         </h3>
       </div>
-      {children}
-    </div>
+      <div className="px-6 pb-6">
+        {children}
+      </div>
+    </Card>
   );
 } 

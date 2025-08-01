@@ -1,64 +1,70 @@
 'use client';
 
-import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import GradientSection from '@/components/ui/GradientSection';
+import Link from '@/components/ui/Link';
+import Section from '@/components/ui/Section';
 import PromoTag from '@/components/ui/PromoTag';
 import FeatureList from '@/components/ui/FeatureList';
 import PhoneMockup from '@/components/ui/PhoneMockup';
 import SimplePlanCard from '@/components/ui/SimplePlanCard';
+import { heroContent } from '@/data/sections/hero';
+import type { HeroSectionProps } from '@/types/section';
 
-export default function HeroSection() {
-  const features = [
-    {
-      highlight: 'Max coverage, Super speed.',
-      details: 'Our prepaid plans use the same great CitiSignal 5G network that covers more than 200 million Americans nationwide.'
-    }
-  ];
-
+export default function HeroSection({
+  content = heroContent,
+  className
+}: HeroSectionProps) {
   return (
-    <GradientSection>
+    <Section 
+      className={`bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 text-white ${className || ''}`}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Content */}
         <div>
-          <PromoTag
-            text="Our lowest-priced plans ever"
-            className="mb-6"
-          />
+          {content.promotional && (
+            <PromoTag
+              text={content.promotional}
+              className="mb-6"
+            />
+          )}
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
-            <span className="text-yellow-300">Starting at only</span>
+            <span className="text-yellow-300">{content.headline.prefix}</span>
             <br />
-            <span className="text-5xl md:text-6xl lg:text-7xl">$10/month</span>
+            <span className="text-5xl md:text-6xl lg:text-7xl">{content.headline.amount}</span>
           </h1>
 
           <p className="text-xl text-purple-100 mb-8 max-w-md">
-            Unlimited talk and text, plus 2.5GB of high-speed data. 
-            And we&apos;ll increase your data by 500MB each year through 2025.
+            {content.description}
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <Link
-              href="/plans"
-              className="inline-flex items-center justify-center px-8 py-4 bg-yellow-400 text-gray-900 font-bold rounded-lg hover:bg-yellow-300 transition-colors"
+              href={content.primaryCTA.href}
+              variant="button"
+              buttonStyle="primary"
+              icon={ArrowRightIcon}
+              iconPosition="right"
+              className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 px-8 py-4"
             >
-              Shop Plans
-              <ArrowRightIcon className="ml-2 w-5 h-5" />
+              {content.primaryCTA.text}
             </Link>
             <Link
-              href="/phones"
-              className="inline-flex items-center justify-center px-8 py-4 border border-white text-white font-medium rounded-lg hover:bg-white hover:text-purple-600 transition-colors"
+              href={content.secondaryCTA.href}
+              variant="button"
+              buttonStyle="outline"
+              className="border-white text-white hover:bg-white hover:text-purple-600 px-8 py-4"
             >
-              Shop Phones
+              {content.secondaryCTA.text}
             </Link>
           </div>
 
           {/* Features */}
           <div className="text-sm text-purple-100 mb-4">
-            Plus taxes & fees. Domestic use only.
+            {content.disclaimer}
           </div>
           
-          <FeatureList features={features} />
+          <FeatureList features={[content.feature]} />
         </div>
 
         {/* Visual */}
@@ -68,9 +74,9 @@ export default function HeroSection() {
               <div className="space-y-6">
                 <PhoneMockup />
                 <SimplePlanCard
-                  price="$10/month"
-                  title="Unlimited Talk & Text"
-                  subtitle="+ 2.5GB High-Speed Data"
+                  price={content.planPreview.price}
+                  title={content.planPreview.title}
+                  subtitle={content.planPreview.subtitle}
                 />
               </div>
             </div>
@@ -81,6 +87,6 @@ export default function HeroSection() {
           <div className="absolute bottom-0 left-0 w-72 h-72 bg-purple-900 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-pulse delay-1000"></div>
         </div>
       </div>
-    </GradientSection>
+    </Section>
   );
 } 

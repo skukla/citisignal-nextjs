@@ -1,5 +1,22 @@
 'use client';
 
+/**
+ * @deprecated This ProductCard component is deprecated. 
+ * Use the refactored ProductCard from '@/features/product/components/ProductCard' instead.
+ * 
+ * New usage:
+ * ```tsx
+ * import { ProductCard } from '@/features/product/components/ProductCard';
+ * 
+ * <ProductCard product={productData}>
+ *   <ProductCard.Image />
+ *   <ProductCard.Info />
+ *   <ProductCard.Price />
+ *   <ProductCard.Actions />
+ * </ProductCard>
+ * ```
+ */
+
 import Link from 'next/link';
 import { HeartIcon } from '@heroicons/react/24/solid';
 import { HeartIcon as HeartOutlineIcon } from '@heroicons/react/24/outline';
@@ -39,6 +56,12 @@ export default function ProductCard({
   isNew = false,
   isSale = false
 }: ProductCardProps) {
+  // Deprecation warning
+  console.warn(
+    'ProductCard from @/components/ui/ProductCard is deprecated. ' +
+    'Use the refactored ProductCard from @/features/product/components/ProductCard instead.'
+  );
+
   const [isWishlisted, setIsWishlisted] = useState(false);
 
   return (

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import { phones } from '@/data/phones';
-import Container from '@/components/ui/Container';
+import Section from '@/components/ui/Section';
+import SectionHeader from '@/components/ui/SectionHeader';
 import ProductCard from '@/components/ui/ProductCard';
 
 export default function PopularPhonesSection() {
@@ -10,18 +11,13 @@ export default function PopularPhonesSection() {
     .slice(0, 4);
 
   return (
-    <section className="py-20 bg-white">
-      <Container>
-        {/* Header */}
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-            Popular Phones
-          </h2>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Discover the latest smartphones with exclusive CitiSignal deals. 
-            Get the phone you want with flexible payment options.
-          </p>
-        </div>
+    <Section background="bg-white">
+      <SectionHeader
+        title="Popular Phones"
+        description="Discover the latest smartphones with exclusive CitiSignal deals. Get the phone you want with flexible payment options."
+        centered
+        className="mb-16"
+      />
 
         {/* Phones Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
@@ -33,8 +29,6 @@ export default function PopularPhonesSection() {
               brand={phone.manufacturer}
               price={phone.price}
               originalPrice={phone.original_price}
-              rating={phone.rating_summary / 20}
-              reviews={phone.review_count}
               image={phone.media_gallery?.[0]?.url || ''}
               category={phone.category}
               features={phone.memory}
@@ -58,7 +52,6 @@ export default function PopularPhonesSection() {
             </svg>
           </Link>
         </div>
-      </Container>
-    </section>
+    </Section>
   );
 } 

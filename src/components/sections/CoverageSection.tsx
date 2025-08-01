@@ -1,30 +1,27 @@
 'use client';
 
-import { MapPinIcon, SignalIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline';
-import Container from '@/components/ui/Container';
+import { SignalIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline';
+import Section from '@/components/ui/Section';
+import SectionHeader from '@/components/ui/SectionHeader';
 import StatsCard from '@/components/ui/StatsCard';
 import ProgressBar from '@/components/ui/ProgressBar';
 import StatsList from '@/components/ui/StatsList';
+import { coverageContent } from '@/data/sections/coverage';
+import type { CoverageSectionProps } from '@/types/section';
 
-export default function CoverageSection() {
-  const coverageStats = [
-    { label: 'Population Coverage', value: 99 },
-    { label: 'Geographic Coverage', value: 92 }
-  ];
-
-  const networkStats = [
-    { icon: MapPinIcon, text: '450,000+ Cell Towers' },
-    { icon: MapPinIcon, text: '98% 4G LTE Coverage' },
-    { icon: MapPinIcon, text: 'Expanding 5G Ultra Capacity' }
-  ];
+export default function CoverageSection({
+  content = coverageContent,
+  className
+}: CoverageSectionProps) {
 
   return (
-    <section className="py-16 bg-white">
-      <Container>
-        <div className="text-center mb-12">
-          <h2 className="text-3xl font-bold text-gray-900 mb-4">Network Coverage</h2>
-          <p className="text-lg text-gray-600">Experience our nationwide 5G network coverage</p>
-        </div>
+    <Section background="bg-white" className={className}>
+      <SectionHeader
+        title={content.header.title}
+        description={content.header.description}
+        centered
+        className="mb-12"
+      />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Coverage Stats */}
@@ -33,7 +30,7 @@ export default function CoverageSection() {
             title="5G Coverage"
           >
             <div className="space-y-4">
-              {coverageStats.map((stat, index) => (
+              {content.coverageStats.map((stat, index) => (
                 <ProgressBar
                   key={index}
                   label={stat.label}
@@ -48,10 +45,9 @@ export default function CoverageSection() {
             icon={GlobeAmericasIcon}
             title="Network Stats"
           >
-            <StatsList items={networkStats} />
+            <StatsList items={content.networkStats} />
           </StatsCard>
         </div>
-      </Container>
-    </section>
+    </Section>
   );
 } 
