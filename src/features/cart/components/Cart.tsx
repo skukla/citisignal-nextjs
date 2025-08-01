@@ -5,7 +5,9 @@ import { twMerge } from 'tailwind-merge';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import type { 
   CartContextValue, 
-  BaseCartProps,
+  CartRootProps,
+  CartIconProps,
+  CartPanelProps,
   CartComponent,
   CartItem
 } from '../types/cart.types';
@@ -22,8 +24,17 @@ function useCartContext() {
   return context;
 }
 
-// Individual components
-const CartRoot = ({ children, className }: BaseCartProps) => {
+/**
+ * Root component for the Cart feature. Provides context and state management
+ * for the shopping cart functionality.
+ *
+ * @example
+ * <Cart.Root>
+ *   <Cart.Icon />
+ *   <Cart.Panel />
+ * </Cart.Root>
+ */
+const CartRoot = ({ children, className }: CartRootProps) => {
   const cartState = useCart();
 
   return (
@@ -35,7 +46,14 @@ const CartRoot = ({ children, className }: BaseCartProps) => {
   );
 };
 
-const CartIcon = ({ className }: BaseCartProps) => {
+/**
+ * Cart icon component that displays the current number of items.
+ * Handles toggling the cart panel visibility.
+ *
+ * @example
+ * <Cart.Icon aria-label="Shopping cart" />
+ */
+const CartIcon = ({ className }: CartIconProps) => {
   const { itemCount, toggle } = useCartContext();
 
   return (
@@ -59,7 +77,14 @@ const CartIcon = ({ className }: BaseCartProps) => {
   );
 };
 
-const CartPanel = ({ className }: BaseCartProps) => {
+/**
+ * Cart panel component that displays the cart contents.
+ * Provides item management (quantity updates, removal).
+ *
+ * @example
+ * <Cart.Panel id="cart-panel" />
+ */
+const CartPanel = ({ className }: CartPanelProps) => {
   const { isOpen, panelRef, items, updateQuantity, removeItem } = useCartContext();
 
   if (!isOpen) return null;
@@ -128,12 +153,28 @@ const CartPanel = ({ className }: BaseCartProps) => {
   );
 };
 
-// Create compound component
-const Cart: CartComponent = {
+/**
+ * Cart compound component for building shopping cart functionality.
+ * Provides a complete cart interface with icon, panel, and item management.
+ *
+ * Features:
+ * - Item count badge
+ * - Item list with images
+ * - Quantity controls
+ * - Item removal
+ * - Empty state handling
+ *
+ * @example
+ * <Cart.Root>
+ *   <Cart.Icon aria-label="Shopping cart" />
+ *   <Cart.Panel id="cart-panel" />
+ * </Cart.Root>
+ */
+const Cart = {
   Root: CartRoot,
   Icon: CartIcon,
   Panel: CartPanel
-} as const;
+} as const satisfies CartComponent;
 
 // Export
 export default Cart; 

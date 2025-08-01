@@ -6,7 +6,9 @@ import Link from 'next/link';
 import { UserIcon } from '@heroicons/react/24/outline';
 import type {
   AccountContextValue,
-  BaseAccountProps,
+  AccountRootProps,
+  AccountIconProps,
+  AccountPanelProps,
   AccountComponent
 } from '../types/account.types';
 import { useAccount } from '../hooks/useAccount';
@@ -23,8 +25,17 @@ function useAccountContext() {
   return context;
 }
 
-// Individual components
-const AccountRoot = ({ children, className }: BaseAccountProps) => {
+/**
+ * Root component for the Account feature. Provides context and state management
+ * for user authentication and account functionality.
+ *
+ * @example
+ * <Account.Root>
+ *   <Account.Icon />
+ *   <Account.Panel />
+ * </Account.Root>
+ */
+const AccountRoot = ({ children, className }: AccountRootProps) => {
   const accountState = useAccount();
 
   return (
@@ -36,7 +47,14 @@ const AccountRoot = ({ children, className }: BaseAccountProps) => {
   );
 };
 
-const AccountIcon = ({ className }: BaseAccountProps) => {
+/**
+ * Account icon component that displays the user's avatar when authenticated.
+ * Handles toggling the account panel visibility.
+ *
+ * @example
+ * <Account.Icon aria-label="User account" />
+ */
+const AccountIcon = ({ className }: AccountIconProps) => {
   const { toggle, isAuthenticated, user } = useAccountContext();
 
   return (
@@ -59,7 +77,20 @@ const AccountIcon = ({ className }: BaseAccountProps) => {
   );
 };
 
-const AccountPanel = ({ className }: BaseAccountProps) => {
+/**
+ * Account panel component that displays user profile and authentication options.
+ * Shows different content for authenticated and unauthenticated states.
+ *
+ * Features:
+ * - User profile with avatar
+ * - Account management menu
+ * - Sign in/out functionality
+ * - Account creation link
+ *
+ * @example
+ * <Account.Panel id="account-panel" />
+ */
+const AccountPanel = ({ className }: AccountPanelProps) => {
   const { isOpen, panelRef, isAuthenticated, signIn, user, signOut } = useAccountContext();
 
   if (!isOpen) return null;
@@ -141,12 +172,29 @@ const AccountPanel = ({ className }: BaseAccountProps) => {
   );
 };
 
-// Create compound component
-const Account: AccountComponent = {
+/**
+ * Account compound component for building user account functionality.
+ * Provides a complete account interface with authentication and profile management.
+ *
+ * Features:
+ * - Authentication state management
+ * - User profile display
+ * - Avatar support
+ * - Account menu navigation
+ * - Sign in/out functionality
+ * - Account creation flow
+ *
+ * @example
+ * <Account.Root>
+ *   <Account.Icon aria-label="User account" />
+ *   <Account.Panel id="account-panel" />
+ * </Account.Root>
+ */
+const Account = {
   Root: AccountRoot,
   Icon: AccountIcon,
   Panel: AccountPanel
-} as const;
+} as const satisfies AccountComponent;
 
 // Export
 export default Account;

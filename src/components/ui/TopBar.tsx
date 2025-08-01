@@ -20,13 +20,26 @@ interface AuthLinksProps {
   className?: string;
 }
 
-// Sub-components
+/**
+ * Announcement component for displaying promotional messages.
+ * Handles text truncation for responsive layouts.
+ *
+ * @example
+ * <TopBar.Announcement>Free shipping on orders over $99</TopBar.Announcement>
+ */
 export const Announcement: FC<AnnouncementProps> = ({ children, className }) => (
   <div className={twMerge('text-sm text-white truncate', className)}>
     {children}
   </div>
 );
 
+/**
+ * Support information component that displays contact details.
+ * Hidden on mobile screens for better responsiveness.
+ *
+ * @example
+ * <TopBar.SupportInfo phone="1-800-SUPPORT" />
+ */
 export const SupportInfo: FC<SupportInfoProps> = ({ phone, className }) => (
   <div className={twMerge('hidden sm:flex items-center space-x-1', className)}>
     <span className="text-sm text-gray-300">Support:</span>
@@ -34,6 +47,16 @@ export const SupportInfo: FC<SupportInfoProps> = ({ phone, className }) => (
   </div>
 );
 
+/**
+ * Authentication links component for sign in/up navigation.
+ * Provides consistent styling and hover effects.
+ *
+ * @example
+ * <TopBar.AuthLinks links={[
+ *   { href: '/signin', label: 'Sign In' },
+ *   { href: '/signup', label: 'Create Account' }
+ * ]} />
+ */
 export const AuthLinks: FC<AuthLinksProps> = ({ links, className }) => (
   <div className={twMerge('flex items-center space-x-2 sm:space-x-4', className)}>
     {links.map((link) => (
@@ -48,7 +71,26 @@ export const AuthLinks: FC<AuthLinksProps> = ({ links, className }) => (
   </div>
 );
 
-// Main component
+/**
+ * Top bar component that displays announcements, support info, and auth links.
+ * Implements responsive design with mobile-first approach.
+ *
+ * Features:
+ * - Promotional announcements
+ * - Support contact information
+ * - Authentication navigation
+ * - Responsive layout
+ *
+ * @example
+ * <TopBar
+ *   announcement="Free shipping on orders over $99"
+ *   supportPhone="1-800-SUPPORT"
+ *   authLinks={[
+ *     { href: '/signin', label: 'Sign In' },
+ *     { href: '/signup', label: 'Create Account' }
+ *   ]}
+ * />
+ */
 export const TopBar: FC<TopBarProps> = ({ 
   announcement, 
   supportPhone, 
@@ -72,7 +114,17 @@ export const TopBar: FC<TopBarProps> = ({
   );
 };
 
-// Create compound component
+/**
+ * TopBar compound component for building site-wide announcement bars.
+ * Provides a complete top bar interface with announcements, support info, and auth links.
+ *
+ * @example
+ * <TopBar.Root>
+ *   <TopBar.Announcement>Special offer!</TopBar.Announcement>
+ *   <TopBar.AuthLinks links={authLinks} />
+ *   <TopBar.SupportInfo phone="1-800-SUPPORT" />
+ * </TopBar.Root>
+ */
 const TopBarNamespace = {
   Root: TopBar,
   Announcement,

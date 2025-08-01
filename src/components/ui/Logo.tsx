@@ -6,6 +6,35 @@ import { twMerge } from 'tailwind-merge';
 import type { FC } from 'react';
 import type { LogoProps } from '@/types/ui';
 
+/**
+ * Logo component that renders a site logo with optional link wrapper.
+ * Supports both linked and standalone logo images with customizable dimensions.
+ *
+ * Features:
+ * - Next.js Image optimization
+ * - Optional link wrapper
+ * - Customizable dimensions
+ * - Separate image and link styling
+ *
+ * @example
+ * // Linked logo
+ * <Logo
+ *   src="/logo.svg"
+ *   alt="Site Logo"
+ *   width={160}
+ *   height={50}
+ *   href="/"
+ * />
+ *
+ * @example
+ * // Standalone logo
+ * <Logo
+ *   src="/logo.svg"
+ *   alt="Site Logo"
+ *   width={160}
+ *   height={50}
+ * />
+ */
 export const Logo: FC<LogoProps> = ({
   src,
   alt,
