@@ -1,10 +1,10 @@
 'use client';
 
 import { BriefcaseIcon, HomeIcon, RocketLaunchIcon, HeartIcon } from '@heroicons/react/24/outline';
-import SectionContainer from '@/components/ui/SectionContainer';
+import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import SolutionGrid from '@/components/ui/SolutionGrid';
-import LinkButton from '@/components/ui/LinkButton';
+import Link from '@/components/ui/Link';
 
 export default function LifestyleSolutionsSection() {
   const solutions = [
@@ -39,7 +39,7 @@ export default function LifestyleSolutionsSection() {
   ];
 
   return (
-    <SectionContainer bgColor="bg-gray-50">
+    <Section background="bg-gray-50">
       <SectionHeader
         title="Solutions for Every Lifestyle"
         description="Discover tailored mobile solutions designed to fit your unique lifestyle and needs."
@@ -49,15 +49,16 @@ export default function LifestyleSolutionsSection() {
 
       <SolutionGrid solutions={solutions} />
 
-      <div className="mt-16">
-        <LinkButton
+      <div className="mt-16 text-center">
+        <Link
           href="/solutions"
-          text="Find Your Perfect Solution"
-          variant="primary"
-          size="lg"
-          centered
-        />
+          variant="button"
+          buttonStyle="primary"
+          className="px-8 py-4 text-lg"
+        >
+          Find Your Perfect Solution
+        </Link>
       </div>
-    </SectionContainer>
+    </Section>
   );
 } 

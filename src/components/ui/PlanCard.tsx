@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { StarIcon, CheckIcon } from '@heroicons/react/24/solid';
 import { HeartIcon } from '@heroicons/react/24/outline';
+import Button from './Button';
 
 interface PlanCardProps {
   name: string;
@@ -176,17 +177,20 @@ export default function PlanCard({
 
           {/* Action Buttons */}
           <div className="space-y-2 mt-8">
-            <button
-              className="block w-full text-white text-center py-2.5 rounded-lg hover:opacity-90 transition-all font-medium"
-              style={{ backgroundColor: '#8821f4' }}
+            <Button
+              fullWidth
+              variant="primary"
+              className="py-2.5"
             >
               Select Plan
-            </button>
-            <button
-              className="block w-full border border-gray-300 text-gray-700 text-center py-2 rounded-lg hover:bg-gray-50 transition-colors"
+            </Button>
+            <Button
+              fullWidth
+              variant="outline"
+              className="py-2"
             >
               Learn More
-            </button>
+            </Button>
           </div>
         </div>
       </div>

@@ -1,6 +1,7 @@
 'use client';
 
 import { PhoneIcon, WifiIcon, CheckCircleIcon, CogIcon } from '@heroicons/react/24/outline';
+import Container from '@/components/ui/Container';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ProcessSteps from '@/components/ui/ProcessSteps';
 import CallToAction from '@/components/ui/CallToAction';
@@ -41,7 +42,7 @@ export default function ActivationSection() {
 
   return (
     <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Container>
         <SectionHeader
           title="Get Started in 4 Easy Steps"
           description="Switching to CitiSignal is simple. Follow these easy steps to get your new device activated and start enjoying our reliable network."
@@ -60,7 +61,7 @@ export default function ActivationSection() {
           supportText="Questions? Call us at"
           supportPhone="1-800-CITI-SIG"
         />
-      </div>
+      </Container>
     </section>
   );
 } 

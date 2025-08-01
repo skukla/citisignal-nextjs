@@ -2,7 +2,7 @@
 
 import { twMerge } from 'tailwind-merge';
 import CheckmarkFeatureList from './CheckmarkFeatureList';
-import LinkButton from './LinkButton';
+import Link from './Link';
 
 interface Feature {
   title: string;
@@ -42,13 +42,13 @@ export default function FeaturedTool({
           <p className="text-lg text-gray-600 mb-6">
             {description}
           </p>
-          <LinkButton
+          <Link
             href={buttonHref}
-            text={buttonText}
-            variant="primary"
-            size="md"
-            showArrow
-          />
+            variant="button"
+            buttonStyle="primary"
+          >
+            {buttonText}
+          </Link>
         </div>
         <div className="bg-white rounded-xl p-6 shadow-sm">
           <CheckmarkFeatureList features={features} />

@@ -1,7 +1,7 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-import IconBadge from './IconBadge';
+import Badge from './Badge';
 
 interface BenefitCardProps {
   emoji: string;

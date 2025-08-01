@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
-import SectionContainer from '@/components/ui/SectionContainer';
+import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
-import IconBadge from '@/components/ui/IconBadge';
+import Badge from '@/components/ui/Badge';
 import BenefitGrid from '@/components/ui/BenefitGrid';
 import NewsletterForm from '@/components/ui/NewsletterForm';
 import PrivacyNotice from '@/components/ui/PrivacyNotice';
@@ -40,28 +40,26 @@ export default function NewsletterSection() {
 
   if (isSubmitted) {
     return (
-      <SectionContainer bgColor="bg-gradient-to-br from-green-50 to-emerald-100">
+      <Section background="bg-gradient-to-br from-green-50 to-emerald-100">
         <SuccessMessage
           title="Thanks for subscribing!"
           description="You'll receive the latest deals and updates in your inbox."
           buttonText="Subscribe another email"
           onButtonClick={() => setIsSubmitted(false)}
         />
-      </SectionContainer>
+      </Section>
     );
   }
 
   return (
-    <SectionContainer 
-      bgColor="bg-gradient-to-br from-[#8821f4] via-[#6a1b9a] to-[#4a148c]"
+    <Section 
+      className="bg-gradient-to-br from-[#8821f4] via-[#6a1b9a] to-[#4a148c]"
     >
       <div className="text-center">
-        <IconBadge
-          icon={<EnvelopeIcon />}
-          bgColor="bg-white"
-          iconColor="text-purple-600"
+        <Badge
+          icon={EnvelopeIcon}
           size="lg"
-          className="mx-auto mb-8"
+          className="mx-auto mb-8 w-12 h-12 bg-white text-purple-600"
         />
 
         <SectionHeader
@@ -89,6 +87,6 @@ export default function NewsletterSection() {
           linkHref="/privacy"
         />
       </div>
-    </SectionContainer>
+    </Section>
   );
 } 

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+import Button from './Button';
 
 interface NewsletterFormProps {
   onSubmit: (email: string) => Promise<void>;
@@ -51,23 +52,15 @@ export default function NewsletterForm({
             )}
           />
         </div>
-        <button
+        <Button
           type="submit"
           disabled={isLoading}
-          className={twMerge(
-            'px-8 py-3 bg-yellow-400 text-gray-900 font-bold rounded-lg',
-            'hover:bg-yellow-300 hover:shadow-xl cursor-pointer',
-            'disabled:opacity-50 disabled:cursor-not-allowed',
-            'shadow-lg transition-all duration-200',
-            buttonClassName
-          )}
+          loading={isLoading}
+          variant="yellow"
+          className={twMerge('px-8 py-3 shadow-lg', buttonClassName)}
         >
-          {isLoading ? (
-            <div className="w-6 h-6 border-2 border-gray-900 border-t-transparent rounded-full animate-spin mx-auto" />
-          ) : (
-            'Subscribe'
-          )}
-        </button>
+          Subscribe
+        </Button>
       </div>
     </form>
   );

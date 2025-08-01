@@ -1,6 +1,7 @@
 'use client';
 
 import { MapPinIcon, SignalIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline';
+import Container from '@/components/ui/Container';
 import StatsCard from '@/components/ui/StatsCard';
 import ProgressBar from '@/components/ui/ProgressBar';
 import StatsList from '@/components/ui/StatsList';
@@ -19,7 +20,7 @@ export default function CoverageSection() {
 
   return (
     <section className="py-16 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Container>
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-gray-900 mb-4">Network Coverage</h2>
           <p className="text-lg text-gray-600">Experience our nationwide 5G network coverage</p>
@@ -50,7 +51,7 @@ export default function CoverageSection() {
             <StatsList items={networkStats} />
           </StatsCard>
         </div>
-      </div>
+      </Container>
     </section>
   );
 } 

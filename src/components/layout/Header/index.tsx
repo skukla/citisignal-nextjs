@@ -10,6 +10,25 @@ import Account from '@/features/account/components/Account';
 import Navigation, { NavigationRoot } from '@/features/navigation/components/Navigation';
 import { navItems } from '@/features/navigation/data/navigation';
 
+/**
+ * Main application header component that provides navigation, search, cart, and account functionality.
+ * Implements a responsive design with different layouts for desktop and mobile viewports.
+ * 
+ * Features:
+ * - Top announcement bar
+ * - Logo
+ * - Desktop navigation (1148px+)
+ * - Mobile navigation with slide-over menu
+ * - Search functionality with dropdown panel
+ * - Shopping cart with slide-over panel
+ * - User account management
+ * 
+ * Accessibility:
+ * - Proper ARIA labels and roles
+ * - Keyboard navigation support
+ * - Screen reader compatibility
+ * - Mobile menu controls
+ */
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 

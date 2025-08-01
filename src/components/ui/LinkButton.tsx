@@ -4,16 +4,28 @@ import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 
-interface LinkButtonProps {
-  href: string;
-  text: string;
-  variant?: 'primary' | 'secondary' | 'outline';
-  size?: 'sm' | 'md' | 'lg';
-  showArrow?: boolean;
-  centered?: boolean;
-  className?: string;
-}
-
+/**
+ * @deprecated Use the Link component with variant="button" instead.
+ * @example
+ * ```tsx
+ * // Instead of:
+ * <LinkButton
+ *   href="/signup"
+ *   text="Get Started"
+ *   variant="primary"
+ *   size="lg"
+ * />
+ * 
+ * // Use:
+ * <Link
+ *   href="/signup"
+ *   variant="button"
+ *   buttonStyle="primary"
+ * >
+ *   Get Started
+ * </Link>
+ * ```
+ */
 export default function LinkButton({
   href,
   text,
@@ -23,6 +35,11 @@ export default function LinkButton({
   centered = false,
   className
 }: LinkButtonProps) {
+  console.warn(
+    'LinkButton is deprecated. Use the Link component with variant="button" instead. ' +
+    'See the component documentation for migration examples.'
+  );
+
   const variantClasses = {
     primary: 'text-white hover:opacity-90',
     secondary: 'bg-purple-100 text-purple-700 hover:bg-purple-200',
@@ -54,4 +71,14 @@ export default function LinkButton({
       </Link>
     </div>
   );
-} 
+}
+
+interface LinkButtonProps {
+  href: string;
+  text: string;
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  showArrow?: boolean;
+  centered?: boolean;
+  className?: string;
+}
