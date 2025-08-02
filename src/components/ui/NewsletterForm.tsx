@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Button from './Button';
 
@@ -23,7 +23,7 @@ interface NewsletterFormProps {
  * />
  * ```
  */
-export default function NewsletterForm({
+function NewsletterForm({
   onSubmit,
   className
 }: NewsletterFormProps) {
@@ -67,4 +67,6 @@ export default function NewsletterForm({
       </div>
     </form>
   );
-} 
+}
+
+export default memo(NewsletterForm); 

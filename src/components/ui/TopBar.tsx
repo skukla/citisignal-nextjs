@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import type { FC } from 'react';
+import { memo } from 'react';
 import type { TopBarProps, AuthLink } from '@/types/ui';
 
 interface AnnouncementProps {

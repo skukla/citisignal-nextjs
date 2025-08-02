@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type { ProgressBarProps } from '@/types/progress';
 
@@ -27,7 +28,7 @@ import type { ProgressBarProps } from '@/types/progress';
  * />
  * ```
  */
-export default function ProgressBar({
+function ProgressBar({
   label,
   value,
   showValue = true,
@@ -70,3 +71,5 @@ export default function ProgressBar({
     </div>
   );
 }
+
+export default memo(ProgressBar);

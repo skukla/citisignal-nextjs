@@ -2,7 +2,7 @@
 
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
-import { SelectProps, SelectOption as SelectOptionType, SelectGroup } from '@/types/form';
+import { SelectProps, SelectOption as SelectOptionType } from '@/types/form';
 
 /**
  * Helper component to reduce duplication in option rendering
