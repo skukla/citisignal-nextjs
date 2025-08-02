@@ -22,6 +22,15 @@ export interface FilterSection {
 }
 
 /**
+ * ActiveFilterEntry interface for active filter items with option details
+ */
+export interface ActiveFilterEntry {
+  filterKey: string;
+  optionId: string;
+  option: FilterOption;
+}
+
+/**
  * Check if any filters are currently active
  * @param activeFilters Record of active filter selections
  * @returns True if any filters have selected values
@@ -55,8 +64,8 @@ export function findFilterOption(
 export function getActiveFilterEntries(
   activeFilters: Record<string, string[]>,
   filters: FilterSection[]
-): Array<{ filterKey: string; optionId: string; option: FilterOption }> {
-  const entries: Array<{ filterKey: string; optionId: string; option: FilterOption }> = [];
+): ActiveFilterEntry[] {
+  const entries: ActiveFilterEntry[] = [];
   
   Object.entries(activeFilters).forEach(([filterKey, values]) => {
     values.forEach((optionId) => {

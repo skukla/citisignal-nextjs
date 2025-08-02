@@ -3,12 +3,14 @@
  * Displays the filter sidebar title and conditional "Clear All" button
  */
 
+import { memo } from 'react';
+
 interface FilterSidebarHeaderProps {
   hasActiveFilters: boolean;
   onClearFilters: () => void;
 }
 
-export default function FilterSidebarHeader({
+function FilterSidebarHeader({
   hasActiveFilters,
   onClearFilters
 }: FilterSidebarHeaderProps) {
@@ -26,3 +28,5 @@ export default function FilterSidebarHeader({
     </div>
   );
 }
+
+export default memo(FilterSidebarHeader);

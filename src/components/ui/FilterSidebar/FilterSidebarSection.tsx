@@ -3,6 +3,7 @@
  * Displays an expandable filter section with toggle button and filter options
  */
 
+import { memo, useCallback } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
 import type { FilterSection } from '@/lib/filter';
 import FilterSidebarOption from './FilterSidebarOption';
@@ -15,17 +16,20 @@ interface FilterSidebarSectionProps {
   onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
 }
 
-export default function FilterSidebarSection({
+function FilterSidebarSection({
   section,
   isExpanded,
   activeFilters,
   onToggleSection,
   onFilterChange
 }: FilterSidebarSectionProps) {
+  const handleToggle = useCallback(() => {
+    onToggleSection(section.key);
+  }, [onToggleSection, section.key]);
   return (
     <div className="border-b border-gray-200 pb-6 last:border-b-0">
       <button
-        onClick={() => onToggleSection(section.key)}
+        onClick={handleToggle}
         className="flex items-center justify-between w-full text-left mb-4"
       >
         <span className="font-medium text-gray-900">{section.title}</span>
@@ -53,3 +57,5 @@ export default function FilterSidebarSection({
     </div>
   );
 }
+
+export default memo(FilterSidebarSection);

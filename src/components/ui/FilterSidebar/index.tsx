@@ -5,7 +5,7 @@
 
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useCallback, memo } from 'react';
 import { useExpandableSections } from '@/hooks/useExpandableSections';
 import { 
   hasActiveFilters, 
@@ -33,7 +33,7 @@ interface FilterSidebarProps {
  * @param onFilterChange Callback when filter selection changes
  * @param onClearFilters Callback to clear all filters
  */
-export default function FilterSidebar({
+function FilterSidebar({
   filters,
   activeFilters,
   onFilterChange,
@@ -49,6 +49,11 @@ export default function FilterSidebar({
   const { expandedSections, toggleSection } = useExpandableSections({
     initialSections: initialExpandedSections
   });
+
+  // Memoize toggle section to prevent unnecessary re-renders
+  const handleToggleSection = useCallback((key: string) => {
+    toggleSection(key);
+  }, [toggleSection]);
 
   // Use extracted business logic for active filters
   const hasFiltersActive = useMemo(
@@ -76,7 +81,7 @@ export default function FilterSidebar({
             section={section}
             isExpanded={expandedSections[section.key] ?? true}
             activeFilters={activeFilters}
-            onToggleSection={toggleSection}
+            onToggleSection={handleToggleSection}
             onFilterChange={onFilterChange}
           />
         ))}
@@ -89,3 +94,5 @@ export default function FilterSidebar({
     </div>
   );
 }
+
+export default memo(FilterSidebar);

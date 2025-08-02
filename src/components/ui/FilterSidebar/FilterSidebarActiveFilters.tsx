@@ -3,23 +3,21 @@
  * Displays active filter tags with individual removal capability
  */
 
-import type { FilterOption } from '@/lib/filter';
-
-interface ActiveFilterEntry {
-  filterKey: string;
-  optionId: string;
-  option: FilterOption;
-}
+import { memo, useCallback } from 'react';
+import type { ActiveFilterEntry } from '@/lib/filter';
 
 interface FilterSidebarActiveFiltersProps {
   activeFilterEntries: ActiveFilterEntry[];
   onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
 }
 
-export default function FilterSidebarActiveFilters({
+function FilterSidebarActiveFilters({
   activeFilterEntries,
   onFilterChange
 }: FilterSidebarActiveFiltersProps) {
+  const handleRemoveFilter = useCallback((filterKey: string, optionId: string) => {
+    onFilterChange(filterKey, optionId, false);
+  }, [onFilterChange]);
   if (activeFilterEntries.length === 0) {
     return null;
   }
@@ -35,7 +33,7 @@ export default function FilterSidebarActiveFilters({
           >
             <span className="text-sm text-blue-800">{option.name}</span>
             <button
-              onClick={() => onFilterChange(filterKey, optionId, false)}
+              onClick={() => handleRemoveFilter(filterKey, optionId)}
               className="text-blue-600 hover:text-blue-800 ml-2"
             >
               ×
@@ -46,3 +44,5 @@ export default function FilterSidebarActiveFilters({
     </div>
   );
 }
+
+export default memo(FilterSidebarActiveFilters);
