@@ -4,7 +4,7 @@
  */
 
 import { memo } from 'react';
-import type { FilterSidebarHeaderProps } from '@/types/filters';
+import type { FilterSidebarHeaderProps } from './FilterSidebar.types';
 
 function FilterSidebarHeader({
   hasActiveFilters,

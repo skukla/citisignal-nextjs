@@ -12,7 +12,7 @@ import {
   getActiveFilterEntries, 
   initializeExpandedSections
 } from '@/lib/filter';
-import type { FilterSidebarProps } from '@/types/filters';
+import type { FilterSidebarProps } from './FilterSidebar.types';
 import FilterSidebarHeader from './FilterSidebarHeader';
 import FilterSidebarSection from './FilterSidebarSection';
 import FilterSidebarActiveFilters from './FilterSidebarActiveFilters';

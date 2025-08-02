@@ -4,7 +4,7 @@
  */
 
 import { memo, useCallback } from 'react';
-import type { FilterSidebarOptionProps } from '@/types/filters';
+import type { FilterSidebarOptionProps } from './FilterSidebar.types';
 
 function FilterSidebarOption({
   option,

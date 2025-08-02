@@ -2,12 +2,7 @@
 
 import { twMerge } from 'tailwind-merge';
 import Button from '../Button';
-
-interface PlanCardActionsProps {
-  onSelectPlan?: () => void;
-  onLearnMore?: () => void;
-  className?: string;
-}
+import type { PlanCardActionsProps } from './PlanCard.types';
 
 /**
  * PlanCardActions component for displaying action buttons.

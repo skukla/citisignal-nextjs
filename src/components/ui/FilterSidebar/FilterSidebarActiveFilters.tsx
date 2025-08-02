@@ -4,7 +4,7 @@
  */
 
 import { memo, useCallback } from 'react';
-import type { FilterSidebarActiveFiltersProps } from '@/types/filters';
+import type { FilterSidebarActiveFiltersProps } from './FilterSidebar.types';
 
 function FilterSidebarActiveFilters({
   activeFilterEntries,

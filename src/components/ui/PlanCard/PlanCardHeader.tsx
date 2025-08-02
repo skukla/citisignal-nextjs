@@ -6,7 +6,7 @@ import { twMerge } from 'tailwind-merge';
 import StarRating from '../StarRating';
 import PlanBadge from '../PlanBadge';
 import { formatPrice } from '@/lib/pricing';
-import type { PlanCardHeaderProps } from '@/types/planCard';
+import type { PlanCardHeaderProps } from './PlanCard.types';
 
 /**
  * PlanCardHeader component for displaying plan title, pricing, rating, and badges.

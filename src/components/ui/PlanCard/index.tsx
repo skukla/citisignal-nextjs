@@ -7,15 +7,7 @@ import PlanCardActions from './PlanCardActions';
 import PlanBadge from '../PlanBadge';
 import { isPlanPopular, isPlanNew, formatPlanFeatures } from '@/lib/plan';
 import { isSalePrice } from '@/lib/pricing';
-import type { Plan } from '@/types/commerce';
-
-interface PlanCardProps {
-  plan: Plan;
-  onSelectPlan?: (planId: string) => void;
-  onLearnMore?: (planId: string) => void;
-  onWishlistToggle?: (planId: string, saved: boolean) => void;
-  className?: string;
-}
+import type { PlanCardProps } from './PlanCard.types';
 
 /**
  * PlanCard component for displaying mobile plans with pricing, features, and actions.

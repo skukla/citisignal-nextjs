@@ -1,14 +1,8 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-import type { Plan } from '@/types/commerce';
 import { formatNetworkPriority } from '@/lib/plan';
-
-interface PlanCardFeaturesProps {
-  plan: Plan;
-  features: string[];
-  className?: string;
-}
+import type { PlanCardFeaturesProps } from './PlanCard.types';
 
 /**
  * PlanCardFeatures component for displaying plan details, features, and streaming services.

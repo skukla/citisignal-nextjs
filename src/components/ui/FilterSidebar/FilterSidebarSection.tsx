@@ -5,7 +5,7 @@
 
 import { memo, useCallback } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
-import type { FilterSidebarSectionProps } from '@/types/filters';
+import type { FilterSidebarSectionProps } from './FilterSidebar.types';
 import FilterSidebarOption from './FilterSidebarOption';
 
 function FilterSidebarSection({
