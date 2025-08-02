@@ -3,6 +3,7 @@
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import { SortOption } from '@/lib/constants';
 import Select from './Select';
+import Input from './Input';
 
 interface SearchSortBarProps {
   searchQuery: string;
@@ -26,14 +27,14 @@ export default function SearchSortBar({
 }: SearchSortBarProps) {
   return (
     <div className="flex flex-col lg:flex-row gap-4 mb-8">
-      <div className="relative flex-1">
-        <MagnifyingGlassIcon className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
-        <input
+      <div className="flex-1">
+        <Input
           type="text"
           placeholder={searchPlaceholder}
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
-          className="w-full pl-10 pr-4 py-3 border-2 border-gray-300 rounded-lg bg-white shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 focus:outline-none transition-all duration-200 text-gray-900 placeholder-gray-400"
+          leftIcon={MagnifyingGlassIcon}
+          className="py-3 border-2 border-gray-300 shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 text-gray-900 placeholder-gray-400"
         />
       </div>
       <Select

@@ -57,16 +57,24 @@ function Input({
 
   const inputClasses = twMerge(
     // Base styles
-    'w-full bg-white border border-gray-300 rounded-lg py-2 px-4',
-    'focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent',
-    'placeholder:text-gray-400',
+    'w-full bg-white rounded-lg transition-all duration-200',
+    
+    // Variant-specific styles
+    variant === 'default' && [
+      'border border-gray-300 py-2 px-4',
+      'focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent',
+      'placeholder:text-gray-400'
+    ],
+    variant === 'newsletter' && [
+      'border-0 shadow-lg py-3 px-4',
+      'focus:ring-4 focus:ring-yellow-400 focus:outline-none',
+      'placeholder:text-gray-500 text-gray-900',
+      'rounded-r-none'
+    ],
     
     // Icon spacing
     hasLeftIcon && 'pl-10',
     hasRightIcon && 'pr-10',
-    
-    // Newsletter variant
-    variant === 'newsletter' && 'rounded-r-none border-r-0',
     
     // Disabled state
     disabled && 'cursor-not-allowed',

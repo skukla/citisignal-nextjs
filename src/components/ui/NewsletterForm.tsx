@@ -3,6 +3,7 @@
 import { useState, memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Button from './Button';
+import Input from './Input';
 
 interface NewsletterFormProps {
   onSubmit: (email: string) => Promise<void>;
@@ -46,13 +47,13 @@ function NewsletterForm({
     <form onSubmit={handleSubmit} className={twMerge('max-w-md', className)}>
       <div className="flex flex-col sm:flex-row gap-3">
         <div className="flex-1">
-          <input
+          <Input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter your email address"
+            variant="newsletter"
             required
-            className="w-full px-4 py-3 rounded-lg text-gray-900 placeholder-gray-500 bg-white border-0 shadow-lg focus:ring-4 focus:ring-yellow-400 focus:outline-none transition-all duration-200"
           />
         </div>
         <Button
