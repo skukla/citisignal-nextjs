@@ -4,30 +4,15 @@ import { useState, useCallback } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import TopBar from '@/components/layout/TopBar';
 import { Logo } from '@/components/ui/Logo';
-import Search from '@/features/search/components/Search';
-import Cart from '@/features/cart/components/Cart';
-import Account from '@/features/account/components/Account';
-import Navigation, { NavigationRoot } from '@/features/navigation/components/Navigation';
-import { navItems } from '@/features/navigation/data/navigation';
+import Search from '@/components/ui/Search';
+import Cart from '@/components/ui/Cart';
+import Account from '@/components/ui/Account';
+import Navigation, { NavigationRoot } from '@/components/ui/Navigation';
+import { navItems } from '@/data/navigation';
 
 /**
  * Main application header component that provides navigation, search, cart, and account functionality.
  * Implements a responsive design with different layouts for desktop and mobile viewports.
- * 
- * Features:
- * - Top announcement bar
- * - Logo
- * - Desktop navigation (1148px+)
- * - Mobile navigation with slide-over menu
- * - Search functionality with dropdown panel
- * - Shopping cart with slide-over panel
- * - User account management
- * 
- * Accessibility:
- * - Proper ARIA labels and roles
- * - Keyboard navigation support
- * - Screen reader compatibility
- * - Mobile menu controls
  */
 export default function Header() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -68,13 +53,9 @@ export default function Header() {
             </div>
 
             {/* Desktop Navigation */}
-            <nav 
-              className="hidden min-[1148px]:flex flex-1 justify-center max-w-3xl mx-auto px-4"
-              aria-label="Main navigation"
-              role="navigation"
-            >
-              <Navigation.List items={navItems} variant="desktop" />
-            </nav>
+            <div className="hidden min-[1148px]:flex flex-1 justify-center max-w-3xl mx-auto px-4">
+              <Navigation.Desktop items={navItems} />
+            </div>
 
             {/* Search, Cart, and User Actions */}
             <div 
@@ -162,13 +143,7 @@ export default function Header() {
         </div>
 
         {/* Mobile Navigation */}
-        <div 
-          id="mobile-navigation"
-          role="navigation"
-          aria-label="Mobile navigation"
-        >
-          <Navigation.List items={navItems} variant="mobile" />
-        </div>
+        <Navigation.Mobile items={navItems} />
       </header>
     </NavigationRoot>
   );

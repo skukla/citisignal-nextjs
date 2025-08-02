@@ -1,4 +1,4 @@
-import type { UserProfile } from '@/features/account/types/account.types';
+import type { UserProfile } from '@/components/ui/Account/Account.types';
 
 export const demoUser: UserProfile = {
   id: 'demo-1',
