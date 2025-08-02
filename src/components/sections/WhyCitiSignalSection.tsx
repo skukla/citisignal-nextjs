@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import { whyCitiSignalContent } from '@/data/sections/whyCitiSignal';
@@ -10,7 +11,7 @@ export interface WhyCitiSignalSectionProps {
   className?: string;
 }
 
-export default function WhyCitiSignalSection({
+function WhyCitiSignalSection({
   content = whyCitiSignalContent,
   className
 }: WhyCitiSignalSectionProps) {
@@ -43,4 +44,6 @@ export default function WhyCitiSignalSection({
       </div>
     </Section>
   );
-} 
+}
+
+export default memo(WhyCitiSignalSection); 

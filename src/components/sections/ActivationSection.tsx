@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ProcessSteps from '@/components/ui/ProcessSteps';
@@ -7,7 +8,7 @@ import CallToAction from '@/components/ui/CallToAction';
 import { activationContent } from '@/data/sections/activation';
 import type { ActivationSectionProps } from '@/types/section';
 
-export default function ActivationSection({
+function ActivationSection({
   content = activationContent,
   className
 }: ActivationSectionProps) {
@@ -32,4 +33,6 @@ export default function ActivationSection({
         />
     </Section>
   );
-} 
+}
+
+export default memo(ActivationSection); 

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, memo } from 'react';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import Section from '@/components/ui/Section';
 import Badge from '@/components/ui/Badge';
@@ -16,7 +16,7 @@ export interface NewsletterSectionProps {
   className?: string;
 }
 
-export default function NewsletterSection({
+function NewsletterSection({
   content = newsletterContent,
   className
 }: NewsletterSectionProps) {
@@ -82,4 +82,6 @@ export default function NewsletterSection({
       </div>
     </Section>
   );
-} 
+}
+
+export default memo(NewsletterSection); 

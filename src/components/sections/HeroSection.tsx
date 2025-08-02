@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from '@/components/ui/Link';
 import Section from '@/components/ui/Section';
@@ -10,7 +11,16 @@ import SimplePlanCard from '@/components/ui/SimplePlanCard';
 import { heroContent } from '@/data/sections/hero';
 import type { HeroSectionProps } from '@/types/section';
 
-export default function HeroSection({
+/**
+ * HeroSection component for the main landing page hero area.
+ * Features promotional content, CTAs, and product showcase.
+ * 
+ * @example
+ * ```tsx
+ * <HeroSection className="min-h-screen" />
+ * ```
+ */
+function HeroSection({
   content = heroContent,
   className
 }: HeroSectionProps) {
@@ -89,4 +99,6 @@ export default function HeroSection({
       </div>
     </Section>
   );
-} 
+}
+
+export default memo(HeroSection); 

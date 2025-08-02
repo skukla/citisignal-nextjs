@@ -1,9 +1,10 @@
 'use client';
 
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Section from '@/components/ui/Section';
 import Link from '@/components/ui/Link';
-import FeatureList from './FeatureList';
+import IconFeatureList from '@/components/ui/IconFeatureList';
 import type { CallToActionProps } from '@/types/section';
 
 /**
@@ -27,7 +28,7 @@ import type { CallToActionProps } from '@/types/section';
  * />
  * ```
  */
-export default function CallToAction({
+function CallToAction({
   title,
   description,
   features,
@@ -55,7 +56,7 @@ export default function CallToAction({
             {description}
           </p>
           {features && (
-            <FeatureList 
+            <IconFeatureList 
               features={features}
               className="mb-6 lg:mb-0"
             />
@@ -89,3 +90,5 @@ export default function CallToAction({
     </Section>
   );
 }
+
+export default memo(CallToAction);

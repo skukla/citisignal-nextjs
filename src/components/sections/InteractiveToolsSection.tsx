@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ToolGrid from '@/components/ui/ToolGrid';
@@ -12,7 +13,7 @@ export interface InteractiveToolsSectionProps {
   className?: string;
 }
 
-export default function InteractiveToolsSection({
+function InteractiveToolsSection({
   content = interactiveToolsContent,
   className
 }: InteractiveToolsSectionProps) {
@@ -39,4 +40,6 @@ export default function InteractiveToolsSection({
       />
     </Section>
   );
-} 
+}
+
+export default memo(InteractiveToolsSection); 

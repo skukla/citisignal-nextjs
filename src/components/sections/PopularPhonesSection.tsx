@@ -1,7 +1,10 @@
+import { memo, useMemo } from 'react';
 import Link from 'next/link';
 import { phones } from '@/data/phones';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
+import { popularPhonesContent } from '@/data/sections/popularPhones';
+import type { PopularPhonesContent } from '@/data/sections/popularPhones';
 import { 
   ProductCard, 
   ProductCardImage, 
@@ -11,17 +14,36 @@ import {
   ProductCardActions 
 } from '@/features/product/components/ProductCard';
 
-export default function PopularPhonesSection() {
-  // Get 4 popular phones (those with highest review count)
-  const popularPhones = phones
-    .sort((a, b) => b.review_count - a.review_count)
-    .slice(0, 4);
+export interface PopularPhonesSectionProps {
+  content?: PopularPhonesContent;
+  className?: string;
+}
+
+/**
+ * PopularPhonesSection displays the most popular phones based on review count.
+ * 
+ * @example
+ * ```tsx
+ * <PopularPhonesSection className="my-8" />
+ * ```
+ */
+function PopularPhonesSection({
+  content = popularPhonesContent,
+  className
+}: PopularPhonesSectionProps) {
+  // Memoize popular phones calculation for performance
+  const popularPhones = useMemo(() => 
+    phones
+      .sort((a, b) => b.review_count - a.review_count)
+      .slice(0, content.phoneCount),
+    [content.phoneCount]
+  );
 
   return (
-    <Section background="bg-white">
+    <Section background="bg-white" className={className}>
       <SectionHeader
-        title="Popular Phones"
-        description="Discover the latest smartphones with exclusive CitiSignal deals. Get the phone you want with flexible payment options."
+        title={content.header.title}
+        description={content.header.description}
         centered
         className="mb-16"
       />
@@ -42,10 +64,10 @@ export default function PopularPhonesSection() {
         {/* View All Button */}
         <div className="text-center mt-12">
           <Link
-            href="/phones"
+            href={content.viewAllLink.href}
             className="inline-flex items-center px-8 py-3 bg-gray-100 text-gray-900 font-medium rounded-lg hover:bg-gray-200 transition-colors"
           >
-            View All Phones
+            {content.viewAllLink.text}
             <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
@@ -53,4 +75,6 @@ export default function PopularPhonesSection() {
         </div>
     </Section>
   );
-} 
+}
+
+export default memo(PopularPhonesSection); 

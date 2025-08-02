@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import SolutionGrid from '@/components/ui/SolutionGrid';
@@ -12,7 +13,7 @@ export interface LifestyleSolutionsSectionProps {
   className?: string;
 }
 
-export default function LifestyleSolutionsSection({
+function LifestyleSolutionsSection({
   content = lifestyleSolutionsContent,
   className
 }: LifestyleSolutionsSectionProps) {
@@ -41,4 +42,6 @@ export default function LifestyleSolutionsSection({
       </div>
     </Section>
   );
-} 
+}
+
+export default memo(LifestyleSolutionsSection); 

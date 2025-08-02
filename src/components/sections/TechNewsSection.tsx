@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Section from '@/components/ui/Section';
@@ -12,7 +13,7 @@ export interface TechNewsSectionProps {
   className?: string;
 }
 
-export default function TechNewsSection({
+function TechNewsSection({
   content = techNewsContent,
   className
 }: TechNewsSectionProps) {
@@ -74,4 +75,6 @@ export default function TechNewsSection({
       </div>
     </Section>
   );
-} 
+}
+
+export default memo(TechNewsSection); 

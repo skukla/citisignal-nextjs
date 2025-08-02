@@ -1,13 +1,24 @@
 'use client';
 
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type { FeatureListProps } from '@/types/section';
 
 /**
- * FeatureList component for displaying a list of features with optional icons.
- * Used in sections like CallToAction and feature comparisons.
+ * IconFeatureList component for displaying a list of features with optional icons.
+ * 
+ * @example
+ * ```tsx
+ * <IconFeatureList
+ *   features={[
+ *     { text: "Free shipping", icon: TruckIcon },
+ *     { text: "24/7 support", icon: ChatIcon }
+ *   ]}
+ *   iconColor="text-green-500"
+ * />
+ * ```
  */
-export default function FeatureList({
+function IconFeatureList({
   features,
   iconColor = 'text-green-500',
   className
@@ -30,3 +41,5 @@ export default function FeatureList({
     </ul>
   );
 }
+
+export default memo(IconFeatureList);
