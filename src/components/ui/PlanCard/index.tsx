@@ -44,17 +44,7 @@ export default function PlanCard({
   const isSale = isSalePrice(plan.original_price, plan.price);
   const formattedFeatures = formatPlanFeatures(plan);
 
-  const handleSelectPlan = () => {
-    onSelectPlan?.(plan.id);
-  };
 
-  const handleLearnMore = () => {
-    onLearnMore?.(plan.id);
-  };
-
-  const handleWishlistToggle = (saved: boolean) => {
-    onWishlistToggle?.(plan.id, saved);
-  };
 
   return (
     <div className={twMerge(
@@ -77,9 +67,9 @@ export default function PlanCard({
         originalPrice={plan.original_price}
         rating={plan.rating_summary}
         reviewCount={plan.review_count}
-        isPopular={isPopular}
         isNew={isNew}
-        onWishlistToggle={handleWishlistToggle}
+        isSale={isSale}
+        onWishlistToggle={(saved) => onWishlistToggle?.(plan.id, saved)}
       />
 
       {/* Features Section */}
@@ -90,8 +80,8 @@ export default function PlanCard({
 
       {/* Actions Section */}
       <PlanCardActions
-        onSelectPlan={handleSelectPlan}
-        onLearnMore={handleLearnMore}
+        onSelectPlan={() => onSelectPlan?.(plan.id)}
+        onLearnMore={() => onLearnMore?.(plan.id)}
       />
     </div>
   );

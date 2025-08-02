@@ -6,9 +6,6 @@ import Button from '../Button';
 interface PlanCardActionsProps {
   onSelectPlan?: () => void;
   onLearnMore?: () => void;
-  selectButtonText?: string;
-  learnMoreButtonText?: string;
-  disabled?: boolean;
   className?: string;
 }
 
@@ -19,9 +16,6 @@ interface PlanCardActionsProps {
 export default function PlanCardActions({
   onSelectPlan,
   onLearnMore,
-  selectButtonText = 'Select Plan',
-  learnMoreButtonText = 'Learn More',
-  disabled = false,
   className
 }: PlanCardActionsProps) {
   return (
@@ -31,18 +25,16 @@ export default function PlanCardActions({
         variant="primary"
         className="py-2.5"
         onClick={onSelectPlan}
-        disabled={disabled}
       >
-        {selectButtonText}
+        Select Plan
       </Button>
       <Button
         fullWidth
         variant="outline"
         className="py-2"
         onClick={onLearnMore}
-        disabled={disabled}
       >
-        {learnMoreButtonText}
+        Learn More
       </Button>
     </div>
   );

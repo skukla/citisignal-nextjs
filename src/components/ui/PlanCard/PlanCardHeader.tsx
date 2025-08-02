@@ -35,7 +35,7 @@ export default function PlanCardHeader({
   return (
     <div className={twMerge('p-6 border-b border-gray-100', className)}>
       {/* Title and badges section */}
-      <div className="h-[100px] flex flex-col mb-6">
+      <div className="flex flex-col mb-6">
         <div className="flex justify-between items-start gap-4">
           <div>
             <h3 className="text-xl font-bold text-gray-900 mb-1">{name}</h3>
@@ -70,7 +70,7 @@ export default function PlanCardHeader({
       </div>
 
       {/* Pricing section */}
-      <div className="h-[48px] mb-6 flex flex-col justify-end">
+      <div className="mb-6">
         <div className="flex items-baseline">
           <span className="text-3xl font-bold text-gray-900">
             {formatPrice(price)}
