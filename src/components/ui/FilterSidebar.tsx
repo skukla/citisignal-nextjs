@@ -1,20 +1,14 @@
 'use client';
 
-import { useState } from 'react';
+import { useMemo } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
-
-interface FilterOption {
-  id: string;
-  name: string;
-  count?: number;
-}
-
-interface FilterSection {
-  title: string;
-  key: string;
-  options: FilterOption[];
-  type: 'checkbox' | 'radio';
-}
+import { useExpandableSections } from '@/hooks/useExpandableSections';
+import { 
+  hasActiveFilters, 
+  getActiveFilterEntries, 
+  initializeExpandedSections,
+  type FilterSection
+} from '@/lib/filter';
 
 interface FilterSidebarProps {
   filters: FilterSection[];
@@ -29,25 +23,35 @@ export default function FilterSidebar({
   onFilterChange,
   onClearFilters
 }: FilterSidebarProps) {
-  const [expandedSections, setExpandedSections] = useState<Record<string, boolean>>(
-    filters.reduce((acc, filter) => ({ ...acc, [filter.key]: true }), {})
+  // Initialize expanded sections with business logic
+  const initialExpandedSections = useMemo(
+    () => initializeExpandedSections(filters, true),
+    [filters]
   );
 
-  const toggleSection = (key: string) => {
-    setExpandedSections(prev => ({
-      ...prev,
-      [key]: !prev[key]
-    }));
-  };
+  // Use extracted expandable sections hook
+  const { expandedSections, toggleSection } = useExpandableSections({
+    initialSections: initialExpandedSections
+  });
 
-  const hasActiveFilters = Object.values(activeFilters).some(values => values.length > 0);
+  // Use extracted business logic for active filters
+  const hasFiltersActive = useMemo(
+    () => hasActiveFilters(activeFilters),
+    [activeFilters]
+  );
+
+  // Use extracted business logic for active filter entries
+  const activeFilterEntries = useMemo(
+    () => getActiveFilterEntries(activeFilters, filters),
+    [activeFilters, filters]
+  );
 
   return (
     <div className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg p-6">
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-lg font-semibold text-gray-900">Filters</h3>
-        {hasActiveFilters && (
+        {hasFiltersActive && (
           <button
             onClick={onClearFilters}
             className="text-sm text-purple-600 hover:text-purple-700 font-medium"
@@ -99,32 +103,24 @@ export default function FilterSidebar({
       </div>
 
       {/* Active Filters Summary */}
-      {hasActiveFilters && (
+      {hasFiltersActive && (
         <div className="mt-6 pt-6 border-t border-gray-200">
           <h4 className="text-sm font-medium text-gray-900 mb-3">Active Filters</h4>
           <div className="space-y-2">
-            {Object.entries(activeFilters).map(([filterKey, values]) =>
-              values.map((value) => {
-                const filter = filters.find(f => f.key === filterKey);
-                const option = filter?.options.find(o => o.id === value);
-                if (!option) return null;
-
-                return (
-                  <div
-                    key={`${filterKey}-${value}`}
-                    className="flex items-center justify-between bg-blue-50 px-3 py-1 rounded-full"
-                  >
-                    <span className="text-sm text-blue-800">{option.name}</span>
-                    <button
-                      onClick={() => onFilterChange(filterKey, value, false)}
-                      className="text-blue-600 hover:text-blue-800 ml-2"
-                    >
-                      ×
-                    </button>
-                  </div>
-                );
-              })
-            )}
+            {activeFilterEntries.map(({ filterKey, optionId, option }) => (
+              <div
+                key={`${filterKey}-${optionId}`}
+                className="flex items-center justify-between bg-blue-50 px-3 py-1 rounded-full"
+              >
+                <span className="text-sm text-blue-800">{option.name}</span>
+                <button
+                  onClick={() => onFilterChange(filterKey, optionId, false)}
+                  className="text-blue-600 hover:text-blue-800 ml-2"
+                >
+                  ×
+                </button>
+              </div>
+            ))}
           </div>
         </div>
       )}
