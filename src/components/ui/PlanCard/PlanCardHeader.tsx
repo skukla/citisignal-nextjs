@@ -5,20 +5,8 @@ import { HeartIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
 import StarRating from '../StarRating';
 import PlanBadge from '../PlanBadge';
-import { formatPrice, isSalePrice } from '@/lib/pricing';
-
-interface PlanCardHeaderProps {
-  name: string;
-  type: string;
-  price: number;
-  originalPrice?: number;
-  rating: number;
-  reviewCount: number;
-  isPopular: boolean;
-  isNew: boolean;
-  onWishlistToggle?: (saved: boolean) => void;
-  className?: string;
-}
+import { formatPrice } from '@/lib/pricing';
+import type { PlanCardHeaderProps } from '@/types/planCard';
 
 /**
  * PlanCardHeader component for displaying plan title, pricing, rating, and badges.
@@ -31,13 +19,12 @@ export default function PlanCardHeader({
   originalPrice,
   rating,
   reviewCount,
-  isPopular,
   isNew,
+  isSale,
   onWishlistToggle,
   className
 }: PlanCardHeaderProps) {
   const [isSaved, setIsSaved] = useState(false);
-  const isSale = isSalePrice(originalPrice, price);
 
   const handleWishlistToggle = () => {
     const newSavedState = !isSaved;
