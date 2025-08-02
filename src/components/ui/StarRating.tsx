@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { StarIcon } from '@heroicons/react/24/solid';
 import { twMerge } from 'tailwind-merge';
 import { getFilledStars, formatRatingDisplay, formatReviewCount } from '@/lib/rating';
@@ -27,7 +28,7 @@ interface StarRatingProps {
  * />
  * ```
  */
-export default function StarRating({
+function StarRating({
   rating,
   maxRating = 100,
   reviewCount,
@@ -70,3 +71,5 @@ export default function StarRating({
     </div>
   );
 }
+
+export default memo(StarRating);

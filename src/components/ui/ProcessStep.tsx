@@ -1,6 +1,6 @@
 'use client';
 
-import { ElementType } from 'react';
+import { ElementType, memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface ProcessStepProps {
@@ -29,7 +29,7 @@ interface ProcessStepProps {
  * />
  * ```
  */
-export default function ProcessStep({
+function ProcessStep({
   icon: Icon,
   stepNumber,
   title,
@@ -86,4 +86,6 @@ export default function ProcessStep({
       </div>
     </div>
   );
-} 
+}
+
+export default memo(ProcessStep); 

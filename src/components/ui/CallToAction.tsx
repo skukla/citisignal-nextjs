@@ -70,7 +70,7 @@ export default function CallToAction({
           <div className="space-y-4">
             <button
               onClick={buttonAction}
-              className="w-full lg:w-auto px-8 py-4 text-white rounded-lg shadow-lg hover:opacity-90 hover:shadow-xl cursor-pointer transition-all duration-200"
+              className="w-full lg:w-auto px-8 py-4 text-white font-bold rounded-lg hover:opacity-90 transition-colors text-lg"
               style={{ backgroundColor: buttonColor }}
             >
               {buttonText}

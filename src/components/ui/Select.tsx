@@ -2,7 +2,21 @@
 
 import { ChevronDownIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
-import { SelectProps, SelectOption, SelectGroup } from '@/types/form';
+import { SelectProps, SelectOption as SelectOptionType, SelectGroup } from '@/types/form';
+
+/**
+ * Helper component to reduce duplication in option rendering
+ */
+function SelectOption({ option }: { option: SelectOptionType }) {
+  return (
+    <option 
+      value={option.value}
+      disabled={option.disabled}
+    >
+      {option.label}
+    </option>
+  );
+}
 
 /**
  * Select component for choosing from a list of options.
@@ -75,30 +89,17 @@ export default function Select({
           <option value="">{placeholder || 'Select...'}</option>
         )}
         
-        {options.map((item, index) => (
-          // Inline type guard - only used once
+        {options.map((item, index) => 
           'options' in item ? (
             <optgroup key={index} label={item.label}>
               {item.options.map(option => (
-                <option 
-                  key={option.value} 
-                  value={option.value}
-                  disabled={option.disabled}
-                >
-                  {option.label}
-                </option>
+                <SelectOption key={option.value} option={option} />
               ))}
             </optgroup>
           ) : (
-            <option 
-              key={item.value} 
-              value={item.value}
-              disabled={item.disabled}
-            >
-              {item.label}
-            </option>
+            <SelectOption key={item.value} option={item} />
           )
-        ))}
+        )}
       </select>
       
       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
