@@ -1,97 +1,94 @@
 'use client';
 
-import { ElementType, memo } from 'react';
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
+import Section from '@/components/ui/Section';
+import Link from '@/components/ui/Link';
+import IconFeatureList from '@/components/ui/IconFeatureList';
+import type { CallToActionProps } from '@/types/section';
 
-interface Feature {
-  text: string;
-  icon?: ElementType;
-}
-
-interface CallToActionProps {
-  title: string;
-  description: string;
-  features?: Feature[];
-  buttonText: string;
-  buttonAction?: () => void;
-  supportText?: string;
-  supportPhone?: string;
-  gradient?: string;
-  buttonColor?: string;
-  iconColor?: string;
-  className?: string;
-}
-
+/**
+ * CallToAction section component for conversion points and feature promotions.
+ * 
+ * @example
+ * ```tsx
+ * <CallToAction
+ *   title="Ready to get started?"
+ *   description="Join thousands of satisfied customers."
+ *   features={[
+ *     { text: "No credit card required", icon: CreditCardIcon },
+ *     { text: "14-day free trial", icon: CalendarIcon },
+ *     { text: "Cancel anytime", icon: XCircleIcon }
+ *   ]}
+ *   buttonText="Start Free Trial"
+ *   buttonHref="/signup"
+ *   supportText="Need help? Call us at"
+ *   supportPhone="1-800-123-4567"
+ *   gradient="from-purple-50 to-purple-100"
+ * />
+ * ```
+ */
 function CallToAction({
   title,
   description,
-  features = [],
+  features,
   buttonText,
-  buttonAction,
+  buttonHref,
   supportText,
   supportPhone,
   gradient = 'from-purple-50 to-purple-100',
-  buttonColor = '#8821f4',
-  iconColor = 'text-green-500',
   className
 }: CallToActionProps) {
-  const containerClasses = twMerge(
-    'bg-gradient-to-r',
-    gradient,
-    'rounded-2xl p-8 md:p-12',
-    className
-  );
-
   return (
-    <div className={containerClasses}>
+    <Section
+      className={twMerge(
+        'bg-gradient-to-r rounded-2xl',
+        gradient,
+        className
+      )}
+    >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
         <div>
-          <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
+          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
             {title}
-          </h3>
+          </h2>
           <p className="text-lg text-gray-600 mb-6">
             {description}
           </p>
-          {features.length > 0 && (
-            <ul className="space-y-2 text-gray-600">
-              {features.map((feature, index) => (
-                <li key={index} className="flex items-center">
-                  {feature.icon && (
-                    <feature.icon className={`w-5 h-5 ${iconColor} mr-3`} />
-                  )}
-                  {feature.text}
-                </li>
-              ))}
-            </ul>
+          {features && (
+            <IconFeatureList 
+              features={features}
+              className="mb-6 lg:mb-0"
+            />
           )}
         </div>
         
         <div className="text-center lg:text-left">
           <div className="space-y-4">
-            <button
-              onClick={buttonAction}
-              className="w-full lg:w-auto px-8 py-4 text-white font-bold rounded-lg hover:opacity-90 transition-colors text-lg"
-              style={{ backgroundColor: buttonColor }}
+            <Link
+              href={buttonHref}
+              variant="button"
+              buttonStyle="primary"
+              className="w-full lg:w-auto px-8 py-4 text-white rounded-lg shadow-lg hover:opacity-90 hover:shadow-xl cursor-pointer transition-all duration-200"
             >
               {buttonText}
-            </button>
+            </Link>
+            
             {(supportText || supportPhone) && (
-              <div className="text-center lg:text-left">
-                <p className="text-sm text-gray-500">
-                  {supportText}
-                  {supportPhone && (
-                    <span className="font-medium text-gray-900">
-                      {supportText ? ' ' : ''}{supportPhone}
-                    </span>
-                  )}
-                </p>
-              </div>
+              <p className="text-sm text-gray-500">
+                {supportText}
+                {supportPhone && (
+                  <span className="font-medium text-gray-900">
+                    {supportText ? ' ' : ''}{supportPhone}
+                  </span>
+                )}
+              </p>
             )}
           </div>
         </div>
       </div>
-    </div>
+    </Section>
   );
 }
 
-export default memo(CallToAction); 
+export default memo(CallToAction);
