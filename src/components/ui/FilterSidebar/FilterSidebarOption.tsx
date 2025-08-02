@@ -4,15 +4,7 @@
  */
 
 import { memo, useCallback } from 'react';
-import type { FilterOption } from '@/lib/filter';
-
-interface FilterSidebarOptionProps {
-  option: FilterOption;
-  sectionKey: string;
-  sectionType: 'checkbox' | 'radio';
-  isSelected: boolean;
-  onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
-}
+import type { FilterSidebarOptionProps } from '@/types/filters';
 
 function FilterSidebarOption({
   option,

@@ -5,16 +5,8 @@
 
 import { memo, useCallback } from 'react';
 import { ChevronDownIcon, ChevronUpIcon } from '@heroicons/react/24/outline';
-import type { FilterSection } from '@/lib/filter';
+import type { FilterSidebarSectionProps } from '@/types/filters';
 import FilterSidebarOption from './FilterSidebarOption';
-
-interface FilterSidebarSectionProps {
-  section: FilterSection;
-  isExpanded: boolean;
-  activeFilters: Record<string, string[]>;
-  onToggleSection: (key: string) => void;
-  onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
-}
 
 function FilterSidebarSection({
   section,

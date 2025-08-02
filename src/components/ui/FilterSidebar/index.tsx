@@ -10,19 +10,12 @@ import { useExpandableSections } from '@/hooks/useExpandableSections';
 import { 
   hasActiveFilters, 
   getActiveFilterEntries, 
-  initializeExpandedSections,
-  type FilterSection
+  initializeExpandedSections
 } from '@/lib/filter';
+import type { FilterSidebarProps } from '@/types/filters';
 import FilterSidebarHeader from './FilterSidebarHeader';
 import FilterSidebarSection from './FilterSidebarSection';
 import FilterSidebarActiveFilters from './FilterSidebarActiveFilters';
-
-interface FilterSidebarProps {
-  filters: FilterSection[];
-  activeFilters: Record<string, string[]>;
-  onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
-  onClearFilters: () => void;
-}
 
 /**
  * FilterSidebar main component with compound architecture

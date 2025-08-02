@@ -4,11 +4,7 @@
  */
 
 import { memo } from 'react';
-
-interface FilterSidebarHeaderProps {
-  hasActiveFilters: boolean;
-  onClearFilters: () => void;
-}
+import type { FilterSidebarHeaderProps } from '@/types/filters';
 
 function FilterSidebarHeader({
   hasActiveFilters,

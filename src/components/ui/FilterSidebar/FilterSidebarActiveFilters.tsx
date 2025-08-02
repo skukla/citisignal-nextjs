@@ -4,12 +4,7 @@
  */
 
 import { memo, useCallback } from 'react';
-import type { ActiveFilterEntry } from '@/lib/filter';
-
-interface FilterSidebarActiveFiltersProps {
-  activeFilterEntries: ActiveFilterEntry[];
-  onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
-}
+import type { FilterSidebarActiveFiltersProps } from '@/types/filters';
 
 function FilterSidebarActiveFilters({
   activeFilterEntries,

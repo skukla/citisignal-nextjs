@@ -2,33 +2,7 @@
  * Utility functions for filter-related business logic
  */
 
-/**
- * FilterOption interface for individual filter choices
- */
-export interface FilterOption {
-  id: string;
-  name: string;
-  count?: number;
-}
-
-/**
- * FilterSection interface for grouped filter options
- */
-export interface FilterSection {
-  title: string;
-  key: string;
-  options: FilterOption[];
-  type: 'checkbox' | 'radio';
-}
-
-/**
- * ActiveFilterEntry interface for active filter items with option details
- */
-export interface ActiveFilterEntry {
-  filterKey: string;
-  optionId: string;
-  option: FilterOption;
-}
+import type { FilterOption, FilterSection, ActiveFilterEntry } from '@/types/filters';
 
 /**
  * Check if any filters are currently active
