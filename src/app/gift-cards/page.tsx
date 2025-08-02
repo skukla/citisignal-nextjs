@@ -2,7 +2,14 @@
 
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
-import ProductCard from '@/components/ui/ProductCard';
+import { 
+  ProductCard, 
+  ProductCardImage, 
+  ProductCardBadges, 
+  ProductCardInfo, 
+  ProductCardPrice, 
+  ProductCardActions 
+} from '@/features/product/components/ProductCard';
 import FilterSidebar from '@/components/ui/FilterSidebar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/ui/PageHeader';
@@ -82,19 +89,13 @@ export default function GiftCardsPage() {
           <div className="flex-1">
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
               {filteredAndSortedProducts.map((product) => (
-                <ProductCard
-                  key={product.id}
-                  id={product.id}
-                  name={product.name}
-                  brand="CitiSignal"
-                  price={product.price}
-                  originalPrice={product.original_price}
-                  image={product.media_gallery[0]?.url || ''}
-                  category={product.category}
-                  inStock={product.stock_status === 'IN_STOCK'}
-                  isNew={product.isNew}
-                  isSale={product.original_price !== undefined && product.original_price > product.price}
-                />
+                <ProductCard key={product.id} product={product}>
+                  <ProductCardImage />
+                  <ProductCardBadges />
+                  <ProductCardInfo />
+                  <ProductCardPrice />
+                  <ProductCardActions />
+                </ProductCard>
               ))}
             </div>
 

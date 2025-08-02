@@ -24,7 +24,7 @@ export interface SelectGroup {
   options: SelectOption[];
 }
 
-export type SelectOptions = (SelectOption | SelectGroup)[];
+export type SelectOptions = readonly (SelectOption | SelectGroup)[];
 
 /**
  * Props for the Select component

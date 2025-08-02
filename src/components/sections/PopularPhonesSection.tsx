@@ -2,7 +2,14 @@ import Link from 'next/link';
 import { phones } from '@/data/phones';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
-import ProductCard from '@/components/ui/ProductCard';
+import { 
+  ProductCard, 
+  ProductCardImage, 
+  ProductCardBadges, 
+  ProductCardInfo, 
+  ProductCardPrice, 
+  ProductCardActions 
+} from '@/features/product/components/ProductCard';
 
 export default function PopularPhonesSection() {
   // Get 4 popular phones (those with highest review count)
@@ -22,21 +29,13 @@ export default function PopularPhonesSection() {
         {/* Phones Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {popularPhones.map((phone) => (
-            <ProductCard
-              key={phone.sku}
-              id={phone.id}
-              name={phone.name}
-              brand={phone.manufacturer}
-              price={phone.price}
-              originalPrice={phone.original_price}
-              image={phone.media_gallery?.[0]?.url || ''}
-              category={phone.category}
-              features={phone.memory}
-              colors={phone.available_colors}
-              inStock={phone.stock_status === 'IN_STOCK'}
-              isNew={phone.isNew}
-              isSale={phone.original_price ? phone.original_price > phone.price : false}
-            />
+            <ProductCard key={phone.sku} product={phone}>
+              <ProductCardImage />
+              <ProductCardBadges />
+              <ProductCardInfo />
+              <ProductCardPrice />
+              <ProductCardActions />
+            </ProductCard>
           ))}
         </div>
 
