@@ -20,7 +20,16 @@ export interface NewsletterContent {
     buttonText: string;
     privacyText: string;
   };
-  successMessage: string;
+  successState: {
+    title: string;
+    description: string;
+    buttonText: string;
+  };
+  privacyNotice: {
+    text: string;
+    linkText: string;
+    linkHref: string;
+  };
 }
 
 export const newsletterContent: NewsletterContent = {
@@ -50,5 +59,14 @@ export const newsletterContent: NewsletterContent = {
     buttonText: "Subscribe Now",
     privacyText: "We respect your privacy. Unsubscribe at any time."
   },
-  successMessage: "Thanks for subscribing! Check your email to confirm your subscription."
+  successState: {
+    title: "Thanks for subscribing!",
+    description: "You'll receive the latest deals and updates in your inbox.",
+    buttonText: "Subscribe another email"
+  },
+  privacyNotice: {
+    text: "We respect your privacy. Unsubscribe at any time.",
+    linkText: "Privacy Policy",
+    linkHref: "/privacy"
+  }
 };

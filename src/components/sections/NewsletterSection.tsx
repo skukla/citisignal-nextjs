@@ -35,9 +35,9 @@ function NewsletterSection({
     return (
       <Section background="bg-gradient-to-br from-green-50 to-emerald-100" className={className}>
         <SuccessMessage
-          title="Thanks for subscribing!"
-          description="You'll receive the latest deals and updates in your inbox."
-          buttonText="Subscribe another email"
+          title={content.successState.title}
+          description={content.successState.description}
+          buttonText={content.successState.buttonText}
           onButtonClick={() => setIsSubmitted(false)}
         />
       </Section>
@@ -75,9 +75,9 @@ function NewsletterSection({
         />
 
         <PrivacyNotice
-          text="We respect your privacy. Unsubscribe at any time."
-          linkText="Privacy Policy"
-          linkHref="/privacy"
+          text={content.privacyNotice.text}
+          linkText={content.privacyNotice.linkText}
+          linkHref={content.privacyNotice.linkHref}
         />
       </div>
     </Section>

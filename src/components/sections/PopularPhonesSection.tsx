@@ -1,5 +1,6 @@
 import { memo, useMemo } from 'react';
 import Link from 'next/link';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { phones } from '@/data/phones';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -68,9 +69,7 @@ function PopularPhonesSection({
             className="inline-flex items-center px-8 py-3 bg-gray-100 text-gray-900 font-medium rounded-lg hover:bg-gray-200 transition-colors"
           >
             {content.viewAllLink.text}
-            <svg className="ml-2 w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
+            <ArrowRightIcon className="ml-2 w-5 h-5" />
           </Link>
         </div>
     </Section>

@@ -1,5 +1,5 @@
 import { ShieldCheckIcon, SignalIcon, CurrencyDollarIcon, UserGroupIcon } from '@heroicons/react/24/outline';
-import type { ElementType } from 'react';
+import type { HeroIcon } from '@/types/hero-icons';
 
 /**
  * Why CitiSignal Section Data
@@ -7,7 +7,7 @@ import type { ElementType } from 'react';
  */
 
 export interface Benefit {
-  icon: ElementType;
+  icon: HeroIcon;
   title: string;
   description: string;
 }
