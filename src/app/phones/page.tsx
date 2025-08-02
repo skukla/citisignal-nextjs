@@ -2,14 +2,13 @@
 
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
-import { 
-  ProductCard, 
+import ProductCard, { 
   ProductCardImage, 
   ProductCardBadges, 
   ProductCardInfo, 
   ProductCardPrice, 
   ProductCardActions 
-} from '@/features/product/components/ProductCard';
+} from '@/components/ui/ProductCard';
 import FilterSidebar from '@/components/ui/FilterSidebar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/ui/PageHeader';
@@ -143,13 +142,13 @@ export default function PhonesPage() {
             {filteredAndSortedProducts.length > 0 ? (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 {filteredAndSortedProducts.map((phone) => (
-                  <ProductCard key={phone.sku} product={phone}>
+                  <ProductCard.Root key={phone.sku} product={phone}>
                     <ProductCardImage />
                     <ProductCardBadges />
                     <ProductCardInfo />
                     <ProductCardPrice />
                     <ProductCardActions />
-                  </ProductCard>
+                  </ProductCard.Root>
                 ))}
               </div>
             ) : (

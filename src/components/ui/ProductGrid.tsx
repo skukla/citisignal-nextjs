@@ -1,15 +1,14 @@
 'use client';
 
 import Grid from './Grid';
-import { 
-  ProductCard, 
+import ProductCard, { 
   ProductCardImage, 
   ProductCardBadges, 
   ProductCardInfo, 
   ProductCardPrice, 
   ProductCardActions 
-} from '@/features/product/components/ProductCard';
-import type { ProductType } from '@/features/product/types/product.types';
+} from '@/components/ui/ProductCard';
+import type { ProductType } from '@/components/ui/ProductCard/ProductCard.types';
 import type { GridGap, ResponsiveValue } from '@/types/grid';
 
 interface ProductGridProps {
@@ -55,7 +54,7 @@ export default function ProductGrid({
   return (
     <Grid columns={columns} gap={gap} className={className}>
       {products.map((product) => (
-        <ProductCard key={product.sku} product={product}>
+        <ProductCard.Root key={product.sku} product={product}>
           {children || (
             <>
               <ProductCardImage />
@@ -65,7 +64,7 @@ export default function ProductGrid({
               <ProductCardActions />
             </>
           )}
-        </ProductCard>
+        </ProductCard.Root>
       ))}
     </Grid>
   );
