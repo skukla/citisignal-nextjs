@@ -1,6 +1,6 @@
 import { ProductCardPriceProps } from '../types/product.types';
 import { useProductCard } from '../context/ProductCardContext';
-import { formatPrice } from '@/lib/price';
+import { formatPrice } from '@/lib/pricing';
 
 export function ProductCardPrice({ className, showSavings }: ProductCardPriceProps) {
   const { product } = useProductCard();

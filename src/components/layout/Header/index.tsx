@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
-import { TopBar } from '@/components/ui/TopBar';
+import TopBar from '@/components/layout/TopBar';
 import { Logo } from '@/components/ui/Logo';
 import Search from '@/features/search/components/Search';
 import Cart from '@/features/cart/components/Cart';

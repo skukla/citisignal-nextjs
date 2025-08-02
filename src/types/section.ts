@@ -71,6 +71,7 @@ export interface ActivationContent {
     title: string;
     description: string;
     buttonText: string;
+    buttonHref: string;
     supportText: string;
     supportPhone: string;
     features: Array<{

@@ -28,6 +28,7 @@ function ActivationSection({
           description={content.callToAction.description}
           features={content.callToAction.features}
           buttonText={content.callToAction.buttonText}
+          buttonHref={content.callToAction.buttonHref}
           supportText={content.callToAction.supportText}
           supportPhone={content.callToAction.supportPhone}
         />

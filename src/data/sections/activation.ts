@@ -36,6 +36,7 @@ export const activationContent: ActivationContent = {
     title: "Ready to make the switch?",
     description: "Join millions of satisfied customers who trust CitiSignal for their wireless needs. Start your journey today with our easy activation process.",
     buttonText: "Start Your Activation",
+    buttonHref: "/activation",
     supportText: "Questions? Call us at",
     supportPhone: "1-800-CITI-SIG",
     features: [
