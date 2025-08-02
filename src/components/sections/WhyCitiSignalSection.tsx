@@ -3,7 +3,7 @@
 import { memo } from 'react';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
-import IconBenefitCard from '@/components/ui/IconBenefitCard';
+import IconBenefitGrid from '@/components/ui/IconBenefitGrid';
 import { whyCitiSignalContent } from '@/data/sections/whyCitiSignal';
 import type { WhyCitiSignalContent } from '@/data/sections/whyCitiSignal';
 
@@ -25,16 +25,11 @@ function WhyCitiSignalSection({
         className="mb-12"
       />
       
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-        {content.benefits.map((benefit, index) => (
-          <IconBenefitCard
-            key={index}
-            icon={benefit.icon}
-            title={benefit.title}
-            description={benefit.description}
-          />
-        ))}
-      </div>
+      <IconBenefitGrid 
+        benefits={content.benefits}
+        columns={{ sm: 1, md: 2, lg: 4 }}
+        gap="lg"
+      />
     </Section>
   );
 }

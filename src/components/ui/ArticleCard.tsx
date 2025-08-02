@@ -2,6 +2,7 @@
 
 import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
+import Card from './Card';
 
 export interface ArticleCardProps {
   category: string;
@@ -43,12 +44,14 @@ function ArticleCard({
   onClick
 }: ArticleCardProps) {
   return (
-    <article 
-      className={twMerge('group cursor-pointer', className)}
+    <Card 
+      as="article"
+      interactive
+      className={twMerge('group p-0 overflow-hidden', className)}
       onClick={onClick}
     >
       {/* Article Image */}
-      <div className="aspect-video bg-purple-50 rounded-xl mb-4 overflow-hidden">
+      <div className="aspect-video bg-purple-50 rounded-t-xl mb-4 overflow-hidden">
         {image ? (
           <img 
             src={image} 
@@ -63,7 +66,7 @@ function ArticleCard({
       </div>
 
       {/* Article Content */}
-      <div>
+      <div className="p-6">
         <div className="text-sm font-medium text-purple-600 mb-2">
           {category} • {readTime}
         </div>
@@ -83,7 +86,7 @@ function ArticleCard({
           </div>
         )}
       </div>
-    </article>
+    </Card>
   );
 }
 

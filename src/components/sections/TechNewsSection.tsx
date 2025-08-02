@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
-import ArticleCard from '@/components/ui/ArticleCard';
+import ArticleGrid from '@/components/ui/ArticleGrid';
 import { techNewsContent } from '@/data/sections/techNews';
 import type { TechNewsContent } from '@/data/sections/techNews';
 
@@ -38,21 +38,12 @@ function TechNewsSection({
       </div>
 
       {/* Articles Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-        {content.articles.map((article) => (
-          <ArticleCard
-            key={article.slug || article.title}
-            category={article.category}
-            title={article.title}
-            excerpt={article.excerpt}
-            readTime={article.readTime}
-            image={article.image}
-            slug={article.slug}
-            publishedAt={article.publishedAt}
-            author={article.author}
-          />
-        ))}
-      </div>
+      <ArticleGrid 
+        articles={content.articles}
+        columns={{ sm: 1, md: 3 }}
+        gap="lg"
+        className="mb-8"
+      />
 
       {/* Mobile View All Link */}
       <div className="md:hidden text-center">

@@ -4,16 +4,9 @@ import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { phones } from '@/data/phones';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
+import ProductGrid from '@/components/ui/ProductGrid';
 import { popularPhonesContent } from '@/data/sections/popularPhones';
 import type { PopularPhonesContent } from '@/data/sections/popularPhones';
-import { 
-  ProductCard, 
-  ProductCardImage, 
-  ProductCardBadges, 
-  ProductCardInfo, 
-  ProductCardPrice, 
-  ProductCardActions 
-} from '@/features/product/components/ProductCard';
 
 export interface PopularPhonesSectionProps {
   content?: PopularPhonesContent;
@@ -50,17 +43,11 @@ function PopularPhonesSection({
       />
 
         {/* Phones Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {popularPhones.map((phone) => (
-            <ProductCard key={phone.sku} product={phone}>
-              <ProductCardImage />
-              <ProductCardBadges />
-              <ProductCardInfo />
-              <ProductCardPrice />
-              <ProductCardActions />
-            </ProductCard>
-          ))}
-        </div>
+        <ProductGrid 
+          products={popularPhones}
+          columns={{ sm: 1, md: 2, lg: 4 }}
+          gap="lg"
+        />
 
         {/* View All Button */}
         <div className="text-center mt-12">

@@ -2,6 +2,7 @@
 
 import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
+import Card from './Card';
 import type { HeroIcon } from '@/types/hero-icons';
 
 export interface IconBenefitCardProps {
@@ -36,10 +37,10 @@ function IconBenefitCard({
   className
 }: IconBenefitCardProps) {
   return (
-    <div className={twMerge(
-      'bg-white p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow',
-      className
-    )}>
+    <Card 
+      interactive
+      className={twMerge('p-6', className)}
+    >
       <div className={twMerge(
         'w-12 h-12 rounded-lg flex items-center justify-center mb-4',
         iconBgColor
@@ -52,7 +53,7 @@ function IconBenefitCard({
       <p className="text-gray-600">
         {description}
       </p>
-    </div>
+    </Card>
   );
 }
 
