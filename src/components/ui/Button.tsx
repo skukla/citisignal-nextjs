@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type { ButtonProps } from '@/types/button';
 import Spinner from '@/components/ui/Spinner';
@@ -25,7 +26,7 @@ import Spinner from '@/components/ui/Spinner';
  * </Button>
  * ```
  */
-export default function Button({
+function Button({
   children,
   variant = 'primary',
   size = 'md',
@@ -102,3 +103,5 @@ export default function Button({
     </button>
   );
 }
+
+export default memo(Button);

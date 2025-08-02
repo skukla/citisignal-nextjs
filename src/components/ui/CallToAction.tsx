@@ -1,6 +1,6 @@
 'use client';
 
-import { ElementType } from 'react';
+import { ElementType, memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface Feature {
@@ -22,7 +22,7 @@ interface CallToActionProps {
   className?: string;
 }
 
-export default function CallToAction({
+function CallToAction({
   title,
   description,
   features = [],
@@ -92,4 +92,6 @@ export default function CallToAction({
       </div>
     </div>
   );
-} 
+}
+
+export default memo(CallToAction); 

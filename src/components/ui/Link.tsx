@@ -1,6 +1,7 @@
 'use client';
 
 import NextLink from 'next/link';
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { isExternalUrl } from '@/lib/url';
 import type { LinkProps } from '@/types/link';
@@ -42,7 +43,7 @@ import type { LinkProps } from '@/types/link';
  * </Link>
  * ```
  */
-export default function Link({
+function Link({
   href,
   children,
   variant = 'text',
@@ -111,3 +112,5 @@ export default function Link({
     </NextLink>
   );
 }
+
+export default memo(Link);

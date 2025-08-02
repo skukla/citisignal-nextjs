@@ -1,6 +1,6 @@
 'use client';
 
-import { ComponentType, InputHTMLAttributes } from 'react';
+import { ComponentType, InputHTMLAttributes, memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 /**
@@ -35,7 +35,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
  * />
  * ```
  */
-export default function Input({
+function Input({
   leftIcon: LeftIcon,
   rightIcon: RightIcon,
   iconClassName,
@@ -101,3 +101,5 @@ export default function Input({
     </div>
   );
 }
+
+export default memo(Input);
