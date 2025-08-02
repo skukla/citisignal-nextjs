@@ -1,5 +1,5 @@
 import { BriefcaseIcon, HomeIcon, RocketLaunchIcon, HeartIcon } from '@heroicons/react/24/outline';
-import type { ElementType } from 'react';
+import type { HeroIcon } from '@/types/hero-icons';
 
 /**
  * Lifestyle Solutions Section Data
@@ -7,7 +7,7 @@ import type { ElementType } from 'react';
  */
 
 export interface Solution {
-  icon: ElementType;
+  icon: HeroIcon;
   title: string;
   description: string;
   features: string[];

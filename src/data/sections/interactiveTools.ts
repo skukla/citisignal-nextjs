@@ -1,5 +1,5 @@
 import { MapIcon, CalculatorIcon, SignalIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
-import type { ElementType } from 'react';
+import type { HeroIcon } from '@/types/hero-icons';
 
 /**
  * Interactive Tools Section Data
@@ -7,7 +7,7 @@ import type { ElementType } from 'react';
  */
 
 export interface Tool {
-  icon: ElementType;
+  icon: HeroIcon;
   title: string;
   description: string;
   link: string;

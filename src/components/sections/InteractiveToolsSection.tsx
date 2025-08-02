@@ -1,71 +1,40 @@
 'use client';
 
-import { MapIcon, CalculatorIcon, SignalIcon, DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ToolGrid from '@/components/ui/ToolGrid';
 import FeaturedTool from '@/components/ui/FeaturedTool';
+import { interactiveToolsContent } from '@/data/sections/interactiveTools';
+import type { InteractiveToolsContent } from '@/data/sections/interactiveTools';
 
-export default function InteractiveToolsSection() {
-  const tools = [
-    {
-      icon: MapIcon,
-      title: "Coverage Checker",
-      description: "Check 5G coverage and network strength",
-      link: "/tools/coverage"
-    },
-    {
-      icon: CalculatorIcon,
-      title: "Plan Calculator",
-      description: "Find the perfect plan based on your usage patterns",
-      link: "/tools/calculator"
-    },
-    {
-      icon: SignalIcon,
-      title: "Speed Test",
-      description: "Test your current connection speed and performance",
-      link: "/tools/speed-test"
-    },
-    {
-      icon: DevicePhoneMobileIcon,
-      title: "Phone Finder",
-      description: "Discover the perfect phone for your needs and budget",
-      link: "/tools/phone-finder"
-    }
-  ];
+export interface InteractiveToolsSectionProps {
+  content?: InteractiveToolsContent;
+  className?: string;
+}
 
-  const optimizerFeatures = [
-    {
-      title: "Personalized Analysis",
-      description: "Based on your actual usage"
-    },
-    {
-      title: "Smart Recommendations",
-      description: "AI-powered plan suggestions"
-    },
-    {
-      title: "Potential Savings",
-      description: "See how much you could save"
-    }
-  ];
+export default function InteractiveToolsSection({
+  content = interactiveToolsContent,
+  className
+}: InteractiveToolsSectionProps) {
+
 
   return (
-    <Section>
+    <Section className={className}>
       <SectionHeader
-        title="Interactive Tools"
-        description="Make informed decisions with our suite of interactive tools designed to help you get the most from your mobile service."
+        title={content.header.title}
+        description={content.header.description}
         centered
         className="mb-16"
       />
 
-      <ToolGrid tools={tools} />
+      <ToolGrid tools={content.tools} />
 
       <FeaturedTool
-        title="Try Our Plan Optimizer"
-        description="Answer a few questions about your usage and let our AI recommend the perfect plan for you. Save up to 30% on your monthly bill!"
-        buttonText="Start Optimization"
-        buttonHref="/tools/plan-optimizer"
-        features={optimizerFeatures}
+        title={content.optimizer.title}
+        description={content.optimizer.description}
+        buttonText={content.optimizer.buttonText}
+        buttonHref={content.optimizer.buttonLink}
+        features={content.optimizer.features}
         className="mt-16"
       />
     </Section>
