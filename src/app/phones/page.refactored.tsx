@@ -21,7 +21,7 @@ import TipGrid from '@/components/ui/TipGrid';
 import AccessoryGrid from '@/components/ui/AccessoryGrid';
 import { phones, phoneFilterOptions } from '@/data/phones';
 import { phonesPageContent } from '@/data/pages/phones';
-import { DevicePhoneMobileIcon } from '@heroicons/react/24/outline';
+import { DevicePhoneMobileIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 import { SORT_OPTIONS } from '@/lib/constants';
 
