@@ -2,14 +2,7 @@
 
 import Footer from '@/components/layout/Footer';
 import NewsletterSection from '@/components/sections/NewsletterSection';
-import { 
-  ProductCard, 
-  ProductCardImage, 
-  ProductCardBadges, 
-  ProductCardInfo, 
-  ProductCardPrice, 
-  ProductCardActions 
-} from '@/features/product/components/ProductCard';
+import ProductGrid from '@/components/ui/ProductGrid';
 import FilterSidebar from '@/components/ui/FilterSidebar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/ui/PageHeader';
@@ -89,17 +82,11 @@ export default function InternetDealsPage() {
           </div>
 
           <div className="flex-1">
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAndSortedProducts.map((product) => (
-                <ProductCard key={product.id} product={product}>
-                  <ProductCardImage />
-                  <ProductCardBadges />
-                  <ProductCardInfo />
-                  <ProductCardPrice />
-                  <ProductCardActions />
-                </ProductCard>
-              ))}
-            </div>
+            <ProductGrid 
+              products={filteredAndSortedProducts}
+              columns={{ sm: 1, md: 2, lg: 3 }}
+              gap="md"
+            />
 
             {filteredAndSortedProducts.length === 0 && (
               <div className="text-center py-12">

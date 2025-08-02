@@ -1,6 +1,8 @@
 import { Phone, Watch, Accessory, Plan } from '@/types/commerce';
+import type { InternetDeal } from '@/data/internetDeals';
+import type { StreamingService } from '@/data/streaming';
 
-export type ProductType = Phone | Watch | Accessory | Plan;
+export type ProductType = Phone | Watch | Accessory | Plan | InternetDeal | StreamingService;
 
 export interface ProductImageProps {
   url: string;
