@@ -64,6 +64,7 @@
 ## Props Analysis
 
 ### Current Props
+
 - Total count: **16 props** (excessive)
 - Individual props list: name, type, price, originalPrice, rating, reviews, data, talk, text, hotspot, networkPriority (11 individual props)
 - Object props list: features (string[]), streaming (string[])
@@ -80,6 +81,7 @@
 ## Composition Patterns
 
 ### Current Pattern
+
 - Uses children props? No
 - Uses render props? No
 - Uses compound components? No
@@ -95,6 +97,7 @@
 ## State Management
 
 ### Current State
+
 - **Local state usage**: isSaved (wishlist state) - appropriate for UI-only state
 - Context usage: None
 - Props for state: None
@@ -199,21 +202,25 @@
 ## Recommendations
 
 ### High Priority
+
 1. **Decompose into compound components** - 199 lines is too large
 2. **Extract business logic** - sale calculation, rating conversion to utilities
 3. **Consolidate props** - use single plan object instead of 16 individual props
 4. **Extract reusable components** - StarRating, PlanBadge for use elsewhere
 
 ### Medium Priority
+
 5. **Implement useWishlist hook** - better state management
 6. **Add memoization** - React.memo with proper prop comparison
 7. **Create Plans feature directory** - better organization for business logic
 
 ### Low Priority
+
 8. **Render prop patterns** - for customizable feature rendering
 9. **Context for wishlist** - cross-component wishlist state
 
 ### Expected Outcome
+
 - **Reduce from 199 → ~120 lines** (40% reduction) through decomposition
 - **Reduce from 16 → 2 props** (87% reduction) - plan object + className
 - **Extract 4-5 reusable components** (StarRating, PlanBadge, FeatureList, etc.)
