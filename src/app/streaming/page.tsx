@@ -7,7 +7,7 @@ import FilterSidebar from '@/components/ui/FilterSidebar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/ui/PageHeader';
 import SearchSortBar from '@/components/ui/SearchSortBar';
-import { streamingServices, streamingFilterOptions } from '@/data/streaming';
+import { streamingServices, streamingFilterOptions, streamingPageConfig } from '@/data/pages/streaming';
 import { PlayIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { SORT_OPTIONS } from '@/lib/constants';
 import { useProductList } from '@/hooks/useProductList';

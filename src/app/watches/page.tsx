@@ -7,7 +7,7 @@ import FilterSidebar from '@/components/ui/FilterSidebar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/ui/PageHeader';
 import SearchSortBar from '@/components/ui/SearchSortBar';
-import { watches, watchFilterOptions } from '@/data/watches';
+import { watches, watchFilterOptions, watchesPageConfig } from '@/data/pages/watches';
 import { ClockIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 import { SORT_OPTIONS } from '@/lib/constants';
