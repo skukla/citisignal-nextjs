@@ -20,12 +20,12 @@ function InteractiveToolsSection({
 
 
   return (
-    <Section className={className}>
+    <Section background="bg-gray-900" className={`text-white ${className || ''}`}>
       <SectionHeader
         title={content.header.title}
         description={content.header.description}
         centered
-        className="mb-16"
+        className="mb-16 text-white"
       />
 
       <ToolGrid tools={content.tools} />
