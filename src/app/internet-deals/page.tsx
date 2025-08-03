@@ -7,7 +7,7 @@ import FilterSidebar from '@/components/ui/FilterSidebar';
 import Breadcrumb from '@/components/ui/Breadcrumb';
 import PageHeader from '@/components/ui/PageHeader';
 import SearchSortBar from '@/components/ui/SearchSortBar';
-import { internetDeals, internetDealsFilterOptions } from '@/data/internetDeals';
+import { internetDeals, internetDealsFilterOptions, internetDealsPageConfig } from '@/data/pages/internet-deals';
 import { WifiIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { useProductList } from '@/hooks/useProductList';
 import { SORT_OPTIONS } from '@/lib/constants';

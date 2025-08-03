@@ -18,7 +18,7 @@ import TechReviewGrid from '@/components/ui/TechReviewGrid';
 import BuyingGuideGrid from '@/components/ui/BuyingGuideGrid';
 import TipGrid from '@/components/ui/TipGrid';
 import AccessoryGrid from '@/components/ui/AccessoryGrid';
-import { phones, phoneFilterOptions } from '@/data/phones';
+import { phones, phoneFilterOptions, phonesPageConfig } from '@/data/pages/phones';
 import { phonesPageContent } from '@/data/pages/phones';
 import { useProductList } from '@/hooks/useProductList';
 import { SORT_OPTIONS } from '@/lib/constants';

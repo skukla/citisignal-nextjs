@@ -7,12 +7,148 @@ import {
   CameraIcon,
   Bars3Icon
 } from '@heroicons/react/24/outline';
-import { phoneFilterOptions } from '@/data/phones';
+
 import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
 import type { TechReview } from '@/components/ui/TechReviewGrid';
 import type { BuyingGuide } from '@/components/ui/BuyingGuideGrid';
 import type { Tip } from '@/components/ui/TipGrid';
 import type { Accessory } from '@/components/ui/AccessoryGrid';
+
+/**
+ * Phone filter options
+ */
+export const phoneFilterOptions = {
+  manufacturer: [
+    { id: 'apple', name: 'Apple' },
+    { id: 'samsung', name: 'Samsung' },
+    { id: 'citisignal', name: 'CitiSignal' }
+  ],
+  memory: [
+    { id: '128gb', name: '128GB' },
+    { id: '256gb', name: '256GB' },
+    { id: '512gb', name: '512GB' },
+    { id: '1tb', name: '1TB' }
+  ],
+  colors: colorOptions,
+  price: [
+    { id: 'under-700', name: 'Under $700' },
+    { id: '700-1000', name: '$700 - $1000' },
+    { id: 'over-1000', name: 'Over $1000' }
+  ],
+  features: [
+    { id: 'extended-capacity-5g', name: 'Extended Capacity 5G' },
+    { id: 'extended-range-5g', name: 'Extended Range 5G' }
+  ]
+};
+
+/**
+ * Mock phones data
+ */
+export const phones: Phone[] = [
+  {
+    id: '1',
+    sku: 'PHONE-IPHONE-15-PRO-128',
+    name: 'iPhone 15 Pro',
+    url_key: 'iphone-15-pro-128gb',
+    description: 'The ultimate iPhone with titanium design, A17 Pro chip, and pro camera system.',
+    price: 999,
+    original_price: 1099,
+    currency: 'USD',
+    rating_summary: 92,
+    review_count: 245,
+    media_gallery: [
+      {
+        url: '/phones/iphone-15-pro.jpg',
+        label: 'iPhone 15 Pro Natural Titanium',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'phones',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'Apple',
+    memory: '128GB',
+    screen_size: '6.1"',
+    operating_system: 'iOS 17',
+    camera_megapixels: '48MP',
+    battery_capacity: '3274mAh',
+    available_colors: [
+      { name: 'Natural Titanium', hex: '#A7A299' },
+      { name: 'Blue Titanium', hex: '#5E7C8B' },
+      { name: 'White Titanium', hex: '#F7F3E8' },
+      { name: 'Black Titanium', hex: '#1D1D1D' }
+    ],
+    isNew: true,
+    isSale: true
+  },
+  {
+    id: '2',
+    sku: 'PHONE-SAMSUNG-S24-ULTRA-256',
+    name: 'Galaxy S24 Ultra',
+    url_key: 'galaxy-s24-ultra-256gb',
+    description: 'The most powerful Galaxy with S Pen, 200MP camera, and Galaxy AI features.',
+    price: 1199,
+    original_price: 1299,
+    currency: 'USD',
+    rating_summary: 89,
+    review_count: 186,
+    media_gallery: [
+      {
+        url: '/phones/galaxy-s24-ultra.jpg',
+        label: 'Galaxy S24 Ultra Titanium Gray',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'phones',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'Samsung',
+    memory: '256GB',
+    screen_size: '6.8"',
+    operating_system: 'Android 14',
+    camera_megapixels: '200MP',
+    battery_capacity: '5000mAh',
+    available_colors: [
+      { name: 'Titanium Gray', hex: '#8B8B8B' },
+      { name: 'Titanium Black', hex: '#1A1A1A' },
+      { name: 'Titanium Violet', hex: '#8B7AB8' },
+      { name: 'Titanium Yellow', hex: '#F4E04D' }
+    ],
+    isNew: true,
+    isSale: true
+  },
+  {
+    id: '3',
+    sku: 'PHONE-CS-GALAXY-512',
+    name: 'CitiSignal Galaxy Pro',
+    url_key: 'citisignal-galaxy-pro-512gb',
+    description: 'Premium CitiSignal phone with extended 5G coverage and exclusive network features.',
+    price: 899,
+    currency: 'USD',
+    rating_summary: 88,
+    review_count: 94,
+    media_gallery: [
+      {
+        url: '/phones/citisignal-galaxy.jpg',
+        label: 'CitiSignal Galaxy Pro Midnight Blue',
+        roles: ['small_image', 'thumbnail']
+      }
+    ],
+    category: 'phones',
+    stock_status: 'IN_STOCK',
+    manufacturer: 'CitiSignal',
+    memory: '512GB',
+    screen_size: '6.7"',
+    operating_system: 'Android 14',
+    camera_megapixels: '108MP',
+    battery_capacity: '4800mAh',
+    available_colors: [
+      { name: 'Midnight Blue', hex: '#1A237E' },
+      { name: 'Cosmic Silver', hex: '#E8EAF6' },
+      { name: 'Aurora Green', hex: '#4CAF50' }
+    ],
+    isNew: true,
+    isSale: false
+  }
+];
 
 /**
  * Tech Reviews data for the phones page

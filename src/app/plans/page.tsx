@@ -10,7 +10,7 @@ import ResultsCount from '@/components/ui/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/FilterSidebarResponsive';
 import PlanCard from '@/components/ui/PlanCard';
-import { plans } from '@/data/plans';
+import { plans } from '@/data/pages/plans';
 import { plansPageConfig } from '@/data/pages/plans';
 import { useProductList } from '@/hooks/useProductList';
 
