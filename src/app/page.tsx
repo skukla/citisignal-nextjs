@@ -1,4 +1,4 @@
-import HomeLayout from '@/components/layout/HomeLayout';
+import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
 import PopularPhonesSection from '@/components/sections/PopularPhonesSection';
 import ActivationSection from '@/components/sections/ActivationSection';
@@ -11,16 +11,19 @@ import LifestyleSolutionsSection from '@/components/sections/LifestyleSolutionsS
 
 export default function Home() {
   return (
-    <HomeLayout>
-      <HeroSection />
-      <WhyCitiSignalSection />
-      <LifestyleSolutionsSection />
-      <InteractiveToolsSection />
-      <PopularPhonesSection />
-      <CoverageSection />
-      <TechNewsSection />
-      <ActivationSection />
-      <NewsletterSection />
-    </HomeLayout>
+    <div className="min-h-screen">
+      <main>
+        <HeroSection />
+        <WhyCitiSignalSection />
+        <LifestyleSolutionsSection />
+        <InteractiveToolsSection />
+        <PopularPhonesSection />
+        <CoverageSection />
+        <TechNewsSection />
+        <ActivationSection />
+        <NewsletterSection />
+      </main>
+      <Footer />
+    </div>
   );
 }
