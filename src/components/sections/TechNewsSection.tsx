@@ -2,10 +2,10 @@
 
 import { memo } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Link from '@/components/ui/Link';
-import Section from '@/components/ui/Section';
-import SectionHeader from '@/components/ui/SectionHeader';
-import ArticleGrid from '@/components/ui/ArticleGrid';
+import Link from '@/components/ui/foundations/Link';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import ArticleGrid from '@/components/ui/grids/ArticleGrid';
 import { techNewsContent } from '@/data/sections/techNews';
 import type { TechNewsContent } from '@/data/sections/techNews';
 

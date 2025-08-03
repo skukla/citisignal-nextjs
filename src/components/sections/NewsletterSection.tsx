@@ -2,12 +2,12 @@
 
 import { useState, memo } from 'react';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
-import Section from '@/components/ui/Section';
-import Badge from '@/components/ui/Badge';
-import BenefitGrid from '@/components/ui/BenefitGrid';
-import NewsletterForm from '@/components/ui/NewsletterForm';
-import PrivacyNotice from '@/components/ui/PrivacyNotice';
-import SuccessMessage from '@/components/ui/SuccessMessage';
+import Section from '@/components/ui/layout/Section';
+import Badge from '@/components/ui/foundations/Badge';
+import BenefitGrid from '@/components/ui/grids/BenefitGrid';
+import NewsletterForm from '@/components/ui/forms/NewsletterForm';
+import PrivacyNotice from '@/components/ui/feedback/PrivacyNotice';
+import SuccessMessage from '@/components/ui/feedback/SuccessMessage';
 import { newsletterContent } from '@/data/sections/newsletter';
 import type { NewsletterContent } from '@/data/sections/newsletter';
 

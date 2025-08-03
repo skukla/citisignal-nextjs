@@ -2,11 +2,11 @@
 
 import { memo } from 'react';
 import { SignalIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline';
-import Section from '@/components/ui/Section';
-import SectionHeader from '@/components/ui/SectionHeader';
-import StatsCard from '@/components/ui/StatsCard';
-import ProgressBar from '@/components/ui/ProgressBar';
-import StatsList from '@/components/ui/StatsList';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import StatsCard from '@/components/ui/cards/StatsCard';
+import ProgressBar from '@/components/ui/content/ProgressBar';
+import StatsList from '@/components/ui/content/StatsList';
 import { coverageContent } from '@/data/sections/coverage';
 import type { CoverageSectionProps } from '@/types/section';
 

@@ -1,10 +1,10 @@
 'use client';
 
 import { memo } from 'react';
-import Section from '@/components/ui/Section';
-import SectionHeader from '@/components/ui/SectionHeader';
-import SolutionGrid from '@/components/ui/SolutionGrid';
-import Link from '@/components/ui/Link';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import SolutionGrid from '@/components/ui/grids/SolutionGrid';
+import Link from '@/components/ui/foundations/Link';
 import { lifestyleSolutionsContent } from '@/data/sections/lifestyleSolutions';
 import type { LifestyleSolutionsContent } from '@/data/sections/lifestyleSolutions';
 

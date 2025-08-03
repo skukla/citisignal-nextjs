@@ -1,9 +1,9 @@
 'use client';
 
 import { memo } from 'react';
-import Section from '@/components/ui/Section';
-import SectionHeader from '@/components/ui/SectionHeader';
-import IconBenefitGrid from '@/components/ui/IconBenefitGrid';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import IconBenefitGrid from '@/components/ui/grids/IconBenefitGrid';
 import { whyCitiSignalContent } from '@/data/sections/whyCitiSignal';
 import type { WhyCitiSignalContent } from '@/data/sections/whyCitiSignal';
 

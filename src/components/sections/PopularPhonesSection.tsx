@@ -2,11 +2,11 @@
 
 import { memo, useMemo } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
-import Button from '@/components/ui/Button';
+import Button from '@/components/ui/foundations/Button';
 import { phonesPageData } from '@/data/pages/phones';
-import Section from '@/components/ui/Section';
-import SectionHeader from '@/components/ui/SectionHeader';
-import ProductGrid from '@/components/ui/ProductGrid';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import ProductGrid from '@/components/ui/grids/ProductGrid';
 import { popularPhonesContent } from '@/data/sections/popularPhones';
 import type { PopularPhonesContent } from '@/data/sections/popularPhones';
 

@@ -1,10 +1,10 @@
 'use client';
 
 import { memo } from 'react';
-import Section from '@/components/ui/Section';
-import SectionHeader from '@/components/ui/SectionHeader';
-import ToolGrid from '@/components/ui/ToolGrid';
-import FeaturedTool from '@/components/ui/FeaturedTool';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import ToolGrid from '@/components/ui/grids/ToolGrid';
+import FeaturedTool from '@/components/ui/content/FeaturedTool';
 import { interactiveToolsContent } from '@/data/sections/interactiveTools';
 import type { InteractiveToolsContent } from '@/data/sections/interactiveTools';
 

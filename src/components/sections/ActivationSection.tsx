@@ -1,10 +1,10 @@
 'use client';
 
 import { memo } from 'react';
-import Section from '@/components/ui/Section';
-import SectionHeader from '@/components/ui/SectionHeader';
-import ProcessSteps from '@/components/ui/ProcessSteps';
-import CallToAction from '@/components/ui/CallToAction';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import ProcessSteps from '@/components/ui/content/ProcessSteps';
+import CallToAction from '@/components/ui/feedback/CallToAction';
 import { activationContent } from '@/data/sections/activation';
 import type { ActivationSectionProps } from '@/types/section';
 
