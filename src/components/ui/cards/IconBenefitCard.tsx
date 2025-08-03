@@ -38,8 +38,7 @@ function IconBenefitCard({
 }: IconBenefitCardProps) {
   return (
     <Card 
-      interactive
-      className={twMerge('p-6', className)}
+      className={twMerge('p-6 shadow-sm', className)}
     >
       <div className={twMerge(
         'w-12 h-12 rounded-lg flex items-center justify-center mb-4',

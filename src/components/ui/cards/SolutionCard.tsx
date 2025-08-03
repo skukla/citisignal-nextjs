@@ -41,7 +41,7 @@ export default function SolutionCard({
       as={Link}
       href={href}
       interactive
-      className={twMerge('p-6 h-full group', className)}
+      className={twMerge('p-6 h-full group shadow-sm hover:shadow-md transition-shadow', className)}
     >
       <div className="w-12 h-12 rounded-lg bg-purple-50 flex items-center justify-center mb-6">
         <Icon className="w-6 h-6 text-purple-600" />

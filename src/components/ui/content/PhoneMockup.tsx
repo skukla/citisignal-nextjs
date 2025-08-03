@@ -19,7 +19,7 @@ interface PhoneMockupProps {
 function PhoneMockup({ className }: PhoneMockupProps) {
   return (
     <div className={twMerge('bg-gray-900 rounded-2xl p-4 mx-auto w-48', className)}>
-      <div className="rounded-xl h-80 flex items-center justify-center bg-gradient-to-br from-purple-600 to-purple-800">
+      <div className="rounded-xl h-80 flex items-center justify-center" style={{ background: 'linear-gradient(135deg, #8821f4 0%, #6a1b9a 100%)' }}>
         <div className="text-center text-white">
           <div className="text-3xl font-bold mb-2">5G</div>
           <div className="text-sm opacity-75">CitiSignal CONNECT</div>

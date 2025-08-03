@@ -38,7 +38,7 @@ export default function StatsCard({
   );
 
   return (
-    <Card className={className}>
+    <Card className={twMerge('shadow-sm border border-gray-100', className)}>
       <div className="flex items-center mb-4 p-6 pb-0">
         <div className={iconBgClasses}>
           <Icon className={iconColorClasses} />

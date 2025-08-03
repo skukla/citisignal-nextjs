@@ -26,7 +26,8 @@ function HeroSection({
 }: HeroSectionProps) {
   return (
     <Section 
-      className={`bg-gradient-to-br from-purple-600 via-purple-700 to-purple-800 text-white ${className || ''}`}
+      className={`text-white ${className || ''}`}
+      style={{ background: 'linear-gradient(135deg, #8821f4 0%, #6a1b9a 50%, #4a148c 100%)' }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         {/* Content */}

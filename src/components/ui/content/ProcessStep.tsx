@@ -53,7 +53,7 @@ function ProcessStep({
       {/* Step Card */}
       <div className="text-center">
         {/* Icon Circle */}
-        <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4 bg-purple-600">
+        <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#8821f4' }}>
           <Icon className="w-8 h-8 text-white" />
         </div>
         
