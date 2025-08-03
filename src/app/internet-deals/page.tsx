@@ -30,8 +30,7 @@ export default function InternetDealsPage() {
     { title: 'Connection Type', key: 'type', options: internetDealsFilterOptions.type, type: 'checkbox' as const },
     { title: 'Speed Range', key: 'speed', options: internetDealsFilterOptions.speed, type: 'checkbox' as const },
     { title: 'Price Range', key: 'price', options: internetDealsFilterOptions.price, type: 'checkbox' as const },
-    { title: 'Contract Length', key: 'contractLength', options: internetDealsFilterOptions.contract_length, type: 'checkbox' as const },
-    { title: 'Features', key: 'features', options: internetDealsFilterOptions.features, type: 'checkbox' as const }
+    { title: 'Contract Length', key: 'contractLength', options: internetDealsFilterOptions.contract_length, type: 'checkbox' as const }
   ];
 
   const breadcrumbItems = [{ name: 'Shop', href: '/shop' }, { name: 'Internet Deals' }];

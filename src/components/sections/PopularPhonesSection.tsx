@@ -3,7 +3,7 @@
 import { memo, useMemo } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/ui/Button';
-import { phones } from '@/data/phones';
+import { phones } from '@/data/pages/phones';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ProductGrid from '@/components/ui/ProductGrid';

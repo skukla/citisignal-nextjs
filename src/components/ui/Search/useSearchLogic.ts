@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import { phones } from '@/data/phones';
+import { phones } from '@/data/pages/phones';
 import type { SearchResult } from './Search.types';
 
 export interface UseSearchLogicReturn {
