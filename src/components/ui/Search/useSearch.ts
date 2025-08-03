@@ -4,7 +4,12 @@ import type { SearchContextValue, SearchResult } from './Search.types';
 import { useSearchPanel } from './useSearchPanel';
 import { useSearchLogic } from './useSearchLogic';
 
-export function useSearch(): SearchContextValue {
+/**
+ * Return type for useSearch hook
+ */
+export type UseSearchReturn = SearchContextValue;
+
+export function useSearch(): UseSearchReturn {
   const { isOpen, toggle, close, panelRef } = useSearchPanel();
   const { query, results, isLoading, setQuery, selectResult } = useSearchLogic();
 

@@ -1,12 +1,17 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { usePanel } from '@/hooks/usePanel';
+import { useAccountPanel } from './useAccountPanel';
 import type { AccountContextValue, UserProfile } from './Account.types';
 
-export function useAccount(): AccountContextValue {
+/**
+ * Return type for useAccount hook
+ */
+export type UseAccountReturn = AccountContextValue;
+
+export function useAccount(): UseAccountReturn {
   const [user, setUser] = useState<UserProfile | null>(null);
-  const { isOpen, toggle, close, panelRef } = usePanel();
+  const { isOpen, toggle, close, panelRef } = useAccountPanel();
 
   const signIn = useCallback(() => {
     // TODO: Implement actual auth

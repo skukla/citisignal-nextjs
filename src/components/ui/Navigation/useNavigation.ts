@@ -2,15 +2,15 @@
 
 import { useCallback } from 'react';
 import { usePathname } from 'next/navigation';
-import { usePanel } from '@/hooks/usePanel';
+import { useNavigationPanel } from './useNavigationPanel';
 
-interface UseNavigationProps {
+export interface UseNavigationProps {
   isOpen?: boolean;
   onToggle?: () => void;
   onClose?: () => void;
 }
 
-interface UseNavigationReturn {
+export interface UseNavigationReturn {
   isMenuOpen: boolean;
   closeMenu: () => void;
   toggleMenu: () => void;
@@ -20,7 +20,7 @@ interface UseNavigationReturn {
 
 export function useNavigation(props?: UseNavigationProps): UseNavigationReturn {
   const pathname = usePathname();
-  const { isOpen, toggle, close, panelRef } = usePanel();
+  const { isOpen, toggle, close, panelRef } = useNavigationPanel();
 
   const isMenuOpen = props?.isOpen ?? isOpen;
   const toggleMenu = useCallback(() => {

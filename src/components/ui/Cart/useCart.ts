@@ -1,12 +1,17 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { usePanel } from '@/hooks/usePanel';
+import { useCartPanel } from './useCartPanel';
 import type { CartContextValue, CartItem } from './Cart.types';
 
-export function useCart(): CartContextValue {
+/**
+ * Return type for useCart hook
+ */
+export type UseCartReturn = CartContextValue;
+
+export function useCart(): UseCartReturn {
   const [items, setItems] = useState<readonly CartItem[]>([]);
-  const { isOpen, toggle, close, panelRef } = usePanel();
+  const { isOpen, toggle, close, panelRef } = useCartPanel();
 
   const addItem = useCallback((item: CartItem) => {
     setItems(prev => {

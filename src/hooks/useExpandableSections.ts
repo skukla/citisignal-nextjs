@@ -2,7 +2,7 @@
 
 import { useState, useCallback } from 'react';
 
-interface UseExpandableSectionsOptions {
+export interface UseExpandableSectionsOptions {
   initialSections?: Record<string, boolean>;
   defaultExpanded?: boolean;
 }
