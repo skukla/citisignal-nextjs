@@ -8,7 +8,7 @@ import PageHeaderSection from '@/components/ui/layout/PageHeaderSection';
 import SearchAndSort from '@/components/ui/search/SearchAndSort';
 import ResultsCount from '@/components/ui/search/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/grids/ProductGridWithEmpty';
-import FilterSidebarResponsive from '@/components/ui/search/FilterSidebarResponsive';
+import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
 import ProductCard from '@/components/ui/cards/ProductCard';
 import { giftCardsPageData } from '@/data/pages/gift-cards';
 import { useProductList } from '@/hooks/useProductList';

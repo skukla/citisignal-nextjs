@@ -7,7 +7,7 @@ import { HeaderTopBar } from './HeaderTopBar';
 import Container from '@/components/ui/layout/Container';
 import { Logo } from '@/components/ui/foundations/Logo';
 import Navigation, { NavigationRoot } from '@/components/ui/layout/Navigation';
-import Search from '@/components/ui/search/Search/index';
+import Search from '@/components/ui/search/Search';
 import Cart from '@/components/ui/layout/Cart';
 import Account from '@/components/ui/layout/Account';
 import Button from '@/components/ui/foundations/Button';
