@@ -1,6 +1,8 @@
 'use client';
 
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
+import Card from './Card';
 import CheckmarkFeatureList from './CheckmarkFeatureList';
 import Link from './Link';
 import type { DetailedFeature } from '@/types/section';
@@ -32,7 +34,7 @@ interface FeaturedToolProps {
  * />
  * ```
  */
-export default function FeaturedTool({
+function FeaturedTool({
   title,
   description,
   buttonText,
@@ -61,10 +63,12 @@ export default function FeaturedTool({
             {buttonText}
           </Link>
         </div>
-        <div className="bg-white rounded-xl p-6 shadow-sm">
+        <Card className="p-6">
           <CheckmarkFeatureList features={features} />
-        </div>
+        </Card>
       </div>
     </div>
   );
-} 
+}
+
+export default memo(FeaturedTool); 

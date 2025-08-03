@@ -1,6 +1,8 @@
 'use client';
 
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
+import Card from './Card';
 
 interface BenefitCardProps {
   emoji: string;
@@ -21,14 +23,14 @@ interface BenefitCardProps {
  * />
  * ```
  */
-export default function BenefitCard({
+function BenefitCard({
   emoji,
   title,
   description,
   className
 }: BenefitCardProps) {
   return (
-    <div className={twMerge('text-center max-w-[250px] mx-auto', className)}>
+    <Card className={twMerge('text-center max-w-[250px] mx-auto p-0 bg-transparent border-none shadow-none', className)}>
       <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
         <span className="text-2xl leading-none">{emoji}</span>
       </div>
@@ -38,6 +40,8 @@ export default function BenefitCard({
       <p className="text-sm leading-relaxed text-purple-100">
         {description}
       </p>
-    </div>
+    </Card>
   );
-} 
+}
+
+export default memo(BenefitCard); 

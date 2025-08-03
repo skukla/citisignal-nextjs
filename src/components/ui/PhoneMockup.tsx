@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 interface PhoneMockupProps {
@@ -15,7 +16,7 @@ interface PhoneMockupProps {
  * <PhoneMockup className="mx-auto" />
  * ```
  */
-export default function PhoneMockup({ className }: PhoneMockupProps) {
+function PhoneMockup({ className }: PhoneMockupProps) {
   return (
     <div className={twMerge('bg-gray-900 rounded-2xl p-4 mx-auto w-48', className)}>
       <div className="rounded-xl h-80 flex items-center justify-center bg-gradient-to-br from-purple-600 to-purple-800">
@@ -35,4 +36,6 @@ export default function PhoneMockup({ className }: PhoneMockupProps) {
       </div>
     </div>
   );
-} 
+}
+
+export default memo(PhoneMockup); 

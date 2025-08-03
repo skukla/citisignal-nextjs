@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import type { DetailedFeature } from '@/types/section';
 
@@ -22,7 +23,7 @@ interface CheckmarkFeatureListProps {
  * />
  * ```
  */
-export default function CheckmarkFeatureList({
+function CheckmarkFeatureList({
   features,
   className
 }: CheckmarkFeatureListProps) {
@@ -57,4 +58,6 @@ export default function CheckmarkFeatureList({
       ))}
     </div>
   );
-} 
+}
+
+export default memo(CheckmarkFeatureList); 

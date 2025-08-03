@@ -1,5 +1,6 @@
 'use client';
 
+import { memo } from 'react';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 
@@ -22,7 +23,7 @@ interface PrivacyNoticeProps {
  * />
  * ```
  */
-export default function PrivacyNotice({
+function PrivacyNotice({
   text,
   linkText,
   linkHref,
@@ -36,4 +37,6 @@ export default function PrivacyNotice({
       </Link>
     </p>
   );
-} 
+}
+
+export default memo(PrivacyNotice); 

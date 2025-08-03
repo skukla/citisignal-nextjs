@@ -1,6 +1,8 @@
 'use client';
 
+import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
+import Card from './Card';
 
 interface SimplePlanCardProps {
   price: string;
@@ -21,14 +23,14 @@ interface SimplePlanCardProps {
  * />
  * ```
  */
-export default function SimplePlanCard({
+function SimplePlanCard({
   price,
   title,
   subtitle,
   className
 }: SimplePlanCardProps) {
   return (
-    <div className={twMerge('text-center', className)}>
+    <Card className={twMerge('text-center p-4 bg-white border border-gray-200', className)}>
       <div className="text-2xl font-bold text-purple-600">
         {price}
       </div>
@@ -40,6 +42,8 @@ export default function SimplePlanCard({
           {subtitle}
         </div>
       )}
-    </div>
+    </Card>
   );
-} 
+}
+
+export default memo(SimplePlanCard); 

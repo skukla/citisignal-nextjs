@@ -1,7 +1,9 @@
 'use client';
 
+import { memo } from 'react';
 import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
+import Card from './Card';
 import type { HeroIcon } from '@/types/hero-icons';
 
 interface ToolCardProps {
@@ -14,7 +16,7 @@ interface ToolCardProps {
   iconContainerClassName?: string;
 }
 
-export default function ToolCard({
+function ToolCard({
   icon: Icon,
   title,
   description,
@@ -24,29 +26,30 @@ export default function ToolCard({
   iconContainerClassName
 }: ToolCardProps) {
   return (
-    <Link href={href}>
+    <Card 
+      as={Link}
+      href={href}
+      interactive
+      className={twMerge('group p-6', className)}
+    >
       <div className={twMerge(
-        'bg-white rounded-xl border-2 border-gray-100 p-6',
-        'hover:border-purple-200 transition-colors group cursor-pointer',
-        className
+        'w-16 h-16 rounded-lg bg-purple-50 flex items-center justify-center mb-6',
+        'group-hover:bg-purple-100 transition-colors',
+        iconContainerClassName
       )}>
-        <div className={twMerge(
-          'w-16 h-16 rounded-lg bg-purple-50 flex items-center justify-center mb-6',
-          'group-hover:bg-purple-100 transition-colors',
-          iconContainerClassName
-        )}>
-          <Icon className={twMerge(
-            'w-8 h-8 text-purple-600',
-            iconClassName
-          )} />
-        </div>
-        <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
-          {title}
-        </h3>
-        <p className="text-gray-600">
-          {description}
-        </p>
+        <Icon className={twMerge(
+          'w-8 h-8 text-purple-600',
+          iconClassName
+        )} />
       </div>
-    </Link>
+      <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
+        {title}
+      </h3>
+      <p className="text-gray-600">
+        {description}
+      </p>
+    </Card>
   );
-} 
+}
+
+export default memo(ToolCard); 
