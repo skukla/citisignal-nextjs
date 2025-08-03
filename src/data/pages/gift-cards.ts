@@ -1,6 +1,6 @@
 import { GiftIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { BaseProduct } from '@/types/commerce';
-import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
+import type { FilterSection } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 
 export interface GiftCard extends BaseProduct {
   type: 'physical' | 'digital' | 'service';

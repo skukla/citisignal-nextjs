@@ -1,4 +1,4 @@
-import type { AccountMenuItem } from '@/components/ui/Account/Account.types';
+import type { AccountMenuItem } from '@/components/ui/layout/Account/Account.types';
 
 export const authenticatedMenuItems: readonly AccountMenuItem[] = [
   { id: 'profile', label: 'Profile', href: '/account/profile' },

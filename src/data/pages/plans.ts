@@ -1,6 +1,6 @@
 import { SignalIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { Plan } from '@/types/commerce';
-import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
+import type { FilterSection } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 
 /**
  * Complete Plans page data - everything a content editor needs in one place.

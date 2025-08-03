@@ -2,7 +2,7 @@
  * Utility functions for filter-related business logic
  */
 
-import type { FilterOption, FilterSection, ActiveFilterEntry } from '@/components/ui/FilterSidebar/FilterSidebar.types';
+import type { FilterOption, FilterSection, ActiveFilterEntry } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 
 /**
  * Check if any filters are currently active

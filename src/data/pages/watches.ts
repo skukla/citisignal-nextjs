@@ -1,6 +1,6 @@
 import { ClockIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { Watch, colorOptions } from '@/types/commerce';
-import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
+import type { FilterSection } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 
 /**
  * Complete Watches page data - everything a content editor needs in one place.
