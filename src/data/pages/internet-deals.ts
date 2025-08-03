@@ -1,5 +1,5 @@
 import { GlobeAltIcon, Bars3Icon } from '@heroicons/react/24/outline';
-import { internetDealFilterOptions } from '@/data/internet-deals';
+import { internetDealsFilterOptions } from '@/data/internetDeals';
 import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
 
 /**
@@ -12,27 +12,27 @@ export const internetDealsPageConfig = {
    */
   filters: [
     {
+      title: 'Type',
+      key: 'type',
+      options: internetDealsFilterOptions.type,
+      type: 'checkbox' as const
+    },
+    {
       title: 'Speed',
       key: 'speed',
-      options: internetDealFilterOptions.speed,
+      options: internetDealsFilterOptions.speed,
       type: 'checkbox' as const
     },
     {
       title: 'Price Range',
       key: 'price',
-      options: internetDealFilterOptions.price,
+      options: internetDealsFilterOptions.price,
       type: 'checkbox' as const
     },
     {
-      title: 'Provider',
-      key: 'provider',
-      options: internetDealFilterOptions.provider,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Features',
-      key: 'features',
-      options: internetDealFilterOptions.features,
+      title: 'Contract Length',
+      key: 'contract_length',
+      options: internetDealsFilterOptions.contract_length,
       type: 'checkbox' as const
     }
   ] as FilterSection[],

@@ -12,9 +12,9 @@ export const streamingPageConfig = {
    */
   filters: [
     {
-      title: 'Service Type',
-      key: 'type',
-      options: streamingFilterOptions.type,
+      title: 'Provider',
+      key: 'provider',
+      options: streamingFilterOptions.provider,
       type: 'checkbox' as const
     },
     {
@@ -25,8 +25,14 @@ export const streamingPageConfig = {
     },
     {
       title: 'Content Type',
-      key: 'content',
-      options: streamingFilterOptions.content,
+      key: 'content_type',
+      options: streamingFilterOptions.content_type,
+      type: 'checkbox' as const
+    },
+    {
+      title: 'Video Quality',
+      key: 'video_quality',
+      options: streamingFilterOptions.video_quality,
       type: 'checkbox' as const
     },
     {

@@ -1,4 +1,4 @@
-import { WatchIcon, Bars3Icon } from '@heroicons/react/24/outline';
+import { ClockIcon, Bars3Icon } from '@heroicons/react/24/outline';
 import { watchFilterOptions } from '@/data/watches';
 import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
 
@@ -12,9 +12,21 @@ export const watchesPageConfig = {
    */
   filters: [
     {
-      title: 'Brand',
-      key: 'brand',
-      options: watchFilterOptions.brand,
+      title: 'Manufacturer',
+      key: 'manufacturer',
+      options: watchFilterOptions.manufacturer,
+      type: 'checkbox' as const
+    },
+    {
+      title: 'Sizes',
+      key: 'sizes',
+      options: watchFilterOptions.sizes,
+      type: 'checkbox' as const
+    },
+    {
+      title: 'Colors',
+      key: 'colors',
+      options: watchFilterOptions.colors,
       type: 'checkbox' as const
     },
     {
@@ -27,12 +39,6 @@ export const watchesPageConfig = {
       title: 'Features',
       key: 'features',
       options: watchFilterOptions.features,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Style',
-      key: 'style',
-      options: watchFilterOptions.style,
       type: 'checkbox' as const
     }
   ] as FilterSection[],
@@ -51,7 +57,7 @@ export const watchesPageConfig = {
   pageHeader: {
     title: 'Smartwatches',
     description: 'Stay connected and track your fitness with our selection of smartwatches. From health monitoring to seamless connectivity, find the perfect wearable technology for your lifestyle.',
-    icon: WatchIcon
+    icon: ClockIcon
   },
 
   /**

@@ -1,5 +1,5 @@
 import { GiftIcon, Bars3Icon } from '@heroicons/react/24/outline';
-import { giftCardFilterOptions } from '@/data/gift-cards';
+import { giftCardFilterOptions } from '@/data/giftCards';
 import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
 
 /**
@@ -12,27 +12,21 @@ export const giftCardsPageConfig = {
    */
   filters: [
     {
+      title: 'Type',
+      key: 'type',
+      options: giftCardFilterOptions.type,
+      type: 'checkbox' as const
+    },
+    {
       title: 'Amount',
       key: 'amount',
       options: giftCardFilterOptions.amount,
       type: 'checkbox' as const
     },
     {
-      title: 'Category',
-      key: 'category',
-      options: giftCardFilterOptions.category,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Brand',
-      key: 'brand',
-      options: giftCardFilterOptions.brand,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Delivery Method',
-      key: 'delivery',
-      options: giftCardFilterOptions.delivery,
+      title: 'Delivery Time',
+      key: 'delivery_time',
+      options: giftCardFilterOptions.delivery_time,
       type: 'checkbox' as const
     }
   ] as FilterSection[],

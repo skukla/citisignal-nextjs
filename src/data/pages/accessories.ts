@@ -12,27 +12,27 @@ export const accessoriesPageConfig = {
    */
   filters: [
     {
-      title: 'Category',
-      key: 'category',
-      options: accessoryFilterOptions.category,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: accessoryFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Brand',
-      key: 'brand',
-      options: accessoryFilterOptions.brand,
+      title: 'Manufacturer',
+      key: 'manufacturer',
+      options: accessoryFilterOptions.manufacturer,
       type: 'checkbox' as const
     },
     {
       title: 'Compatibility',
       key: 'compatibility',
       options: accessoryFilterOptions.compatibility,
+      type: 'checkbox' as const
+    },
+    {
+      title: 'Colors',
+      key: 'colors',
+      options: accessoryFilterOptions.colors,
+      type: 'checkbox' as const
+    },
+    {
+      title: 'Price Range',
+      key: 'price',
+      options: accessoryFilterOptions.price,
       type: 'checkbox' as const
     }
   ] as FilterSection[],

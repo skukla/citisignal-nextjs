@@ -12,21 +12,27 @@ export const phonesPageConfig = {
    */
   filters: [
     {
-      title: 'Brand',
-      key: 'brand',
-      options: phoneFilterOptions.brand,
+      title: 'Manufacturer',
+      key: 'manufacturer',
+      options: phoneFilterOptions.manufacturer,
+      type: 'checkbox' as const
+    },
+    {
+      title: 'Memory',
+      key: 'memory',
+      options: phoneFilterOptions.memory,
+      type: 'checkbox' as const
+    },
+    {
+      title: 'Colors',
+      key: 'colors',
+      options: phoneFilterOptions.colors,
       type: 'checkbox' as const
     },
     {
       title: 'Price Range',
       key: 'price',
       options: phoneFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Storage',
-      key: 'storage',
-      options: phoneFilterOptions.storage,
       type: 'checkbox' as const
     },
     {
