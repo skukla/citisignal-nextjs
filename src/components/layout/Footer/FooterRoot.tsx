@@ -1,6 +1,6 @@
 'use client';
 
-import Container from '@/components/ui/Container';
+import Container from '@/components/ui/layout/Container';
 import type { BaseComponentProps } from '@/types/ui';
 
 interface FooterRootProps extends BaseComponentProps {

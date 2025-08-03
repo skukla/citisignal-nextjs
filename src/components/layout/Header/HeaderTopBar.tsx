@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import Container from '@/components/ui/Container';
+import Container from '@/components/ui/layout/Container';
 import { headerConfig } from '@/data/header';
 
 /**

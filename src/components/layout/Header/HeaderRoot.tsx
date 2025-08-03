@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { NavigationRoot } from '@/components/ui/Navigation';
+import { NavigationRoot } from '@/components/ui/layout/Navigation';
 import type { BaseComponentProps } from '@/types/ui';
 
 interface HeaderRootProps extends BaseComponentProps {
