@@ -6,7 +6,7 @@ import Container from './Container';
 import { SectionProps } from '@/types/layout';
 
 /**
- * Section component built on Container that adds vertical spacing and background options.
+ * Section component that provides full-width backgrounds with constrained content.
  * Use this for page sections that need visual separation or background styling.
  * 
  * @example
@@ -29,7 +29,7 @@ import { SectionProps } from '@/types/layout';
  *   <h2>Call to Action</h2>
  * </Section>
  * 
- * // Full width section
+ * // Full width content (no container constraint)
  * <Section fullWidth background="bg-primary-900">
  *   <h2>Hero Section</h2>
  * </Section>
@@ -44,19 +44,27 @@ export default function Section({
   noPadding = false,
   style
 }: SectionProps) {
-  return (
-    <Container
-      as="section"
-      fullWidth={fullWidth}
-      noPadding={noPadding}
-      className={twMerge(
-        'py-20',
-        background,
-        className
-      )}
-      style={{ ...style, ...(gradient ? { background: gradient } : {}) }}
-    >
+  const sectionClasses = twMerge(
+    'w-full',
+    'py-20',
+    background,
+    className
+  );
+
+  const content = fullWidth ? (
+    children
+  ) : (
+    <Container noPadding={noPadding}>
       {children}
     </Container>
+  );
+
+  return (
+    <section
+      className={sectionClasses}
+      style={{ ...style, ...(gradient ? { background: gradient } : {}) }}
+    >
+      {content}
+    </section>
   );
 }
