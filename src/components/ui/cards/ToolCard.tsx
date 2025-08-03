@@ -30,7 +30,7 @@ function ToolCard({
       as={Link}
       href={href}
       interactive
-      className={twMerge('group p-6', className)}
+      className={twMerge('group p-6 bg-white border-2 border-gray-100 hover:border-purple-200 transition-colors', className)}
     >
       <div className={twMerge(
         'w-16 h-16 rounded-lg bg-purple-50 flex items-center justify-center mb-6',

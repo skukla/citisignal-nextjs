@@ -59,6 +59,7 @@ function FeaturedTool({
             href={buttonHref}
             variant="button"
             buttonStyle="primary"
+            className="inline-flex items-center px-6 py-3 text-white font-medium rounded-lg transition-colors bg-[#8821f4] hover:bg-purple-700"
           >
             {buttonText}
           </Link>
