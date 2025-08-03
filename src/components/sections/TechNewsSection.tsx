@@ -1,8 +1,8 @@
 'use client';
 
 import { memo } from 'react';
-import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import Link from '@/components/ui/Link';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ArticleGrid from '@/components/ui/ArticleGrid';
@@ -30,10 +30,12 @@ function TechNewsSection({
         />
         <Link
           href={content.viewAllLink}
+          variant="text"
+          icon={ArrowRightIcon}
+          iconPosition="right"
           className="hidden md:flex items-center text-purple-600 hover:text-purple-700 font-medium"
         >
           View All Articles
-          <ArrowRightIcon className="w-5 h-5 ml-2" />
         </Link>
       </div>
 
@@ -49,10 +51,12 @@ function TechNewsSection({
       <div className="md:hidden text-center">
         <Link
           href={content.viewAllLink}
-          className="inline-flex items-center text-purple-600 hover:text-purple-700 font-medium"
+          variant="text"
+          icon={ArrowRightIcon}
+          iconPosition="right"
+          className="text-purple-600 hover:text-purple-700 font-medium"
         >
           View All Articles
-          <ArrowRightIcon className="w-5 h-5 ml-2" />
         </Link>
       </div>
     </Section>

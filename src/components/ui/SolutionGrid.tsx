@@ -2,22 +2,22 @@
 
 import Grid from './Grid';
 import SolutionCard from './SolutionCard';
-import type { HeroIcon } from '@/types/hero-icons';
+import EmptyState from './EmptyState';
+import { PuzzlePieceIcon } from '@heroicons/react/24/outline';
 import type { ResponsiveValue, GridGap } from '@/types/grid';
-
-interface Solution {
-  icon: HeroIcon;
-  title: string;
-  description: string;
-  features: string[];
-  link: string;
-}
+import type { Solution } from '@/types/content';
 
 interface SolutionGridProps {
   solutions: Solution[];
   columns?: ResponsiveValue<number>;
   gap?: GridGap;
   className?: string;
+  emptyState?: {
+    title?: string;
+    description?: string;
+    actionLabel?: string;
+    onAction?: () => void;
+  };
 }
 
 /**
@@ -41,8 +41,22 @@ export default function SolutionGrid({
     lg: 4
   },
   gap = 'lg',
-  className
+  className,
+  emptyState
 }: SolutionGridProps) {
+  // Handle empty state
+  if (solutions.length === 0) {
+    return (
+      <EmptyState
+        icon={PuzzlePieceIcon}
+        title={emptyState?.title || "No solutions found"}
+        description={emptyState?.description || "There are no solutions to display at the moment."}
+        actionLabel={emptyState?.actionLabel}
+        onAction={emptyState?.onAction}
+      />
+    );
+  }
+
   return (
     <Grid columns={columns} gap={gap} className={className}>
       {solutions.map((solution, index) => (

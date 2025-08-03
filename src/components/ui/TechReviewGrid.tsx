@@ -3,17 +3,12 @@
 import { memo } from 'react';
 import Grid from './Grid';
 import TechReviewCard from './TechReviewCard';
+import EmptyState from './EmptyState';
+import { PlayIcon } from '@heroicons/react/24/outline';
 import type { GridProps } from '@/types/grid';
+import type { TechReview } from '@/types/content';
 
-export interface TechReview {
-  id: string;
-  title: string;
-  description: string;
-  videoThumbnail?: string;
-  duration?: string;
-  href?: string;
-  slug?: string;
-}
+export type { TechReview };
 
 interface TechReviewGridProps {
   reviews: TechReview[];
@@ -21,6 +16,12 @@ interface TechReviewGridProps {
   gap?: GridProps['gap'];
   className?: string;
   onReviewClick?: (review: TechReview) => void;
+  emptyState?: {
+    title?: string;
+    description?: string;
+    actionLabel?: string;
+    onAction?: () => void;
+  };
 }
 
 /**
@@ -46,8 +47,22 @@ function TechReviewGrid({
   },
   gap = 'lg',
   className,
-  onReviewClick
+  onReviewClick,
+  emptyState
 }: TechReviewGridProps) {
+  // Handle empty state
+  if (reviews.length === 0) {
+    return (
+      <EmptyState
+        icon={PlayIcon}
+        title={emptyState?.title || "No reviews found"}
+        description={emptyState?.description || "There are no tech reviews to display at the moment."}
+        actionLabel={emptyState?.actionLabel}
+        onAction={emptyState?.onAction}
+      />
+    );
+  }
+
   return (
     <Grid columns={columns} gap={gap} className={className}>
       {reviews.map((review) => (

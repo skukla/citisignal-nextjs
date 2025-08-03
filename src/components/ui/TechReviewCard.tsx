@@ -1,6 +1,7 @@
 'use client';
 
 import { memo } from 'react';
+import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import Card from './Card';
 
@@ -55,10 +56,12 @@ function TechReviewCard({
       {/* Video Thumbnail */}
       <div className="aspect-video bg-purple-50 relative overflow-hidden">
         {videoThumbnail ? (
-          <img 
+          <Image 
             src={videoThumbnail} 
             alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">

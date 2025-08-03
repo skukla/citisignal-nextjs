@@ -2,24 +2,22 @@
 
 import Grid from './Grid';
 import ArticleCard from './ArticleCard';
+import EmptyState from './EmptyState';
+import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import type { GridGap, ResponsiveValue } from '@/types/grid';
-
-interface Article {
-  category: string;
-  title: string;
-  excerpt: string;
-  readTime: string;
-  image?: string;
-  slug?: string;
-  publishedAt?: string;
-  author?: string;
-}
+import type { Article } from '@/types/content';
 
 interface ArticleGridProps {
   articles: Article[];
   columns?: ResponsiveValue<number>;
   gap?: GridGap;
   className?: string;
+  emptyState?: {
+    title?: string;
+    description?: string;
+    actionLabel?: string;
+    onAction?: () => void;
+  };
 }
 
 /**
@@ -42,8 +40,22 @@ export default function ArticleGrid({
     md: 3
   },
   gap = 'lg',
-  className
+  className,
+  emptyState
 }: ArticleGridProps) {
+  // Handle empty state
+  if (articles.length === 0) {
+    return (
+      <EmptyState
+        icon={DocumentTextIcon}
+        title={emptyState?.title || "No articles found"}
+        description={emptyState?.description || "There are no articles to display at the moment."}
+        actionLabel={emptyState?.actionLabel}
+        onAction={emptyState?.onAction}
+      />
+    );
+  }
+
   return (
     <Grid columns={columns} gap={gap} className={className}>
       {articles.map((article) => (

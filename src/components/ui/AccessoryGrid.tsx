@@ -3,17 +3,12 @@
 import { memo } from 'react';
 import Grid from './Grid';
 import AccessoryCard from './AccessoryCard';
+import EmptyState from './EmptyState';
+import { CubeIcon } from '@heroicons/react/24/outline';
 import type { GridProps } from '@/types/grid';
-import type { HeroIcon } from '@/types/hero-icons';
+import type { Accessory } from '@/types/content';
 
-export interface Accessory {
-  id: string;
-  icon: HeroIcon;
-  name: string;
-  price?: string;
-  href?: string;
-  slug?: string;
-}
+export type { Accessory };
 
 interface AccessoryGridProps {
   accessories: Accessory[];
@@ -21,6 +16,12 @@ interface AccessoryGridProps {
   gap?: GridProps['gap'];
   className?: string;
   onAccessoryClick?: (accessory: Accessory) => void;
+  emptyState?: {
+    title?: string;
+    description?: string;
+    actionLabel?: string;
+    onAction?: () => void;
+  };
 }
 
 /**
@@ -45,8 +46,22 @@ function AccessoryGrid({
   },
   gap = 'md',
   className,
-  onAccessoryClick
+  onAccessoryClick,
+  emptyState
 }: AccessoryGridProps) {
+  // Handle empty state
+  if (accessories.length === 0) {
+    return (
+      <EmptyState
+        icon={CubeIcon}
+        title={emptyState?.title || "No accessories found"}
+        description={emptyState?.description || "There are no accessories to display at the moment."}
+        actionLabel={emptyState?.actionLabel}
+        onAction={emptyState?.onAction}
+      />
+    );
+  }
+
   return (
     <Grid columns={columns} gap={gap} className={className}>
       {accessories.map((accessory) => (

@@ -2,21 +2,22 @@
 
 import Grid from './Grid';
 import ToolCard from './ToolCard';
-import type { HeroIcon } from '@/types/hero-icons';
+import EmptyState from './EmptyState';
+import { WrenchScrewdriverIcon } from '@heroicons/react/24/outline';
 import type { ResponsiveValue, GridGap } from '@/types/grid';
-
-interface Tool {
-  icon: HeroIcon;
-  title: string;
-  description: string;
-  link: string;
-}
+import type { Tool } from '@/types/content';
 
 interface ToolGridProps {
   tools: Tool[];
   columns?: ResponsiveValue<number>;
   gap?: GridGap;
   className?: string;
+  emptyState?: {
+    title?: string;
+    description?: string;
+    actionLabel?: string;
+    onAction?: () => void;
+  };
 }
 
 /**
@@ -40,8 +41,22 @@ export default function ToolGrid({
     lg: 4
   },
   gap = 'lg',
-  className
+  className,
+  emptyState
 }: ToolGridProps) {
+  // Handle empty state
+  if (tools.length === 0) {
+    return (
+      <EmptyState
+        icon={WrenchScrewdriverIcon}
+        title={emptyState?.title || "No tools found"}
+        description={emptyState?.description || "There are no tools to display at the moment."}
+        actionLabel={emptyState?.actionLabel}
+        onAction={emptyState?.onAction}
+      />
+    );
+  }
+
   return (
     <Grid columns={columns} gap={gap} className={className}>
       {tools.map((tool, index) => (

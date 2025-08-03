@@ -1,6 +1,7 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import Image from 'next/image';
 import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/ui/Button';
 import EmptyState from '@/components/ui/EmptyState';
@@ -45,11 +46,15 @@ export function CartPanel({ className }: CartPanelProps) {
           {items.map(item => (
             <div key={item.id} className="p-4 flex items-center gap-4">
               {item.imageUrl && (
-                <img 
-                  src={item.imageUrl} 
-                  alt={item.name}
-                  className="w-16 h-16 object-cover rounded"
-                />
+                <div className="w-16 h-16 relative">
+                  <Image 
+                    src={item.imageUrl} 
+                    alt={item.name}
+                    fill
+                    className="object-cover rounded"
+                    sizes="64px"
+                  />
+                </div>
               )}
               <div className="flex-1">
                 <h3 className="font-medium text-gray-900">{item.name}</h3>

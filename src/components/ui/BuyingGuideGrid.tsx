@@ -3,18 +3,12 @@
 import { memo } from 'react';
 import Grid from './Grid';
 import BuyingGuideCard from './BuyingGuideCard';
+import EmptyState from './EmptyState';
+import { BookOpenIcon } from '@heroicons/react/24/outline';
 import type { GridProps } from '@/types/grid';
-import type { HeroIcon } from '@/types/hero-icons';
+import type { BuyingGuide } from '@/types/content';
 
-export interface BuyingGuide {
-  id: string;
-  icon: HeroIcon;
-  title: string;
-  description: string;
-  href?: string;
-  linkText?: string;
-  slug?: string;
-}
+export type { BuyingGuide };
 
 interface BuyingGuideGridProps {
   guides: BuyingGuide[];
@@ -22,6 +16,12 @@ interface BuyingGuideGridProps {
   gap?: GridProps['gap'];
   className?: string;
   onGuideClick?: (guide: BuyingGuide) => void;
+  emptyState?: {
+    title?: string;
+    description?: string;
+    actionLabel?: string;
+    onAction?: () => void;
+  };
 }
 
 /**
@@ -46,8 +46,22 @@ function BuyingGuideGrid({
   },
   gap = 'lg',
   className,
-  onGuideClick
+  onGuideClick,
+  emptyState
 }: BuyingGuideGridProps) {
+  // Handle empty state
+  if (guides.length === 0) {
+    return (
+      <EmptyState
+        icon={BookOpenIcon}
+        title={emptyState?.title || "No guides found"}
+        description={emptyState?.description || "There are no buying guides to display at the moment."}
+        actionLabel={emptyState?.actionLabel}
+        onAction={emptyState?.onAction}
+      />
+    );
+  }
+
   return (
     <Grid columns={columns} gap={gap} className={className}>
       {guides.map((guide) => (

@@ -1,6 +1,7 @@
 'use client';
 
 import { memo } from 'react';
+import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
 import Card from './Card';
 
@@ -37,7 +38,7 @@ function ArticleCard({
   excerpt,
   readTime,
   image,
-  slug,
+  slug: _,
   publishedAt,
   author,
   className,
@@ -51,12 +52,14 @@ function ArticleCard({
       onClick={onClick}
     >
       {/* Article Image */}
-      <div className="aspect-video bg-purple-50 rounded-t-xl mb-4 overflow-hidden">
+      <div className="aspect-video bg-purple-50 rounded-t-xl mb-4 overflow-hidden relative">
         {image ? (
-          <img 
+          <Image 
             src={image} 
             alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-200"
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center">

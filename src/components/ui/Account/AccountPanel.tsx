@@ -1,6 +1,7 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import Image from 'next/image';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import type { AccountPanelProps } from './Account.types';
@@ -34,11 +35,15 @@ export function AccountPanel({ className }: AccountPanelProps) {
           <div className="p-4 border-b border-gray-100">
             <div className="flex items-center gap-3">
               {user?.avatarUrl ? (
-                <img
-                  src={user.avatarUrl}
-                  alt={user.name}
-                  className="w-10 h-10 rounded-full"
-                />
+                <div className="w-10 h-10 relative">
+                  <Image
+                    src={user.avatarUrl}
+                    alt={user.name}
+                    fill
+                    className="rounded-full object-cover"
+                    sizes="40px"
+                  />
+                </div>
               ) : (
                 <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
                   <span className="text-purple-600 font-medium">

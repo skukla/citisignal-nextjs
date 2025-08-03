@@ -1,6 +1,8 @@
+'use client';
+
 import { memo, useMemo } from 'react';
-import Link from 'next/link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import Button from '@/components/ui/Button';
 import { phones } from '@/data/phones';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
@@ -51,13 +53,13 @@ function PopularPhonesSection({
 
         {/* View All Button */}
         <div className="text-center mt-12">
-          <Link
+          <Button
             href={content.viewAllLink.href}
-            className="inline-flex items-center px-8 py-3 bg-gray-100 text-gray-900 font-medium rounded-lg hover:bg-gray-200 transition-colors"
+            variant="secondary"
+            rightIcon={ArrowRightIcon}
           >
             {content.viewAllLink.text}
-            <ArrowRightIcon className="ml-2 w-5 h-5" />
-          </Link>
+          </Button>
         </div>
     </Section>
   );

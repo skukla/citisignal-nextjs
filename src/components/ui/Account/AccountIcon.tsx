@@ -1,5 +1,6 @@
 'use client';
 
+import Image from 'next/image';
 import { UserIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/ui/Button';
 import type { AccountIconProps } from './Account.types';
@@ -27,10 +28,12 @@ export function AccountIcon({ className, ...props }: AccountIconProps) {
         {...props}
       />
       {isAuthenticated && user?.avatarUrl && (
-        <img
+        <Image
           src={user.avatarUrl}
           alt={user.name}
-          className="absolute inset-0 w-full h-full rounded-full"
+          fill
+          className="rounded-full object-cover"
+          sizes="32px"
         />
       )}
     </div>

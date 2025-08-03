@@ -3,16 +3,12 @@
 import { memo } from 'react';
 import Grid from './Grid';
 import TipCard from './TipCard';
+import EmptyState from './EmptyState';
+import { LightBulbIcon } from '@heroicons/react/24/outline';
 import type { GridProps } from '@/types/grid';
+import type { Tip } from '@/types/content';
 
-export interface Tip {
-  id: string;
-  category: string;
-  title: string;
-  description: string;
-  href?: string;
-  slug?: string;
-}
+export type { Tip };
 
 interface TipGridProps {
   tips: Tip[];
@@ -20,6 +16,12 @@ interface TipGridProps {
   gap?: GridProps['gap'];
   className?: string;
   onTipClick?: (tip: Tip) => void;
+  emptyState?: {
+    title?: string;
+    description?: string;
+    actionLabel?: string;
+    onAction?: () => void;
+  };
 }
 
 /**
@@ -45,8 +47,22 @@ function TipGrid({
   },
   gap = 'md',
   className,
-  onTipClick
+  onTipClick,
+  emptyState
 }: TipGridProps) {
+  // Handle empty state
+  if (tips.length === 0) {
+    return (
+      <EmptyState
+        icon={LightBulbIcon}
+        title={emptyState?.title || "No tips found"}
+        description={emptyState?.description || "There are no tips to display at the moment."}
+        actionLabel={emptyState?.actionLabel}
+        onAction={emptyState?.onAction}
+      />
+    );
+  }
+
   return (
     <Grid columns={columns} gap={gap} className={className}>
       {tips.map((tip) => (
