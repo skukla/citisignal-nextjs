@@ -2,21 +2,22 @@
 
 import Link from 'next/link';
 
+import type { BaseComponentProps } from '@/types/ui';
+
 interface FooterLink {
   href: string;
   label: string;
 }
 
-interface FooterLinkGroupProps {
+interface FooterLinkGroupProps extends BaseComponentProps {
   title: string;
-  links: FooterLink[];
-  className?: string;
+  links: readonly FooterLink[];
 }
 
-export default function FooterLinkGroup({
+export function FooterLinkGroup({
   title,
   links,
-  className = ''
+  className
 }: FooterLinkGroupProps) {
   return (
     <div className={className}>

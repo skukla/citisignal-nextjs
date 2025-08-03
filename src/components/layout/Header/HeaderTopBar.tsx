@@ -1,28 +1,28 @@
 'use client';
 
 import Link from 'next/link';
+import Container from '@/components/ui/Container';
+import { headerConfig } from '@/data/header';
 
-interface AuthLink {
-  href: string;
-  label: string;
-}
-
-interface TopBarProps {
-  announcement: string;
-  supportPhone: string;
-  authLinks: AuthLink[];
-}
-
-export default function TopBar({ announcement, supportPhone, authLinks }: TopBarProps) {
+/**
+ * TopBar component specifically for Header with announcement, auth links, and support info.
+ * Uses header configuration data directly for complete encapsulation.
+ * 
+ * @example
+ * ```tsx
+ * <Header.TopBar />
+ * ```
+ */
+export function HeaderTopBar() {
   return (
     <div className="bg-black border-b border-gray-800">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <Container>
         <div className="flex justify-between items-center py-2">
           <div className="text-sm text-white">
-            {announcement}
+            {headerConfig.topBar.announcement}
           </div>
           <div className="flex items-center space-x-4">
-            {authLinks.map((link) => (
+            {headerConfig.topBar.authLinks.map((link) => (
               <Link
                 key={link.href}
                 href={link.href}
@@ -33,11 +33,13 @@ export default function TopBar({ announcement, supportPhone, authLinks }: TopBar
             ))}
             <div className="flex items-center space-x-1">
               <span className="text-sm text-gray-300">Support:</span>
-              <span className="text-sm font-medium text-white">{supportPhone}</span>
+              <span className="text-sm font-medium text-white">
+                {headerConfig.topBar.supportPhone}
+              </span>
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </div>
   );
-} 
+}

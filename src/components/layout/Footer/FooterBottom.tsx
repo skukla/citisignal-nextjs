@@ -1,22 +1,24 @@
 'use client';
 
-interface FooterBottomProps {
+import { twMerge } from 'tailwind-merge';
+import type { BaseComponentProps } from '@/types/ui';
+
+interface FooterBottomProps extends BaseComponentProps {
   copyright: string;
   phone?: string;
   availability?: string;
   borderColor?: string;
-  className?: string;
 }
 
-export default function FooterBottom({
+export function FooterBottom({
   copyright,
   phone,
   availability,
   borderColor = 'border-gray-800',
-  className = ''
+  className
 }: FooterBottomProps) {
   return (
-    <div className={`border-t ${borderColor} mt-8 pt-8 ${className}`}>
+    <div className={twMerge('border-t mt-8 pt-8', borderColor, className)}>
       <div className="flex flex-col md:flex-row justify-between items-center">
         <p className="text-gray-400 text-sm">
           {copyright}

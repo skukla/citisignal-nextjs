@@ -1,19 +1,19 @@
 'use client';
 
 import Image from 'next/image';
+import type { BaseComponentProps } from '@/types/ui';
 
-interface FooterLogoProps {
+interface FooterLogoProps extends BaseComponentProps {
   description?: string;
   width?: number;
   height?: number;
-  className?: string;
 }
 
-export default function FooterLogo({
+export function FooterLogo({
   description,
   width = 160,
   height = 50,
-  className = ''
+  className
 }: FooterLogoProps) {
   return (
     <div className={className}>

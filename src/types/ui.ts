@@ -58,13 +58,6 @@ export interface LogoProps {
   linkClassName?: string;
 }
 
-// TopBar types
-export interface TopBarProps extends BaseUIProps {
-  announcement: string;
-  supportPhone: string;
-  authLinks: readonly AuthLink[];
-}
-
 // Spinner types
 export type SpinnerSize = 'sm' | 'md' | 'lg';
 
@@ -82,10 +75,4 @@ export interface IconWrapperProps extends BaseComponentProps {
   'aria-hidden'?: boolean;
 }
 
-// TopBar compound component type
-export interface TopBarComponent extends React.FC<TopBarProps> {
-  Root: React.FC<TopBarProps>;
-  Announcement: React.FC<{ children: string; className?: string }>;
-  AuthLinks: React.FC<{ links: readonly AuthLink[]; className?: string }>;
-  SupportInfo: React.FC<{ phone: string; className?: string }>;
-} 
+ 
