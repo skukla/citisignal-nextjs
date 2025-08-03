@@ -10,8 +10,7 @@ import ResultsCount from '@/components/ui/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/FilterSidebarResponsive';
 import PlanCard from '@/components/ui/PlanCard';
-import { plans } from '@/data/pages/plans';
-import { plansPageConfig } from '@/data/pages/plans';
+import { plansPageData } from '@/data/pages/plans';
 import { useProductList } from '@/hooks/useProductList';
 
 export default function PlansPage() {
@@ -26,10 +25,10 @@ export default function PlansPage() {
     handleFilterChange,
     handleClearFilters,
     filteredAndSortedProducts
-  } = useProductList({ products: plans });
+  } = useProductList({ products: plansPageData.products });
 
-  // Page configuration
-  const { filters, breadcrumbs, pageHeader, search, emptyState } = plansPageConfig;
+  // Page configuration  
+  const { filters, breadcrumbs, pageHeader, search, emptyState } = plansPageData;
 
   return (
     <PageContainer background="gray">
@@ -50,8 +49,8 @@ export default function PlansPage() {
       />
       
       <ResultsCount 
-        showing={filteredAndSortedProducts.length} 
-        total={plans.length} 
+                  showing={filteredAndSortedProducts.length}
+          total={plansPageData.products.length} 
         itemLabel={search.itemLabel} 
       />
       

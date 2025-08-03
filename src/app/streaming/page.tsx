@@ -10,7 +10,7 @@ import ResultsCount from '@/components/ui/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/FilterSidebarResponsive';
 import ProductCard from '@/components/ui/ProductCard';
-import { streamingServices, streamingPageConfig } from '@/data/pages/streaming';
+import { streamingPageData } from '@/data/pages/streaming';
 import { useProductList } from '@/hooks/useProductList';
 import type { StreamingService } from '@/data/pages/streaming';
 
@@ -26,10 +26,10 @@ export default function StreamingPage() {
     handleFilterChange,
     handleClearFilters,
     filteredAndSortedProducts
-  } = useProductList({ products: streamingServices });
+  } = useProductList({ products: streamingPageData.products });
 
   // Page configuration
-  const { filters, breadcrumbs, pageHeader, search, emptyState } = streamingPageConfig;
+  const { filters, breadcrumbs, pageHeader, search, emptyState } = streamingPageData;
 
   return (
     <PageContainer background="gray">
@@ -51,7 +51,7 @@ export default function StreamingPage() {
       
       <ResultsCount 
         showing={filteredAndSortedProducts.length} 
-        total={streamingServices.length} 
+        total={streamingPageData.products.length} 
         itemLabel={search.itemLabel} 
       />
       

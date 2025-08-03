@@ -10,7 +10,7 @@ import ResultsCount from '@/components/ui/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/FilterSidebarResponsive';
 import ProductCard from '@/components/ui/ProductCard';
-import { accessories, accessoriesPageConfig } from '@/data/pages/accessories';
+import { accessoriesPageData } from '@/data/pages/accessories';
 import { useProductList } from '@/hooks/useProductList';
 import type { Accessory } from '@/types/commerce';
 
@@ -26,10 +26,10 @@ export default function AccessoriesPage() {
     handleFilterChange,
     handleClearFilters,
     filteredAndSortedProducts
-  } = useProductList({ products: accessories });
+  } = useProductList({ products: accessoriesPageData.products });
 
   // Page configuration
-  const { filters, breadcrumbs, pageHeader, search, emptyState } = accessoriesPageConfig;
+  const { filters, breadcrumbs, pageHeader, search, emptyState } = accessoriesPageData;
 
   return (
     <PageContainer background="gray">
@@ -51,7 +51,7 @@ export default function AccessoriesPage() {
       
       <ResultsCount 
         showing={filteredAndSortedProducts.length} 
-        total={accessories.length} 
+        total={accessoriesPageData.products.length} 
         itemLabel={search.itemLabel} 
       />
       

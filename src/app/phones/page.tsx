@@ -15,8 +15,7 @@ import BuyingGuideGrid from '@/components/ui/BuyingGuideGrid';
 import TipGrid from '@/components/ui/TipGrid';
 import AccessoryGrid from '@/components/ui/AccessoryGrid';
 import Link from '@/components/ui/Link';
-import { phones, phonesPageConfig } from '@/data/pages/phones';
-import { phonesPageContent } from '@/data/pages/phones';
+import { phonesPageData } from '@/data/pages/phones';
 import { useProductList } from '@/hooks/useProductList';
 import type { Phone } from '@/types/commerce';
 
@@ -32,11 +31,18 @@ export default function PhonesPage() {
     handleFilterChange,
     handleClearFilters,
     filteredAndSortedProducts
-  } = useProductList({ products: phones });
+  } = useProductList({ products: phonesPageData.products });
 
-  // Page configuration
-  const { filters, breadcrumbs, pageHeader, search, emptyState } = phonesPageConfig;
-  const { sections } = phonesPageContent;
+  // Page configuration and content
+  const { filters, breadcrumbs, pageHeader, search, emptyState, techReviews, buyingGuides, tips, accessories } = phonesPageData;
+  
+  // Enhanced content sections
+  const sections = {
+    techReviews: { title: 'Latest Reviews', reviews: techReviews },
+    buyingGuides: { title: 'Buying Guides', guides: buyingGuides },
+    tips: { title: 'Tips & Tricks', subtitle: 'View All Tips', tips: tips },
+    accessories: { title: 'Essential Accessories', accessories: accessories }
+  };
 
   return (
     <PageContainer background="gray">
@@ -58,7 +64,7 @@ export default function PhonesPage() {
       
       <ResultsCount 
         showing={filteredAndSortedProducts.length} 
-        total={phones.length} 
+        total={phonesPageData.products.length} 
         itemLabel={search.itemLabel} 
       />
       

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import { phones } from '@/data/pages/phones';
+import { phonesPageData } from '@/data/pages/phones';
 import type { SearchResult } from './Search.types';
 
 export interface UseSearchLogicReturn {
@@ -32,7 +32,7 @@ export function useSearchLogic(): UseSearchLogicReturn {
     // Simple search implementation
     setIsLoading(true);
     const timer = setTimeout(() => {
-      const searchResults = phones
+      const searchResults = phonesPageData.products
         .filter(phone => 
           phone.name.toLowerCase().includes(query.toLowerCase()) ||
           (phone.description?.toLowerCase().includes(query.toLowerCase()) ?? false)

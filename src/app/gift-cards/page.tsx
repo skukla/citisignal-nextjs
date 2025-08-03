@@ -10,7 +10,7 @@ import ResultsCount from '@/components/ui/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/FilterSidebarResponsive';
 import ProductCard from '@/components/ui/ProductCard';
-import { giftCards, giftCardsPageConfig } from '@/data/pages/gift-cards';
+import { giftCardsPageData } from '@/data/pages/gift-cards';
 import { useProductList } from '@/hooks/useProductList';
 import type { GiftCard } from '@/data/pages/gift-cards';
 
@@ -26,10 +26,10 @@ export default function GiftCardsPage() {
     handleFilterChange,
     handleClearFilters,
     filteredAndSortedProducts
-  } = useProductList({ products: giftCards });
+  } = useProductList({ products: giftCardsPageData.products });
 
   // Page configuration
-  const { filters, breadcrumbs, pageHeader, search, emptyState } = giftCardsPageConfig;
+  const { filters, breadcrumbs, pageHeader, search, emptyState } = giftCardsPageData;
 
   return (
     <PageContainer background="gray">
@@ -51,7 +51,7 @@ export default function GiftCardsPage() {
       
       <ResultsCount 
         showing={filteredAndSortedProducts.length} 
-        total={giftCards.length} 
+        total={giftCardsPageData.products.length} 
         itemLabel={search.itemLabel} 
       />
       

@@ -10,7 +10,7 @@ import ResultsCount from '@/components/ui/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/FilterSidebarResponsive';
 import ProductCard from '@/components/ui/ProductCard';
-import { watches, watchesPageConfig } from '@/data/pages/watches';
+import { watchesPageData } from '@/data/pages/watches';
 import { useProductList } from '@/hooks/useProductList';
 import type { Watch } from '@/types/commerce';
 
@@ -26,10 +26,10 @@ export default function WatchesPage() {
     handleFilterChange,
     handleClearFilters,
     filteredAndSortedProducts
-  } = useProductList({ products: watches });
+  } = useProductList({ products: watchesPageData.products });
 
   // Page configuration
-  const { filters, breadcrumbs, pageHeader, search, emptyState } = watchesPageConfig;
+  const { filters, breadcrumbs, pageHeader, search, emptyState } = watchesPageData;
 
   return (
     <PageContainer background="gray">
@@ -51,7 +51,7 @@ export default function WatchesPage() {
       
       <ResultsCount 
         showing={filteredAndSortedProducts.length} 
-        total={watches.length} 
+        total={watchesPageData.products.length} 
         itemLabel={search.itemLabel} 
       />
       

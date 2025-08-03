@@ -11,137 +11,116 @@ export interface GiftCard extends BaseProduct {
 }
 
 /**
- * Filter configuration for gift cards page
- * Single layer structure with UI metadata built-in
+ * Complete Gift Cards page data - everything a content editor needs in one place.
+ * Contains products, filters, and all page configuration.
  */
-export const giftCardFilters = [
-  {
-    title: 'Type',
-    key: 'type',
-    type: 'checkbox' as const,
-    options: [
-      { id: 'physical', name: 'Physical Card' },
-      { id: 'digital', name: 'Digital Card' },
-      { id: 'service', name: 'Service Credit' }
-    ]
-  },
-  {
-    title: 'Amount',
-    key: 'amount',
-    type: 'checkbox' as const,
-    options: [
-      { id: 'under-50', name: 'Under $50' },
-      { id: '50-100', name: '$50 - $100' },
-      { id: '100-200', name: '$100 - $200' },
-      { id: 'over-200', name: 'Over $200' }
-    ]
-  },
-  {
-    title: 'Delivery Time',
-    key: 'delivery_time',
-    type: 'checkbox' as const,
-    options: [
-      { id: 'instant', name: 'Instant Delivery' },
-      { id: 'physical', name: 'Physical Shipping' }
-    ]
-  }
-] as FilterSection[];
+export const giftCardsPageData = {
+  /**
+   * Gift card products - what gets displayed and filtered
+   */
+  products: [
+    {
+      id: '1',
+      sku: 'GIFT-DIGITAL-50',
+      name: 'Digital Gift Card - $50',
+      url_key: 'digital-gift-card-50',
+      description: 'Perfect for any occasion. Delivered instantly via email.',
+      price: 50,
+      currency: 'USD',
+      rating_summary: 96,
+      review_count: 1234,
+      media_gallery: [
+        {
+          url: '/gift-cards/digital-50.jpg',
+          label: 'Digital Gift Card $50',
+          roles: ['small_image', 'thumbnail']
+        }
+      ],
+      category: 'gift-cards',
+      stock_status: 'IN_STOCK',
+      type: 'digital',
+      amount: 50,
+      delivery_time: 'Instant',
+      validity_period: '1 year',
+      isNew: false,
+      isSale: false
+    },
+    {
+      id: '2',
+      sku: 'GIFT-PHYSICAL-100',
+      name: 'Physical Gift Card - $100',
+      url_key: 'physical-gift-card-100',
+      description: 'Beautiful physical card perfect for gifting.',
+      price: 100,
+      currency: 'USD',
+      rating_summary: 94,
+      review_count: 567,
+      media_gallery: [
+        {
+          url: '/gift-cards/physical-100.jpg',
+          label: 'Physical Gift Card $100',
+          roles: ['small_image', 'thumbnail']
+        }
+      ],
+      category: 'gift-cards',
+      stock_status: 'IN_STOCK',
+      type: 'physical',
+      amount: 100,
+      delivery_time: '3-5 business days',
+      validity_period: '2 years',
+      isNew: true,
+      isSale: false
+    }
+  ] as GiftCard[],
 
-/**
- * Mock gift cards data
- */
-export const giftCards: GiftCard[] = [
-  {
-    id: '1',
-    sku: 'GIFT-CARD-DIGITAL-100',
-    name: 'Digital Gift Card $100',
-    url_key: 'digital-gift-card-100',
-    description: 'Instant digital gift card delivered via email.',
-    price: 100,
-    currency: 'USD',
-    rating_summary: 92,
-    review_count: 245,
-    media_gallery: [
-      {
-        url: '/gift-cards/digital-100.jpg',
-        label: 'Digital Gift Card $100',
-        roles: ['small_image', 'thumbnail']
-      }
-    ],
-    category: 'gift-cards',
-    stock_status: 'IN_STOCK',
-    type: 'digital',
-    amount: 100,
-    delivery_time: 'Instant Delivery',
-    validity_period: '12 months',
-    isNew: false,
-    isSale: false
-  },
-  {
-    id: '2',
-    sku: 'GIFT-CARD-PHYSICAL-50',
-    name: 'Physical Gift Card $50',
-    url_key: 'physical-gift-card-50',
-    description: 'Premium physical gift card with custom message, delivered by mail.',
-    price: 50,
-    currency: 'USD',
-    rating_summary: 88,
-    review_count: 156,
-    media_gallery: [
-      {
-        url: '/gift-cards/physical-50.jpg',
-        label: 'Physical Gift Card $50',
-        roles: ['small_image', 'thumbnail']
-      }
-    ],
-    category: 'gift-cards',
-    stock_status: 'IN_STOCK',
-    type: 'physical',
-    amount: 50,
-    delivery_time: '3-5 business days',
-    validity_period: '24 months',
-    isNew: true,
-    isSale: false
-  },
-  {
-    id: '3',
-    sku: 'GIFT-CARD-SERVICE-200',
-    name: 'Service Credit $200',
-    url_key: 'service-credit-200',
-    description: 'Service credit for CitiSignal plans and services.',
-    price: 180,
-    original_price: 200,
-    currency: 'USD',
-    rating_summary: 94,
-    review_count: 89,
-    media_gallery: [
-      {
-        url: '/gift-cards/service-200.jpg',
-        label: 'Service Credit $200',
-        roles: ['small_image', 'thumbnail']
-      }
-    ],
-    category: 'gift-cards',
-    stock_status: 'IN_STOCK',
-    type: 'service',
-    amount: 200,
-    delivery_time: 'Instant Delivery',
-    validity_period: '36 months',
-    restrictions: ['Valid for service payments only', 'Cannot be combined with other promotions'],
-    isNew: false,
-    isSale: true
-  }
-];
-
-/**
- * Centralized configuration for the Gift Cards page.
- * Contains all page-specific data: filters, breadcrumbs, header, empty state.
- */
-export const giftCardsPageConfig = {
   /**
    * Filter configuration for gift cards page
    */
-  filters: giftCardFilters,
+  filters: [
+    {
+      title: 'Type',
+      key: 'type',
+      type: 'checkbox' as const,
+      options: [
+        { id: 'physical', name: 'Physical Card' },
+        { id: 'digital', name: 'Digital Card' },
+        { id: 'service', name: 'Service Credit' }
+      ]
+    },
+    {
+      title: 'Amount',
+      key: 'amount',
+      type: 'checkbox' as const,
+      options: [
+        { id: '25', name: '$25' },
+        { id: '50', name: '$50' },
+        { id: '100', name: '$100' },
+        { id: '200', name: '$200' }
+      ]
+    },
+    {
+      title: 'Delivery Time',
+      key: 'delivery_time',
+      type: 'checkbox' as const,
+      options: [
+        { id: 'instant', name: 'Instant' },
+        { id: 'same-day', name: 'Same Day' },
+        { id: '1-3-days', name: '1-3 Days' },
+        { id: '3-5-days', name: '3-5 Days' }
+      ]
+    },
+    {
+      title: 'Validity Period',
+      key: 'validity_period',
+      type: 'checkbox' as const,
+      options: [
+        { id: '6-months', name: '6 Months' },
+        { id: '1-year', name: '1 Year' },
+        { id: '2-years', name: '2 Years' },
+        { id: 'no-expiry', name: 'No Expiry' }
+      ]
+    }
+  ] as FilterSection[],
 
   /**
    * Breadcrumb navigation for gift cards page
@@ -156,7 +135,7 @@ export const giftCardsPageConfig = {
    */
   pageHeader: {
     title: 'Gift Cards',
-    description: 'Give the perfect gift with our selection of digital and physical gift cards. From popular retailers to entertainment services, find the ideal present for any occasion.',
+    description: 'Give the gift of choice with our flexible gift cards. Perfect for any occasion, available in physical and digital formats with various denominations.',
     icon: GiftIcon
   },
 

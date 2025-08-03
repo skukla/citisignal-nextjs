@@ -13,157 +13,124 @@ export interface InternetDeal extends BaseProduct {
 }
 
 /**
- * Filter configuration for internet deals page
- * Single layer structure with UI metadata built-in
+ * Complete Internet Deals page data - everything a content editor needs in one place.
+ * Contains products, filters, and all page configuration.
  */
-export const internetDealFilters = [
-  {
-    title: 'Type',
-    key: 'type',
-    type: 'checkbox' as const,
-    options: [
-      { id: 'fiber', name: 'Fiber' },
-      { id: 'cable', name: 'Cable' },
-      { id: '5g-home', name: '5G Home' },
-      { id: 'satellite', name: 'Satellite' }
-    ]
-  },
-  {
-    title: 'Speed',
-    key: 'speed',
-    type: 'checkbox' as const,
-    options: [
-      { id: 'under-100', name: 'Under 100 Mbps' },
-      { id: '100-500', name: '100-500 Mbps' },
-      { id: '500-1000', name: '500-1000 Mbps' },
-      { id: 'gig-plus', name: 'Gigabit+' }
-    ]
-  },
-  {
-    title: 'Price Range',
-    key: 'price',
-    type: 'checkbox' as const,
-    options: [
-      { id: 'under-50', name: 'Under $50' },
-      { id: '50-100', name: '$50 - $100' },
-      { id: 'over-100', name: 'Over $100' }
-    ]
-  },
-  {
-    title: 'Contract Length',
-    key: 'contract_length',
-    type: 'checkbox' as const,
-    options: [
-      { id: 'no-contract', name: 'No Contract' },
-      { id: '12-months', name: '12 Months' },
-      { id: '24-months', name: '24 Months' }
-    ]
-  }
-] as FilterSection[];
+export const internetDealsPageData = {
+  /**
+   * Internet deal products - what gets displayed and filtered
+   */
+  products: [
+    {
+      id: '1',
+      sku: 'INTERNET-FIBER-GIGA',
+      name: 'CitiSignal Fiber Gigabit',
+      url_key: 'citisignal-fiber-gigabit',
+      description: 'Lightning-fast fiber internet with speeds up to 1 Gig.',
+      price: 79.99,
+      currency: 'USD',
+      rating_summary: 95,
+      review_count: 2340,
+      media_gallery: [
+        {
+          url: '/internet/fiber-gigabit.jpg',
+          label: 'CitiSignal Fiber Gigabit',
+          roles: ['small_image', 'thumbnail']
+        }
+      ],
+      category: 'internet-deals',
+      stock_status: 'IN_STOCK',
+      type: 'fiber',
+      speed: '1 Gig',
+      data_limit: 'Unlimited',
+      installation: 'Professional installation included',
+      equipment_included: ['Modem', 'Router', 'WiFi 6'],
+      availability: 'Select areas',
+      contract_length: '12 months',
+      isNew: true,
+      isSale: false
+    },
+    {
+      id: '2',
+      sku: 'INTERNET-5G-HOME',
+      name: 'CitiSignal 5G Home Internet',
+      url_key: 'citisignal-5g-home-internet',
+      description: 'Wireless home internet powered by our 5G network.',
+      price: 49.99,
+      original_price: 69.99,
+      currency: 'USD',
+      rating_summary: 88,
+      review_count: 1567,
+      media_gallery: [
+        {
+          url: '/internet/5g-home.jpg',
+          label: 'CitiSignal 5G Home Internet',
+          roles: ['small_image', 'thumbnail']
+        }
+      ],
+      category: 'internet-deals',
+      stock_status: 'IN_STOCK',
+      type: '5g-home',
+      speed: 'Up to 300 Mbps',
+      data_limit: 'Unlimited',
+      installation: 'Self-installation',
+      equipment_included: ['5G Gateway'],
+      availability: 'Most areas',
+      contract_length: 'No contract',
+      isNew: false,
+      isSale: true
+    }
+  ] as InternetDeal[],
 
-/**
- * Mock internet deals data
- */
-export const internetDeals: InternetDeal[] = [
-  {
-    id: '1',
-    sku: 'INTERNET-FIBER-1GIG',
-    name: 'Fiber Gigabit Pro',
-    url_key: 'fiber-gigabit-pro',
-    description: 'Lightning-fast fiber internet with symmetrical upload and download speeds.',
-    price: 79.99,
-    original_price: 99.99,
-    currency: 'USD',
-    rating_summary: 94,
-    review_count: 450,
-    media_gallery: [
-      {
-        url: '/internet/fiber-gigabit.jpg',
-        label: 'Fiber Gigabit Pro',
-        roles: ['small_image', 'thumbnail']
-      }
-    ],
-    category: 'internet-deals',
-    stock_status: 'IN_STOCK',
-    type: 'fiber',
-    speed: '1000 Mbps',
-    data_limit: 'Unlimited',
-    installation: 'Professional installation included',
-    equipment_included: ['Fiber Modem', 'WiFi 6 Router'],
-    availability: 'Select areas',
-    contract_length: '12 months',
-    isNew: true,
-    isSale: true
-  },
-  {
-    id: '2',
-    sku: 'INTERNET-5G-HOME-500',
-    name: '5G Home Internet Ultra',
-    url_key: '5g-home-internet-ultra',
-    description: 'Wireless 5G home internet with no data caps and easy setup.',
-    price: 65,
-    currency: 'USD',
-    rating_summary: 88,
-    review_count: 280,
-    media_gallery: [
-      {
-        url: '/internet/5g-home.jpg',
-        label: '5G Home Internet Ultra',
-        roles: ['small_image', 'thumbnail']
-      }
-    ],
-    category: 'internet-deals',
-    stock_status: 'IN_STOCK',
-    type: '5g-home',
-    speed: 'Up to 500 Mbps',
-    data_limit: 'Unlimited',
-    installation: 'Self-installation kit',
-    equipment_included: ['5G Gateway', 'Power Adapter'],
-    availability: '5G coverage areas',
-    contract_length: 'No contract',
-    isNew: true,
-    isSale: false
-  },
-  {
-    id: '3',
-    sku: 'INTERNET-CABLE-200',
-    name: 'Cable Internet Plus',
-    url_key: 'cable-internet-plus',
-    description: 'Reliable cable internet perfect for streaming and working from home.',
-    price: 49.99,
-    currency: 'USD',
-    rating_summary: 86,
-    review_count: 350,
-    media_gallery: [
-      {
-        url: '/internet/cable-plus.jpg',
-        label: 'Cable Internet Plus',
-        roles: ['small_image', 'thumbnail']
-      }
-    ],
-    category: 'internet-deals',
-    stock_status: 'IN_STOCK',
-    type: 'cable',
-    speed: '200 Mbps',
-    data_limit: 'Unlimited',
-    installation: 'Free professional installation',
-    equipment_included: ['Cable Modem', 'WiFi Router'],
-    availability: 'Most areas',
-    contract_length: '24 months',
-    isNew: false,
-    isSale: false
-  }
-];
-
-/**
- * Centralized configuration for the Internet Deals page.
- * Contains all page-specific data: filters, breadcrumbs, header, empty state.
- */
-export const internetDealsPageConfig = {
   /**
    * Filter configuration for internet deals page
    */
-  filters: internetDealFilters,
+  filters: [
+    {
+      title: 'Type',
+      key: 'type',
+      type: 'checkbox' as const,
+      options: [
+        { id: 'fiber', name: 'Fiber' },
+        { id: 'cable', name: 'Cable' },
+        { id: '5g-home', name: '5G Home' },
+        { id: 'satellite', name: 'Satellite' }
+      ]
+    },
+    {
+      title: 'Speed',
+      key: 'speed',
+      type: 'checkbox' as const,
+      options: [
+        { id: 'up-to-100', name: 'Up to 100 Mbps' },
+        { id: '100-300', name: '100-300 Mbps' },
+        { id: '300-500', name: '300-500 Mbps' },
+        { id: 'over-500', name: 'Over 500 Mbps' }
+      ]
+    },
+    {
+      title: 'Price Range',
+      key: 'price',
+      type: 'checkbox' as const,
+      options: [
+        { id: 'under-30', name: 'Under $30' },
+        { id: '30-50', name: '$30 - $50' },
+        { id: '50-80', name: '$50 - $80' },
+        { id: 'over-80', name: 'Over $80' }
+      ]
+    },
+    {
+      title: 'Contract Length',
+      key: 'contract_length',
+      type: 'checkbox' as const,
+      options: [
+        { id: 'no-contract', name: 'No Contract' },
+        { id: '6-months', name: '6 Months' },
+        { id: '12-months', name: '12 Months' },
+        { id: '24-months', name: '24 Months' }
+      ]
+    }
+  ] as FilterSection[],
 
   /**
    * Breadcrumb navigation for internet deals page
@@ -178,7 +145,7 @@ export const internetDealsPageConfig = {
    */
   pageHeader: {
     title: 'Internet Deals',
-    description: 'Find the best internet deals and packages for your home or business. Compare speeds, prices, and features to get the perfect connectivity solution at an unbeatable price.',
+    description: 'Find the best internet deals for your home. Compare speeds, prices, and features from fiber to 5G home internet solutions.',
     icon: GlobeAltIcon
   },
 
@@ -187,7 +154,7 @@ export const internetDealsPageConfig = {
    */
   search: {
     placeholder: 'Search internet deals...',
-    itemLabel: 'deals'
+    itemLabel: 'internet deals'
   },
 
   /**

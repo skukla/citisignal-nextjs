@@ -3,7 +3,7 @@
 import { memo, useMemo } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/ui/Button';
-import { phones } from '@/data/pages/phones';
+import { phonesPageData } from '@/data/pages/phones';
 import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ProductGrid from '@/components/ui/ProductGrid';
@@ -29,7 +29,7 @@ function PopularPhonesSection({
 }: PopularPhonesSectionProps) {
   // Memoize popular phones calculation for performance
   const popularPhones = useMemo(() => 
-    phones
+    phonesPageData.products
       .sort((a, b) => b.review_count - a.review_count)
       .slice(0, content.phoneCount),
     [content.phoneCount]

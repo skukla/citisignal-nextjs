@@ -10,7 +10,7 @@ import ResultsCount from '@/components/ui/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/FilterSidebarResponsive';
 import ProductCard from '@/components/ui/ProductCard';
-import { internetDeals, internetDealsPageConfig } from '@/data/pages/internet-deals';
+import { internetDealsPageData } from '@/data/pages/internet-deals';
 import { useProductList } from '@/hooks/useProductList';
 import type { InternetDeal } from '@/data/pages/internet-deals';
 
@@ -26,10 +26,10 @@ export default function InternetDealsPage() {
     handleFilterChange,
     handleClearFilters,
     filteredAndSortedProducts
-  } = useProductList({ products: internetDeals });
+  } = useProductList({ products: internetDealsPageData.products });
 
   // Page configuration
-  const { filters, breadcrumbs, pageHeader, search, emptyState } = internetDealsPageConfig;
+  const { filters, breadcrumbs, pageHeader, search, emptyState } = internetDealsPageData;
 
   return (
     <PageContainer background="gray">
@@ -51,7 +51,7 @@ export default function InternetDealsPage() {
       
       <ResultsCount 
         showing={filteredAndSortedProducts.length} 
-        total={internetDeals.length} 
+        total={internetDealsPageData.products.length} 
         itemLabel={search.itemLabel} 
       />
       
