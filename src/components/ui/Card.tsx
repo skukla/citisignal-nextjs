@@ -2,7 +2,6 @@
 
 import { ElementType } from 'react';
 import { twMerge } from 'tailwind-merge';
-import { TRANSITION_CLASSES } from '@/lib/ui-constants';
 import type { CardComponentProps } from '@/types/card';
 
 /**
@@ -45,7 +44,7 @@ export default function Card<T extends ElementType = 'div'>({
     
     // Shadow states
     interactive
-      ? `shadow-sm hover:shadow-lg ${TRANSITION_CLASSES.shadow}`
+      ? 'shadow-sm hover:shadow-lg transition-shadow duration-300'
       : 'shadow-sm',
     
     // Allow custom classes to override defaults

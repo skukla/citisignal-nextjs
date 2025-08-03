@@ -8,7 +8,6 @@ import Section from '@/components/ui/Section';
 import SectionHeader from '@/components/ui/SectionHeader';
 import ProductGrid from '@/components/ui/ProductGrid';
 import { popularPhonesContent } from '@/data/sections/popularPhones';
-import { GRID_COLUMNS } from '@/lib/ui-constants';
 import type { PopularPhonesContent } from '@/data/sections/popularPhones';
 
 export interface PopularPhonesSectionProps {
@@ -48,7 +47,7 @@ function PopularPhonesSection({
         {/* Phones Grid */}
         <ProductGrid 
           products={popularPhones}
-          columns={GRID_COLUMNS.products}
+          columns={{ sm: 1, md: 2, lg: 4 }}
           gap="lg"
         />
 
