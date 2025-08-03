@@ -11,7 +11,6 @@ export interface ArticleCardProps {
   excerpt: string;
   readTime: string;
   image?: string;
-  slug?: string;
   publishedAt?: string;
   author?: string;
   className?: string;
@@ -38,7 +37,6 @@ function ArticleCard({
   excerpt,
   readTime,
   image,
-  slug: _,
   publishedAt,
   author,
   className,

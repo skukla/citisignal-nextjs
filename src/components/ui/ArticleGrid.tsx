@@ -66,7 +66,6 @@ export default function ArticleGrid({
           excerpt={article.excerpt}
           readTime={article.readTime}
           image={article.image}
-          slug={article.slug}
           publishedAt={article.publishedAt}
           author={article.author}
         />
