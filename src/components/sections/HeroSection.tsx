@@ -1,6 +1,7 @@
 'use client';
 
 import { memo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from '@/components/ui/foundations/Link';
 import Section from '@/components/ui/layout/Section';
@@ -26,7 +27,7 @@ function HeroSection({
 }: HeroSectionProps) {
   return (
     <Section 
-      className={`text-white ${className || ''}`}
+      className={twMerge('text-white', className)}
       style={{ background: 'linear-gradient(135deg, #8821f4 0%, #6a1b9a 50%, #4a148c 100%)' }}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">

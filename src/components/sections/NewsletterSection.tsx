@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, memo } from 'react';
+import { twMerge } from 'tailwind-merge';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import Section from '@/components/ui/layout/Section';
 import Badge from '@/components/ui/foundations/Badge';
@@ -46,7 +47,7 @@ function NewsletterSection({
 
   return (
     <Section 
-      className={`bg-gradient-to-br from-[#8821f4] via-[#6a1b9a] to-[#4a148c] ${className || ''}`}
+      className={twMerge('bg-gradient-to-br from-[#8821f4] via-[#6a1b9a] to-[#4a148c]', className)}
     >
       <div className="text-center">
         <Badge
