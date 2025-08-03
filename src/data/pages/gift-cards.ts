@@ -11,25 +11,41 @@ export interface GiftCard extends BaseProduct {
 }
 
 /**
- * Gift card filter options
+ * Filter configuration for gift cards page
+ * Single layer structure with UI metadata built-in
  */
-export const giftCardFilterOptions = {
-  type: [
-    { id: 'physical', name: 'Physical Card' },
-    { id: 'digital', name: 'Digital Card' },
-    { id: 'service', name: 'Service Credit' }
-  ],
-  amount: [
-    { id: 'under-50', name: 'Under $50' },
-    { id: '50-100', name: '$50 - $100' },
-    { id: '100-200', name: '$100 - $200' },
-    { id: 'over-200', name: 'Over $200' }
-  ],
-  delivery_time: [
-    { id: 'instant', name: 'Instant Delivery' },
-    { id: 'physical', name: 'Physical Shipping' }
-  ]
-};
+export const giftCardFilters = [
+  {
+    title: 'Type',
+    key: 'type',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'physical', name: 'Physical Card' },
+      { id: 'digital', name: 'Digital Card' },
+      { id: 'service', name: 'Service Credit' }
+    ]
+  },
+  {
+    title: 'Amount',
+    key: 'amount',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'under-50', name: 'Under $50' },
+      { id: '50-100', name: '$50 - $100' },
+      { id: '100-200', name: '$100 - $200' },
+      { id: 'over-200', name: 'Over $200' }
+    ]
+  },
+  {
+    title: 'Delivery Time',
+    key: 'delivery_time',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'instant', name: 'Instant Delivery' },
+      { id: 'physical', name: 'Physical Shipping' }
+    ]
+  }
+] as FilterSection[];
 
 /**
  * Mock gift cards data
@@ -125,26 +141,7 @@ export const giftCardsPageConfig = {
   /**
    * Filter configuration for gift cards page
    */
-  filters: [
-    {
-      title: 'Type',
-      key: 'type',
-      options: giftCardFilterOptions.type,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Amount',
-      key: 'amount',
-      options: giftCardFilterOptions.amount,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Delivery Time',
-      key: 'delivery_time',
-      options: giftCardFilterOptions.delivery_time,
-      type: 'checkbox' as const
-    }
-  ] as FilterSection[],
+  filters: giftCardFilters,
 
   /**
    * Breadcrumb navigation for gift cards page

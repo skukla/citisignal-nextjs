@@ -13,32 +13,53 @@ export interface InternetDeal extends BaseProduct {
 }
 
 /**
- * Internet deals filter options
+ * Filter configuration for internet deals page
+ * Single layer structure with UI metadata built-in
  */
-export const internetDealsFilterOptions = {
-  type: [
-    { id: 'fiber', name: 'Fiber' },
-    { id: 'cable', name: 'Cable' },
-    { id: '5g-home', name: '5G Home' },
-    { id: 'satellite', name: 'Satellite' }
-  ],
-  speed: [
-    { id: 'under-100', name: 'Under 100 Mbps' },
-    { id: '100-500', name: '100-500 Mbps' },
-    { id: '500-1000', name: '500-1000 Mbps' },
-    { id: 'gig-plus', name: 'Gigabit+' }
-  ],
-  price: [
-    { id: 'under-50', name: 'Under $50' },
-    { id: '50-100', name: '$50 - $100' },
-    { id: 'over-100', name: 'Over $100' }
-  ],
-  contract_length: [
-    { id: 'no-contract', name: 'No Contract' },
-    { id: '12-months', name: '12 Months' },
-    { id: '24-months', name: '24 Months' }
-  ]
-};
+export const internetDealFilters = [
+  {
+    title: 'Type',
+    key: 'type',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'fiber', name: 'Fiber' },
+      { id: 'cable', name: 'Cable' },
+      { id: '5g-home', name: '5G Home' },
+      { id: 'satellite', name: 'Satellite' }
+    ]
+  },
+  {
+    title: 'Speed',
+    key: 'speed',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'under-100', name: 'Under 100 Mbps' },
+      { id: '100-500', name: '100-500 Mbps' },
+      { id: '500-1000', name: '500-1000 Mbps' },
+      { id: 'gig-plus', name: 'Gigabit+' }
+    ]
+  },
+  {
+    title: 'Price Range',
+    key: 'price',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'under-50', name: 'Under $50' },
+      { id: '50-100', name: '$50 - $100' },
+      { id: 'over-100', name: 'Over $100' }
+    ]
+  },
+  {
+    title: 'Contract Length',
+    key: 'contract_length',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'no-contract', name: 'No Contract' },
+      { id: '12-months', name: '12 Months' },
+      { id: '24-months', name: '24 Months' }
+    ]
+  }
+] as FilterSection[];
 
 /**
  * Mock internet deals data
@@ -142,32 +163,7 @@ export const internetDealsPageConfig = {
   /**
    * Filter configuration for internet deals page
    */
-  filters: [
-    {
-      title: 'Type',
-      key: 'type',
-      options: internetDealsFilterOptions.type,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Speed',
-      key: 'speed',
-      options: internetDealsFilterOptions.speed,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: internetDealsFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Contract Length',
-      key: 'contract_length',
-      options: internetDealsFilterOptions.contract_length,
-      type: 'checkbox' as const
-    }
-  ] as FilterSection[],
+  filters: internetDealFilters,
 
   /**
    * Breadcrumb navigation for internet deals page

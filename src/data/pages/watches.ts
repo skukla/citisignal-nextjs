@@ -3,32 +3,58 @@ import { Watch, colorOptions } from '@/types/commerce';
 import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
 
 /**
- * Watch filter options
+ * Filter configuration for watches page
+ * Single layer structure with UI metadata built-in
  */
-export const watchFilterOptions = {
-  manufacturer: [
-    { id: 'apple', name: 'Apple' },
-    { id: 'samsung', name: 'Samsung' },
-    { id: 'citisignal', name: 'CitiSignal' }
-  ],
-  sizes: [
-    { id: '41mm', name: '41mm' },
-    { id: '45mm', name: '45mm' },
-    { id: '49mm', name: '49mm' }
-  ],
-  colors: colorOptions,
-  price: [
-    { id: 'under-300', name: 'Under $300' },
-    { id: '300-500', name: '$300 - $500' },
-    { id: 'over-500', name: 'Over $500' }
-  ],
-  features: [
-    { id: 'cellular', name: 'Cellular' },
-    { id: 'gps', name: 'GPS' },
-    { id: 'health-tracking', name: 'Health Tracking' },
-    { id: 'voice-assistant', name: 'Voice Assistant' }
-  ]
-};
+export const watchFilters = [
+  {
+    title: 'Manufacturer',
+    key: 'manufacturer',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'apple', name: 'Apple' },
+      { id: 'samsung', name: 'Samsung' },
+      { id: 'citisignal', name: 'CitiSignal' }
+    ]
+  },
+  {
+    title: 'Sizes',
+    key: 'sizes',
+    type: 'checkbox' as const,
+    options: [
+      { id: '41mm', name: '41mm' },
+      { id: '45mm', name: '45mm' },
+      { id: '49mm', name: '49mm' }
+    ]
+  },
+  {
+    title: 'Colors',
+    key: 'colors',
+    type: 'checkbox' as const,
+    options: colorOptions
+  },
+  {
+    title: 'Price Range',
+    key: 'price',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'under-300', name: 'Under $300' },
+      { id: '300-500', name: '$300 - $500' },
+      { id: 'over-500', name: 'Over $500' }
+    ]
+  },
+  {
+    title: 'Features',
+    key: 'features',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'cellular', name: 'Cellular' },
+      { id: 'gps', name: 'GPS' },
+      { id: 'health-tracking', name: 'Health Tracking' },
+      { id: 'voice-assistant', name: 'Voice Assistant' }
+    ]
+  }
+] as FilterSection[];
 
 /**
  * Mock watches data
@@ -142,38 +168,7 @@ export const watchesPageConfig = {
   /**
    * Filter configuration for watches page
    */
-  filters: [
-    {
-      title: 'Manufacturer',
-      key: 'manufacturer',
-      options: watchFilterOptions.manufacturer,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Sizes',
-      key: 'sizes',
-      options: watchFilterOptions.sizes,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Colors',
-      key: 'colors',
-      options: watchFilterOptions.colors,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: watchFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Features',
-      key: 'features',
-      options: watchFilterOptions.features,
-      type: 'checkbox' as const
-    }
-  ] as FilterSection[],
+  filters: watchFilters,
 
   /**
    * Breadcrumb navigation for watches page

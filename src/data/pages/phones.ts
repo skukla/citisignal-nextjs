@@ -16,31 +16,57 @@ import type { Tip } from '@/components/ui/TipGrid';
 import type { Accessory } from '@/components/ui/AccessoryGrid';
 
 /**
- * Phone filter options
+ * Filter configuration for phones page
+ * Single layer structure with UI metadata built-in
  */
-export const phoneFilterOptions = {
-  manufacturer: [
-    { id: 'apple', name: 'Apple' },
-    { id: 'samsung', name: 'Samsung' },
-    { id: 'citisignal', name: 'CitiSignal' }
-  ],
-  memory: [
-    { id: '128gb', name: '128GB' },
-    { id: '256gb', name: '256GB' },
-    { id: '512gb', name: '512GB' },
-    { id: '1tb', name: '1TB' }
-  ],
-  colors: colorOptions,
-  price: [
-    { id: 'under-700', name: 'Under $700' },
-    { id: '700-1000', name: '$700 - $1000' },
-    { id: 'over-1000', name: 'Over $1000' }
-  ],
-  features: [
-    { id: 'extended-capacity-5g', name: 'Extended Capacity 5G' },
-    { id: 'extended-range-5g', name: 'Extended Range 5G' }
-  ]
-};
+export const phoneFilters = [
+  {
+    title: 'Manufacturer',
+    key: 'manufacturer',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'apple', name: 'Apple' },
+      { id: 'samsung', name: 'Samsung' },
+      { id: 'citisignal', name: 'CitiSignal' }
+    ]
+  },
+  {
+    title: 'Memory',
+    key: 'memory',
+    type: 'checkbox' as const,
+    options: [
+      { id: '128gb', name: '128GB' },
+      { id: '256gb', name: '256GB' },
+      { id: '512gb', name: '512GB' },
+      { id: '1tb', name: '1TB' }
+    ]
+  },
+  {
+    title: 'Colors',
+    key: 'colors',
+    type: 'checkbox' as const,
+    options: colorOptions
+  },
+  {
+    title: 'Price Range',
+    key: 'price',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'under-700', name: 'Under $700' },
+      { id: '700-1000', name: '$700 - $1000' },
+      { id: 'over-1000', name: 'Over $1000' }
+    ]
+  },
+  {
+    title: 'Features',
+    key: 'features',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'extended-capacity-5g', name: 'Extended Capacity 5G' },
+      { id: 'extended-range-5g', name: 'Extended Range 5G' }
+    ]
+  }
+] as FilterSection[];
 
 /**
  * Mock phones data
@@ -297,38 +323,7 @@ export const phonesPageConfig = {
   /**
    * Filter configuration for phones page
    */
-  filters: [
-    {
-      title: 'Manufacturer',
-      key: 'manufacturer',
-      options: phoneFilterOptions.manufacturer,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Memory',
-      key: 'memory',
-      options: phoneFilterOptions.memory,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Colors',
-      key: 'colors',
-      options: phoneFilterOptions.colors,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: phoneFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Features',
-      key: 'features',
-      options: phoneFilterOptions.features,
-      type: 'checkbox' as const
-    }
-  ] as FilterSection[],
+  filters: phoneFilters,
 
   /**
    * Breadcrumb navigation for phones page

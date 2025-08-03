@@ -3,31 +3,52 @@ import { Plan } from '@/types/commerce';
 import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
 
 /**
- * Plan filter options
+ * Filter configuration for plans page
+ * Single layer structure with UI metadata built-in
  */
-export const planFilterOptions = {
-  type: [
-    { id: 'individual', name: 'Individual' },
-    { id: 'family', name: 'Family' },
-    { id: 'unlimited', name: 'Unlimited' },
-    { id: 'prepaid', name: 'Prepaid' }
-  ],
-  data: [
-    { id: '50gb', name: '50GB' },
-    { id: '100gb', name: '100GB' },
-    { id: 'unlimited', name: 'Unlimited' }
-  ],
-  features: [
-    { id: 'hotspot', name: 'Mobile Hotspot' },
-    { id: 'streaming', name: 'HD Streaming' },
-    { id: 'international', name: 'International' }
-  ],
-  price: [
-    { id: 'under-50', name: 'Under $50' },
-    { id: '50-100', name: '$50 - $100' },
-    { id: 'over-100', name: 'Over $100' }
-  ]
-};
+export const planFilters = [
+  {
+    title: 'Plan Type',
+    key: 'type',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'individual', name: 'Individual' },
+      { id: 'family', name: 'Family' },
+      { id: 'unlimited', name: 'Unlimited' },
+      { id: 'prepaid', name: 'Prepaid' }
+    ]
+  },
+  {
+    title: 'Price Range',
+    key: 'price',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'under-50', name: 'Under $50' },
+      { id: '50-100', name: '$50 - $100' },
+      { id: 'over-100', name: 'Over $100' }
+    ]
+  },
+  {
+    title: 'Data Amount',
+    key: 'data',
+    type: 'checkbox' as const,
+    options: [
+      { id: '50gb', name: '50GB' },
+      { id: '100gb', name: '100GB' },
+      { id: 'unlimited', name: 'Unlimited' }
+    ]
+  },
+  {
+    title: 'Features',
+    key: 'features',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'hotspot', name: 'Mobile Hotspot' },
+      { id: 'streaming', name: 'HD Streaming' },
+      { id: 'international', name: 'International' }
+    ]
+  }
+] as FilterSection[];
 
 /**
  * Mock plans data
@@ -134,32 +155,7 @@ export const plansPageConfig = {
   /**
    * Filter configuration for plans page
    */
-  filters: [
-    {
-      title: 'Plan Type',
-      key: 'type',
-      options: planFilterOptions.type,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: planFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Data Amount',
-      key: 'data',
-      options: planFilterOptions.data,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Features',
-      key: 'features',
-      options: planFilterOptions.features,
-      type: 'checkbox' as const
-    }
-  ] as FilterSection[],
+  filters: planFilters,
 
   /**
    * Breadcrumb navigation for plans page

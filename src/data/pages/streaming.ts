@@ -14,38 +14,64 @@ export interface StreamingService extends BaseProduct {
 }
 
 /**
- * Filter options for streaming services
+ * Filter configuration for streaming page
+ * Single layer structure with UI metadata built-in
  */
-export const streamingFilterOptions = {
-  provider: [
-    { id: 'netflix', name: 'Netflix' },
-    { id: 'disney', name: 'Disney+' },
-    { id: 'hbo', name: 'HBO Max' },
-    { id: 'citisignal', name: 'CitiSignal+' }
-  ],
-  price: [
-    { id: 'under-10', name: 'Under $10' },
-    { id: '10-15', name: '$10 - $15' },
-    { id: 'over-15', name: 'Over $15' }
-  ],
-  content_type: [
-    { id: 'movies', name: 'Movies' },
-    { id: 'tv-shows', name: 'TV Shows' },
-    { id: 'sports', name: 'Sports' },
-    { id: 'kids', name: 'Kids' }
-  ],
-  video_quality: [
-    { id: 'sd', name: 'SD' },
-    { id: 'hd', name: 'HD' },
-    { id: '4k', name: '4K UHD' }
-  ],
-  features: [
-    { id: 'no-ads', name: 'No Ads' },
-    { id: 'downloads', name: 'Downloads' },
-    { id: 'live-tv', name: 'Live TV' },
-    { id: 'family-friendly', name: 'Family Friendly' }
-  ]
-};
+export const streamingFilters = [
+  {
+    title: 'Provider',
+    key: 'provider',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'netflix', name: 'Netflix' },
+      { id: 'disney', name: 'Disney+' },
+      { id: 'hbo', name: 'HBO Max' },
+      { id: 'citisignal', name: 'CitiSignal+' }
+    ]
+  },
+  {
+    title: 'Price Range',
+    key: 'price',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'under-10', name: 'Under $10' },
+      { id: '10-15', name: '$10 - $15' },
+      { id: 'over-15', name: 'Over $15' }
+    ]
+  },
+  {
+    title: 'Content Type',
+    key: 'content_type',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'movies', name: 'Movies' },
+      { id: 'tv-shows', name: 'TV Shows' },
+      { id: 'sports', name: 'Sports' },
+      { id: 'kids', name: 'Kids' }
+    ]
+  },
+  {
+    title: 'Video Quality',
+    key: 'video_quality',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'sd', name: 'SD' },
+      { id: 'hd', name: 'HD' },
+      { id: '4k', name: '4K UHD' }
+    ]
+  },
+  {
+    title: 'Features',
+    key: 'features',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'no-ads', name: 'No Ads' },
+      { id: 'downloads', name: 'Downloads' },
+      { id: 'live-tv', name: 'Live TV' },
+      { id: 'family-friendly', name: 'Family Friendly' }
+    ]
+  }
+] as FilterSection[];
 
 /**
  * Mock streaming services data
@@ -149,38 +175,7 @@ export const streamingPageConfig = {
   /**
    * Filter configuration for streaming page
    */
-  filters: [
-    {
-      title: 'Provider',
-      key: 'provider',
-      options: streamingFilterOptions.provider,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: streamingFilterOptions.price,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Content Type',
-      key: 'content_type',
-      options: streamingFilterOptions.content_type,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Video Quality',
-      key: 'video_quality',
-      options: streamingFilterOptions.video_quality,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Features',
-      key: 'features',
-      options: streamingFilterOptions.features,
-      type: 'checkbox' as const
-    }
-  ] as FilterSection[],
+  filters: streamingFilters,
 
   /**
    * Breadcrumb navigation for streaming page

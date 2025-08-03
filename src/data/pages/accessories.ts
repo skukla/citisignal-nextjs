@@ -3,30 +3,51 @@ import { Accessory, colorOptions } from '@/types/commerce';
 import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
 
 /**
- * Filter options for accessories
+ * Filter configuration for accessories page
+ * Single layer structure with UI metadata built-in
  */
-export const accessoryFilterOptions = {
-  manufacturer: [
-    { id: 'apple', name: 'Apple' },
-    { id: 'samsung', name: 'Samsung' },
-    { id: 'citisignal', name: 'CitiSignal' },
-    { id: 'belkin', name: 'Belkin' },
-    { id: 'anker', name: 'Anker' }
-  ],
-  compatibility: [
-    { id: 'iphone', name: 'iPhone' },
-    { id: 'samsung', name: 'Samsung' },
-    { id: 'android', name: 'Android' },
-    { id: 'universal', name: 'Universal' }
-  ],
-  colors: colorOptions,
-  price: [
-    { id: 'under-25', name: 'Under $25' },
-    { id: '25-50', name: '$25 - $50' },
-    { id: '50-100', name: '$50 - $100' },
-    { id: 'over-100', name: 'Over $100' }
-  ]
-};
+export const accessoryFilters = [
+  {
+    title: 'Manufacturer',
+    key: 'manufacturer',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'apple', name: 'Apple' },
+      { id: 'samsung', name: 'Samsung' },
+      { id: 'citisignal', name: 'CitiSignal' },
+      { id: 'belkin', name: 'Belkin' },
+      { id: 'anker', name: 'Anker' }
+    ]
+  },
+  {
+    title: 'Compatibility',
+    key: 'compatibility',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'iphone', name: 'iPhone' },
+      { id: 'samsung', name: 'Samsung' },
+      { id: 'android', name: 'Android' },
+      { id: 'universal', name: 'Universal' }
+    ]
+  },
+  {
+    title: 'Colors',
+    key: 'colors',
+    type: 'checkbox' as const,
+    options: colorOptions
+  },
+  {
+    title: 'Price Range',
+    key: 'price',
+    type: 'checkbox' as const,
+    options: [
+      { id: 'under-25', name: 'Under $25' },
+      { id: '25-50', name: '$25 - $50' },
+      { id: '50-100', name: '$50 - $100' },
+      { id: 'over-100', name: 'Over $100' }
+    ]
+  }
+] as FilterSection[];
 
 /**
  * Mock data matching Commerce API structure
@@ -126,32 +147,7 @@ export const accessoriesPageConfig = {
   /**
    * Filter configuration for accessories page
    */
-  filters: [
-    {
-      title: 'Manufacturer',
-      key: 'manufacturer',
-      options: accessoryFilterOptions.manufacturer,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Compatibility',
-      key: 'compatibility',
-      options: accessoryFilterOptions.compatibility,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Colors',
-      key: 'colors',
-      options: accessoryFilterOptions.colors,
-      type: 'checkbox' as const
-    },
-    {
-      title: 'Price Range',
-      key: 'price',
-      options: accessoryFilterOptions.price,
-      type: 'checkbox' as const
-    }
-  ] as FilterSection[],
+  filters: accessoryFilters,
 
   /**
    * Breadcrumb navigation for accessories page
