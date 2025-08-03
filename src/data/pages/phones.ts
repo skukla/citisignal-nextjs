@@ -8,6 +8,7 @@ import {
   Bars3Icon
 } from '@heroicons/react/24/outline';
 
+import { Phone, colorOptions } from '@/types/commerce';
 import type { FilterSection } from '@/components/ui/FilterSidebar/FilterSidebar.types';
 import type { TechReview } from '@/components/ui/TechReviewGrid';
 import type { BuyingGuide } from '@/components/ui/BuyingGuideGrid';
@@ -66,11 +67,9 @@ export const phones: Phone[] = [
     category: 'phones',
     stock_status: 'IN_STOCK',
     manufacturer: 'Apple',
-    memory: '128GB',
-    screen_size: '6.1"',
-    operating_system: 'iOS 17',
-    camera_megapixels: '48MP',
-    battery_capacity: '3274mAh',
+    memory: ['128GB'],
+    extended_capacity_5g: true,
+    extended_range_5g: true,
     available_colors: [
       { name: 'Natural Titanium', hex: '#A7A299' },
       { name: 'Blue Titanium', hex: '#5E7C8B' },
@@ -101,11 +100,9 @@ export const phones: Phone[] = [
     category: 'phones',
     stock_status: 'IN_STOCK',
     manufacturer: 'Samsung',
-    memory: '256GB',
-    screen_size: '6.8"',
-    operating_system: 'Android 14',
-    camera_megapixels: '200MP',
-    battery_capacity: '5000mAh',
+    memory: ['256GB'],
+    extended_capacity_5g: true,
+    extended_range_5g: false,
     available_colors: [
       { name: 'Titanium Gray', hex: '#8B8B8B' },
       { name: 'Titanium Black', hex: '#1A1A1A' },
@@ -135,11 +132,9 @@ export const phones: Phone[] = [
     category: 'phones',
     stock_status: 'IN_STOCK',
     manufacturer: 'CitiSignal',
-    memory: '512GB',
-    screen_size: '6.7"',
-    operating_system: 'Android 14',
-    camera_megapixels: '108MP',
-    battery_capacity: '4800mAh',
+    memory: ['512GB'],
+    extended_capacity_5g: true,
+    extended_range_5g: true,
     available_colors: [
       { name: 'Midnight Blue', hex: '#1A237E' },
       { name: 'Cosmic Silver', hex: '#E8EAF6' },
