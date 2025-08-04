@@ -42,8 +42,8 @@ function TechNewsSection({
       {/* Articles Grid */}
       <ArticleGrid 
         articles={content.articles}
-        columns={{ sm: 1, md: 3 }}
-        gap="lg"
+        columns={{ sm: 1, md: 2, lg: 4 }}
+        gap="xl"
         className="mb-8"
       />
 
