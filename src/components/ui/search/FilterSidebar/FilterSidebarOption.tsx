@@ -23,7 +23,7 @@ function FilterSidebarOption({
         name={sectionType === 'radio' ? sectionKey : undefined}
         checked={isSelected}
         onChange={handleChange}
-        className="w-4 h-4 text-purple-600 border-gray-300 rounded focus:ring-purple-500"
+        className="w-4 h-4 accent-purple-600 border-gray-300 rounded"
       />
       <span className="ml-3 text-sm text-gray-700 flex-1">
         {option.name}
