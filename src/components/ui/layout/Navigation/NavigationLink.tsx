@@ -23,7 +23,7 @@ export const NavigationLink: FC<NavigationLinkProps> = ({ href, className, child
     <Link
       href={href}
       className={twMerge(
-        'text-gray-700 hover:text-purple-600 focus:text-purple-600 font-medium transition-colors outline-none focus:ring-2 focus:ring-purple-600 focus:ring-offset-2 rounded',
+        'text-gray-700 hover:text-purple-600 focus:text-purple-600 font-medium transition-colors outline-none focus:outline-none',
         isActive && 'text-purple-600',
         className
       )}
