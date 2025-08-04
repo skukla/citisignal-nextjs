@@ -46,11 +46,11 @@ function ArticleCard({
     <Card 
       as="article"
       interactive
-      className={twMerge('group p-0 overflow-hidden', className)}
+      className={twMerge('group border-0 shadow-none p-0 overflow-hidden', className)}
       onClick={onClick}
     >
       {/* Article Image */}
-      <div className="aspect-video bg-purple-50 rounded-t-xl mb-4 overflow-hidden relative">
+      <div className="aspect-video bg-purple-50 mb-4 overflow-hidden relative">
         {image ? (
           <Image 
             src={image} 
@@ -67,7 +67,7 @@ function ArticleCard({
       </div>
 
       {/* Article Content */}
-      <div className="p-6">
+      <div className="px-0">
         <div className="text-sm font-medium text-purple-600 mb-2">
           {category} • {readTime}
         </div>
