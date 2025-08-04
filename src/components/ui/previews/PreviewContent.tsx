@@ -24,21 +24,21 @@ export default function PreviewContent({
 }: PreviewContentProps) {
   const titleSizeClasses = {
     sm: 'text-base',
-    md: 'text-lg',
-    lg: 'text-xl'
+    md: 'text-xl',
+    lg: 'text-2xl'
   };
 
   return (
     <div className={twMerge('space-y-2', className)}>
       <h3 className={twMerge(
-        'font-semibold group-hover:text-purple-600 transition-colors',
+        'font-bold group-hover:text-purple-600 transition-colors',
         titleSizeClasses[titleSize],
         titleColor
       )}>
         {title}
       </h3>
       <p className={twMerge(
-        'text-sm line-clamp-2',
+        'text-base',
         descriptionColor
       )}>
         {description}
