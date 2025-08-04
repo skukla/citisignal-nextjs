@@ -46,6 +46,7 @@ export default function Grid({
         gap === 'sm' && 'gap-4',
         gap === 'md' && 'gap-6',
         gap === 'lg' && 'gap-8',
+        gap === 'xl' && 'gap-12',
         
         // Custom classes
         className
