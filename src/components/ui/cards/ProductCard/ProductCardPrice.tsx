@@ -9,9 +9,9 @@ export function ProductCardPrice({ className, showSavings }: ProductCardPricePro
 
   return (
     <div className={twMerge('px-4 pb-4', className)}>
-      <p className="text-xl font-bold text-gray-900">{formatPrice(price, currency)}</p>
+      <p className="text-2xl font-bold text-gray-900">{formatPrice(price, currency)}</p>
       {original_price && (
-        <p className="text-sm text-gray-500 line-through">{formatPrice(original_price, currency)}</p>
+        <p className="text-lg text-gray-500 line-through">{formatPrice(original_price, currency)}</p>
       )}
       {showSavings && original_price && (
         <p className="mt-1 text-sm font-medium text-green-600">

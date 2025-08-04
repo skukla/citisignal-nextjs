@@ -12,7 +12,7 @@ export function ProductCardInfo({ className, showDescription }: ProductCardInfoP
       {hasManufacturer(product) && (
         <p className="text-sm text-gray-500">{product.manufacturer}</p>
       )}
-      <h3 className="text-lg font-semibold text-gray-900">{name}</h3>
+      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">{name}</h3>
       {showDescription && description && (
         <p className="mt-2 text-sm text-gray-600">{description}</p>
       )}

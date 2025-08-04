@@ -33,22 +33,30 @@ export function ProductCardActions({ className, showQuickAdd }: ProductCardActio
   };
 
   return (
-    <div className={twMerge('flex items-center justify-between px-4 pb-4', className)}>
-      {showQuickAdd && (
+    <div className={twMerge('px-4 pb-4', className)}>
+      <div className="space-y-2">
+        {showQuickAdd && (
+          <Button
+            onClick={handleAddToCartClick}
+            disabled={isOutOfStock}
+            className={`w-full ${isOutOfStock ? 'bg-gray-300 text-gray-500' : 'bg-[#8821f4] text-white'}`}
+          >
+            {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+          </Button>
+        )}
         <Button
-          onClick={handleAddToCartClick}
-          disabled={isOutOfStock}
-          className="w-full"
+          variant="outline"
+          className="w-full border border-gray-300 text-gray-700 hover:bg-gray-50"
         >
-          {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+          View Details
         </Button>
-      )}
+      </div>
       <Button
         variant="ghost"
         size="sm"
         onClick={handleWishlistClick}
         leftIcon={isWishlisted ? HeartIcon : HeartIconOutline}
-        className="ml-4 rounded-full text-gray-500 hover:bg-gray-100"
+        className="absolute top-8 right-8 p-2 bg-white rounded-full shadow-md hover:bg-gray-50"
         aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
       />
     </div>
