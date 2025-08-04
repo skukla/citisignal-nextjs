@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { ButtonProps } from '@/types/ui/button.types';
+import type { ButtonProps } from '@/types/button.types';
 import Spinner from '@/components/ui/foundations/Spinner';
 
 /**
