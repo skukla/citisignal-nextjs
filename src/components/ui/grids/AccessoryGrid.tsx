@@ -43,7 +43,7 @@ function AccessoryGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 3
+    lg: 2
   },
   gap = 'md',
   className,

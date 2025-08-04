@@ -16,6 +16,7 @@ import BuyingGuideGrid from '@/components/ui/grids/BuyingGuideGrid';
 import TipGrid from '@/components/ui/grids/TipGrid';
 import AccessoryGrid from '@/components/ui/grids/AccessoryGrid';
 import Link from '@/components/ui/foundations/Link';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { phonesPageData } from '@/data/pages/phones';
 import { useProductList } from '@/hooks/useProductList';
 import type { Phone } from '@/types/commerce';
@@ -120,9 +121,10 @@ export default function PhonesPage() {
                     <Link 
                       href="/tips" 
                       variant="text"
-                      className="text-sm font-medium text-purple-600 hover:text-purple-700"
+                      className="text-sm font-medium text-purple-600 hover:text-purple-700 inline-flex items-center gap-1"
                     >
                       {sections.tips.subtitle}
+                      <ArrowRightIcon className="w-4 h-4" />
                     </Link>
                   </div>
                   <TipGrid tips={sections.tips.tips} />
