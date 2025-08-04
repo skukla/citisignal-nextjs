@@ -5,7 +5,8 @@ import ProductCard, {
   ProductCardImage, 
   ProductCardBadges, 
   ProductCardInfo, 
-  ProductCardPrice, 
+  ProductCardPrice,
+  ProductCardColors,
   ProductCardActions 
 } from '@/components/ui/cards/ProductCard';
 import type { ProductType } from '@/components/ui/cards/ProductCard/ProductCard.types';

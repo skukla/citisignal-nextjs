@@ -35,18 +35,16 @@ export function ProductCardActions({ className, showQuickAdd }: ProductCardActio
   return (
     <div className={twMerge('px-4 pb-4', className)}>
       <div className="space-y-2">
-        {showQuickAdd && (
-          <Button
-            onClick={handleAddToCartClick}
-            disabled={isOutOfStock}
-            className={`w-full ${isOutOfStock ? 'bg-gray-300 text-gray-500' : 'bg-[#8821f4] text-white'}`}
-          >
-            {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
-          </Button>
-        )}
+        <Button
+          onClick={handleAddToCartClick}
+          disabled={isOutOfStock}
+          className={`w-full py-3 ${isOutOfStock ? 'bg-gray-300 text-gray-500' : 'bg-[#8821f4] text-white hover:opacity-90'}`}
+        >
+          {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+        </Button>
         <Button
           variant="outline"
-          className="w-full border border-gray-300 text-gray-700 hover:bg-gray-50"
+          className="w-full py-2 border border-gray-300 text-gray-700 hover:bg-gray-50"
         >
           View Details
         </Button>
