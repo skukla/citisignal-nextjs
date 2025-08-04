@@ -3,7 +3,7 @@
 import PageContainer from '@/components/layout/PageContainer';
 import TwoColumnLayout from '@/components/layout/TwoColumnLayout';
 import PageFooter from '@/components/layout/PageFooter';
-import NewsletterSection from '@/components/sections/NewsletterSection';
+
 import BreadcrumbSection from '@/components/ui/layout/BreadcrumbSection';
 import PageHeaderSection from '@/components/ui/layout/PageHeaderSection';
 import SearchAndSort from '@/components/ui/search/SearchAndSort';
@@ -131,7 +131,6 @@ export default function PhonesPage() {
         </TwoColumnLayout>
       </PageContainer>
 
-      <NewsletterSection />
       <PageFooter />
     </div>
   );
