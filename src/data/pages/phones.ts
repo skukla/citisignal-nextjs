@@ -26,7 +26,7 @@ export const phonesPageData = {
       url_key: 'iphone-15-pro',
       description: 'The most advanced iPhone ever.',
       price: 999,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 95,
       review_count: 1250,
       media_gallery: [
@@ -58,7 +58,7 @@ export const phonesPageData = {
       url_key: 'samsung-galaxy-s24',
       description: 'Galaxy AI is here. Search like never before, get real-time interpretation on a call, format your notes into a clear summary, and edit your photos effortlessly.',
       price: 799,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 91,
       review_count: 890,
       media_gallery: [
@@ -91,7 +91,7 @@ export const phonesPageData = {
       description: 'The powerful iPhone for everyone.',
       price: 799,
       original_price: 899,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 90,
       review_count: 950,
       media_gallery: [
@@ -124,7 +124,7 @@ export const phonesPageData = {
       url_key: 'citisignal-ultra-5g',
       description: 'Our most advanced 5G phone yet.',
       price: 899,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 88,
       review_count: 450,
       media_gallery: [
