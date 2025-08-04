@@ -33,17 +33,13 @@ export default function TechReviewPreview({
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-white bg-opacity-0 group-hover:bg-opacity-90 transition-opacity flex items-center justify-center">
-                <PlayIcon className="w-6 h-6 text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
+              <PlayIcon className="w-12 h-12 text-white opacity-0 group-hover:opacity-60 transition-opacity" />
             </div>
           </div>
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center relative">
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity flex items-center justify-center">
-              <div className="w-12 h-12 rounded-full bg-white bg-opacity-0 group-hover:bg-opacity-90 transition-opacity flex items-center justify-center">
-                <PlayIcon className="w-6 h-6 text-purple-600 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </div>
+              <PlayIcon className="w-12 h-12 text-white opacity-0 group-hover:opacity-60 transition-opacity" />
             </div>
             <span className="text-purple-600 font-medium group-hover:opacity-0 transition-opacity">Review Video</span>
           </div>
