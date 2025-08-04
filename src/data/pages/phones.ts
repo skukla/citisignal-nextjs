@@ -82,6 +82,70 @@ export const phonesPageData = {
       extended_range_5g: false,
       isNew: false,
       isSale: true
+    },
+    {
+      id: '3',
+      sku: 'PHONE-IPHONE-15',
+      name: 'iPhone 15',
+      url_key: 'iphone-15',
+      description: 'The powerful iPhone for everyone.',
+      price: 799,
+      original_price: 899,
+      currency: 'USD',
+      rating_summary: 90,
+      review_count: 950,
+      media_gallery: [
+        {
+          url: '/phones/iphone-15.jpg',
+          label: 'iPhone 15',
+          roles: ['small_image', 'thumbnail']
+        }
+      ],
+      category: 'phones',
+      stock_status: 'IN_STOCK',
+      manufacturer: 'Apple',
+      memory: ['128GB', '256GB', '512GB'],
+      available_colors: [
+        { name: 'Pink', hex: '#ffc0cb' },
+        { name: 'Yellow', hex: '#ffeb3b' },
+        { name: 'Green', hex: '#4caf50' },
+        { name: 'Blue', hex: '#2196f3' },
+        { name: 'Black', hex: '#000000' }
+      ],
+      extended_capacity_5g: true,
+      extended_range_5g: false,
+      isNew: true,
+      isSale: true
+    },
+    {
+      id: '4',
+      sku: 'PHONE-CITISIGNAL-ULTRA',
+      name: 'CitiSignal Ultra 5G',
+      url_key: 'citisignal-ultra-5g',
+      description: 'Our most advanced 5G phone yet.',
+      price: 899,
+      currency: 'USD',
+      rating_summary: 88,
+      review_count: 450,
+      media_gallery: [
+        {
+          url: '/phones/citisignal-ultra.jpg',
+          label: 'CitiSignal Ultra 5G',
+          roles: ['small_image', 'thumbnail']
+        }
+      ],
+      category: 'phones',
+      stock_status: 'IN_STOCK',
+      manufacturer: 'CitiSignal',
+      memory: ['128GB', '256GB'],
+      available_colors: [
+        { name: 'Midnight Black', hex: '#000000' },
+        { name: 'Stellar Silver', hex: '#c0c0c0' }
+      ],
+      extended_capacity_5g: true,
+      extended_range_5g: true,
+      isNew: true,
+      isSale: false
     }
   ] as Phone[],
 
