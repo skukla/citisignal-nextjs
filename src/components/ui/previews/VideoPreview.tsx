@@ -12,11 +12,11 @@ export default function VideoPreview({
   image,
   href = '#',
   className,
-  placeholder = 'Video Preview'
+  placeholder = 'Review Video'
 }: VideoPreviewProps) {
   return (
     <a href={href} className={twMerge('group block', className)}>
-      <div className="aspect-video bg-gray-100 rounded-lg mb-4 overflow-hidden">
+      <div className="aspect-video bg-purple-50 rounded-lg mb-4 overflow-hidden">
         {image ? (
           <div className="relative w-full h-full">
             <Image
@@ -31,11 +31,9 @@ export default function VideoPreview({
             </div>
           </div>
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-100 flex items-center justify-center relative">
-            <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity flex items-center justify-center">
-              <PlayIcon className="w-12 h-12 text-white opacity-0 group-hover:opacity-60 transition-opacity" />
-            </div>
-            <span className="text-gray-600 font-medium group-hover:opacity-0 transition-opacity">{placeholder}</span>
+          <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center group-hover:bg-opacity-90 transition-opacity">
+            <span className="text-purple-600 font-medium group-hover:opacity-0 transition-opacity">{placeholder}</span>
+            <PlayIcon className="w-12 h-12 text-purple-600 opacity-0 group-hover:opacity-60 absolute transition-opacity" />
           </div>
         )}
       </div>
