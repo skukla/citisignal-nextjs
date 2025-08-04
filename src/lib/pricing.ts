@@ -22,7 +22,7 @@ export function calculateDiscountPercentage(originalPrice: number, salePrice: nu
  * @param currency The currency symbol (default: '$')
  * @returns Formatted price string (e.g., '$99')
  */
-export function formatPrice(price: number, currency: string = 'USD'): string {
+export function formatPrice(price: number, currency: string = '$'): string {
   return `${currency}${price}`;
 }
 
