@@ -3,50 +3,45 @@
 import { memo } from 'react';
 import Image from 'next/image';
 import { twMerge } from 'tailwind-merge';
-import Card from './Card';
 
-export interface ArticleCardProps {
+export interface ArticlePreviewProps {
   category: string;
   title: string;
   excerpt: string;
   readTime: string;
   image?: string;
-  publishedAt?: string;
-  author?: string;
   className?: string;
   onClick?: () => void;
 }
 
 /**
- * ArticleCard component for displaying blog articles and news content.
+ * ArticlePreview component for displaying article teasers in a content feed or grid.
+ * Unlike Card components which are bounded containers, previews are unbounded content teasers
+ * that focus on typography and content hierarchy.
  * 
  * @example
  * ```tsx
- * <ArticleCard
+ * <ArticlePreview
  *   category="Technology"
- *   title="The Future of 5G Networks"
- *   excerpt="Exploring the next generation of mobile connectivity..."
+ *   title="Understanding 5G: The Future of Mobile Connectivity"
+ *   excerpt="Learn how 5G technology is revolutionizing mobile communications..."
  *   readTime="5 min read"
  *   onClick={() => router.push(`/blog/${article.slug}`)}
  * />
  * ```
  */
-function ArticleCard({
+function ArticlePreview({
   category,
   title,
   excerpt,
   readTime,
   image,
-  publishedAt,
-  author,
   className,
   onClick
-}: ArticleCardProps) {
+}: ArticlePreviewProps) {
   return (
-    <Card 
-      as="article"
-      interactive
-      className={twMerge('group border-0 shadow-none p-0 overflow-hidden', className)}
+    <div 
+      className={twMerge('group cursor-pointer overflow-hidden', className)}
       onClick={onClick}
     >
       {/* Article Image */}
@@ -56,7 +51,7 @@ function ArticleCard({
             src={image} 
             alt={title}
             fill
-            className="object-cover group-hover:scale-105 transition-transform duration-200"
+            className="object-cover group-hover:scale-110 transition-transform duration-300"
             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
         ) : (
@@ -67,7 +62,7 @@ function ArticleCard({
       </div>
 
       {/* Article Content */}
-      <div className="px-6">
+      <div>
         <div className="text-sm font-medium text-purple-600 mb-2">
           {category} • {readTime}
         </div>
@@ -77,18 +72,9 @@ function ArticleCard({
         <p className="text-gray-600">
           {excerpt}
         </p>
-        
-        {/* Optional metadata */}
-        {(author || publishedAt) && (
-          <div className="mt-3 text-xs text-gray-500">
-            {author && <span>By {author}</span>}
-            {author && publishedAt && <span> • </span>}
-            {publishedAt && <span>{new Date(publishedAt).toLocaleDateString()}</span>}
-          </div>
-        )}
       </div>
-    </Card>
+    </div>
   );
 }
 
-export default memo(ArticleCard);
+export default memo(ArticlePreview);

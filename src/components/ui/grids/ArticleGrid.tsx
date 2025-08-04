@@ -1,7 +1,7 @@
 'use client';
 
 import Grid from './Grid';
-import ArticleCard from '@/components/ui/cards/ArticleCard';
+import ArticlePreview from '@/components/ui/content/ArticlePreview';
 import EmptyState from '@/components/ui/feedback/EmptyState';
 import { DocumentTextIcon } from '@heroicons/react/24/outline';
 import type { GridGap, ResponsiveValue } from '@/types/grid';
@@ -59,15 +59,13 @@ export default function ArticleGrid({
   return (
     <Grid columns={columns} gap={gap} className={className}>
       {articles.map((article) => (
-        <ArticleCard
+        <ArticlePreview
           key={article.slug || article.title}
           category={article.category}
           title={article.title}
           excerpt={article.excerpt}
           readTime={article.readTime}
           image={article.image}
-          publishedAt={article.publishedAt}
-          author={article.author}
         />
       ))}
     </Grid>
