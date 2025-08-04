@@ -1,7 +1,7 @@
 'use client';
 
 import Grid from './Grid';
-import ArticlePreview from '../content/ArticlePreview';
+import ArticlePreview from '../previews/ArticlePreview';
 import type { GridProps } from '@/types/grid';
 import type { TechArticle } from '@/data/sections/techNews';
 

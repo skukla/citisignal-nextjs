@@ -1,15 +1,9 @@
 'use client';
 
-import TechReviewPreview from '../previews/TechReviewPreview';
+import VideoPreview from '../previews/VideoPreview';
 import Grid from './Grid';
 import type { GridProps } from '@/types/grid';
-
-interface TechReview {
-  title: string;
-  description: string;
-  image?: string;
-  href?: string;
-}
+import type { TechReview } from '@/types/content';
 
 interface TechReviewGridProps {
   reviews: TechReview[];
@@ -35,12 +29,12 @@ export default function TechReviewGrid({
       className={className}
     >
       {reviews.map((review, index) => (
-        <TechReviewPreview
+        <VideoPreview
           key={index}
           title={review.title}
           description={review.description}
-          image={review.image}
-          href={review.href}
+          image={review.videoThumbnail}
+          href={review.href || `/reviews/${review.slug}`}
         />
       ))}
     </Grid>
