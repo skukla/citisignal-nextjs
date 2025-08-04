@@ -68,8 +68,7 @@ function Input({
     variant === 'newsletter' && [
       'border-0 shadow-lg py-3 px-4',
       'focus:ring-4 focus:ring-yellow-400 focus:outline-none',
-      'placeholder:text-gray-500 text-gray-900',
-      'rounded-r-none'
+      'placeholder:text-gray-500 text-gray-900'
     ],
     
     // Icon spacing
