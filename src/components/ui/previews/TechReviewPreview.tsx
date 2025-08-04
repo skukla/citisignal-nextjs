@@ -22,7 +22,7 @@ export default function TechReviewPreview({
 }: TechReviewPreviewProps) {
   return (
     <a href={href} className={twMerge('group block', className)}>
-      <div className="aspect-video bg-purple-50 rounded-lg mb-4 overflow-hidden">
+      <div className="aspect-video bg-gray-100 rounded-lg mb-4 overflow-hidden">
         {image ? (
           <div className="relative w-full h-full">
             <Image
@@ -37,7 +37,7 @@ export default function TechReviewPreview({
             </div>
           </div>
         ) : (
-          <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center relative">
+          <div className="w-full h-full bg-gradient-to-br from-gray-200 to-gray-100 flex items-center justify-center relative">
             <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-opacity flex items-center justify-center">
               <PlayIcon className="w-12 h-12 text-white opacity-0 group-hover:opacity-60 transition-opacity" />
             </div>
