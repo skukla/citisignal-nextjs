@@ -27,14 +27,17 @@ export default function BuyingGuidePreview({
       'flex gap-6 items-start group',
       className
     )}>
-      <IconContainer
-        size="lg"
-        bgColor="bg-purple-50"
-        bgOpacity="bg-opacity-100"
-        className="group-hover:bg-purple-100 transition-colors"
-      >
-        <Icon className="w-10 h-10 text-purple-600" />
-      </IconContainer>
+      <div className="relative">
+        <IconContainer
+          size="lg"
+          bgColor="bg-purple-50"
+          bgOpacity="bg-opacity-100"
+          className="group-hover:bg-purple-100 transition-colors"
+        >
+          <Icon className="w-10 h-10 text-purple-600 group-hover:scale-110 transition-transform" />
+        </IconContainer>
+        <div className="absolute inset-0 bg-purple-600 bg-opacity-0 group-hover:bg-opacity-5 rounded-lg transition-colors" />
+      </div>
 
       <div className="flex-1">
         <PreviewContent
