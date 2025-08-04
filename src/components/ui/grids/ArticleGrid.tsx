@@ -1,7 +1,7 @@
 'use client';
 
 import Grid from './Grid';
-import TechReviewPreview from '../previews/TechReviewPreview';
+import ArticlePreview from '../content/ArticlePreview';
 import type { GridProps } from '@/types/grid';
 import type { TechArticle } from '@/data/sections/techNews';
 
@@ -29,11 +29,13 @@ export default function ArticleGrid({
       className={className}
     >
       {articles.map((article, index) => (
-        <TechReviewPreview
+        <ArticlePreview
           key={index}
           title={article.title}
           description={article.excerpt}
           image={article.image}
+          category={article.category}
+          readTime={article.readTime}
           href={`/blog/${article.slug}`}
         />
       ))}
