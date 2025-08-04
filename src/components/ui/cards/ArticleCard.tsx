@@ -67,7 +67,7 @@ function ArticleCard({
       </div>
 
       {/* Article Content */}
-      <div className="px-0">
+      <div className="px-6">
         <div className="text-sm font-medium text-purple-600 mb-2">
           {category} • {readTime}
         </div>
