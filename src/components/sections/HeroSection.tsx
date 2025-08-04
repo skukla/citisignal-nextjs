@@ -36,7 +36,7 @@ function HeroSection({
           {content.promotional && (
             <PromoTag
               text={content.promotional}
-              className="mb-6"
+              className="mb-6 bg-purple-900"
             />
           )}
 
@@ -57,7 +57,7 @@ function HeroSection({
               buttonStyle="primary"
               icon={ArrowRightIcon}
               iconPosition="right"
-              className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 px-8 py-4"
+              className="bg-yellow-400 text-gray-900 font-bold hover:bg-yellow-300 px-8 py-4"
             >
               {content.primaryCTA.text}
             </Link>
