@@ -1,46 +1,40 @@
-import { ProductCardColorsProps } from './ProductCard.types';
+import { ProductCardColorsProps, hasColors } from './ProductCard.types';
 import { useProductCard } from './ProductCardContext';
-import { hasColors } from './ProductCard.types';
-import Button from '@/components/ui/foundations/Button';
 import { twMerge } from 'tailwind-merge';
 
+const sizeClasses = {
+  sm: 'w-4 h-4',
+  md: 'w-6 h-6',
+  lg: 'w-8 h-8'
+};
+
 export function ProductCardColors({ className, size = 'md' }: ProductCardColorsProps) {
-  const { product, selectedColor, selectColor } = useProductCard();
+  const { product } = useProductCard();
 
   if (!hasColors(product) || product.available_colors.length === 0) {
     return null;
   }
 
-  const sizeClasses = {
-    sm: 'w-6 h-6',
-    md: 'w-8 h-8',
-    lg: 'w-10 h-10',
-  };
+  const colors = product.available_colors;
+  const colorSize = sizeClasses[size];
 
   return (
-    <div className={twMerge('px-4 pb-4', className)}>
-      <p className="mb-2 text-sm font-medium text-gray-700">Color</p>
-      <div className="flex space-x-2">
-        {product.available_colors.map((color) => (
-          <Button
-            key={color.name}
-            variant="ghost"
-            size="sm"
-            onClick={(e) => {
-              e.preventDefault();
-              selectColor(color.name);
-            }}
-            className={`rounded-full border-2 ${
-              selectedColor === color.name ? 'border-blue-500' : 'border-transparent'
-            } p-0.5 transition-all focus:outline-none`}
-            aria-label={`Select color ${color.name}`}
-          >
-            <span
-              className={`block rounded-full ${sizeClasses[size]}`}
-              style={{ backgroundColor: color.hex }}
-            />
-          </Button>
+    <div className={twMerge('mb-4', className)}>
+      <div className="text-sm text-gray-600 mb-2">Available Colors:</div>
+      <div className="flex flex-wrap gap-2">
+        {colors.slice(0, 4).map((color, index) => (
+          <div
+            key={index}
+            className={`${colorSize} rounded-full border border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition-transform`}
+            style={{ backgroundColor: color.hex }}
+            title={color.name}
+          />
         ))}
+        {colors.length > 4 && (
+          <div className={`${colorSize} rounded-full border border-gray-200 bg-gray-50 flex items-center justify-center text-xs text-gray-500 font-medium`}>
+            +{colors.length - 4}
+          </div>
+        )}
       </div>
     </div>
   );

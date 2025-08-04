@@ -60,6 +60,7 @@ export default function ProductGrid({
               <ProductCardImage />
               <ProductCardBadges />
               <ProductCardInfo />
+              <ProductCardColors />
               <ProductCardPrice />
               <ProductCardActions />
             </>

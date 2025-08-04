@@ -2,6 +2,7 @@ import { ProductCardInfoProps } from './ProductCard.types';
 import { useProductCard } from './ProductCardContext';
 import { hasManufacturer } from './ProductCard.types';
 import { twMerge } from 'tailwind-merge';
+import { ProductCardColors } from './ProductCardColors';
 
 export function ProductCardInfo({ className, showDescription }: ProductCardInfoProps) {
   const { product } = useProductCard();
@@ -16,6 +17,16 @@ export function ProductCardInfo({ className, showDescription }: ProductCardInfoP
       {showDescription && description && (
         <p className="mt-2 text-sm text-gray-600">{description}</p>
       )}
+
+      {/* Features/Storage */}
+      {'features' in product && product.features && product.features.length > 0 && (
+        <div className="text-sm text-gray-600 mb-4 truncate">
+          {product.features.join(', ')}
+        </div>
+      )}
+
+      {/* Colors */}
+      <ProductCardColors />
     </div>
   );
 }
