@@ -11,7 +11,7 @@ export type ResponsiveValue<T> = {
 /**
  * Grid gap sizes
  */
-export type GridGap = 'sm' | 'md' | 'lg';
+export type GridGap = 'sm' | 'md' | 'lg' | 'xl';
 
 /**
  * Props for the Grid component
