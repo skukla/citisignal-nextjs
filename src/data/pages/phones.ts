@@ -244,6 +244,12 @@ export const phonesPageData = {
       title: 'Samsung Galaxy S24 vs iPhone 15: The Ultimate Comparison',
       description: 'We pit Samsung\'s latest against Apple\'s flagship to see which offers better value.',
       slug: 'samsung-s24-vs-iphone-15'
+    },
+    {
+      id: '3',
+      title: '5G Speed Test: Real World Results',
+      description: 'We tested 5G speeds across different phones and locations. See which devices offer the fastest connectivity.',
+      slug: '5g-speed-test-results'
     }
   ] as TechReview[],
 

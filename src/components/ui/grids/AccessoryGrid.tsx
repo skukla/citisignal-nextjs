@@ -41,8 +41,9 @@ interface AccessoryGridProps {
 function AccessoryGrid({
   accessories,
   columns = {
-    sm: 2,
-    md: 4
+    sm: 1,
+    md: 2,
+    lg: 3
   },
   gap = 'md',
   className,
