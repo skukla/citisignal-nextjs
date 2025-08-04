@@ -19,7 +19,7 @@ export function ProductCardColors({ className, size = 'md' }: ProductCardColorsP
   const colorSize = sizeClasses[size];
 
   return (
-    <div className={twMerge('mb-4', className)}>
+    <div className={twMerge('px-4 mb-4', className)}>
       <div className="text-sm text-gray-600 mb-2">Available Colors:</div>
       <div className="flex flex-wrap gap-2">
         {colors.slice(0, 4).map((color, index) => (

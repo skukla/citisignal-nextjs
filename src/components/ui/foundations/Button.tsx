@@ -41,7 +41,7 @@ function Button({
   ...props
 }: ButtonProps) {
   // Base classes that rarely change
-  const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2';
+  const baseClasses = 'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2';
   
   // Dynamic classes based on variant/size/state
   const classes = twMerge(

@@ -39,9 +39,7 @@ export interface ProductCardColorsProps extends BaseComponentProps {
   size?: 'sm' | 'md' | 'lg';
 }
 
-export interface ProductCardActionsProps extends BaseComponentProps {
-  showQuickAdd?: boolean;
-}
+export type ProductCardActionsProps = BaseComponentProps;
 
 // Type Guards
 export function hasManufacturer(product: ProductType): product is Phone | Watch | Accessory {

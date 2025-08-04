@@ -6,7 +6,7 @@ import { useCart } from '@/components/ui/layout/Cart';
 import Button from '@/components/ui/foundations/Button';
 import { twMerge } from 'tailwind-merge';
 
-export function ProductCardActions({ className, showQuickAdd }: ProductCardActionsProps) {
+export function ProductCardActions({ className }: ProductCardActionsProps) {
   const { isWishlisted, toggleWishlist, product } = useProductCard();
   const { addItem } = useCart();
   const { stock_status, id, name, price } = product;
