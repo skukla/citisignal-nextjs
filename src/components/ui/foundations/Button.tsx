@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
-import type { ButtonProps } from '@/types/button';
+import type { ButtonProps } from '@/types/ui/button.types';
 import Spinner from '@/components/ui/foundations/Spinner';
 
 /**
@@ -52,6 +52,7 @@ function Button({
     variant === 'outline' && 'border-2 border-gray-300 text-gray-700 hover:bg-gray-100',
     variant === 'ghost' && 'text-gray-700 hover:bg-gray-100',
     variant === 'yellow' && 'bg-yellow-400 text-gray-900 font-bold hover:bg-yellow-300',
+    variant === 'link' && 'text-purple-600 hover:text-purple-700 p-0',
     // Sizes
     size === 'sm' && 'px-4 py-2 text-sm',
     size === 'md' && 'px-6 py-3',
