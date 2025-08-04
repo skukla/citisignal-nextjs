@@ -40,7 +40,7 @@ export default function Card<T extends ElementType = 'div'>({
 
   const classes = twMerge(
     // Base styles - matching existing card patterns
-    'bg-white border border-gray-200 rounded-xl',
+    'bg-white border border-gray-200 rounded-xl relative',
     
     // Shadow states
     interactive
