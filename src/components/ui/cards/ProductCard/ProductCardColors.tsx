@@ -27,6 +27,7 @@ export function ProductCardColors({ className, size = 'md' }: ProductCardColorsP
             key={index}
             className={`${colorSize} rounded-full border border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition-transform`}
             style={{ backgroundColor: color.hex }}
+            style={{ backgroundColor: color.hex }}
             title={color.name}
           />
         ))}
