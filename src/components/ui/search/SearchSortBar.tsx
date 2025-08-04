@@ -34,7 +34,7 @@ export default function SearchSortBar({
           value={searchQuery}
           onChange={(e) => onSearchChange(e.target.value)}
           leftIcon={MagnifyingGlassIcon}
-          className="py-3 border-2 border-gray-300 shadow-sm focus:ring-4 focus:ring-purple-400 focus:ring-opacity-50 focus:border-purple-500 text-gray-900 placeholder-gray-400"
+          className="py-3 border-2 border-gray-300 focus:ring-2 focus:ring-purple-500 focus:border-purple-500 shadow-sm"
         />
       </div>
       <Select
@@ -45,4 +45,4 @@ export default function SearchSortBar({
       />
     </div>
   );
-} 
+}
