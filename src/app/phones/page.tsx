@@ -8,13 +8,14 @@ import PageHeaderSection from '@/components/ui/layout/PageHeaderSection';
 import SearchAndSort from '@/components/ui/search/SearchAndSort';
 import ResultsCount from '@/components/ui/search/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/grids/ProductGridWithEmpty';
+import ProductGrid from '@/components/ui/grids/ProductGrid';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
 import ProductCard from '@/components/ui/cards/ProductCard';
 import TechReviewGrid from '@/components/ui/grids/TechReviewGrid';
 import BuyingGuideGrid from '@/components/ui/grids/BuyingGuideGrid';
 import TipGrid from '@/components/ui/grids/TipGrid';
 import AccessoryGrid from '@/components/ui/grids/AccessoryGrid';
-import Link from '@/components/ui/foundations/Link';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import { phonesPageData } from '@/data/pages/phones';
 import { useProductList } from '@/hooks/useProductList';
 import type { Phone } from '@/types/commerce';
@@ -90,53 +91,38 @@ export default function PhonesPage() {
             onAction: handleClearFilters
           }}
         >
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {filteredAndSortedProducts.map((phone) => (
-              <ProductCard.Root key={phone.sku} product={phone as Phone}>
-                <ProductCard.Image />
-                <ProductCard.Badges />
-                <ProductCard.Info />
-                <ProductCard.Price />
-                <ProductCard.Actions />
-              </ProductCard.Root>
-            ))}
-          </div>
+          <ProductGrid 
+            products={filteredAndSortedProducts as Phone[]}
+            columns={{ sm: 1, md: 2, lg: 3 }} 
+            gap="md"
+          />
 
           {/* Enhanced Content Sections - Only show when we have products */}
           {filteredAndSortedProducts.length > 0 && (
             <div className="space-y-12 mt-12">
               {/* Featured Tech Reviews */}
-              <section className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">{sections.techReviews.title}</h2>
+              <ContentSection title={sections.techReviews.title}>
                 <TechReviewGrid reviews={sections.techReviews.reviews} />
-              </section>
+              </ContentSection>
 
               {/* Buying Guides */}
-              <section className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">{sections.buyingGuides.title}</h2>
+              <ContentSection title={sections.buyingGuides.title}>
                 <BuyingGuideGrid guides={sections.buyingGuides.guides} />
-              </section>
+              </ContentSection>
 
               {/* Tips & Tricks */}
-              <section className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <div className="flex justify-between items-center mb-6">
-                  <h2 className="text-2xl font-bold text-gray-900">{sections.tips.title}</h2>
-                  <Link 
-                    href="/tips" 
-                    variant="text"
-                    className="text-sm font-medium text-purple-600 hover:text-purple-700"
-                  >
-                    {sections.tips.subtitle}
-                  </Link>
-                </div>
+              <ContentSection 
+                title={sections.tips.title}
+                subtitle={sections.tips.subtitle}
+                subtitleHref="/tips"
+              >
                 <TipGrid tips={sections.tips.tips} />
-              </section>
+              </ContentSection>
 
               {/* Essential Accessories */}
-              <section className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
-                <h2 className="text-2xl font-bold text-gray-900 mb-6">{sections.accessories.title}</h2>
+              <ContentSection title={sections.accessories.title}>
                 <AccessoryGrid accessories={sections.accessories.accessories} />
-              </section>
+              </ContentSection>
             </div>
           )}
         </ProductGridWithEmpty>
