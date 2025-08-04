@@ -42,6 +42,7 @@ export default function Section({
   gradient,
   fullWidth = false,
   noPadding = false,
+
   style
 }: SectionProps) {
   const sectionClasses = twMerge(
