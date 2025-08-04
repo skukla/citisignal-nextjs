@@ -44,7 +44,7 @@ export default function Container<T extends ElementType = 'div'>({
   const classes = twMerge(
     // Base styles
     'mx-auto w-full',
-    !fullWidth && 'max-w-7xl',
+    !fullWidth && 'max-w-6xl',
     !noPadding && 'px-4 sm:px-6 lg:px-8',
     className
   );
