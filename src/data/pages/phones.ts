@@ -41,10 +41,10 @@ export const phonesPageData = {
       manufacturer: 'Apple',
       memory: ['128GB'],
       available_colors: [
-        { name: 'Natural Titanium', hex: '#F5F5DC' },
-        { name: 'Blue Titanium', hex: '#4169E1' },
-        { name: 'White Titanium', hex: '#F8F8FF' },
-        { name: 'Black Titanium', hex: '#2F2F2F' }
+        { name: 'Natural Titanium', hex: '#9FA1A3' },
+        { name: 'Blue Titanium', hex: '#515B6F' },
+        { name: 'White Titanium', hex: '#F5F5F0' },
+        { name: 'Black Titanium', hex: '#3D3C41' }
       ],
       extended_capacity_5g: true,
       extended_range_5g: true,
@@ -73,10 +73,10 @@ export const phonesPageData = {
       manufacturer: 'Samsung',
       memory: ['256GB'],
       available_colors: [
-        { name: 'Onyx Black', hex: '#000000' },
-        { name: 'Marble Gray', hex: '#808080' },
-        { name: 'Cobalt Violet', hex: '#915C83' },
-        { name: 'Amber Yellow', hex: '#FFBF00' }
+        { name: 'Titanium Black', hex: '#2A2A2C' },
+        { name: 'Titanium Gray', hex: '#7C7C7E' },
+        { name: 'Titanium Violet', hex: '#7B6C7E' },
+        { name: 'Titanium Yellow', hex: '#F3E0B6' }
       ],
       extended_capacity_5g: true,
       extended_range_5g: false,
@@ -106,11 +106,11 @@ export const phonesPageData = {
       manufacturer: 'Apple',
       memory: ['128GB', '256GB', '512GB'],
       available_colors: [
-        { name: 'Pink', hex: '#ffc0cb' },
-        { name: 'Yellow', hex: '#ffeb3b' },
-        { name: 'Green', hex: '#4caf50' },
-        { name: 'Blue', hex: '#2196f3' },
-        { name: 'Black', hex: '#000000' }
+        { name: 'Pink', hex: '#F8D7D9' },
+        { name: 'Yellow', hex: '#F3E3B6' },
+        { name: 'Green', hex: '#A7C1B5' },
+        { name: 'Blue', hex: '#B4C4DE' },
+        { name: 'Black', hex: '#3F3F3D' }
       ],
       extended_capacity_5g: true,
       extended_range_5g: false,
@@ -139,8 +139,9 @@ export const phonesPageData = {
       manufacturer: 'CitiSignal',
       memory: ['128GB', '256GB'],
       available_colors: [
-        { name: 'Midnight Black', hex: '#000000' },
-        { name: 'Stellar Silver', hex: '#c0c0c0' }
+        { name: 'Midnight Blue', hex: '#1F2330' },
+        { name: 'Silver', hex: '#F1F3EE' },
+        { name: 'Graphite', hex: '#5F5E5A' }
       ],
       extended_capacity_5g: true,
       extended_range_5g: true,
