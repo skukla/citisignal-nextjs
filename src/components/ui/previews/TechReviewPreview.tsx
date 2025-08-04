@@ -1,6 +1,7 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
+import PreviewContent from './PreviewContent';
 
 interface TechReviewPreviewProps {
   title: string;
@@ -32,12 +33,12 @@ export default function TechReviewPreview({
           </div>
         )}
       </div>
-      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">
-        {title}
-      </h3>
-      <p className="text-gray-600 text-sm line-clamp-2">
-        {description}
-      </p>
+      <PreviewContent
+        title={title}
+        description={description}
+        titleSize="md"
+        className="mt-4"
+      />
     </a>
   );
 }
