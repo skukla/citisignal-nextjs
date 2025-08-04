@@ -23,7 +23,7 @@ export function ProductCardImage({ className, width = 300, height = 300, priorit
   }
 
   return (
-    <div className={twMerge('relative overflow-hidden rounded-t-lg', className)}>
+    <div className={twMerge('relative overflow-hidden rounded-t-lg p-6', className)}>
       <Image
         src={mainImage.url}
         alt={mainImage.label || product.name}
