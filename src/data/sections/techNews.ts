@@ -30,34 +30,28 @@ export const techNewsContent: TechNewsContent = {
   },
   articles: [
     {
-      category: "5G Technology",
-      title: "The Future of 5G: What's Next for Mobile Connectivity",
-      excerpt: "Explore how 5G is revolutionizing everything from gaming to remote work, and what's coming next.",
+      category: "5G",
+      title: "Understanding 5G: The Future of Mobile Connectivity",
+      excerpt: "Learn how 5G technology is revolutionizing mobile communications and what it means for your daily digital experience.",
       readTime: "5 min read",
       image: "/blog/5g-future.jpg",
-      slug: "future-of-5g-mobile-connectivity",
-      publishedAt: "2024-01-15",
-      author: "Sarah Chen"
+      slug: "understanding-5g"
     },
     {
-      category: "Smart Living",
-      title: "Connected Home: Essential Smart Devices for 2024",
-      excerpt: "Discover the must-have smart home devices that work seamlessly with your mobile plan.",
-      readTime: "4 min read",
-      image: "/blog/smart-home.jpg",
-      slug: "connected-home-smart-devices-2024",
-      publishedAt: "2024-01-12",
-      author: "Michael Rodriguez"
-    },
-    {
-      category: "Tips & Tricks",
-      title: "Maximize Your Phone's Battery Life: Expert Tips",
-      excerpt: "Learn how to extend your phone's battery life with these proven techniques.",
+      category: "Tips",
+      title: "Top 10 Ways to Extend Your Phone's Battery Life",
+      excerpt: "Simple yet effective strategies to make your smartphone battery last longer throughout the day.",
       readTime: "3 min read",
       image: "/blog/battery-tips.jpg",
-      slug: "maximize-phone-battery-life-tips",
-      publishedAt: "2024-01-10",
-      author: "Lisa Thompson"
+      slug: "extend-battery-life"
+    },
+    {
+      category: "Security",
+      title: "Essential Mobile Security Tips for 2024",
+      excerpt: "Protect your mobile device and personal data with these up-to-date security practices and recommendations.",
+      readTime: "4 min read",
+      image: "/blog/security-tips.jpg",
+      slug: "mobile-security-tips"
     }
   ],
   viewAllLink: "/blog"
