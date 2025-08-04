@@ -5,15 +5,7 @@ import PreviewContent from './PreviewContent';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Button from '../foundations/Button';
 import IconContainer from '../foundations/IconContainer';
-import type { HeroIcon } from '@/types/hero-icons';
-
-interface BuyingGuidePreviewProps {
-  icon: HeroIcon;
-  title: string;
-  description: string;
-  href: string;
-  className?: string;
-}
+import type { BuyingGuidePreviewProps } from '@/types/preview.types';
 
 export default function BuyingGuidePreview({
   icon: Icon,

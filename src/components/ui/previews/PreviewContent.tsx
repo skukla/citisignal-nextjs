@@ -1,17 +1,7 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-import { ReactNode } from 'react';
-
-interface PreviewContentProps {
-  title: string;
-  description: string;
-  titleSize?: 'sm' | 'md' | 'lg';
-  titleColor?: string;
-  descriptionColor?: string;
-  className?: string;
-  children?: ReactNode;
-}
+import type { PreviewContentProps, PreviewTitleSize } from '@/types/preview.types';
 
 export default function PreviewContent({
   title,
@@ -22,7 +12,7 @@ export default function PreviewContent({
   className,
   children
 }: PreviewContentProps) {
-  const titleSizeClasses = {
+  const titleSizeClasses: Record<PreviewTitleSize, string> = {
     sm: 'text-base',
     md: 'text-xl',
     lg: 'text-2xl'
