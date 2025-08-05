@@ -1,6 +1,7 @@
-import type { BaseComponentProps, BasePanelProps, BasePanelContextValue } from '@/types/ui';
+import { ReactNode } from 'react';
+import type { BaseComponentProps } from '@/types/ui';
 
-// Cart item types
+// Cart Item type
 export interface CartItem {
   id: string;
   name: string;
@@ -10,22 +11,50 @@ export interface CartItem {
 }
 
 // Context types
-export interface CartContextValue extends BasePanelContextValue {
-  items: readonly CartItem[];
-  itemCount: number;
-  addItem: (item: CartItem) => void;
-  removeItem: (itemId: string) => void;
-  updateQuantity: (itemId: string, quantity: number) => void;
+export interface CartContextValue {
+  isOpen: boolean;
+  onClose: () => void;
+  items: CartItem[];
+  updateQuantity: (id: string, quantity: number) => void;
+  removeItem: (id: string) => void;
+  subtotal: number;
 }
 
 // Component props
-export type CartRootProps = BaseComponentProps;
-export type CartIconProps = BasePanelProps;
-export type CartPanelProps = BasePanelProps;
+export interface CartRootProps extends BaseComponentProps {
+  isOpen: boolean;
+  onClose: () => void;
+  children: ReactNode;
+}
 
-// Compound component type
-export interface CartComponent {
-  Root: React.FC<CartRootProps>;
-  Icon: React.FC<CartIconProps>;
-  Panel: React.FC<CartPanelProps>;
-} 
+export interface CartHeaderProps extends BaseComponentProps {
+  title?: string;
+}
+
+export interface CartBodyProps extends BaseComponentProps {
+  emptyStateIcon?: React.ElementType;
+  emptyStateTitle?: string;
+  emptyStateDescription?: string;
+}
+
+export interface CartItemProps extends BaseComponentProps {
+  item: CartItem;
+}
+
+export interface CartFooterProps extends BaseComponentProps {
+  showShippingNote?: boolean;
+  checkoutLabel?: string;
+  onCheckout?: () => void;
+}
+
+// Type guards
+export function isCartItem(item: unknown): item is CartItem {
+  return (
+    typeof item === 'object' &&
+    item !== null &&
+    'id' in item &&
+    'name' in item &&
+    'price' in item &&
+    'quantity' in item
+  );
+}

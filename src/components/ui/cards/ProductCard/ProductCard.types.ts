@@ -10,8 +10,6 @@ export interface ProductCardContextValue {
   product: ProductType;
   isWishlisted: boolean;
   selectedColor?: string;
-  toggleWishlist: () => void;
-  selectColor: (colorName: string) => void;
 }
 
 // Component props
@@ -31,23 +29,27 @@ export interface ProductCardInfoProps extends BaseComponentProps {
   showDescription?: boolean;
 }
 
-export interface ProductCardPriceProps extends BaseComponentProps {
-  showSavings?: boolean;
+export type ProductCardPriceProps = BaseComponentProps;
+
+export type ProductCardColorsProps = BaseComponentProps;
+
+export interface ProductCardActionsProps extends BaseComponentProps {
+  product: {
+    id: string;
+    name: string;
+    price: number;
+    images?: string[];
+    stock_status?: 'in_stock' | 'out_of_stock';
+  };
 }
 
-export interface ProductCardColorsProps extends BaseComponentProps {
-  size?: 'sm' | 'md' | 'lg';
-}
-
-export type ProductCardActionsProps = BaseComponentProps;
-
-// Type Guards
-export function hasManufacturer(product: ProductType): product is Phone | Watch | Accessory {
-  return 'manufacturer' in product;
-}
-
+// Type guards
 export function hasColors(product: ProductType): product is Phone | Watch | Accessory {
   return 'available_colors' in product && Array.isArray(product.available_colors);
+}
+
+export function hasManufacturer(product: ProductType): product is Phone | Watch {
+  return 'manufacturer' in product && typeof product.manufacturer === 'string';
 }
 
 // Compound component type

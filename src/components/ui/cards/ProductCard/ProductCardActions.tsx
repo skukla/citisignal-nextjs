@@ -1,62 +1,46 @@
-import { HeartIcon } from '@heroicons/react/24/solid';
-import { HeartIcon as HeartIconOutline } from '@heroicons/react/24/outline';
-import { ProductCardActionsProps } from './ProductCard.types';
-import { useProductCard } from './ProductCardContext';
-import { useCart } from '@/components/ui/layout/Cart';
-import Button from '@/components/ui/foundations/Button';
+'use client';
+
 import { twMerge } from 'tailwind-merge';
+import Button from '@/components/ui/foundations/Button';
+import { useCart } from '@/components/ui/layout/Cart';
+import type { ProductCardActionsProps } from './ProductCard.types';
 
-export function ProductCardActions({ className }: ProductCardActionsProps) {
-  const { isWishlisted, toggleWishlist, product } = useProductCard();
+export function ProductCardActions({
+  product,
+  className
+}: ProductCardActionsProps) {
   const { addItem } = useCart();
-  const { stock_status, id, name, price } = product;
-  const isOutOfStock = stock_status === 'OUT_OF_STOCK';
+  const isOutOfStock = product?.stock_status === 'out_of_stock';
 
-  const handleWishlistClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    toggleWishlist();
-  };
-
-  const handleAddToCartClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    
-    // Convert product to CartItem format
-    const cartItem = {
-      id,
-      name,
-      price,
-      quantity: 1,
-      imageUrl: 'media_gallery' in product ? product.media_gallery?.[0]?.url : undefined
-    };
-    
-    addItem(cartItem);
+  const handleAddToCartClick = () => {
+    if (!isOutOfStock && product) {
+      addItem({
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        imageUrl: product.images?.[0]
+      });
+    }
   };
 
   return (
-    <div className={twMerge('px-4 pb-4', className)}>
-      <div className="space-y-2">
-        <Button
-          onClick={handleAddToCartClick}
-          disabled={isOutOfStock}
-          className={`w-full py-3 ${isOutOfStock ? 'bg-gray-300 text-gray-500' : 'bg-[#8821f4] text-white hover:opacity-90'}`}
-        >
-          {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
-        </Button>
-        <Button
-          variant="outline"
-          className="w-full py-2 border border-gray-300 text-gray-700 hover:bg-gray-50"
-        >
-          View Details
-        </Button>
-      </div>
+    <div className={twMerge('space-y-2', className)}>
       <Button
-        variant="ghost"
-        size="sm"
-        onClick={handleWishlistClick}
-        leftIcon={isWishlisted ? HeartIcon : HeartIconOutline}
-        className="absolute top-8 right-8 p-2 bg-white rounded-full shadow-md hover:bg-gray-50"
-        aria-label={isWishlisted ? 'Remove from wishlist' : 'Add to wishlist'}
-      />
+        onClick={handleAddToCartClick}
+        disabled={isOutOfStock}
+        className={twMerge(
+          'w-full py-3',
+          isOutOfStock ? 'bg-gray-300 text-gray-500' : 'bg-[#8821f4] text-white hover:opacity-90'
+        )}
+      >
+        {isOutOfStock ? 'Out of Stock' : 'Add to Cart'}
+      </Button>
+      <Button
+        variant="outline"
+        className="w-full py-2 border border-gray-300 text-gray-700 hover:bg-gray-50"
+      >
+        View Details
+      </Button>
     </div>
   );
 }

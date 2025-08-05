@@ -1,19 +1,13 @@
 'use client';
 
 import { useState, useCallback } from 'react';
-import { useCartPanel } from './useCartPanel';
-import type { CartContextValue, CartItem } from './Cart.types';
+import type { CartItem } from './Cart.types';
 
-/**
- * Return type for useCart hook
- */
-export type UseCartReturn = CartContextValue;
+export function useCart() {
+  const [items, setItems] = useState<CartItem[]>([]);
+  const [isOpen, setIsOpen] = useState(false);
 
-export function useCart(): UseCartReturn {
-  const [items, setItems] = useState<readonly CartItem[]>([]);
-  const { isOpen, toggle, close, panelRef } = useCartPanel();
-
-  const addItem = useCallback((item: CartItem) => {
+  const addItem = useCallback((item: Omit<CartItem, 'quantity'>) => {
     setItems(prev => {
       const existingItem = prev.find(i => i.id === item.id);
       if (existingItem) {
@@ -23,39 +17,44 @@ export function useCart(): UseCartReturn {
             : i
         );
       }
-      return [...prev, item];
+      return [...prev, { ...item, quantity: 1 }];
     });
+    setIsOpen(true);
   }, []);
 
-  const removeItem = useCallback((itemId: string) => {
-    setItems(prev => prev.filter(item => item.id !== itemId));
-  }, []);
-
-  const updateQuantity = useCallback((itemId: string, quantity: number) => {
-    if (quantity < 1) {
-      removeItem(itemId);
-      return;
-    }
-    setItems(prev =>
-      prev.map(item =>
-        item.id === itemId
-          ? { ...item, quantity }
-          : item
-      )
+  const updateQuantity = useCallback((id: string, quantity: number) => {
+    setItems(prev => 
+      quantity > 0
+        ? prev.map(item =>
+            item.id === id
+              ? { ...item, quantity }
+              : item
+          )
+        : prev.filter(item => item.id !== id)
     );
-  }, [removeItem]);
+  }, []);
 
-  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
+  const removeItem = useCallback((id: string) => {
+    setItems(prev => prev.filter(item => item.id !== id));
+  }, []);
+
+  const getSubtotal = useCallback(() => {
+    return items.reduce((total, item) => total + (item.price * item.quantity), 0);
+  }, [items]);
+
+  const openCart = useCallback(() => setIsOpen(true), []);
+  const closeCart = useCallback(() => setIsOpen(false), []);
+  const toggleCart = useCallback(() => setIsOpen(prev => !prev), []);
 
   return {
     items,
-    itemCount,
     isOpen,
-    toggle,
-    close,
     addItem,
-    removeItem,
     updateQuantity,
-    panelRef
+    removeItem,
+    getSubtotal,
+    openCart,
+    closeCart,
+    toggleCart
   };
-} 
+}
