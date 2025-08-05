@@ -206,7 +206,7 @@ export const phonesPageData = {
    * Page header configuration
    */
   pageHeader: {
-    title: 'Smartphones',
+    title: 'Phones',
     description: 'Discover the latest smartphones with cutting-edge technology, exceptional cameras, and lightning-fast performance. Find your perfect device from top brands.',
     icon: DevicePhoneMobileIcon
   },
