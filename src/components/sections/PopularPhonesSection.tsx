@@ -1,57 +1,68 @@
 'use client';
 
-import { ChevronRightIcon } from '@heroicons/react/24/outline';
-import { phones } from '@/data/phones';
-import ProductCard from '@/components/ui/ProductCard';
-import SectionContainer from '@/components/ui/SectionContainer';
-import SectionHeader from '@/components/ui/SectionHeader';
-import ProductGrid from '@/components/ui/ProductGrid';
-import Button from '@/components/ui/Button';
+import { memo, useMemo } from 'react';
+import { ArrowRightIcon } from '@heroicons/react/24/outline';
+import Button from '@/components/ui/foundations/Button';
+import { phonesPageData } from '@/data/pages/phones';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import ProductGrid from '@/components/ui/grids/ProductGrid';
+import { popularPhonesContent } from '@/data/sections/popularPhones';
+import type { PopularPhonesContent } from '@/data/sections/popularPhones';
 
-export default function PopularPhonesSection() {
-  // Get 4 popular phones (those with highest review count)
-  const popularPhones = phones
-    .sort((a, b) => b.review_count - a.review_count)
-    .slice(0, 4);
+export interface PopularPhonesSectionProps {
+  content?: PopularPhonesContent;
+  className?: string;
+}
+
+/**
+ * PopularPhonesSection displays the most popular phones based on review count.
+ * 
+ * @example
+ * ```tsx
+ * <PopularPhonesSection className="my-8" />
+ * ```
+ */
+function PopularPhonesSection({
+  content = popularPhonesContent,
+  className
+}: PopularPhonesSectionProps) {
+  // Memoize popular phones calculation for performance
+  const popularPhones = useMemo(() => 
+    phonesPageData.products
+      .sort((a, b) => b.review_count - a.review_count)
+      .slice(0, content.phoneCount),
+    [content.phoneCount]
+  );
 
   return (
-    <SectionContainer>
+    <Section background="bg-white" className={className}>
       <SectionHeader
-        title="Popular Phones"
-        description="Discover the latest smartphones with exclusive CitiSignal deals. Get the phone you want with flexible payment options."
+        title={content.header.title}
+        description={content.header.description}
         centered
         className="mb-16"
       />
 
-      <ProductGrid>
-        {popularPhones.map((phone) => (
-          <ProductCard
-            key={phone.sku}
-            id={phone.id}
-            name={phone.name}
-            brand={phone.manufacturer}
-            price={phone.price}
-            originalPrice={phone.original_price}
-            image={phone.media_gallery?.[0]?.url || ''}
-            category={phone.category}
-            features={phone.memory}
-            colors={phone.available_colors}
-            inStock={phone.stock_status === 'IN_STOCK'}
-            isNew={phone.isNew}
-            isSale={phone.original_price ? phone.original_price > phone.price : false}
-          />
-        ))}
-      </ProductGrid>
+        {/* Phones Grid */}
+        <ProductGrid 
+          products={popularPhones}
+          columns={{ sm: 1, md: 2, lg: 4 }}
+          gap="lg"
+        />
 
-      <div className="text-center mt-12">
-        <Button
-          href="/phones"
-          variant="subtle"
-          rightIcon={ChevronRightIcon}
-        >
-          View All Phones
-        </Button>
-      </div>
-    </SectionContainer>
+        {/* View All Button */}
+        <div className="text-center mt-12">
+          <Button
+            href={content.viewAllLink.href}
+            variant="secondary"
+            rightIcon={ArrowRightIcon}
+          >
+            {content.viewAllLink.text}
+          </Button>
+        </div>
+    </Section>
   );
-} 
+}
+
+export default memo(PopularPhonesSection); 

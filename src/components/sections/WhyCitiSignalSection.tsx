@@ -1,44 +1,37 @@
 'use client';
 
-import { ShieldCheckIcon, SignalIcon, CurrencyDollarIcon, UserGroupIcon } from '@heroicons/react/24/outline';
-import SectionContainer from '@/components/ui/SectionContainer';
-import SectionHeader from '@/components/ui/SectionHeader';
-import FeatureGrid from '@/components/ui/FeatureGrid';
+import { memo } from 'react';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import IconBenefitGrid from '@/components/ui/grids/IconBenefitGrid';
+import { whyCitiSignalContent } from '@/data/sections/whyCitiSignal';
+import type { WhyCitiSignalContent } from '@/data/sections/whyCitiSignal';
 
-export default function WhyCitiSignalSection() {
-  const features = [
-    {
-      icon: SignalIcon,
-      title: 'Superior Coverage',
-      description: 'Nationwide 5G network with 99% population coverage and growing'
-    },
-    {
-      icon: ShieldCheckIcon,
-      title: 'Reliable Security',
-      description: 'Advanced network security and data protection for peace of mind'
-    },
-    {
-      icon: CurrencyDollarIcon,
-      title: 'Competitive Pricing',
-      description: 'Flexible plans and transparent pricing to fit your budget'
-    },
-    {
-      icon: UserGroupIcon,
-      title: '24/7 Support',
-      description: 'Expert customer service available around the clock'
-    }
-  ];
+export interface WhyCitiSignalSectionProps {
+  content?: WhyCitiSignalContent;
+  className?: string;
+}
 
+function WhyCitiSignalSection({
+  content = whyCitiSignalContent,
+  className
+}: WhyCitiSignalSectionProps) {
   return (
-    <SectionContainer bgColor="bg-gray-50">
+    <Section background="bg-gray-50" className={className}>
       <SectionHeader
-        title="Why Choose CitiSignal"
-        description="Experience the difference with our industry-leading service"
+        title={content.header.title}
+        description={content.header.description}
         centered
         className="mb-12"
       />
-
-      <FeatureGrid features={features} />
-    </SectionContainer>
+      
+      <IconBenefitGrid 
+        benefits={content.benefits}
+        columns={{ sm: 1, md: 2, lg: 4 }}
+        gap="lg"
+      />
+    </Section>
   );
-} 
+}
+
+export default memo(WhyCitiSignalSection); 

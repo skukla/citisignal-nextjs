@@ -1,66 +1,39 @@
 'use client';
 
-import { PhoneIcon, WifiIcon, CheckCircleIcon, CogIcon } from '@heroicons/react/24/outline';
-import SectionHeader from '@/components/ui/SectionHeader';
-import ProcessSteps from '@/components/ui/ProcessSteps';
-import CallToAction from '@/components/ui/CallToAction';
+import { memo } from 'react';
+import Section from '@/components/ui/layout/Section';
+import SectionHeader from '@/components/ui/layout/SectionHeader';
+import ProcessSteps from '@/components/ui/content/ProcessSteps';
+import CallToAction from '@/components/ui/feedback/CallToAction';
+import { activationContent } from '@/data/sections/activation';
+import type { ActivationSectionProps } from '@/types/section';
 
-export default function ActivationSection() {
-  const steps = [
-    {
-      icon: PhoneIcon,
-      title: 'Choose Your Device',
-      description: 'Select from our wide range of smartphones, tablets, and watches.',
-      details: ['Latest iPhone and Android models', 'Certified refurbished options', 'Trade-in credit available']
-    },
-    {
-      icon: WifiIcon,
-      title: 'Select Your Plan',
-      description: 'Pick the perfect plan for your lifestyle and budget.',
-      details: ['Unlimited data options', 'Family plan discounts', 'No hidden fees or contracts']
-    },
-    {
-      icon: CogIcon,
-      title: 'Easy Setup',
-      description: 'Get your device activated and ready to use in minutes.',
-      details: ['Online activation', 'In-store assistance', 'Phone number transfer']
-    },
-    {
-      icon: CheckCircleIcon,
-      title: 'Start Using',
-      description: 'Enjoy your new device with CitiSignal&apos;s reliable network.',
-      details: ['24/7 customer support', 'Network optimization', 'Mobile app included']
-    }
-  ];
-
-  const features = [
-    { text: 'Free activation and setup', icon: CheckCircleIcon },
-    { text: 'Keep your current phone number', icon: CheckCircleIcon },
-    { text: '30-day satisfaction guarantee', icon: CheckCircleIcon }
-  ];
+function ActivationSection({
+  content = activationContent,
+  className
+}: ActivationSectionProps) {
 
   return (
-    <section className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <Section background="bg-white" className={className}>
         <SectionHeader
-          title="Get Started in 4 Easy Steps"
-          description="Switching to CitiSignal is simple. Follow these easy steps to get your new device activated and start enjoying our reliable network."
+          title={content.header.title}
+          description={content.header.description}
           centered
-          titleSize="md"
-          descriptionSize="lg"
         />
 
-        <ProcessSteps steps={steps} />
+        <ProcessSteps steps={content.steps} />
 
         <CallToAction
-          title="Ready to make the switch?"
-          description="Join millions of satisfied customers who trust CitiSignal for their wireless needs. Start your journey today with our easy activation process."
-          features={features}
-          buttonText="Start Your Activation"
-          supportText="Questions? Call us at"
-          supportPhone="1-800-CITI-SIG"
+          title={content.callToAction.title}
+          description={content.callToAction.description}
+          features={content.callToAction.features}
+          buttonText={content.callToAction.buttonText}
+          buttonHref={content.callToAction.buttonHref}
+          supportText={content.callToAction.supportText}
+          supportPhone={content.callToAction.supportPhone}
         />
-      </div>
-    </section>
+    </Section>
   );
-} 
+}
+
+export default memo(ActivationSection); 

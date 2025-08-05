@@ -20,12 +20,12 @@ interface Product {
   stock_status?: string;
 }
 
-interface UseProductListProps<T extends Product> {
+export interface UseProductListProps<T extends Product> {
   products: T[];
   initialSort?: SortOption;
 }
 
-interface UseProductListReturn<T> {
+export interface UseProductListReturn<T> {
   searchQuery: string;
   setSearchQuery: (query: string) => void;
   sortBy: SortOption;

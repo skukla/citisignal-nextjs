@@ -1,4 +1,3 @@
-import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import HeroSection from '@/components/sections/HeroSection';
 import PopularPhonesSection from '@/components/sections/PopularPhonesSection';
@@ -13,7 +12,6 @@ import LifestyleSolutionsSection from '@/components/sections/LifestyleSolutionsS
 export default function Home() {
   return (
     <div className="min-h-screen">
-      <Header />
       <main>
         <HeroSection />
         <WhyCitiSignalSection />

@@ -103,4 +103,4 @@ export const colorOptions = [
   { id: 'silver', name: 'Silver', hex: '#f1f3ee' },
   { id: 'starlight', name: 'Starlight', hex: '#e7e1dc' },
   { id: 'white', name: 'White', hex: '#f9f9f9' }
-]; 
+];
