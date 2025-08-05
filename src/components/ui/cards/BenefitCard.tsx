@@ -31,7 +31,7 @@ function BenefitCard({
 }: BenefitCardProps) {
   return (
     <Card className={twMerge('text-center max-w-[250px] mx-auto p-0 bg-transparent border-none shadow-none', className)}>
-      <div className="w-12 h-12 bg-white bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-3">
+      <div className="w-12 h-12 bg-purple-50/20 rounded-full flex items-center justify-center mx-auto mb-3">
         <span className="text-2xl leading-none">{emoji}</span>
       </div>
       <h3 className="text-base font-semibold mb-1 text-white">
@@ -44,4 +44,4 @@ function BenefitCard({
   );
 }
 
-export default memo(BenefitCard); 
+export default memo(BenefitCard);

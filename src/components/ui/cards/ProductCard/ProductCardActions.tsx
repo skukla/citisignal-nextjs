@@ -24,7 +24,7 @@ export function ProductCardActions({
   };
 
   return (
-    <div className={twMerge('space-y-2', className)}>
+    <div className={twMerge('space-y-2 px-4 pb-4', className)}>
       <Button
         onClick={handleAddToCartClick}
         disabled={isOutOfStock}
