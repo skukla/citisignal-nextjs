@@ -8,7 +8,7 @@ import Container from '@/components/ui/layout/Container';
 import { Logo } from '@/components/ui/foundations/Logo';
 import Navigation, { NavigationRoot } from '@/components/ui/layout/Navigation';
 import Search from '@/components/ui/search/Search';
-import Cart from '@/components/ui/layout/Cart';
+import { CartIcon } from '@/components/ui/layout/Cart/CartIcon';
 import Account from '@/components/ui/layout/Account';
 import Button from '@/components/ui/foundations/Button';
 import { headerConfig } from '@/data/header';
@@ -69,10 +69,7 @@ export function StandardHeader() {
               
               {/* Cart */}
               <div className="relative">
-                <Cart.Root>
-                  <Cart.Icon aria-label="Shopping cart" />
-                  <Cart.Panel />
-                </Cart.Root>
+                <CartIcon aria-label="Shopping cart" />
               </div>
               
               {/* Account */}
