@@ -28,7 +28,7 @@ export const internetDealsPageData = {
       url_key: 'citisignal-fiber-gigabit',
       description: 'Lightning-fast fiber internet with speeds up to 1 Gig.',
       price: 79.99,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 95,
       review_count: 2340,
       media_gallery: [
@@ -58,7 +58,7 @@ export const internetDealsPageData = {
       description: 'Wireless home internet powered by our 5G network.',
       price: 49.99,
       original_price: 69.99,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 88,
       review_count: 1567,
       media_gallery: [

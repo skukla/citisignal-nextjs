@@ -28,7 +28,7 @@ export const streamingPageData = {
       url_key: 'netflix-premium',
       description: 'Watch unlimited movies and TV shows in Ultra HD.',
       price: 15.49,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 92,
       review_count: 15420,
       media_gallery: [
@@ -57,7 +57,7 @@ export const streamingPageData = {
       url_key: 'disney-plus-bundle',
       description: 'Disney+, Hulu, and ESPN+ all in one package.',
       price: 19.99,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 89,
       review_count: 8934,
       media_gallery: [

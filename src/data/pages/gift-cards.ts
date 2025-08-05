@@ -26,7 +26,7 @@ export const giftCardsPageData = {
       url_key: 'digital-gift-card-50',
       description: 'Perfect for any occasion. Delivered instantly via email.',
       price: 50,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 96,
       review_count: 1234,
       media_gallery: [
@@ -52,7 +52,7 @@ export const giftCardsPageData = {
       url_key: 'physical-gift-card-100',
       description: 'Beautiful physical card perfect for gifting.',
       price: 100,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 94,
       review_count: 567,
       media_gallery: [

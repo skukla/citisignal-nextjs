@@ -18,7 +18,7 @@ export const watchesPageData = {
       url_key: 'apple-watch-series-9',
       description: 'The most advanced Apple Watch yet with new health features.',
       price: 399,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 94,
       review_count: 567,
       media_gallery: [
@@ -52,7 +52,7 @@ export const watchesPageData = {
       url_key: 'samsung-galaxy-watch-6',
       description: 'Advanced health monitoring with sleek design.',
       price: 329,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 89,
       review_count: 432,
       media_gallery: [
@@ -144,7 +144,7 @@ export const watchesPageData = {
    * Page header configuration
    */
   pageHeader: {
-    title: 'Smart Watches',
+    title: 'Watches',
     description: 'Stay connected and track your health with our collection of smart watches. From fitness tracking to notifications, find the perfect wearable technology.',
     icon: ClockIcon
   },

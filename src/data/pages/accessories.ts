@@ -18,7 +18,7 @@ export const accessoriesPageData = {
       url_key: 'iphone-15-clear-case',
       description: 'Crystal clear protection for your iPhone 15.',
       price: 29.99,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 92,
       review_count: 245,
       media_gallery: [
@@ -46,7 +46,7 @@ export const accessoriesPageData = {
       url_key: 'wireless-charging-pad',
       description: 'Fast wireless charging for compatible devices.',
       price: 39.99,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 88,
       review_count: 156,
       media_gallery: [

@@ -18,7 +18,7 @@ export const plansPageData = {
       url_key: 'citisignal-unlimited-max',
       description: 'Our premium unlimited plan with all the perks.',
       price: 85,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 94,
       review_count: 1250,
       media_gallery: [
@@ -49,7 +49,7 @@ export const plansPageData = {
       description: 'Perfect for families with shared data and individual lines.',
       price: 120,
       original_price: 140,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 88,
       review_count: 850,
       media_gallery: [
@@ -79,7 +79,7 @@ export const plansPageData = {
       url_key: 'citisignal-essentials',
       description: 'Basic plan with everything you need.',
       price: 45,
-      currency: 'USD',
+      currency: '$',
       rating_summary: 86,
       review_count: 620,
       media_gallery: [
