@@ -24,7 +24,7 @@ export interface BaseProduct {
   
   // Categories & Stock
   category: string;
-  stock_status: 'IN_STOCK' | 'OUT_OF_STOCK';
+  stock_status: 'in_stock' | 'out_of_stock';
 
   // Flags
   isNew?: boolean;

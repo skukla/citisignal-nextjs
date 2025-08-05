@@ -37,7 +37,7 @@ export const giftCardsPageData = {
         }
       ],
       category: 'gift-cards',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       type: 'digital',
       amount: 50,
       delivery_time: 'Instant',
@@ -63,7 +63,7 @@ export const giftCardsPageData = {
         }
       ],
       category: 'gift-cards',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       type: 'physical',
       amount: 100,
       delivery_time: '3-5 business days',

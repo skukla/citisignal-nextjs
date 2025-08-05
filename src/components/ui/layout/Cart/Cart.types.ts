@@ -44,7 +44,6 @@ export interface CartItemProps extends BaseComponentProps {
 export interface CartFooterProps extends BaseComponentProps {
   showShippingNote?: boolean;
   checkoutLabel?: string;
-  onCheckout?: () => void;
 }
 
 // Type guards

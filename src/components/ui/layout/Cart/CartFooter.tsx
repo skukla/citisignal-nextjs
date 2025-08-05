@@ -2,16 +2,22 @@
 
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
+import { useRouter } from 'next/navigation';
 import { useCartContext } from './CartContext';
 import type { CartFooterProps } from './Cart.types';
 
 export function CartFooter({
   showShippingNote = true,
   checkoutLabel = 'Checkout',
-  onCheckout,
   className
 }: CartFooterProps) {
-  const { subtotal } = useCartContext();
+  const router = useRouter();
+  const { subtotal, onClose } = useCartContext();
+
+  const handleCheckout = () => {
+    onClose();
+    router.push('/checkout');
+  };
 
   return (
     <div className={twMerge('border-t border-gray-200 px-6 py-6', className)}>
@@ -26,7 +32,7 @@ export function CartFooter({
       )}
       <div className="mt-6">
         <Button
-          onClick={onCheckout}
+          onClick={handleCheckout}
           fullWidth
           size="lg"
         >

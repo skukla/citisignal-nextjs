@@ -29,7 +29,7 @@ export const accessoriesPageData = {
         }
       ],
       category: 'accessories',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       manufacturer: 'Apple',
       compatibility: ['iPhone 15'],
       available_colors: [
@@ -57,7 +57,7 @@ export const accessoriesPageData = {
         }
       ],
       category: 'accessories',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       manufacturer: 'CitiSignal',
       compatibility: ['Universal'],
       available_colors: [

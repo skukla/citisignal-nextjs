@@ -39,3 +39,14 @@ export function calculateDiscount(originalPrice: number, price: number): number 
 export function formatPrice(price: number, currency: string = '$'): string {
   return `${currency}${price.toFixed(2)}`;
 }
+
+/**
+ * Normalizes product stock status to lowercase format
+ * 
+ * @param status - The stock status to normalize
+ * @returns Normalized stock status
+ */
+export function normalizeStockStatus(status: string | undefined): 'in_stock' | 'out_of_stock' | undefined {
+  if (!status) return undefined;
+  return status.toLowerCase() as 'in_stock' | 'out_of_stock';
+}

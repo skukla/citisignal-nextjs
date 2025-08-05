@@ -29,7 +29,7 @@ export const plansPageData = {
         }
       ],
       category: 'plans',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       type: 'unlimited',
       data: 'Unlimited Premium',
       talk: 'Unlimited',
@@ -60,7 +60,7 @@ export const plansPageData = {
         }
       ],
       category: 'plans',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       type: 'family',
       data: '100GB',
       talk: 'Unlimited',
@@ -90,7 +90,7 @@ export const plansPageData = {
         }
       ],
       category: 'plans',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       type: 'individual',
       data: '50GB',
       talk: 'Unlimited',

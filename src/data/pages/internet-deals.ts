@@ -39,7 +39,7 @@ export const internetDealsPageData = {
         }
       ],
       category: 'internet-deals',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       type: 'fiber',
       speed: '1 Gig',
       data_limit: 'Unlimited',
@@ -69,7 +69,7 @@ export const internetDealsPageData = {
         }
       ],
       category: 'internet-deals',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       type: '5g-home',
       speed: 'Up to 300 Mbps',
       data_limit: 'Unlimited',

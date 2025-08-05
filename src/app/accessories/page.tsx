@@ -7,9 +7,8 @@ import BreadcrumbSection from '@/components/ui/layout/BreadcrumbSection';
 import PageHeaderSection from '@/components/ui/layout/PageHeaderSection';
 import SearchAndSort from '@/components/ui/search/SearchAndSort';
 import ResultsCount from '@/components/ui/search/ResultsCount';
-import ProductGridWithEmpty from '@/components/ui/grids/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
-import ProductCard from '@/components/ui/cards/ProductCard';
+import ProductGrid from '@/components/ui/grids/ProductGrid';
 import { accessoriesPageData } from '@/data/pages/accessories';
 import { useProductList } from '@/hooks/useProductList';
 import type { Accessory } from '@/types/commerce';
@@ -19,7 +18,7 @@ export default function AccessoriesPage() {
     searchQuery,
     setSearchQuery,
     sortBy,
-    setSortBy,
+    handleSortChange,
     activeFilters,
     showMobileFilters,
     setShowMobileFilters,
@@ -32,7 +31,7 @@ export default function AccessoriesPage() {
   const { filters, breadcrumbs, pageHeader, search, emptyState } = accessoriesPageData;
 
   return (
-    <div className="min-h-screen">
+    <PageContainer>
       <PageContainer background="gray">
         <BreadcrumbSection items={breadcrumbs} />
         
@@ -46,7 +45,7 @@ export default function AccessoriesPage() {
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           sortBy={sortBy}
-          onSortChange={setSortBy}
+          onSortChange={handleSortChange}
           searchPlaceholder={search.placeholder}
         />
         
@@ -68,8 +67,10 @@ export default function AccessoriesPage() {
             />
           }
         >
-          <ProductGridWithEmpty 
-            hasResults={filteredAndSortedProducts.length > 0}
+          <ProductGrid 
+            products={filteredAndSortedProducts as Accessory[]}
+            columns={{ sm: 1, md: 2, lg: 3 }}
+            gap="lg"
             emptyState={{
               icon: emptyState.icon,
               title: emptyState.title,
@@ -77,22 +78,10 @@ export default function AccessoriesPage() {
               actionLabel: emptyState.actionLabel,
               onAction: handleClearFilters
             }}
-          >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAndSortedProducts.map((accessory) => (
-                <ProductCard.Root key={accessory.id} product={accessory as Accessory}>
-                  <ProductCard.Image />
-                  <ProductCard.Badges />
-                  <ProductCard.Info />
-                  <ProductCard.Price />
-                  <ProductCard.Actions />
-                </ProductCard.Root>
-              ))}
-            </div>
-          </ProductGridWithEmpty>
+          />
         </TwoColumnLayout>
       </PageContainer>
       <PageFooter />
-    </div>
+    </PageContainer>
   );
 }

@@ -29,7 +29,7 @@ export const watchesPageData = {
         }
       ],
       category: 'watches',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       manufacturer: 'Apple',
       sizes: ['41mm', '45mm'],
       connectivity: 'GPS + Cellular',
@@ -63,7 +63,7 @@ export const watchesPageData = {
         }
       ],
       category: 'watches',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       manufacturer: 'Samsung',
       sizes: ['40mm', '44mm'],
       connectivity: 'GPS + LTE',

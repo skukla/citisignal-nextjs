@@ -39,7 +39,7 @@ export const streamingPageData = {
         }
       ],
       category: 'streaming',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       provider: 'Netflix',
       video_quality: ['4K Ultra HD', 'HD', 'SD'],
       device_limit: '4 screens at once',
@@ -68,7 +68,7 @@ export const streamingPageData = {
         }
       ],
       category: 'streaming',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       provider: 'Disney',
       video_quality: ['4K Ultra HD', 'HD'],
       device_limit: '4 screens at once',

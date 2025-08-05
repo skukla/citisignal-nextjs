@@ -37,7 +37,7 @@ export const phonesPageData = {
         }
       ],
       category: 'phones',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       manufacturer: 'Apple',
       memory: ['128GB'],
       available_colors: [
@@ -69,7 +69,7 @@ export const phonesPageData = {
         }
       ],
       category: 'phones',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       manufacturer: 'Samsung',
       memory: ['256GB'],
       available_colors: [
@@ -102,7 +102,7 @@ export const phonesPageData = {
         }
       ],
       category: 'phones',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       manufacturer: 'Apple',
       memory: ['128GB', '256GB', '512GB'],
       available_colors: [
@@ -135,7 +135,7 @@ export const phonesPageData = {
         }
       ],
       category: 'phones',
-      stock_status: 'IN_STOCK',
+      stock_status: 'in_stock',
       manufacturer: 'CitiSignal',
       memory: ['128GB', '256GB'],
       available_colors: [

@@ -9,7 +9,7 @@ import SearchAndSort from '@/components/ui/search/SearchAndSort';
 import ResultsCount from '@/components/ui/search/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/grids/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
-import ProductCard from '@/components/ui/cards/ProductCard';
+import ProductGrid from '@/components/ui/grids/ProductGrid';
 import { internetDealsPageData } from '@/data/pages/internet-deals';
 import { useProductList } from '@/hooks/useProductList';
 import type { InternetDeal } from '@/data/pages/internet-deals';
@@ -19,7 +19,7 @@ export default function InternetDealsPage() {
     searchQuery,
     setSearchQuery,
     sortBy,
-    setSortBy,
+    handleSortChange,
     activeFilters,
     showMobileFilters,
     setShowMobileFilters,
@@ -32,7 +32,7 @@ export default function InternetDealsPage() {
   const { filters, breadcrumbs, pageHeader, search, emptyState } = internetDealsPageData;
 
   return (
-    <div className="min-h-screen">
+    <PageContainer>
       <PageContainer background="gray">
         <BreadcrumbSection items={breadcrumbs} />
         
@@ -46,7 +46,7 @@ export default function InternetDealsPage() {
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           sortBy={sortBy}
-          onSortChange={setSortBy}
+          onSortChange={handleSortChange}
           searchPlaceholder={search.placeholder}
         />
         
@@ -78,21 +78,15 @@ export default function InternetDealsPage() {
               onAction: handleClearFilters
             }}
           >
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredAndSortedProducts.map((deal) => (
-                <ProductCard.Root key={deal.id} product={deal as InternetDeal}>
-                  <ProductCard.Image />
-                  <ProductCard.Badges />
-                  <ProductCard.Info />
-                  <ProductCard.Price />
-                  <ProductCard.Actions />
-                </ProductCard.Root>
-              ))}
-            </div>
+            <ProductGrid 
+              products={filteredAndSortedProducts as InternetDeal[]}
+              columns={{ sm: 1, md: 2, lg: 3 }}
+              gap="lg"
+            />
           </ProductGridWithEmpty>
         </TwoColumnLayout>
       </PageContainer>
       <PageFooter />
-    </div>
+    </PageContainer>
   );
 }

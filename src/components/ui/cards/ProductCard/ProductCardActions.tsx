@@ -3,12 +3,13 @@
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
 import { useCart } from '@/components/ui/layout/Cart';
-import type { ProductCardActionsProps } from './ProductCard.types';
+import { useProductCard } from './ProductCardContext';
+import type { BaseComponentProps } from '@/types/ui';
 
 export function ProductCardActions({
-  product,
   className
-}: ProductCardActionsProps) {
+}: BaseComponentProps) {
+  const { product } = useProductCard();
   const { addItem } = useCart();
   const isOutOfStock = product?.stock_status === 'out_of_stock';
 
@@ -18,7 +19,7 @@ export function ProductCardActions({
         id: product.id,
         name: product.name,
         price: product.price,
-        imageUrl: product.images?.[0]
+        imageUrl: product.media_gallery?.[0]?.url
       });
     }
   };

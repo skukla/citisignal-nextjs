@@ -30,18 +30,8 @@ export interface ProductCardInfoProps extends BaseComponentProps {
 }
 
 export type ProductCardPriceProps = BaseComponentProps;
-
 export type ProductCardColorsProps = BaseComponentProps;
-
-export interface ProductCardActionsProps extends BaseComponentProps {
-  product: {
-    id: string;
-    name: string;
-    price: number;
-    images?: string[];
-    stock_status?: 'in_stock' | 'out_of_stock';
-  };
-}
+export type ProductCardActionsProps = BaseComponentProps;
 
 // Type guards
 export function hasColors(product: ProductType): product is Phone | Watch | Accessory {
