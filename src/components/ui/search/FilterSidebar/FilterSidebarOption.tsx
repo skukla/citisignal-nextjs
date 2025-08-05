@@ -4,6 +4,7 @@
  */
 
 import { memo, useCallback } from 'react';
+import Checkbox from '@/components/ui/foundations/Checkbox';
 import type { FilterSidebarOptionProps } from './FilterSidebar.types';
 
 function FilterSidebarOption({
@@ -17,21 +18,18 @@ function FilterSidebarOption({
     onFilterChange(sectionKey, option.id, e.target.checked);
   }, [onFilterChange, sectionKey, option.id]);
   return (
-    <label className="flex items-center cursor-pointer">
-      <input
-        type={sectionType}
+    <div className="flex items-center">
+      <Checkbox
         name={sectionType === 'radio' ? sectionKey : undefined}
         checked={isSelected}
         onChange={handleChange}
-        className="w-4 h-4 accent-purple-600 border-gray-300 rounded"
+        label={option.name}
+        containerClassName="flex-1"
       />
-      <span className="ml-3 text-sm text-gray-700 flex-1">
-        {option.name}
-      </span>
       {option.count !== undefined && (
         <span className="text-sm text-gray-500">({option.count})</span>
       )}
-    </label>
+    </div>
   );
 }
 
