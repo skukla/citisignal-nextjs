@@ -9,81 +9,81 @@ import type {
   CheckoutStepId, 
   ShippingDetails, 
   PaymentDetails,
-  CartItem 
-} from '../Checkout.types';
+  OrderDetails,
+  TouchedFields
+} from '../types';
 
-const STEPS = [
-  {
-    id: 'shipping' as const,
-    title: 'Shipping',
-    description: 'Enter your shipping details',
-    isComplete: false
-  },
-  {
-    id: 'payment' as const,
-    title: 'Payment',
-    description: 'Enter your payment information',
-    isComplete: false
-  },
-  {
-    id: 'review' as const,
-    title: 'Review',
-    description: 'Review your order',
-    isComplete: false
-  }
-];
-
-const TAX_RATE = 0.0825; // 8.25%
-const SHIPPING_RATE = 9.99;
-
-interface OrderDetails {
-  items: CartItem[];
-  shipping: ShippingDetails;
-  payment: PaymentDetails;
-  totals: {
-    subtotal: number;
-    tax: number;
-    shipping: number;
-    total: number;
-  };
-}
+import { checkoutData } from '../data/checkout';
+import { validationData } from '../data/validation';
 
 interface UseCheckoutOptions {
   onComplete?: (orderDetails: OrderDetails) => void;
 }
 
+/**
+ * Manages checkout process state and logic.
+ * Handles shipping, payment, and order completion.
+ * @param {Object} [options] - Checkout configuration
+ * @param {Function} [options.onComplete] - Callback when order completes
+ * @returns {Object} Checkout state and handlers
+ * @example
+ * const {
+ *   currentStep,
+ *   shippingDetails,
+ *   paymentDetails,
+ *   updateShipping,
+ *   placeOrder
+ * } = useCheckout({
+ *   onComplete: (order) => console.log(order)
+ * });
+ */
 export function useCheckout({ onComplete }: UseCheckoutOptions = {}): CheckoutContextValue {
   const { items, getSubtotal } = useCart();
   const [currentStep, setCurrentStep] = useState<CheckoutStepId>('shipping');
-  const steps = STEPS;
+  const steps = checkoutData.steps;
   const [shippingDetails, setShippingDetails] = useState<ShippingDetails | null>(null);
   const [paymentDetails, setPaymentDetails] = useState<PaymentDetails | null>(null);
+  const [touchedFields, setTouchedFields] = useState<TouchedFields>({});
 
   const subtotal = useMemo(() => getSubtotal(), [getSubtotal]);
-  const tax = useMemo(() => subtotal * TAX_RATE, [subtotal]);
-  const shipping = SHIPPING_RATE;
+  const tax = useMemo(() => subtotal * checkoutData.rates.tax, [subtotal]);
+  const shipping = checkoutData.rates.shipping;
   const total = useMemo(() => subtotal + tax + shipping, [subtotal, tax, shipping]);
 
-  const updateShipping = useCallback((details: Partial<ShippingDetails>) => {
+  const updateShipping = useCallback((details: Partial<ShippingDetails>, fieldName?: string) => {
     setShippingDetails(prev => ({
       ...prev,
       ...details
     } as ShippingDetails));
+    
+    if (fieldName) {
+      setTouchedFields((prev: TouchedFields) => ({
+        ...prev,
+        [fieldName]: true
+      }));
+    }
   }, []);
 
-  const updatePayment = useCallback((details: Partial<PaymentDetails>) => {
+  const updatePayment = useCallback((details: Partial<PaymentDetails>, fieldName?: string) => {
     setPaymentDetails(prev => ({
       ...prev,
       ...details
     } as PaymentDetails));
+    
+    if (fieldName) {
+      setTouchedFields((prev: TouchedFields) => ({
+        ...prev,
+        [fieldName]: true
+      }));
+    }
   }, []);
 
-  const { isStepComplete } = useCheckoutValidation(shippingDetails, paymentDetails);
+  const { isStepComplete, validateStep } = useCheckoutValidation(shippingDetails, paymentDetails);
   const { placeOrder: processOrder } = useOrderProcessing({ onComplete });
 
   const canProceedToStep = useCallback((stepId: CheckoutStepId): boolean => {
-    const stepIndex = STEPS.findIndex(step => step.id === stepId);
-    const previousSteps = STEPS.slice(0, stepIndex);
+    const stepIndex = checkoutData.steps.findIndex(step => step.id === stepId);
+    const previousSteps = checkoutData.steps.slice(0, stepIndex);
     return previousSteps.every(step => isStepComplete(step.id));
   }, [isStepComplete]);
 
@@ -95,7 +95,7 @@ export function useCheckout({ onComplete }: UseCheckoutOptions = {}): CheckoutCo
 
   const placeOrder = useCallback(async () => {
     if (!isStepComplete('shipping') || !isStepComplete('payment')) {
-      throw new Error('Cannot place order: missing required information');
+      throw new Error(validationData.messages.missingInfo);
     }
 
     const orderDetails = {
@@ -112,7 +112,7 @@ export function useCheckout({ onComplete }: UseCheckoutOptions = {}): CheckoutCo
 
     const result = await processOrder(orderDetails);
     if (!result.success) {
-      throw result.error || new Error('Failed to place order');
+      throw result.error || new Error(validationData.messages.orderFailed);
     }
   }, [items, shippingDetails, paymentDetails, subtotal, tax, shipping, total, processOrder, isStepComplete]);
 
@@ -126,11 +126,13 @@ export function useCheckout({ onComplete }: UseCheckoutOptions = {}): CheckoutCo
     total,
     shippingDetails,
     paymentDetails,
+    touchedFields,
     setStep,
     updateShipping,
     updatePayment,
     placeOrder,
     isStepComplete,
-    canProceedToStep
+    canProceedToStep,
+    validateStep
   };
 }

@@ -12,6 +12,8 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
     iconClassName?: string;
     variant?: 'default' | 'newsletter';
     containerClassName?: string;
+    label?: string;
+    error?: string;
 }
 
 /**
@@ -43,6 +45,8 @@ function Input({
   containerClassName,
   className,
   disabled,
+  label,
+  error,
   ...props
 }: InputProps) {
   const hasLeftIcon = !!LeftIcon;
@@ -57,7 +61,7 @@ function Input({
 
   const inputClasses = twMerge(
     // Base styles
-    'w-full bg-white rounded-lg transition-all duration-200',
+    'w-full bg-white rounded-lg transition-all duration-200 text-gray-900',
     
     // Variant-specific styles
     variant === 'default' && [
@@ -88,22 +92,32 @@ function Input({
 
   return (
     <div className={containerClasses}>
-      {LeftIcon && (
-        <LeftIcon 
-          className={twMerge(iconStyles, 'left-3')}
-          aria-hidden
-        />
+      {label && (
+        <label htmlFor={props.id} className="block text-sm font-medium text-gray-700 mb-1">
+          {label}
+        </label>
       )}
-      <input
+      <div className="relative">
+        {LeftIcon && (
+          <LeftIcon 
+            className={twMerge(iconStyles, 'left-3')}
+            aria-hidden
+          />
+        )}
+        <input
         {...props}
         disabled={disabled}
         className={inputClasses}
       />
-      {RightIcon && (
-        <RightIcon 
-          className={twMerge(iconStyles, 'right-3')}
-          aria-hidden
-        />
+        {RightIcon && (
+          <RightIcon 
+            className={twMerge(iconStyles, 'right-3')}
+            aria-hidden
+          />
+        )}
+      </div>
+      {error && (
+        <p className="mt-1 text-sm text-red-600">{error}</p>
       )}
     </div>
   );
