@@ -1,14 +1,16 @@
 import { CheckoutRoot } from './CheckoutRoot';
 import { CheckoutHeader } from './CheckoutHeader';
+import { CheckoutSteps } from './CheckoutSteps';
 import { CheckoutSummary } from './CheckoutSummary';
-import { CheckoutShipping } from './CheckoutShipping';
-import { CheckoutPayment } from './CheckoutPayment';
-import { CheckoutReview } from './CheckoutReview';
-import type { CheckoutComponent } from './Checkout.types';
+import CheckoutShipping from './CheckoutShipping';
+import CheckoutPayment from './CheckoutPayment';
+import CheckoutReview from './CheckoutReview';
+import type { CheckoutComponent } from './types';
 
 const Checkout: CheckoutComponent = {
   Root: CheckoutRoot,
   Header: CheckoutHeader,
+  Steps: CheckoutSteps,
   Summary: CheckoutSummary,
   Shipping: CheckoutShipping,
   Payment: CheckoutPayment,
