@@ -38,6 +38,21 @@ export interface UseProductListReturn<T> {
   filteredAndSortedProducts: T[];
 }
 
+/**
+ * Manages product list filtering, sorting, and search functionality.
+ * @template T - Product type that extends base Product interface
+ * @param {Object} props - Hook configuration
+ * @param {T[]} props.products - List of products to manage
+ * @param {SortOption} [props.initialSort='popular'] - Initial sort option
+ * @returns {Object} Product list state and handlers
+ * @example
+ * const {
+ *   searchQuery,
+ *   sortBy,
+ *   activeFilters,
+ *   filteredAndSortedProducts
+ * } = useProductList({ products });
+ */
 export function useProductList<T extends Product>({ 
   products,
   initialSort = 'popular'

@@ -9,6 +9,13 @@ import { useSearchLogic } from './useSearchLogic';
  */
 export type UseSearchReturn = SearchContextValue;
 
+/**
+ * Provides search functionality for the search component.
+ * Uses SearchContext to manage global search state.
+ * @returns {Object} Search state and handlers
+ * @example
+ * const { query, setQuery, results } = useSearch();
+ */
 export function useSearch(): UseSearchReturn {
   const { isOpen, toggle, close, panelRef } = useSearchPanel();
   const { query, results, isLoading, setQuery, selectResult } = useSearchLogic();

@@ -16,6 +16,17 @@ export interface UsePanelReturn {
   triggerRef: React.RefObject<HTMLButtonElement | null>;
 }
 
+/**
+ * Manages panel state with click-outside and keyboard handling.
+ * @param {Object} [options] - Panel configuration
+ * @param {boolean} [options.isOpen] - Controlled open state
+ * @param {Function} [options.onOpenChange] - Callback when open state changes
+ * @returns {Object} Panel state and refs
+ * @example
+ * const { isOpen, toggle, panelRef } = usePanel({
+ *   onOpenChange: (isOpen) => console.log(isOpen)
+ * });
+ */
 export function usePanel(options: UsePanelOptions = {}): UsePanelReturn {
   const { isOpen: controlledIsOpen, onOpenChange } = options;
   
