@@ -1,7 +1,7 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-import Container from './Container';
+import Content from '@/components/layout/Content';
 import type { PageHeaderProps } from '@/types/header';
 
 /**
@@ -46,25 +46,27 @@ export default function PageHeader({
   'aria-label': ariaLabel,
 }: PageHeaderProps) {
   return (
-    <Container as="header" role="banner" aria-label={ariaLabel || title}>
-      <div className={twMerge('mb-8', className)}>
-        <div className="flex items-center justify-between gap-4 mb-4">
-          <div className="flex items-center gap-3">
-            <Icon className="w-8 h-8 text-purple-600" aria-hidden="true" />
-            <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
-          </div>
-          {actions && (
+    <Content>
+      <header role="banner" aria-label={ariaLabel || title}>
+        <div className={twMerge('mb-8', className)}>
+          <div className="flex items-center justify-between gap-4 mb-4">
             <div className="flex items-center gap-3">
-              {actions}
+              <Icon className="w-8 h-8 text-purple-600" aria-hidden="true" />
+              <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
             </div>
+            {actions && (
+              <div className="flex items-center gap-3">
+                {actions}
+              </div>
+            )}
+          </div>
+          {description && (
+            <p className="text-lg text-gray-600 max-w-3xl">
+              {description}
+            </p>
           )}
         </div>
-        {description && (
-          <p className="text-lg text-gray-600 max-w-3xl">
-            {description}
-          </p>
-        )}
-      </div>
-    </Container>
+    </header>
+    </Content>
   );
 }
