@@ -8,6 +8,7 @@ import PageHeader from '@/components/ui/layout/PageHeader';
 import SearchAndSort from '@/components/ui/search/SearchAndSort';
 import ResultsCount from '@/components/ui/search/ResultsCount';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
+import EmptyState from '@/components/ui/feedback/EmptyState';
 import ProductGrid from '@/components/ui/grids/ProductGrid';
 import NewsletterSection from '@/components/sections/NewsletterSection';
 import { streamingPageData } from '@/data/pages/streaming';
@@ -56,30 +57,31 @@ export default function StreamingPage() {
           itemLabel={search.itemLabel} 
         />
         
-        <TwoColumnLayout 
-          sidebar={
-            <FilterSidebarResponsive 
-              filters={filters}
-              activeFilters={activeFilters}
-              onFilterChange={handleFilterChange}
-              onClearFilters={handleClearFilters}
-              showMobileFilters={showMobileFilters}
-              setShowMobileFilters={setShowMobileFilters}
-            />
-          }
-        >
-          <ProductGrid 
-            products={filteredAndSortedProducts as StreamingService[]}
-            columns={{ sm: 1, md: 2, lg: 3 }}
-            gap="lg"
-            emptyState={{
-              icon: emptyState.icon,
-              title: emptyState.title,
-              description: emptyState.description,
-              actionLabel: emptyState.actionLabel,
-              onAction: handleClearFilters
-            }}
+        <TwoColumnLayout>
+          <FilterSidebarResponsive 
+            filters={filters}
+            activeFilters={activeFilters}
+            onFilterChange={handleFilterChange}
+            onClearFilters={handleClearFilters}
+            showMobileFilters={showMobileFilters}
+            setShowMobileFilters={setShowMobileFilters}
           />
+          
+          {filteredAndSortedProducts.length > 0 ? (
+            <ProductGrid 
+              products={filteredAndSortedProducts as StreamingService[]}
+              columns={{ sm: 1, md: 2, lg: 3 }}
+              gap="lg"
+            />
+          ) : (
+            <EmptyState
+              icon={emptyState.icon}
+              title={emptyState.title}
+              description={emptyState.description}
+              actionLabel={emptyState.actionLabel}
+              onAction={handleClearFilters}
+            />
+          )}
         </TwoColumnLayout>
       </Content>
       <NewsletterSection />

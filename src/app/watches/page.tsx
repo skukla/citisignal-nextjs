@@ -7,7 +7,7 @@ import Breadcrumb from '@/components/ui/layout/Breadcrumb';
 import PageHeader from '@/components/ui/layout/PageHeader';
 import SearchAndSort from '@/components/ui/search/SearchAndSort';
 import ResultsCount from '@/components/ui/search/ResultsCount';
-import ProductGridWithEmpty from '@/components/ui/grids/ProductGridWithEmpty';
+import EmptyState from '@/components/ui/feedback/EmptyState';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
 import ProductGrid from '@/components/ui/grids/ProductGrid';
 import NewsletterSection from '@/components/sections/NewsletterSection';
@@ -57,34 +57,31 @@ export default function WatchesPage() {
           itemLabel={search.itemLabel} 
         />
         
-        <TwoColumnLayout 
-          sidebar={
-            <FilterSidebarResponsive 
-              filters={filters}
-              activeFilters={activeFilters}
-              onFilterChange={handleFilterChange}
-              onClearFilters={handleClearFilters}
-              showMobileFilters={showMobileFilters}
-              setShowMobileFilters={setShowMobileFilters}
-            />
-          }
-        >
-          <ProductGridWithEmpty 
-            hasResults={filteredAndSortedProducts.length > 0}
-            emptyState={{
-              icon: emptyState.icon,
-              title: emptyState.title,
-              description: emptyState.description,
-              actionLabel: emptyState.actionLabel,
-              onAction: handleClearFilters
-            }}
-          >
+        <TwoColumnLayout>
+          <FilterSidebarResponsive 
+            filters={filters}
+            activeFilters={activeFilters}
+            onFilterChange={handleFilterChange}
+            onClearFilters={handleClearFilters}
+            showMobileFilters={showMobileFilters}
+            setShowMobileFilters={setShowMobileFilters}
+          />
+          
+          {filteredAndSortedProducts.length > 0 ? (
             <ProductGrid 
               products={filteredAndSortedProducts as Watch[]}
               columns={{ sm: 1, md: 2, lg: 3 }}
               gap="lg"
             />
-          </ProductGridWithEmpty>
+          ) : (
+            <EmptyState
+              icon={emptyState.icon}
+              title={emptyState.title}
+              description={emptyState.description}
+              actionLabel={emptyState.actionLabel}
+              onAction={handleClearFilters}
+            />
+          )}
         </TwoColumnLayout>
       </Content>
       <NewsletterSection />

@@ -83,23 +83,14 @@ export default function PhonesPage() {
           />
           
           {filteredAndSortedProducts.length > 0 ? (
-            <ProductGrid 
-              products={filteredAndSortedProducts as Phone[]}
-              columns={{ sm: 1, md: 2, lg: 3 }} 
-              gap="md"
-            />
-          ) : (
-            <EmptyState
-              icon={emptyState.icon}
-              title={emptyState.title}
-              description={emptyState.description}
-              actionLabel={emptyState.actionLabel}
-              onAction={handleClearFilters}
-            />
-          )}
+            <>
+              <ProductGrid 
+                products={filteredAndSortedProducts as Phone[]}
+                columns={{ sm: 1, md: 2, lg: 3 }} 
+                gap="md"
+              />
 
-            {/* Enhanced Content Sections - Only show when we have products */}
-            {filteredAndSortedProducts.length > 0 && (
+              {/* Enhanced Content Sections */}
               <div className="space-y-12 mt-12">
                 {/* Featured Tech Reviews */}
                 <section className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100">
@@ -135,8 +126,16 @@ export default function PhonesPage() {
                   <AccessoryGrid accessories={sections.accessories.accessories} />
                 </section>
               </div>
-            )}
-          </ProductGridWithEmpty>
+            </>
+          ) : (
+            <EmptyState
+              icon={emptyState.icon}
+              title={emptyState.title}
+              description={emptyState.description}
+              actionLabel={emptyState.actionLabel}
+              onAction={handleClearFilters}
+            />
+          )}
         </TwoColumnLayout>
       </Content>
       <NewsletterSection />
