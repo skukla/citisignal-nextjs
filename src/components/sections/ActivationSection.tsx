@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import Section from '@/components/ui/layout/Section';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
 import ProcessSteps from '@/components/ui/content/ProcessSteps';
 import CallToAction from '@/components/ui/feedback/CallToAction';
@@ -14,7 +14,7 @@ function ActivationSection({
 }: ActivationSectionProps) {
 
   return (
-    <Section background="bg-white" className={className}>
+    <ContentSection background="bg-white" className={className}>
         <SectionHeader
           title={content.header.title}
           description={content.header.description}
@@ -32,7 +32,7 @@ function ActivationSection({
           supportText={content.callToAction.supportText}
           supportPhone={content.callToAction.supportPhone}
         />
-    </Section>
+    </ContentSection>
   );
 }
 

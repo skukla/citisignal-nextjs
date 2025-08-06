@@ -2,7 +2,7 @@
 
 import { twMerge } from 'tailwind-merge';
 import { useCheckoutContext } from './CheckoutContext';
-import type { CheckoutHeaderProps } from './Checkout.types';
+import type { CheckoutHeaderProps } from './types';
 
 export function CheckoutHeader({
   title = 'Checkout',

@@ -1,33 +1,20 @@
 'use client';
 
-import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
 import { useCheckoutContext } from './CheckoutContext';
-import type { CheckoutReviewProps } from './Checkout.types';
+import { useOrderSubmission } from './hooks/useOrderSubmission';
+import { useCheckoutNavigation } from './hooks/useCheckoutNavigation';
+import type { CheckoutReviewProps } from './types';
 
-export function CheckoutReview({ className }: CheckoutReviewProps) {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const { 
-    shippingDetails, 
-    paymentDetails,
-    setStep,
-    placeOrder,
-    isStepComplete 
-  } = useCheckoutContext();
+export default function CheckoutReview({ className }: CheckoutReviewProps) {
+  const { shippingDetails, paymentDetails } = useCheckoutContext();
+  const { isSubmitting, submitOrder, canSubmit } = useOrderSubmission();
+  const { navigateToStep } = useCheckoutNavigation();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!isStepComplete('shipping') || !isStepComplete('payment')) return;
-
-    try {
-      setIsSubmitting(true);
-      await placeOrder();
-    } catch (error) {
-      console.error('Failed to place order:', error);
-    } finally {
-      setIsSubmitting(false);
-    }
+    await submitOrder();
   };
 
   if (!shippingDetails || !paymentDetails) {
@@ -70,14 +57,14 @@ export function CheckoutReview({ className }: CheckoutReviewProps) {
       <div className="flex justify-between">
         <Button
           variant="outline"
-          onClick={() => setStep('payment')}
+          onClick={() => navigateToStep('payment')}
         >
           Back to Payment
         </Button>
         <Button 
           onClick={handleSubmit}
           loading={isSubmitting}
-          disabled={isSubmitting || !isStepComplete('shipping') || !isStepComplete('payment')}
+          disabled={isSubmitting || !canSubmit()}
         >
           Place Order
         </Button>

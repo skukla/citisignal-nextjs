@@ -4,26 +4,14 @@ import { createContext, useContext, ReactNode } from 'react';
 import { useCheckout } from './hooks/useCheckout';
 import type { 
   CheckoutContextValue,
-  CartItem,
-  ShippingDetails,
-  PaymentDetails 
-} from './Checkout.types';
+  OrderDetails
+} from './types';
 
 const CheckoutContext = createContext<CheckoutContextValue | null>(null);
 
 interface CheckoutProviderProps {
   children: ReactNode;
-  onComplete?: (orderDetails: {
-    items: CartItem[];
-    shipping: ShippingDetails;
-    payment: PaymentDetails;
-    totals: {
-      subtotal: number;
-      tax: number;
-      shipping: number;
-      total: number;
-    };
-  }) => void;
+  onComplete?: (orderDetails: OrderDetails) => void;
 }
 
 export function CheckoutProvider({ children, onComplete }: CheckoutProviderProps) {

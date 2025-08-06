@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import Section from '@/components/ui/layout/Section';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
 import IconBenefitGrid from '@/components/ui/grids/IconBenefitGrid';
 import { whyCitiSignalContent } from '@/data/sections/whyCitiSignal';
@@ -17,7 +17,7 @@ function WhyCitiSignalSection({
   className
 }: WhyCitiSignalSectionProps) {
   return (
-    <Section background="bg-gray-50" className={className}>
+    <ContentSection background="bg-gray-50" className={className}>
       <SectionHeader
         title={content.header.title}
         description={content.header.description}
@@ -30,7 +30,7 @@ function WhyCitiSignalSection({
         columns={{ sm: 1, md: 2, lg: 4 }}
         gap="lg"
       />
-    </Section>
+    </ContentSection>
   );
 }
 

@@ -12,7 +12,7 @@ interface BreadcrumbProps {
 
 export default function Breadcrumb({ items }: BreadcrumbProps) {
   return (
-    <nav className="flex" aria-label="Breadcrumb">
+    <nav className="flex mb-6" aria-label="Breadcrumb">
       <ol className="flex items-center space-x-2">
         {/* Home Link */}
         <li>

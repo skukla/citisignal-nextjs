@@ -3,7 +3,7 @@
 import { memo } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from '@/components/ui/foundations/Link';
-import Section from '@/components/ui/layout/Section';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
 import ArticleGrid from '@/components/ui/grids/ArticleGrid';
 import { techNewsContent } from '@/data/sections/techNews';
@@ -20,7 +20,7 @@ function TechNewsSection({
 }: TechNewsSectionProps) {
 
   return (
-    <Section background="bg-gray-50" className={className}>
+    <ContentSection background="bg-gray-50" className={className}>
       {/* Section Header with View All Link */}
       <div className="flex justify-between items-end mb-12">
         <SectionHeader
@@ -59,7 +59,7 @@ function TechNewsSection({
           View All Articles
         </Link>
       </div>
-    </Section>
+    </ContentSection>
   );
 }
 

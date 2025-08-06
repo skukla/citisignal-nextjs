@@ -2,7 +2,7 @@
 
 import { memo } from 'react';
 import { SignalIcon, GlobeAmericasIcon } from '@heroicons/react/24/outline';
-import Section from '@/components/ui/layout/Section';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
 import StatsCard from '@/components/ui/cards/StatsCard';
 import ProgressBar from '@/components/ui/content/ProgressBar';
@@ -16,7 +16,7 @@ function CoverageSection({
 }: CoverageSectionProps) {
 
   return (
-    <Section background="bg-white" className={className}>
+    <ContentSection background="bg-white" className={className}>
       <SectionHeader
         title={content.header.title}
         description={content.header.description}
@@ -49,7 +49,7 @@ function CoverageSection({
             <StatsList items={content.networkStats} />
           </StatsCard>
         </div>
-    </Section>
+    </ContentSection>
   );
 }
 

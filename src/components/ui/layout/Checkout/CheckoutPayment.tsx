@@ -1,22 +1,31 @@
 'use client';
 
+import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Input from '@/components/ui/foundations/Input';
 import Checkbox from '@/components/ui/foundations/Checkbox';
 import Button from '@/components/ui/foundations/Button';
 import { useCheckoutContext } from './CheckoutContext';
-import type { CheckoutPaymentProps } from './Checkout.types';
+import { useFieldValidation } from './hooks/useFieldValidation';
+import type { CheckoutPaymentProps, PaymentDetails, ValidationResult } from './types';
 
-export function CheckoutPayment({ className }: CheckoutPaymentProps) {
+export default function CheckoutPayment({ className }: CheckoutPaymentProps) {
   const { 
     paymentDetails, 
     updatePayment, 
     setStep, 
-    isStepComplete 
+    isStepComplete,
+    validateStep,
+    touchedFields
   } = useCheckoutContext();
+
+  const validation = validateStep('payment') as ValidationResult<PaymentDetails>;
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const { getFieldError } = useFieldValidation<PaymentDetails>({ isSubmitted, touchedFields });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitted(true);
     if (isStepComplete('payment')) {
       setStep('review');
     }
@@ -37,10 +46,13 @@ export function CheckoutPayment({ className }: CheckoutPaymentProps) {
             <Input
               type="text"
               name="nameOnCard"
-              placeholder="Name on card"
+              id="nameOnCard"
+              label="Name on Card"
+              placeholder="Enter the name on your card"
               value={paymentDetails?.nameOnCard || ''}
-              onChange={(e) => updatePayment({ nameOnCard: e.target.value })}
+              onChange={(e) => updatePayment({ nameOnCard: e.target.value }, 'nameOnCard')}
               required
+              error={getFieldError('nameOnCard', validation.errors)}
             />
           </div>
 
@@ -48,10 +60,13 @@ export function CheckoutPayment({ className }: CheckoutPaymentProps) {
             <Input
               type="text"
               name="cardNumber"
-              placeholder="Card number"
+              id="cardNumber"
+              label="Card Number"
+              placeholder="Enter your card number"
               value={paymentDetails?.cardNumber || ''}
-              onChange={(e) => updatePayment({ cardNumber: e.target.value })}
+              onChange={(e) => updatePayment({ cardNumber: e.target.value }, 'cardNumber')}
               required
+              error={getFieldError('cardNumber', validation.errors)}
             />
           </div>
 
@@ -60,10 +75,13 @@ export function CheckoutPayment({ className }: CheckoutPaymentProps) {
               <Input
                 type="text"
                 name="expiryDate"
+                id="expiryDate"
+                label="Expiry Date"
                 placeholder="MM/YY"
-                value={paymentDetails?.expiryDate || ''}
-                onChange={(e) => updatePayment({ expiryDate: e.target.value })}
-                required
+                              value={paymentDetails?.expiryDate || ''}
+              onChange={(e) => updatePayment({ expiryDate: e.target.value }, 'expiryDate')}
+              required
+              error={getFieldError('expiryDate', validation.errors)}
               />
             </div>
 
@@ -71,10 +89,13 @@ export function CheckoutPayment({ className }: CheckoutPaymentProps) {
               <Input
                 type="text"
                 name="cvv"
-                placeholder="CVV"
+                id="cvv"
+                label="CVV"
+                placeholder="Enter CVV"
                 value={paymentDetails?.cvv || ''}
-                onChange={(e) => updatePayment({ cvv: e.target.value })}
-                required
+              onChange={(e) => updatePayment({ cvv: e.target.value }, 'cvv')}
+              required
+              error={getFieldError('cvv', validation.errors)}
               />
             </div>
           </div>

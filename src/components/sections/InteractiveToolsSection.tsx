@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import Section from '@/components/ui/layout/Section';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
 import ToolGrid from '@/components/ui/grids/ToolGrid';
 import FeaturedTool from '@/components/ui/content/FeaturedTool';
@@ -20,7 +20,7 @@ function InteractiveToolsSection({
 
 
   return (
-    <Section background="bg-white" className={className}>
+    <ContentSection background="bg-white" className={className}>
       <SectionHeader
         title={content.header.title}
         description={content.header.description}
@@ -38,7 +38,7 @@ function InteractiveToolsSection({
         features={content.optimizer.features}
         className="mt-16"
       />
-    </Section>
+    </ContentSection>
   );
 }
 

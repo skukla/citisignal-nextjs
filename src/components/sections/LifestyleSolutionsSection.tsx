@@ -1,7 +1,7 @@
 'use client';
 
 import { memo } from 'react';
-import Section from '@/components/ui/layout/Section';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
 import SolutionGrid from '@/components/ui/grids/SolutionGrid';
 import Link from '@/components/ui/foundations/Link';
@@ -20,7 +20,7 @@ function LifestyleSolutionsSection({
 
 
   return (
-    <Section background="bg-gray-50" className={className}>
+    <ContentSection background="bg-gray-50" className={className}>
       <SectionHeader
         title={content.header.title}
         description={content.header.description}
@@ -40,7 +40,7 @@ function LifestyleSolutionsSection({
           Find Your Perfect Solution
         </Link>
       </div>
-    </Section>
+    </ContentSection>
   );
 }
 

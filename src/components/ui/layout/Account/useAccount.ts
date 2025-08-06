@@ -9,6 +9,13 @@ import type { AccountContextValue, UserProfile } from './Account.types';
  */
 export type UseAccountReturn = AccountContextValue;
 
+/**
+ * Manages account state and authentication.
+ * Uses AccountContext to handle global account state.
+ * @returns {Object} Account state and handlers
+ * @example
+ * const { user, isAuthenticated, login, logout } = useAccount();
+ */
 export function useAccount(): UseAccountReturn {
   const [user, setUser] = useState<UserProfile | null>(null);
   const { isOpen, toggle, close, panelRef } = useAccountPanel();

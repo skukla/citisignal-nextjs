@@ -3,7 +3,7 @@
 import { useState, memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
-import Section from '@/components/ui/layout/Section';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import Badge from '@/components/ui/foundations/Badge';
 import BenefitGrid from '@/components/ui/grids/BenefitGrid';
 import NewsletterForm from '@/components/ui/forms/NewsletterForm';
@@ -23,8 +23,6 @@ function NewsletterSection({
 }: NewsletterSectionProps) {
   const [isSubmitted, setIsSubmitted] = useState(false);
 
-
-
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const handleSubmit = async (email: string) => {
     // Simulate API call
@@ -34,19 +32,19 @@ function NewsletterSection({
 
   if (isSubmitted) {
     return (
-      <Section background="bg-gradient-to-br from-green-50 to-emerald-100" className={className}>
+      <ContentSection background="bg-gradient-to-br from-green-50 to-emerald-100" className={className}>
         <SuccessMessage
           title={content.successState.title}
           description={content.successState.description}
           buttonText={content.successState.buttonText}
           onButtonClick={() => setIsSubmitted(false)}
         />
-      </Section>
+      </ContentSection>
     );
   }
 
   return (
-    <Section 
+    <ContentSection 
       className={twMerge('bg-gradient-to-br from-[#8821f4] via-[#6a1b9a] to-[#4a148c]', className)}
     >
       <div className="text-center">
@@ -81,7 +79,7 @@ function NewsletterSection({
           linkHref={content.privacyNotice.linkHref}
         />
       </div>
-    </Section>
+    </ContentSection>
   );
 }
 

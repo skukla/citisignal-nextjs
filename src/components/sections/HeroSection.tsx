@@ -4,7 +4,7 @@ import { memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from '@/components/ui/foundations/Link';
-import Section from '@/components/ui/layout/Section';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import PromoTag from '@/components/ui/badges/PromoTag';
 import FeatureList from '@/components/ui/content/FeatureList';
 import PhoneMockup from '@/components/ui/content/PhoneMockup';
@@ -26,7 +26,7 @@ function HeroSection({
   className
 }: HeroSectionProps) {
   return (
-    <Section 
+    <ContentSection 
       className={twMerge('text-white', className)}
       style={{ background: 'linear-gradient(135deg, #8821f4 0%, #6a1b9a 50%, #4a148c 100%)' }}
     >
@@ -99,7 +99,7 @@ function HeroSection({
           <div className="absolute bottom-0 left-0 w-72 h-72 bg-purple-900 rounded-full mix-blend-multiply filter blur-xl opacity-40 animate-pulse delay-1000"></div>
         </div>
       </div>
-    </Section>
+    </ContentSection>
   );
 }
 

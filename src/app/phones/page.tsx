@@ -1,20 +1,21 @@
 'use client';
 
-import PageContainer from '@/components/layout/PageContainer';
+
 import TwoColumnLayout from '@/components/layout/TwoColumnLayout';
-import PageFooter from '@/components/layout/PageFooter';
-import BreadcrumbSection from '@/components/ui/layout/BreadcrumbSection';
-import PageHeaderSection from '@/components/ui/layout/PageHeaderSection';
+import Page from '@/components/layout/Page';
+import Content from '@/components/layout/Content';
+import Breadcrumb from '@/components/ui/layout/Breadcrumb';
+import PageHeader from '@/components/ui/layout/PageHeader';
 import SearchAndSort from '@/components/ui/search/SearchAndSort';
 import ResultsCount from '@/components/ui/search/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/grids/ProductGridWithEmpty';
 import ProductGrid from '@/components/ui/grids/ProductGrid';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
-
 import TechReviewGrid from '@/components/ui/grids/TechReviewGrid';
 import BuyingGuideGrid from '@/components/ui/grids/BuyingGuideGrid';
 import TipGrid from '@/components/ui/grids/TipGrid';
 import AccessoryGrid from '@/components/ui/grids/AccessoryGrid';
+import NewsletterSection from '@/components/sections/NewsletterSection';
 import Link from '@/components/ui/foundations/Link';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { phonesPageData } from '@/data/pages/phones';
@@ -26,7 +27,7 @@ export default function PhonesPage() {
     searchQuery,
     setSearchQuery,
     sortBy,
-    setSortBy,
+    handleSortChange,
     activeFilters,
     showMobileFilters,
     setShowMobileFilters,
@@ -47,11 +48,11 @@ export default function PhonesPage() {
   };
 
   return (
-    <div className="min-h-screen">
-      <PageContainer background="gray">
-        <BreadcrumbSection items={breadcrumbs} />
+    <Page background="gray">
+      <Content>
+        <Breadcrumb items={breadcrumbs} />
         
-        <PageHeaderSection 
+        <PageHeader 
           title={pageHeader.title}
           description={pageHeader.description}
           icon={pageHeader.icon}
@@ -61,7 +62,7 @@ export default function PhonesPage() {
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           sortBy={sortBy}
-          onSortChange={setSortBy}
+          onSortChange={handleSortChange}
           searchPlaceholder={search.placeholder}
         />
         
@@ -139,8 +140,8 @@ export default function PhonesPage() {
             )}
           </ProductGridWithEmpty>
         </TwoColumnLayout>
-      </PageContainer>
-      <PageFooter />
-    </div>
+      </Content>
+      <NewsletterSection />
+    </Page>
   );
 }

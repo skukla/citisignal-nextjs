@@ -1,9 +1,11 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
+import Page from '@/components/layout/Page';
+import Content from '@/components/layout/Content';
 import Card from '@/components/ui/cards/Card';
 import Checkout from '@/components/ui/layout/Checkout';
-import type { OrderDetails } from '@/components/ui/layout/Checkout/Checkout.types';
+import type { OrderDetails } from '@/components/ui/layout/Checkout/types';
 
 export default function CheckoutPage() {
   const router = useRouter();
@@ -18,22 +20,22 @@ export default function CheckoutPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12">
-      <Checkout.Root onComplete={handleOrderComplete}>
-        <Checkout.Header />
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <Card className="p-6">
-              <Checkout.Shipping />
-              <Checkout.Payment />
-              <Checkout.Review />
-            </Card>
+    <Page background="gray">
+      <Content>
+        <Checkout.Root onComplete={handleOrderComplete}>
+          <Checkout.Header />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2">
+              <Card className="p-6">
+                <Checkout.Steps />
+              </Card>
+            </div>
+            <div className="lg:col-span-1">
+              <Checkout.Summary />
+            </div>
           </div>
-          <div className="lg:col-span-1">
-            <Checkout.Summary />
-          </div>
-        </div>
-      </Checkout.Root>
-    </div>
+        </Checkout.Root>
+      </Content>
+    </Page>
   );
 }

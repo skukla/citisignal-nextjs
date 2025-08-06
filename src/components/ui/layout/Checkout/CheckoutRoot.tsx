@@ -2,7 +2,7 @@
 
 import { twMerge } from 'tailwind-merge';
 import { CheckoutProvider } from './CheckoutContext';
-import type { CheckoutRootProps } from './Checkout.types';
+import type { CheckoutRootProps } from './types';
 
 export function CheckoutRoot({ 
   children, 

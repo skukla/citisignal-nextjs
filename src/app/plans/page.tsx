@@ -1,15 +1,16 @@
 'use client';
 
-import PageContainer from '@/components/layout/PageContainer';
+import Page from '@/components/layout/Page';
+import Content from '@/components/layout/Content';
 import TwoColumnLayout from '@/components/layout/TwoColumnLayout';
-import PageFooter from '@/components/layout/PageFooter';
-import BreadcrumbSection from '@/components/ui/layout/BreadcrumbSection';
-import PageHeaderSection from '@/components/ui/layout/PageHeaderSection';
+import Breadcrumb from '@/components/ui/layout/Breadcrumb';
+import PageHeader from '@/components/ui/layout/PageHeader';
 import SearchAndSort from '@/components/ui/search/SearchAndSort';
 import ResultsCount from '@/components/ui/search/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/grids/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
 import PlanGrid from '@/components/ui/grids/PlanGrid';
+import NewsletterSection from '@/components/sections/NewsletterSection';
 import { plansPageData } from '@/data/pages/plans';
 import { useProductList } from '@/hooks/useProductList';
 
@@ -18,7 +19,7 @@ export default function PlansPage() {
     searchQuery,
     setSearchQuery,
     sortBy,
-    setSortBy,
+    handleSortChange,
     activeFilters,
     showMobileFilters,
     setShowMobileFilters,
@@ -31,11 +32,11 @@ export default function PlansPage() {
   const { filters, breadcrumbs, pageHeader, search, emptyState } = plansPageData;
 
   return (
-    <div className="min-h-screen">
-      <PageContainer background="gray">
-        <BreadcrumbSection items={breadcrumbs} />
+    <Page background="gray">
+      <Content>
+        <Breadcrumb items={breadcrumbs} />
         
-        <PageHeaderSection 
+        <PageHeader 
           title={pageHeader.title}
           description={pageHeader.description}
           icon={pageHeader.icon}
@@ -45,7 +46,7 @@ export default function PlansPage() {
           searchQuery={searchQuery}
           onSearchChange={setSearchQuery}
           sortBy={sortBy}
-          onSortChange={setSortBy}
+          onSortChange={handleSortChange}
           searchPlaceholder={search.placeholder}
         />
         
@@ -94,8 +95,8 @@ export default function PlansPage() {
             />
           </ProductGridWithEmpty>
         </TwoColumnLayout>
-      </PageContainer>
-      <PageFooter />
-    </div>
+      </Content>
+      <NewsletterSection />
+    </Page>
   );
 }

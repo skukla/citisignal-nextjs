@@ -1,15 +1,16 @@
 'use client';
 
-import PageContainer from '@/components/layout/PageContainer';
+import Page from '@/components/layout/Page';
+import Content from '@/components/layout/Content';
 import TwoColumnLayout from '@/components/layout/TwoColumnLayout';
-import PageFooter from '@/components/layout/PageFooter';
-import BreadcrumbSection from '@/components/ui/layout/BreadcrumbSection';
-import PageHeaderSection from '@/components/ui/layout/PageHeaderSection';
+import Breadcrumb from '@/components/ui/layout/Breadcrumb';
+import PageHeader from '@/components/ui/layout/PageHeader';
 import SearchAndSort from '@/components/ui/search/SearchAndSort';
 import ResultsCount from '@/components/ui/search/ResultsCount';
 import ProductGridWithEmpty from '@/components/ui/grids/ProductGridWithEmpty';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
 import ProductGrid from '@/components/ui/grids/ProductGrid';
+import NewsletterSection from '@/components/sections/NewsletterSection';
 import { watchesPageData } from '@/data/pages/watches';
 import { useProductList } from '@/hooks/useProductList';
 import type { Watch } from '@/types/commerce';
@@ -32,11 +33,11 @@ export default function WatchesPage() {
   const { filters, breadcrumbs, pageHeader, search, emptyState } = watchesPageData;
 
   return (
-    <PageContainer>
-      <PageContainer background="gray">
-        <BreadcrumbSection items={breadcrumbs} />
+    <Page background="gray">
+      <Content>
+        <Breadcrumb items={breadcrumbs} />
         
-        <PageHeaderSection 
+        <PageHeader 
           title={pageHeader.title}
           description={pageHeader.description}
           icon={pageHeader.icon}
@@ -85,8 +86,8 @@ export default function WatchesPage() {
             />
           </ProductGridWithEmpty>
         </TwoColumnLayout>
-      </PageContainer>
-      <PageFooter />
-    </PageContainer>
+      </Content>
+      <NewsletterSection />
+    </Page>
   );
 }

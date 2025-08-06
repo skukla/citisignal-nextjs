@@ -4,7 +4,7 @@ import { memo, useMemo } from 'react';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/ui/foundations/Button';
 import { phonesPageData } from '@/data/pages/phones';
-import Section from '@/components/ui/layout/Section';
+import ContentSection from '@/components/ui/layout/ContentSection';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
 import ProductGrid from '@/components/ui/grids/ProductGrid';
 import { popularPhonesContent } from '@/data/sections/popularPhones';
@@ -36,7 +36,7 @@ function PopularPhonesSection({
   );
 
   return (
-    <Section background="bg-white" className={className}>
+    <ContentSection background="bg-white" className={className}>
       <SectionHeader
         title={content.header.title}
         description={content.header.description}
@@ -61,7 +61,7 @@ function PopularPhonesSection({
             {content.viewAllLink.text}
           </Button>
         </div>
-    </Section>
+    </ContentSection>
   );
 }
 

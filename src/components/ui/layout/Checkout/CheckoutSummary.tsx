@@ -5,7 +5,7 @@ import Image from 'next/image';
 import Card from '@/components/ui/cards/Card';
 import { formatPrice } from '@/lib/pricing';
 import { useCheckoutContext } from './CheckoutContext';
-import type { CheckoutSummaryProps } from './Checkout.types';
+import type { CheckoutSummaryProps } from './types';
 
 export function CheckoutSummary({ className }: CheckoutSummaryProps) {
   const { items, subtotal, tax, shipping, total } = useCheckoutContext();
