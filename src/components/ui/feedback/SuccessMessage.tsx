@@ -43,9 +43,8 @@ export default function SuccessMessage({
         {description}
       </p>
       <Button
-        variant="outline"
         onClick={onButtonClick}
-        className="text-purple-600 border-purple-600 hover:bg-purple-50"
+        size="lg"
       >
         {buttonText}
       </Button>
