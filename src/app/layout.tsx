@@ -4,6 +4,7 @@ import type { ReactNode } from 'react';
 import Header from '@/components/layout/Header/index';
 import Footer from '@/components/layout/Footer';
 import Root from '@/components/layout/Root';
+import CartRootProvider from '@/components/ui/layout/Cart/CartRootProvider';
 import './globals.css';
 
 const geistSans = Geist({
@@ -29,11 +30,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Root>
-          <Header />
-          {children}
-          <Footer />
-        </Root>
+        <CartRootProvider>
+          <Root>
+            <Header />
+            {children}
+            <Footer />
+          </Root>
+        </CartRootProvider>
       </body>
     </html>
   );

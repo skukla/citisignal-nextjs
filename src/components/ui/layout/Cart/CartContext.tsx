@@ -8,7 +8,7 @@ const CartContext = createContext<CartContextValue | undefined>(undefined);
 
 interface CartProviderProps {
   isOpen: boolean;
-  onClose: () => void;
+  onClose?: () => void;
   children: React.ReactNode;
 }
 
@@ -17,7 +17,7 @@ export function CartProvider({ isOpen, onClose, children }: CartProviderProps) {
 
   const value = useMemo(() => ({
     isOpen,
-    onClose,
+    onClose: onClose || (() => {}),
     items,
     updateQuantity,
     removeItem,
