@@ -1,42 +1,38 @@
-import { Geist, Geist_Mono } from 'next/font/google';
-import { type Metadata } from 'next';
-import type { ReactNode } from 'react';
-import Header from '@/components/layout/Header/index';
-import Footer from '@/components/layout/Footer';
-import Root from '@/components/layout/Root';
+'use client';
+
+import { ReactNode } from 'react';
+import { StandardHeader } from '@/components/layout/Header/StandardHeader';
+import { StandardFooter } from '@/components/layout/Footer/StandardFooter';
+import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
 import CartRootProvider from '@/components/ui/layout/Cart/CartRootProvider';
+import { usePathname } from 'next/navigation';
+import Root from '@/components/layout/Root';
 import './globals.css';
 
-const geistSans = Geist({
-  variable: '--font-geist-sans',
-  subsets: ['latin'],
-});
-
-const geistMono = Geist_Mono({
-  variable: '--font-geist-mono',
-  subsets: ['latin'],
-});
-
-export const metadata: Metadata = {
-  title: 'CitiSignal',
-  description: 'Your trusted mobile carrier',
-};
-
-export default function RootLayout({
-  children,
-}: {
+interface RootLayoutProps {
   children: ReactNode;
-}) {
+}
+
+export default function RootLayout({ children }: RootLayoutProps) {
+  const pathname = usePathname();
+  const isCheckout = pathname?.startsWith('/checkout');
+
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <CartRootProvider>
-          <Root>
-            <Header />
-            {children}
-            <Footer />
-          </Root>
-        </CartRootProvider>
+      <body>
+        <AuthProvider>
+          <AccountProvider>
+            <CartRootProvider>
+              <Root>
+                {!isCheckout && <StandardHeader />}
+                <main>
+                  {children}
+                </main>
+                <StandardFooter />
+              </Root>
+            </CartRootProvider>
+          </AccountProvider>
+        </AuthProvider>
       </body>
     </html>
   );
