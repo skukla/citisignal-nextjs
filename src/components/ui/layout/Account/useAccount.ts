@@ -1,43 +1,24 @@
 'use client';
 
-import { useState, useCallback } from 'react';
 import { useAccountPanel } from './useAccountPanel';
-import type { AccountContextValue, UserProfile } from './Account.types';
-
-/**
- * Return type for useAccount hook
- */
-export type UseAccountReturn = AccountContextValue;
+import { useAuthContext } from './AuthContext';
+import type { AccountContextValue } from './Account.types';
 
 /**
  * Manages account state and authentication.
  * Uses AccountContext to handle global account state.
- * @returns {Object} Account state and handlers
- * @example
- * const { user, isAuthenticated, login, logout } = useAccount();
+ * @returns {AccountContextValue} Account state and handlers
  */
-export function useAccount(): UseAccountReturn {
-  const [user, setUser] = useState<UserProfile | null>(null);
+export function useAccount(): AccountContextValue {
   const { isOpen, toggle, close, panelRef } = useAccountPanel();
-
-  const signIn = useCallback(() => {
-    // TODO: Implement actual auth
-    close();
-  }, [close]);
-
-  const signOut = useCallback(() => {
-    setUser(null);
-    close();
-  }, [close]);
+  const { isAuthenticated, user } = useAuthContext();
 
   return {
-    isAuthenticated: user !== null,
+    isAuthenticated,
     user,
     isOpen,
     toggle,
     close,
-    signIn,
-    signOut,
     panelRef
   };
 }

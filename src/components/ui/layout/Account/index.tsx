@@ -1,12 +1,16 @@
-// Account Compound Component
+// Compound component exports
 export { AccountRoot } from './AccountRoot';
 export { AccountIcon } from './AccountIcon';
 export { AccountPanel } from './AccountPanel';
+export { AccountMenu } from './AccountMenu';
+export { AccountProfile } from './AccountProfile';
 
 // Compound component namespace
 import { AccountRoot } from './AccountRoot';
 import { AccountIcon } from './AccountIcon';
 import { AccountPanel } from './AccountPanel';
+import { AccountMenu } from './AccountMenu';
+import { AccountProfile } from './AccountProfile';
 import type { AccountComponent } from './Account.types';
 
 /**
@@ -22,16 +26,14 @@ import type { AccountComponent } from './Account.types';
 const Account: AccountComponent = {
   Root: AccountRoot,
   Icon: AccountIcon,
-  Panel: AccountPanel
+  Panel: AccountPanel,
+  Menu: AccountMenu,
+  Profile: AccountProfile
 };
 
 export default Account;
 
-// Context
-export { useAccountContext } from './AccountRoot';
-
-// Hooks
-export { useAccount } from './useAccount';
-
-// Types
-export type * from './Account.types';
+// Contexts and hooks
+export { useAccountContext, AccountProvider } from './AccountContext';
+export { useAuthContext, AuthProvider } from './AuthContext';
+export { useAuth } from './useAuth';

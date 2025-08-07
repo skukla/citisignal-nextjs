@@ -1,11 +1,48 @@
-import type { BaseComponentProps, BasePanelProps, BasePanelContextValue } from '@/types/ui';
+import { ReactNode } from 'react';
+import { BaseComponentProps, BasePanelProps, BasePanelContextValue } from '@/types/ui';
 
 // User types
 export interface UserProfile {
   id: string;
-  name: string;
   email: string;
+  name?: string;
   avatarUrl?: string;
+}
+
+// Auth types
+export interface AuthContextValue {
+  user: UserProfile | null;
+  isAuthenticated: boolean;
+  isLoading: boolean;
+  error: string | null;
+  login: (email: string, password: string) => Promise<void>;
+  signup: (email: string, password: string) => Promise<void>;
+  logout: () => Promise<void>;
+}
+
+export interface AuthProviderProps {
+  children: ReactNode;
+}
+
+// Account panel types
+export interface AccountContextValue extends BasePanelContextValue {
+  isAuthenticated: boolean;
+  user: UserProfile | null;
+}
+
+export interface AccountProviderProps {
+  children: ReactNode;
+}
+
+export interface AccountRootProps extends BaseComponentProps {
+  children: ReactNode;
+}
+
+export type AccountPanelProps = BasePanelProps;
+export type AccountIconProps = BaseComponentProps;
+export type AccountMenuProps = BaseComponentProps;
+export interface AccountProfileProps extends BaseComponentProps {
+  user: UserProfile;
 }
 
 // Menu item type
@@ -16,22 +53,11 @@ export interface AccountMenuItem {
   icon?: React.ComponentType<{ className?: string }>;
 }
 
-// Context types
-export interface AccountContextValue extends BasePanelContextValue {
-  isAuthenticated: boolean;
-  user: UserProfile | null;
-  signIn: () => void;
-  signOut: () => void;
-}
-
-// Component props
-export type AccountRootProps = BaseComponentProps;
-export type AccountIconProps = BasePanelProps;
-export type AccountPanelProps = BasePanelProps;
-
 // Compound component type
 export interface AccountComponent {
   Root: React.FC<AccountRootProps>;
   Icon: React.FC<AccountIconProps>;
   Panel: React.FC<AccountPanelProps>;
+  Menu: React.FC<AccountMenuProps>;
+  Profile: React.FC<AccountProfileProps>;
 }
