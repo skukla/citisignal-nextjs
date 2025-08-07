@@ -1,6 +1,6 @@
 'use client';
 
-import { ComponentType, InputHTMLAttributes, memo } from 'react';
+import { ComponentType, InputHTMLAttributes, memo, forwardRef } from 'react';
 import { twMerge } from 'tailwind-merge';
 
 /**
@@ -37,7 +37,7 @@ export interface InputProps extends Omit<InputHTMLAttributes<HTMLInputElement>, 
  * />
  * ```
  */
-function Input({
+const Input = forwardRef<HTMLInputElement, InputProps>(({
   leftIcon: LeftIcon,
   rightIcon: RightIcon,
   iconClassName,
@@ -48,7 +48,7 @@ function Input({
   label,
   error,
   ...props
-}: InputProps) {
+}, ref) => {
   const hasLeftIcon = !!LeftIcon;
   const hasRightIcon = !!RightIcon;
 
@@ -105,10 +105,11 @@ function Input({
           />
         )}
         <input
-        {...props}
-        disabled={disabled}
-        className={inputClasses}
-      />
+          {...props}
+          ref={ref}
+          disabled={disabled}
+          className={inputClasses}
+        />
         {RightIcon && (
           <RightIcon 
             className={twMerge(iconStyles, 'right-3')}
@@ -121,6 +122,8 @@ function Input({
       )}
     </div>
   );
-}
+});
+
+Input.displayName = 'Input';
 
 export default memo(Input);

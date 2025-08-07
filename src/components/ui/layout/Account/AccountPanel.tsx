@@ -1,22 +1,15 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-import Image from 'next/image';
 import Link from 'next/link';
 import Button from '@/components/ui/foundations/Button';
+import { useAccountContext } from './AccountContext';
+import { AccountProfile } from './AccountProfile';
+import { AccountMenu } from './AccountMenu';
 import type { AccountPanelProps } from './Account.types';
-import { useAccountContext } from './AccountRoot';
-import { authenticatedMenuItems } from '@/data/account';
 
-/**
- * Account panel component that displays user profile and authentication options.
- * Uses Button component for consistent styling.
- *
- * @example
- * <Account.Panel id="account-panel" />
- */
 export function AccountPanel({ className }: AccountPanelProps) {
-  const { isOpen, panelRef, isAuthenticated, signIn, user, signOut } = useAccountContext();
+  const { isOpen, panelRef, close, isAuthenticated, user } = useAccountContext();
 
   if (!isOpen) return null;
 
@@ -29,74 +22,25 @@ export function AccountPanel({ className }: AccountPanelProps) {
       )}
       onClick={(e) => e.stopPropagation()}
     >
-      {isAuthenticated ? (
+      {isAuthenticated && user ? (
         <div>
-          {/* Profile Section */}
-          <div className="p-4 border-b border-gray-100">
-            <div className="flex items-center gap-3">
-              {user?.avatarUrl ? (
-                <div className="w-10 h-10 relative">
-                  <Image
-                    src={user.avatarUrl}
-                    alt={user.name}
-                    fill
-                    className="rounded-full object-cover"
-                    sizes="40px"
-                  />
-                </div>
-              ) : (
-                <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center">
-                  <span className="text-purple-600 font-medium">
-                    {user?.name.charAt(0).toUpperCase()}
-                  </span>
-                </div>
-              )}
-              <div>
-                <div className="font-medium text-gray-900">{user?.name}</div>
-                <div className="text-sm text-gray-700">{user?.email}</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Menu Section */}
-          <nav className="py-2">
-            {authenticatedMenuItems.map(item => (
-              <Link
-                key={item.id}
-                href={item.href}
-                className="flex items-center gap-3 px-4 py-2 text-gray-700 hover:text-gray-900 hover:bg-gray-50 transition-colors"
-              >
-                {item.icon && <item.icon className="w-5 h-5 text-gray-500" />}
-                {item.label}
-              </Link>
-            ))}
-            <Button
-              onClick={signOut}
-              variant="ghost"
-              className="w-full justify-start gap-3 px-4 py-2 text-red-500 hover:text-red-700 hover:bg-gray-50"
-            >
-              Sign Out
-            </Button>
-          </nav>
+          <AccountProfile user={user} />
+          <AccountMenu />
         </div>
       ) : (
         <div className="p-4 space-y-4">
           <h2 className="text-lg font-medium text-gray-900">Welcome</h2>
           <div className="space-y-2">
-            <Button
-              onClick={signIn}
-              variant="primary"
-              className="w-full"
-            >
-              Sign In
-            </Button>
-            <Button
-              href="/signup"
-              variant="outline"
-              className="w-full"
-            >
-              Create Account
-            </Button>
+            <Link href="/account/auth" onClick={close} className="block">
+              <Button variant="primary" className="w-full">
+                Sign In
+              </Button>
+            </Link>
+            <Link href="/account/auth?mode=signup" onClick={close} className="block">
+              <Button variant="outline" className="w-full">
+                Create Account
+              </Button>
+            </Link>
           </div>
         </div>
       )}

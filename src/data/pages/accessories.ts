@@ -128,7 +128,7 @@ export const accessoriesPageData = {
    */
   pageHeader: {
     title: 'Phone Accessories',
-    description: 'Enhance your mobile experience with our premium selection of phone accessories. From protective cases to wireless chargers, find everything you need to get the most out of your device.',
+    description: 'Enhance your mobile experience with our premium selection of phone accessories. From cases to chargers, we have everything to protect and power your devices.',
     icon: BoltIcon
   },
 
