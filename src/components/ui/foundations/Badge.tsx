@@ -1,89 +1,29 @@
-'use client';
-
 import { twMerge } from 'tailwind-merge';
-import type { BadgeProps } from '@/types/badge';
 
-/**
- * Badge component for displaying status, labels, counters, or icons.
- * 
- * @example
- * ```tsx
- * // Basic usage
- * <Badge>New</Badge>
- * 
- * // With custom style
- * <Badge className="bg-green-500 text-white">Success</Badge>
- * 
- * // With icon component
- * <Badge icon={StarIcon}>Featured</Badge>
- * 
- * // Icon-only badge (IconBadge style)
- * <Badge 
- *   icon={StarIcon} 
- *   className="w-12 h-12 bg-purple-50 text-purple-600" 
- * />
- * 
- * // With dot
- * <Badge showDot dotColor="bg-yellow-400">Premium</Badge>
- * ```
- */
-export default function Badge({
-  children,
-  size = 'md',
-  pill = false,
-  icon: Icon,
-  iconPosition = 'left',
-  showDot,
-  dotColor = 'bg-current',
-  className
-}: BadgeProps) {
-  const isIconOnly = !children && Icon;
-  
-  const classes = twMerge(
-    'inline-flex items-center justify-center font-medium',
-    
-    // Size variants
-    size === 'sm' && 'text-xs px-2 py-0.5 gap-1',
-    size === 'md' && 'text-sm px-2.5 py-1 gap-1.5',
-    size === 'lg' && 'text-base px-3 py-1.5 gap-2',
-    
-    // Shape
-    (pill || isIconOnly) ? 'rounded-full' : 'rounded',
-    
-    // Default style (can be overridden by className)
-    'bg-gray-100 text-gray-700',
-    
-    className
-  );
+export interface BadgeProps {
+  children: React.ReactNode;
+  variant?: 'gray' | 'purple' | 'success' | 'warning' | 'error';
+  className?: string;
+}
 
-  const iconSize = isIconOnly ? 'w-6 h-6' : 'w-4 h-4';
+export default function Badge({ children, variant = 'gray', className }: BadgeProps) {
+  const variantStyles = {
+    gray: 'bg-gray-100 text-gray-800',
+    purple: 'bg-purple-100 text-purple-800',
+    success: 'bg-green-100 text-green-800',
+    warning: 'bg-yellow-100 text-yellow-800',
+    error: 'bg-red-100 text-red-800'
+  };
 
   return (
-    <span className={classes}>
-      {/* Left icon */}
-      {Icon && !isIconOnly && iconPosition === 'left' && (
-        <Icon className={iconSize} aria-hidden />
+    <span
+      className={twMerge(
+        'inline-flex items-center px-2 py-1 text-xs font-medium rounded-full',
+        variantStyles[variant],
+        className
       )}
-      
-      {/* Dot indicator */}
-      {showDot && (
-        <span 
-          className={twMerge('rounded-full w-2 h-2', dotColor)}
-          aria-hidden
-        />
-      )}
-      
-      {/* Content or icon-only */}
-      {isIconOnly && Icon ? (
-        <Icon className={iconSize} aria-hidden />
-      ) : (
-        children
-      )}
-      
-      {/* Right icon */}
-      {Icon && !isIconOnly && iconPosition === 'right' && (
-        <Icon className={iconSize} aria-hidden />
-      )}
+    >
+      {children}
     </span>
   );
 }

@@ -42,49 +42,49 @@ function CallToAction({
   return (
     <Section
       className={twMerge(
-        'bg-gradient-to-r rounded-2xl',
+        'bg-gradient-to-r rounded-2xl py-12 px-8 md:px-12',
         gradient,
         className
       )}
     >
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
-        <div>
-          <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
-            {title}
-          </h2>
-          <p className="text-lg text-gray-600 mb-6">
-            {description}
-          </p>
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+        <div className="space-y-8">
+          <div className="space-y-4">
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
+              {title}
+            </h2>
+            <p className="text-lg text-gray-600">
+              {description}
+            </p>
+          </div>
           {features && (
             <IconFeatureList 
               features={features}
-              className="mb-6 lg:mb-0"
+              className="space-y-4"
             />
           )}
         </div>
         
-        <div className="text-center lg:text-left">
-          <div className="space-y-4">
-            <Link
-              href={buttonHref}
-              variant="button"
-              buttonStyle="primary"
-              className="w-full lg:w-auto px-8 py-4 text-white rounded-lg shadow-lg hover:opacity-90 hover:shadow-xl cursor-pointer transition-all duration-200"
-            >
-              {buttonText}
-            </Link>
-            
-            {(supportText || supportPhone) && (
-              <p className="text-sm text-gray-500">
-                {supportText}
-                {supportPhone && (
-                  <span className="font-medium text-gray-900">
-                    {supportText ? ' ' : ''}{supportPhone}
-                  </span>
-                )}
-              </p>
-            )}
-          </div>
+        <div className="flex flex-col items-center lg:items-start space-y-6">
+          <Link
+            href={buttonHref}
+            variant="button"
+            buttonStyle="primary"
+            className="w-full lg:w-auto px-8 py-4 text-lg font-medium text-white rounded-lg shadow-lg hover:opacity-90 hover:shadow-xl cursor-pointer transition-all duration-200"
+          >
+            {buttonText}
+          </Link>
+          
+          {(supportText || supportPhone) && (
+            <p className="text-sm text-gray-600">
+              {supportText}
+              {supportPhone && (
+                <span className="font-medium text-gray-900 ml-1">
+                  {supportPhone}
+                </span>
+              )}
+            </p>
+          )}
         </div>
       </div>
     </Section>
