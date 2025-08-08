@@ -12,7 +12,7 @@ import { useSearchContext } from './SearchRoot';
  * @example
  * <Search.Trigger aria-label="Search products" />
  */
-export function SearchTrigger({ className, ...props }: SearchTriggerProps) {
+export function SearchTrigger({ ...props }: SearchTriggerProps) {
   const { toggle } = useSearchContext();
 
   return (
@@ -21,7 +21,7 @@ export function SearchTrigger({ className, ...props }: SearchTriggerProps) {
       size="sm"
       leftIcon={MagnifyingGlassIcon}
       onClick={toggle}
-      className={className}
+      className="focus:ring-0 focus:ring-offset-0"
       aria-label="Search products"
       {...props}
     />

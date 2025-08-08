@@ -23,7 +23,7 @@ export function AccountIcon({ className, ...props }: AccountIconProps) {
         variant="ghost"
         size="sm"
         leftIcon={UserIcon}
-        className={className}
+        className="focus:ring-0 focus:ring-offset-0"
         aria-label="User account"
         {...props}
       />
