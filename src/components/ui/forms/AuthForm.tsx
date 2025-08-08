@@ -1,68 +1,22 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { useSearchParams } from 'next/navigation';
 import { twMerge } from 'tailwind-merge';
+import Link from 'next/link';
 import Button from '@/components/ui/foundations/Button';
 import Input from '@/components/ui/foundations/Input';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
-import { useAuthContext } from '@/components/ui/layout/Account';
-
-type AuthMode = 'login' | 'signup';
+import { useAuthForm } from '@/hooks/forms/useAuthForm';
 
 export default function AuthForm() {
-  const searchParams = useSearchParams();
-  const [mode, setMode] = useState<AuthMode>('login');
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const { login, signup, isLoading, error: authError } = useAuthContext();
-  const [error, setError] = useState('');
-  const loginEmailRef = useRef<HTMLInputElement>(null);
-  const signupEmailRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (searchParams.get('mode') === 'signup') {
-      setMode('signup');
-    }
-    // Enable transitions after initial render
-    const timer = setTimeout(() => setIsTransitioning(true), 0);
-    return () => clearTimeout(timer);
-  }, [searchParams]);
-
-  useEffect(() => {
-    // Focus the appropriate input after transition
-    const timer = setTimeout(() => {
-      if (mode === 'login') {
-        loginEmailRef.current?.focus();
-      } else {
-        signupEmailRef.current?.focus();
-      }
-    }, 500); // Match the transition duration
-    return () => clearTimeout(timer);
-  }, [mode]);
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setError('');
-
-    const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-
-    try {
-      if (mode === 'signup') {
-        const confirmPassword = formData.get('confirmPassword') as string;
-        if (password !== confirmPassword) {
-          setError('Passwords do not match');
-          return;
-        }
-        await signup(email, password);
-      } else {
-        await login(email, password);
-      }
-    } catch {
-      // Error handled by auth context
-    }
-  };
+  const {
+    mode,
+    isTransitioning,
+    isLoading,
+    error,
+    loginEmailRef,
+    signupEmailRef,
+    handleSubmit
+  } = useAuthForm();
 
   return (
     <div className="w-full max-w-sm mx-auto">
@@ -99,8 +53,8 @@ export default function AuthForm() {
                 required
                 autoComplete="current-password"
               />
-              {(error || authError) && (
-                <div className="text-red-600 text-sm">{error || authError}</div>
+              {error && (
+                <div className="text-red-600 text-sm">{error}</div>
               )}
               <Button
                 type="submit"
@@ -120,14 +74,15 @@ export default function AuthForm() {
                   </span>
                 </div>
               </div>
-              <Button
-                type="button"
-                variant="link"
-                className="w-full text-gray-600 hover:text-gray-900 font-medium"
-                onClick={() => setMode('signup')}
-              >
-                Create Account
-              </Button>
+              <Link href="/account/auth?mode=signup" className="block">
+                <Button
+                  type="button"
+                  variant="link"
+                  className="w-full text-gray-600 hover:text-gray-900 font-medium focus:outline-none"
+                >
+                  Create Account
+                </Button>
+              </Link>
             </form>
           </div>
 
@@ -156,8 +111,8 @@ export default function AuthForm() {
                 required
                 autoComplete="new-password"
               />
-              {(error || authError) && (
-                <div className="text-red-600 text-sm">{error || authError}</div>
+              {error && (
+                <div className="text-red-600 text-sm">{error}</div>
               )}
               <Button
                 type="submit"
@@ -177,14 +132,15 @@ export default function AuthForm() {
                   </span>
                 </div>
               </div>
-              <Button
-                type="button"
-                variant="link"
-                className="w-full text-gray-600 hover:text-gray-900 font-medium"
-                onClick={() => setMode('login')}
-              >
-                Sign In
-              </Button>
+              <Link href="/account/auth" className="block">
+                <Button
+                  type="button"
+                  variant="link"
+                  className="w-full text-gray-600 hover:text-gray-900 font-medium focus:outline-none"
+                >
+                  Sign In
+                </Button>
+              </Link>
             </form>
           </div>
         </div>
