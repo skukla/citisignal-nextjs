@@ -1,34 +1,47 @@
 import {
   UserIcon,
   ShoppingBagIcon,
+  MapPinIcon,
+  CreditCardIcon,
   HeartIcon,
-  CreditCardIcon
+  GiftIcon
 } from '@heroicons/react/24/outline';
-import type { AccountSectionId } from './dashboard';
 
 export const accountNavigation = [
   {
-    id: 'profile' as AccountSectionId,
-    label: 'Account & Preferences',
+    id: 'profile',
+    label: 'Profile',
     href: '/account/profile',
     icon: UserIcon
   },
   {
-    id: 'orders' as AccountSectionId,
-    label: 'Orders & Subscriptions',
+    id: 'orders',
+    label: 'Orders',
     href: '/account/orders',
     icon: ShoppingBagIcon
   },
   {
-    id: 'payment' as AccountSectionId,
+    id: 'addresses',
+    label: 'Addresses',
+    href: '/account/addresses',
+    icon: MapPinIcon
+  },
+  {
+    id: 'payment',
     label: 'Payment Methods',
     href: '/account/payment',
     icon: CreditCardIcon
   },
   {
-    id: 'saved' as AccountSectionId,
-    label: 'Saved Items',
-    href: '/account/saved',
+    id: 'wishlists',
+    label: 'Wishlists',
+    href: '/account/wishlists',
     icon: HeartIcon
+  },
+  {
+    id: 'rewards',
+    label: 'Rewards',
+    href: '/account/rewards',
+    icon: GiftIcon
   }
 ];

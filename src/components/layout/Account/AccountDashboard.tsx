@@ -13,7 +13,7 @@ export function AccountDashboard({ children }: AccountDashboardProps) {
   const { navigation, isActive } = useAccountNavigation();
 
   return (
-    <div className="py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-[calc(100vh-16rem)] py-8 px-4 sm:px-6 lg:px-8">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Navigation Sidebar */}
         <div className="lg:w-60 flex-shrink-0">
