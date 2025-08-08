@@ -1,7 +1,6 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import Page from '@/components/layout/Page';
 import Content from '@/components/layout/Content';
 import Card from '@/components/ui/cards/Card';
 import Checkout from '@/components/ui/layout/Checkout';
@@ -28,7 +27,7 @@ export default function CheckoutPage() {
   };
 
   return (
-    <Page background="gray">
+    <div className="min-h-screen bg-gray-50">
       <Content>
         {items.length > 0 ? (
           <Checkout.Root onComplete={handleOrderComplete}>
@@ -56,6 +55,6 @@ export default function CheckoutPage() {
           </Card>
         )}
       </Content>
-    </Page>
+    </div>
   );
 }

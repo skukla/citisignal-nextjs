@@ -1,16 +1,16 @@
 'use client';
 
-import { ReactNode } from 'react';
-import { HeaderRoot, HeaderTopBar } from '@/components/layout/Header';
+import { HeaderRoot } from '@/components/layout/Header/HeaderRoot';
+import { HeaderTopBar } from '@/components/layout/Header/HeaderTopBar';
 import Container from '@/components/ui/layout/Container';
 import { Logo } from '@/components/ui/foundations/Logo';
 import { headerConfig } from '@/data/header';
 
-interface CheckoutLayoutProps {
-  children: ReactNode;
-}
-
-export default function Layout({ children }: CheckoutLayoutProps) {
+export default function CheckoutLayout({
+  children
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <>
       <HeaderRoot>
