@@ -38,7 +38,7 @@ export const footerContent = {
     description: "America's most reliable wireless network. Stay connected with the latest phones, unlimited plans, and nationwide coverage."
   },
   bottom: {
-    copyright: '© 2024 CitiSignal. All rights reserved.',
+    copyright: '© 2025 CitiSignal. All rights reserved.',
     phone: '1-800-CITISIGNAL',
     availability: 'Available 24/7'
   }

@@ -4,7 +4,7 @@ export const heroContent: HeroContent = {
   promotional: "Our lowest-priced plans ever",
   headline: {
     prefix: "Starting at only",
-    amount: "$10/month"
+    amount: "$20/month"
   },
   description: "Unlimited talk and text, plus 2.5GB of high-speed data. And we'll increase your data by 500MB each year through 2025.",
   disclaimer: "Plus taxes & fees. Domestic use only.",
