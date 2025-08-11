@@ -6,6 +6,9 @@ import type { ValidationResult } from './types/validation';
 import type { CheckoutStepId } from './types/steps';
 import type { OrderDetails } from './types/order';
 
+// Re-export types for external use
+export type { OrderDetails };
+
 // Component Props
 export interface CheckoutRootProps extends BaseComponentProps {
   onComplete?: (orderDetails: OrderDetails) => void;

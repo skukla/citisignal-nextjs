@@ -20,13 +20,10 @@ export default function BuyingGuidePreview({
       className
     )}>
       <IconContainer
+        icon={Icon}
         size="lg"
-        bgColor="bg-purple-50"
-        bgOpacity="bg-opacity-100"
-        className="group-hover:bg-purple-100 transition-colors"
-      >
-        <Icon className="w-10 h-10 text-purple-600" />
-      </IconContainer>
+        variant="primary"
+      />
 
       <div className="flex-1">
         <PreviewContent

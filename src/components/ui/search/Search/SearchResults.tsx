@@ -33,7 +33,6 @@ export function SearchResults({ className }: SearchResultsProps) {
         icon={MagnifyingGlassIcon}
         title="No results found"
         description="Try adjusting your search terms"
-        className="py-8"
       />
     );
   }

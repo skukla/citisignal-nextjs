@@ -1,8 +1,6 @@
 'use client';
 
 import { useCallback } from 'react';
-import type { CartItem, ShippingDetails, PaymentDetails } from '../Checkout.types';
-
 import type { OrderDetails } from '../Checkout.types';
 
 interface UseOrderProcessingProps {

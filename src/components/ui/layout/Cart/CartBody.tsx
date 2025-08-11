@@ -22,7 +22,6 @@ export function CartBody({
         icon={emptyStateIcon as ComponentType}
         title={emptyStateTitle}
         description={emptyStateDescription}
-        className="py-8"
       />
     );
   }

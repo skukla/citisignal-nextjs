@@ -50,7 +50,7 @@ export default function PaymentForm({ onSubmit, onCancel }: PaymentFormProps) {
             label={field.label}
             type={field.type}
             required={field.required}
-            value={values[fieldName]}
+            value={String(values[fieldName] || '')}
             error={error}
             onChange={(e) => handleChange(fieldName, e.target.value)}
             onBlur={() => handleBlur(fieldName)}
