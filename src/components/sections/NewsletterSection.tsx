@@ -4,7 +4,6 @@ import { useState, memo } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { EnvelopeIcon } from '@heroicons/react/24/outline';
 import ContentSection from '@/components/ui/layout/ContentSection';
-import Badge from '@/components/ui/foundations/Badge';
 import BenefitGrid from '@/components/ui/grids/BenefitGrid';
 import NewsletterForm from '@/components/ui/forms/NewsletterForm';
 import PrivacyNotice from '@/components/ui/feedback/PrivacyNotice';
@@ -48,11 +47,9 @@ function NewsletterSection({
       className={twMerge('bg-gradient-to-br from-[#8821f4] via-[#6a1b9a] to-[#4a148c]', className)}
     >
       <div className="text-center">
-        <Badge
-          icon={EnvelopeIcon}
-          size="lg"
-          className="mx-auto mb-8 w-12 h-12 bg-white text-purple-600"
-        />
+        <div className="mx-auto mb-8 w-12 h-12 bg-white rounded-full flex items-center justify-center">
+          <EnvelopeIcon className="w-6 h-6 text-purple-600" />
+        </div>
 
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold text-white mb-4">

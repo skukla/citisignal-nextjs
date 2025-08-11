@@ -5,7 +5,7 @@ import { twMerge } from 'tailwind-merge';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import Link from '@/components/ui/foundations/Link';
 import ContentSection from '@/components/ui/layout/ContentSection';
-import PromoTag from '@/components/ui/badges/PromoTag';
+import Badge from '@/components/ui/foundations/Badge';
 import FeatureList from '@/components/ui/content/FeatureList';
 import PhoneMockup from '@/components/ui/content/PhoneMockup';
 import SimplePlanCard from '@/components/ui/cards/SimplePlanCard';
@@ -34,10 +34,13 @@ function HeroSection({
         {/* Content */}
         <div>
           {content.promotional && (
-            <PromoTag
-              text={content.promotional}
-              className="mb-6 bg-purple-900"
-            />
+            <Badge
+              variant="promo"
+              size="md"
+              className="mb-6 bg-purple-900 text-sm font-medium px-4 py-2"
+            >
+              {content.promotional}
+            </Badge>
           )}
 
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6">
