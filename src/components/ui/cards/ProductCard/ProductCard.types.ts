@@ -29,8 +29,14 @@ export interface ProductCardInfoProps extends BaseComponentProps {
   showDescription?: boolean;
 }
 
-export type ProductCardPriceProps = BaseComponentProps;
-export type ProductCardColorsProps = BaseComponentProps;
+export interface ProductCardPriceProps extends BaseComponentProps {
+  showSavings?: boolean;
+}
+
+export interface ProductCardColorsProps extends BaseComponentProps {
+  size?: 'sm' | 'md' | 'lg';
+}
+
 export type ProductCardActionsProps = BaseComponentProps;
 
 // Type guards

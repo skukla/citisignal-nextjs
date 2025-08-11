@@ -4,8 +4,8 @@ import { useState } from 'react';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
 import StarRating from '@/components/ui/content/StarRating';
-import PlanBadge from '@/components/ui/badges/PlanBadge';
-import { formatPrice } from '@/lib/pricing';
+import Badge from '@/components/ui/foundations/Badge';
+import { formatPrice, calculateDiscountPercentage } from '@/lib/pricing';
 import type { PlanCardHeaderProps } from './PlanCard.types';
 
 /**
@@ -42,14 +42,16 @@ export default function PlanCardHeader({
             <div className="flex items-center gap-2 flex-wrap">
               <p className="text-sm text-gray-600 capitalize">{type} Plan</p>
               
-              {isNew && <PlanBadge variant="new" />}
+              {isNew && (
+                <Badge variant="new" size="xs" className="font-bold">
+                  NEW
+                </Badge>
+              )}
               
               {isSale && originalPrice && (
-                <PlanBadge 
-                  variant="sale" 
-                  originalPrice={originalPrice} 
-                  salePrice={price} 
-                />
+                <Badge variant="sale" size="xs" className="font-bold">
+                  {calculateDiscountPercentage(originalPrice, price)}% OFF
+                </Badge>
               )}
             </div>
           </div>

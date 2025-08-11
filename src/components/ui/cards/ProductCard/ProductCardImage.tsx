@@ -16,7 +16,6 @@ export function ProductCardImage({ className, width = 300, height = 300, priorit
           icon={PhotoIcon}
           title="No image"
           description="Image not available"
-          className="h-full"
         />
       </div>
     );
