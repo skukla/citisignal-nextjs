@@ -53,6 +53,14 @@ export interface AccountMenuItem {
   icon?: React.ComponentType<{ className?: string }>;
 }
 
+// Dashboard types
+export type DashboardSectionId = 'profile' | 'orders' | 'addresses' | 'payment' | 'wishlists' | 'rewards';
+
+export interface DashboardSection {
+  title: string;
+  description: string;
+}
+
 // Compound component type
 export interface AccountComponent {
   Root: React.FC<AccountRootProps>;
