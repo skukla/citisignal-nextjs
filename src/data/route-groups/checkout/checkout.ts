@@ -1,4 +1,4 @@
-import type { CheckoutPageData } from '@/types/checkout';
+import type { CheckoutPageData } from '@/components/ui/layout/Checkout/Checkout.types';
 
 export const checkoutPageData: CheckoutPageData = {
   steps: {

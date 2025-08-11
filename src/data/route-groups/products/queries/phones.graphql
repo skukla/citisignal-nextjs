@@ -1,0 +1,73 @@
+query TestProductsFromPhonesCategory {
+  Catalog_productSearch(
+    phrase: ""
+    filter: [{ attribute: "categories", eq: "phones" }]
+    page_size: 10
+    current_page: 1
+  ) {
+    total_count
+    items {
+      productView {
+        name
+        sku
+        url_key
+        description
+        media_gallery {
+          url
+          label
+          roles
+        }
+        rating_summary
+        review_count
+        ... on Catalog_ComplexProductView {
+          options {
+            id
+            title
+            required
+            values {
+              ... on Catalog_ProductViewOptionValueSwatch {
+                id
+                title
+                value
+              }
+            }
+          }
+          priceRange {
+            minimum {
+              regular {
+                amount {
+                  value
+                  currency
+                }
+              }
+              final {
+                amount {
+                  value
+                  currency
+                }
+              }
+            }
+          }
+          custom_attributes {
+            code
+            label
+            value {
+              label
+              value
+            }
+          }
+          stock_status
+          categories {
+            name
+            url_path
+          }
+        }
+      }
+    }
+    page_info {
+      current_page
+      page_size
+      total_pages
+    }
+  }
+}
