@@ -18,7 +18,7 @@ export default function Spinner({
   return (
     <div 
       className={twMerge(
-        'border-2 border-t-transparent rounded-full animate-spin',
+        'border-2 border-purple-400 border-t-transparent rounded-full animate-spin',
         // Size variants - direct conditionals following Button pattern
         size === 'sm' && 'w-5 h-5',
         size === 'md' && 'w-6 h-6',
