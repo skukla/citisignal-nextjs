@@ -10,8 +10,8 @@ export const headerConfig = {
   logo: {
     src: "/logo.svg",
     alt: "CitiSignal",
-    width: 160,
-    height: 50
+    width: 180,
+    height: 80
   },
   responsive: {
     desktopBreakpoint: 'lg', // Standardized from min-[1148px]

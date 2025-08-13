@@ -38,8 +38,8 @@ import type { LogoProps } from '@/types/ui';
 export const Logo: FC<LogoProps> = ({
   src,
   alt,
-  width = 160,
-  height = 50,
+  width = 180,
+  height = 80,
   className,
   href = "/",
   linkClassName
@@ -51,7 +51,11 @@ export const Logo: FC<LogoProps> = ({
       width={width}
       height={height}
       className={className}
-      style={{ width: 'auto', height: 'auto' }}
+      priority
+      style={{ 
+        width: `${width}px`,
+        height: `${height}px`
+      }}
     />
   );
 
