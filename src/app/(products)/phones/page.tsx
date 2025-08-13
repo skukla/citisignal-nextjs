@@ -1,6 +1,7 @@
 'use client';
 
-import { ProductRoot } from '@/components/layout/Product/ProductRoot';
+import { useState } from 'react';
+import { ProductPageWrapper } from '@/components/layout/Product/ProductPageWrapper';
 import EmptyState from '@/components/ui/feedback/EmptyState';
 import ProductGrid from '@/components/ui/grids/ProductGrid';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
@@ -8,12 +9,20 @@ import TechReviewGrid from '@/components/ui/grids/TechReviewGrid';
 import BuyingGuideGrid from '@/components/ui/grids/BuyingGuideGrid';
 import TipGrid from '@/components/ui/grids/TipGrid';
 import Link from '@/components/ui/foundations/Link';
+import Button from '@/components/ui/foundations/Button';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { phonesPageData } from '@/data/route-groups/products/phones';
 import { useProductList } from '@/hooks/useProductList';
+import { useAllPhones } from '@/hooks/products/usePhones';
 import type { Phone } from '@/types/commerce';
 
 export default function PhonesPage() {
+  const [pageSize] = useState(12); // Products per page
+  
+  // Fetch phones from Adobe Commerce
+  const { phones, loading, error, pageInfo, loadMore, totalCount } = useAllPhones(pageSize, 1);
+  
+  // Use product list hook with dynamic data
   const {
     searchQuery,
     setSearchQuery,
@@ -25,7 +34,7 @@ export default function PhonesPage() {
     handleFilterChange,
     handleClearFilters,
     filteredAndSortedProducts
-  } = useProductList({ products: phonesPageData.products });
+  } = useProductList({ products: phones });
 
   // Page configuration and content
   const { filters, breadcrumbs, pageHeader, search, emptyState, techReviews, buyingGuides, tips } = phonesPageData;
@@ -36,12 +45,23 @@ export default function PhonesPage() {
     buyingGuides: { title: 'Buying Guides', guides: buyingGuides },
     tips: { title: 'Tips & Tricks', subtitle: 'View All Tips', tips: tips }
   };
+  
+  // Handle loading more products
+  const handleLoadMore = async () => {
+    if (loadMore) {
+      await loadMore();
+    }
+  };
 
   return (
-    <ProductRoot
+    <ProductPageWrapper
       breadcrumbs={breadcrumbs}
       title={pageHeader.title}
       description={pageHeader.description}
+      loading={loading}
+      error={error}
+      products={phones}
+      totalCount={totalCount || filteredAndSortedProducts.length}
       searchProps={{
         searchQuery,
         onSearchChange: setSearchQuery,
@@ -49,7 +69,9 @@ export default function PhonesPage() {
         onSortChange: handleSortChange,
         placeholder: search.placeholder
       }}
-      resultsCount={filteredAndSortedProducts.length}
+      loadingSkeletonCount={pageSize}
+      errorTitle="Unable to load phones"
+      errorDescription="There was an error loading the phones. Please try again later."
     >
       <FilterSidebarResponsive 
         filters={filters}
@@ -67,6 +89,30 @@ export default function PhonesPage() {
             columns={{ sm: 1, md: 2, lg: 3 }} 
             gap="md"
           />
+
+          {/* Load More Button */}
+          {pageInfo && pageInfo.current_page < pageInfo.total_pages && (
+            <div className="flex justify-center mt-8">
+              <Button
+                onClick={handleLoadMore}
+                variant="secondary"
+                disabled={loading}
+                className="min-w-[200px]"
+              >
+                {loading ? (
+                  <span className="flex items-center gap-2">
+                    <svg className="animate-spin h-4 w-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Loading...
+                  </span>
+                ) : (
+                  `Load More (${totalCount - phones.length} remaining)`
+                )}
+              </Button>
+            </div>
+          )}
 
           {/* Enhanced Content Sections */}
           <div className="space-y-12 mt-12">
@@ -108,6 +154,6 @@ export default function PhonesPage() {
           onAction={handleClearFilters}
         />
       )}
-    </ProductRoot>
+    </ProductPageWrapper>
   );
 }

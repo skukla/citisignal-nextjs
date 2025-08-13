@@ -38,13 +38,15 @@ export function ProductRoot({
           description={description}
         />
 
-        <SearchAndSort {...searchProps} />
+        {searchProps && <SearchAndSort {...searchProps} />}
         
-        <ResultsCount 
-          showing={resultsCount} 
-          total={resultsCount} 
-          itemLabel={itemLabel}
-        />
+        {searchProps && (
+          <ResultsCount 
+            showing={resultsCount} 
+            total={resultsCount} 
+            itemLabel={itemLabel}
+          />
+        )}
 
         <TwoColumnLayout>
           {sidebar}
