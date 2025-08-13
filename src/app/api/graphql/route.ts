@@ -1,68 +1,57 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+// GraphQL proxy endpoint that forwards requests to Adobe Mesh
 export async function POST(request: NextRequest) {
+  const meshEndpoint = process.env.MESH_ENDPOINT;
+  
+  if (!meshEndpoint) {
+    return NextResponse.json(
+      { error: 'MESH_ENDPOINT not configured' },
+      { status: 500 }
+    );
+  }
+
   try {
-    // Require environment variables
-    if (!process.env.MESH_ENDPOINT) {
-      throw new Error('MESH_ENDPOINT environment variable is not configured');
-    }
-    if (!process.env.ADOBE_API_KEY) {
-      throw new Error('ADOBE_API_KEY environment variable is not configured');
-    }
-    
     const body = await request.json();
     
-    // The mesh endpoint URL should include the API key as a query parameter
-    const meshUrl = `${process.env.MESH_ENDPOINT}?api_key=${process.env.ADOBE_API_KEY}`;
+    // Build headers object - Note: Headers are case-sensitive!
+    const headers = {
+      'Content-Type': 'application/json',
+      'X-Api-Key': process.env.ADOBE_CATALOG_API_KEY || process.env.ADOBE_API_KEY || '',
+      'Magento-Environment-Id': process.env.ADOBE_COMMERCE_ENVIRONMENT_ID || '',
+      'Magento-Website-Code': process.env.ADOBE_COMMERCE_WEBSITE_CODE || '',
+      'Magento-Store-Code': process.env.ADOBE_COMMERCE_STORE_CODE || '',
+      'Magento-Store-View-Code': process.env.ADOBE_COMMERCE_STORE_VIEW_CODE || '',
+      'Magento-Customer-Group': process.env.ADOBE_COMMERCE_CUSTOMER_GROUP || '',
+    };
     
-    const response = await fetch(meshUrl, {
+    // Forward the request to the mesh endpoint with required headers
+    const response = await fetch(meshEndpoint, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        // These headers are required for the Catalog Service based on mesh.json configuration
-        'magento-environment-id': process.env.ADOBE_COMMERCE_ENVIRONMENT_ID!,
-        'magento-store-view-code': process.env.ADOBE_COMMERCE_STORE_VIEW_CODE!,
-        'magento-website-code': process.env.ADOBE_COMMERCE_WEBSITE_CODE!,
-        'magento-store-code': process.env.ADOBE_COMMERCE_STORE_CODE!,
-        'magento-customer-group': process.env.ADOBE_COMMERCE_CUSTOMER_GROUP!,
-        'x-api-key': 'storefront-widgets', // Required for Catalog Service
-      },
+      headers,
       body: JSON.stringify(body),
     });
 
     const data = await response.json();
     
-    // Filter out federation-related validation errors that don't affect the actual data
-    if (data.errors) {
-      data.errors = data.errors.filter((error: any) => {
-        if (error.message?.includes('Unknown type \'_Any\'') || 
-            error.message?.includes('Field \'_entities\'')) {
-          return false;
-        }
-        return true;
-      });
-      
-      // If no real errors remain, remove the errors field
-      if (data.errors.length === 0) {
-        delete data.errors;
-      }
-    }
-    
-    return NextResponse.json(data, {
-      status: response.status,
-      headers: {
-        'Cache-Control': 'public, s-maxage=60, stale-while-revalidate=300',
-      },
-    });
+    return NextResponse.json(data);
   } catch (error) {
     console.error('GraphQL proxy error:', error);
     return NextResponse.json(
-      { error: 'Failed to fetch data from Adobe Commerce' },
+      { error: 'Failed to proxy GraphQL request' },
       { status: 500 }
     );
   }
 }
 
-export async function GET() {
-  return NextResponse.json({ message: 'GraphQL endpoint - use POST method' });
+// Support OPTIONS for CORS
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 200,
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type',
+    },
+  });
 }

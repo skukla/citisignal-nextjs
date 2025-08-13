@@ -1,0 +1,99 @@
+# Full Detail Query - For product detail pages and complete data needs
+# Includes all fields: descriptions, attributes, options, etc.
+# For product cards, use GetPhonesForCards.graphql instead
+
+query GetPhonesWithFullDetails($pageSize: Int = 20, $currentPage: Int = 1) {
+  products(
+    filter: [{ attribute: "categories", eq: "phones" }]
+    limit: $pageSize
+    page: $currentPage
+  ) {
+    total
+    items {
+      product {
+        __typename
+        id
+        name
+        sku
+        urlKey
+        images {
+          url
+          label
+          roles
+        }
+        ... on Catalog_ComplexProductView {
+          # --- MESH ENHANCEMENTS ---
+          manufacturer   # Pulled from attributes array into its own field
+          memory_options # Converted from nested options structure to a flat array 
+          # Restructured from options with hex values extracted
+          available_colors {
+            name    
+            hex
+          }
+          # Calculated by comparing final vs regular price
+          is_on_sale
+          # --- ORIGINAL FIELDS (Still Available) ---
+          priceRange {
+            minimum {
+              regular {
+                amount {
+                  value
+                  currency
+                }
+              }
+              final {
+                amount {
+                  value
+                  currency
+                }
+              }
+            }
+          }
+          options {
+            title
+            values {
+              ... on Catalog_ProductViewOptionValueSwatch {
+                id
+                title
+                value
+              }
+            }
+          }
+          attributes {
+            name
+            value
+          }
+          categories # Converted to simple array from product metadata
+        }
+        ... on Catalog_SimpleProductView {
+          # Same changes apply for simple products
+          manufacturer
+          is_on_sale 
+          price {
+            regular {
+              amount {
+                value
+                currency
+              }
+            }
+            final {
+              amount {
+                value
+                currency
+              }
+            }
+          }
+          attributes {
+            name
+            value
+          }
+        }
+      }
+    }
+    page_info {
+      current_page
+      page_size
+      total_pages
+    }
+  }
+}

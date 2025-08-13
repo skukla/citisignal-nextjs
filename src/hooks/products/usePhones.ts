@@ -1,4 +1,8 @@
-import { GET_POPULAR_PHONES, GET_ALL_PHONES } from '@/graphql/queries/products';
+import GET_PHONES_FOR_CARDS from '@/graphql/queries/GetPhonesForCards.graphql';
+import GET_POPULAR_PHONES_FOR_CARDS from '@/graphql/queries/GetPopularPhonesForCards.graphql';
+// Full detail queries can be imported when needed for product detail pages
+// import GET_ALL_PHONES from '@/graphql/queries/GetAllPhones.graphql';
+// import GET_POPULAR_PHONES from '@/graphql/queries/GetPopularPhones.graphql';
 import { transformToPhone } from './transforms';
 import { useProducts } from './useProducts';
 import type { Phone } from '@/types/commerce';
@@ -9,7 +13,7 @@ import type { Phone } from '@/types/commerce';
  */
 export function usePopularPhones(limit: number = 4) {
   const result = useProducts<Phone>({
-    query: GET_POPULAR_PHONES,
+    query: GET_POPULAR_PHONES_FOR_CARDS,
     variables: { limit },
     transform: transformToPhone
   });
@@ -30,9 +34,10 @@ export function usePopularPhones(limit: number = 4) {
  */
 export function useAllPhones(pageSize: number = 20, currentPage: number = 1) {
   const result = useProducts<Phone>({
-    query: GET_ALL_PHONES,
+    query: GET_PHONES_FOR_CARDS,
     variables: { pageSize, currentPage },
-    transform: transformToPhone
+    transform: transformToPhone,
+    enablePagination: true  // Enable load more functionality
   });
 
   return {

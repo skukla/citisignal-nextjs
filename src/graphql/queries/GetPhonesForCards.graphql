@@ -1,0 +1,88 @@
+# Query for phone product cards
+# Uses only the enhanced fields that the mesh provides
+
+query GetPhonesForCards($pageSize: Int = 20, $currentPage: Int = 1) {
+  products(
+    filter: [{ attribute: "categories", eq: "phones" }]
+    limit: $pageSize
+    page: $currentPage
+  ) {
+    total
+    items {
+      product {
+        __typename
+        id
+        name
+        sku
+        urlKey
+        shortDescription
+        
+        # Images without roles filter (as per PRODUCT_SEARCH_QUERY)
+        images {
+          url
+          label
+          roles
+        }
+        
+        ... on Catalog_ComplexProductView {
+          # Mesh-computed fields from base data
+          manufacturer
+          memory_options
+          available_colors {
+            name
+            hex
+          }
+          is_on_sale
+          display_price
+          in_stock
+          
+          # Include base price data for fallback
+          priceRange {
+            minimum {
+              regular {
+                amount {
+                  value
+                  currency
+                }
+              }
+              final {
+                amount {
+                  value
+                  currency
+                }
+              }
+            }
+          }
+        }
+        
+        ... on Catalog_SimpleProductView {
+          manufacturer
+          is_on_sale
+          display_price
+          in_stock
+          
+          # Include base price data for fallback
+          price {
+            regular {
+              amount {
+                value
+                currency
+              }
+            }
+            final {
+              amount {
+                value
+                currency
+              }
+            }
+          }
+        }
+      }
+    }
+    page_info {
+      current_page
+      page_size
+      total_pages
+    }
+  }
+}

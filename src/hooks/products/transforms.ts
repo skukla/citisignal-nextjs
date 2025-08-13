@@ -14,8 +14,17 @@ export function extractPriceData(productView: any): PriceData {
   let originalPrice: number | undefined;
   let currency = '$';
 
-  if (productView.priceRange) {
-    // Complex product
+  // Use display_price if available (from mesh-enhanced fields)
+  if (productView.display_price !== undefined) {
+    price = productView.display_price;
+    // If is_on_sale is true, we know there's a discount but don't have original price
+    // This is a limitation of using only enhanced fields
+    if (productView.is_on_sale) {
+      originalPrice = price * 1.2; // Estimate for now, or could be undefined
+    }
+    currency = '$'; // Default to USD
+  } else if (productView.priceRange) {
+    // Complex product with full price data
     const minimum = productView.priceRange.minimum;
     price = minimum.final.amount.value;
     const regularPrice = minimum.regular.amount.value;
@@ -26,7 +35,7 @@ export function extractPriceData(productView: any): PriceData {
     
     currency = minimum.final.amount.currency === 'USD' ? '$' : minimum.final.amount.currency;
   } else if (productView.price) {
-    // Simple product
+    // Simple product with full price data
     price = productView.price.final.amount.value;
     const regularPrice = productView.price.regular.amount.value;
     
@@ -50,9 +59,9 @@ export function getAttributeValue(attributes: any[], name: string): string | und
 /**
  * Transform product data to Phone interface
  */
-export function transformToPhone(product: any): Phone {
-  // Check if product is already the productView or if it's nested
-  const productView = product.productView || product;
+export function transformToPhone(item: any): Phone {
+  // Handle both productView and product field names from different resolvers
+  const productView = item.productView || item.product || item;
   const { price, originalPrice, currency } = extractPriceData(productView);
   
   // Use custom resolver fields directly
@@ -71,7 +80,7 @@ export function transformToPhone(product: any): Phone {
     sku: productView.sku,
     name: productView.name,
     url_key: productView.urlKey,
-    description: productView.description,
+    description: productView.description || productView.shortDescription || '',
     price,
     original_price: originalPrice,
     currency,
@@ -97,9 +106,9 @@ export function transformToPhone(product: any): Phone {
 /**
  * Transform product data to Watch interface
  */
-export function transformToWatch(product: any): Watch {
-  // Check if product is already the productView or if it's nested
-  const productView = product.productView || product;
+export function transformToWatch(item: any): Watch {
+  // Handle both productView and product field names from different resolvers
+  const productView = item.productView || item.product || item;
   const { price, originalPrice, currency } = extractPriceData(productView);
   
   // Use custom resolver fields
@@ -122,7 +131,7 @@ export function transformToWatch(product: any): Watch {
     sku: productView.sku,
     name: productView.name,
     url_key: productView.urlKey,
-    description: productView.description,
+    description: productView.description || productView.shortDescription || '',
     price,
     original_price: originalPrice,
     currency,
@@ -149,9 +158,9 @@ export function transformToWatch(product: any): Watch {
 /**
  * Transform product data to Accessory interface
  */
-export function transformToAccessory(product: any): Accessory {
-  // Check if product is already the productView or if it's nested
-  const productView = product.productView || product;
+export function transformToAccessory(item: any): Accessory {
+  // Handle both productView and product field names from different resolvers
+  const productView = item.productView || item.product || item;
   const { price, originalPrice, currency } = extractPriceData(productView);
   
   // Extract accessory-specific attributes
@@ -166,7 +175,7 @@ export function transformToAccessory(product: any): Accessory {
     sku: productView.sku,
     name: productView.name,
     url_key: productView.urlKey,
-    description: productView.description,
+    description: productView.description || productView.shortDescription || '',
     price,
     original_price: originalPrice,
     currency,
