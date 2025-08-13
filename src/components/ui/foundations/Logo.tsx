@@ -51,6 +51,7 @@ export const Logo: FC<LogoProps> = ({
       width={width}
       height={height}
       className={className}
+      style={{ width: 'auto', height: 'auto' }}
     />
   );
 

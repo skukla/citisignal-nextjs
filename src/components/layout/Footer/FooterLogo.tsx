@@ -24,6 +24,7 @@ export function FooterLogo({
           width={width}
           height={height}
           className="object-contain"
+          style={{ width: 'auto', height: 'auto' }}
         />
       </div>
       {description && (

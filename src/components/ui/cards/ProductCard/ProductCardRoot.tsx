@@ -23,7 +23,7 @@ export function ProductCardRoot({ product, className, children }: ProductCardRoo
     <ProductCardProvider product={product}>
       <Card
         as={Link}
-        href={`/products/${product.url_key}`}
+        href={`/products/${product.urlKey}`}
         interactive
         className={className}
       >

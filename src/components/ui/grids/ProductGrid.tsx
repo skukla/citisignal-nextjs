@@ -20,6 +20,7 @@ interface ProductGridProps {
   gap?: GridGap;
   className?: string;
   children?: React.ReactNode; // For custom ProductCard children
+  priorityImageCount?: number; // Number of images to load with priority (default: 4)
   emptyState?: {
     icon?: HeroIcon;
     title?: string;
@@ -66,6 +67,7 @@ export default function ProductGrid({
   gap = 'md',
   className,
   children,
+  priorityImageCount = 4,
   emptyState
 }: ProductGridProps) {
   if (products.length === 0) {
@@ -82,20 +84,25 @@ export default function ProductGrid({
 
   return (
     <Grid columns={columns} gap={gap} className={className}>
-      {products.map((product) => (
-        <ProductCard.Root key={product.sku} product={product}>
-          {children || (
-            <>
-              <ProductCardImage />
-              <ProductCardBadges />
-              <ProductCardInfo />
-              <ProductCardColors />
-              <ProductCardPrice />
-              <ProductCardActions />
-            </>
-          )}
-        </ProductCard.Root>
-      ))}
+      {products.map((product, index) => {
+        // Load first N images with priority for better LCP
+        const shouldPrioritize = index < priorityImageCount;
+        
+        return (
+          <ProductCard.Root key={product.sku || product.id || `product-${index}`} product={product}>
+            {children || (
+              <>
+                <ProductCardImage priority={shouldPrioritize} />
+                <ProductCardBadges />
+                <ProductCardInfo />
+                <ProductCardColors />
+                <ProductCardPrice />
+                <ProductCardActions />
+              </>
+            )}
+          </ProductCard.Root>
+        );
+      })}
     </Grid>
   );
 }

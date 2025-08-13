@@ -7,7 +7,7 @@ import { twMerge } from 'tailwind-merge';
 
 export function ProductCardImage({ className, width = 300, height = 300, priority }: ProductCardImageProps) {
   const { product } = useProductCard();
-  const mainImage = product.media_gallery.find((img: { url: string; label: string; roles: string[] }) => img.roles.includes('main')) || product.media_gallery[0];
+  const mainImage = product.images?.find((img: { url: string; label: string; roles: string[] }) => img.roles?.includes('main')) || product.images?.[0];
 
   if (!mainImage) {
     return (
@@ -22,15 +22,17 @@ export function ProductCardImage({ className, width = 300, height = 300, priorit
   }
 
   return (
-    <div className={twMerge('relative overflow-hidden rounded-t-lg p-6', className)}>
-      <Image
-        src={mainImage.url}
-        alt={mainImage.label || product.name}
-        width={width}
-        height={height}
-        className="object-cover"
-        priority={priority}
-      />
+    <div className={twMerge('p-4', className)}>
+      <div className="relative aspect-square bg-gray-50 rounded-lg p-4">
+        <Image
+          src={mainImage.url}
+          alt={mainImage.label || product.name}
+          fill
+          sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+          className="object-contain"
+          priority={priority}
+        />
+      </div>
     </div>
   );
 }
