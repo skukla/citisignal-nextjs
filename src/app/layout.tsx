@@ -19,7 +19,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
   const isCheckoutPage = pathname?.startsWith('/checkout');
 
   return (
-    <html lang="en" className="h-full">
+    <html lang="en" className="h-full" data-scroll-behavior="smooth">
       <head>
         <title>CitiSignal - Your Trusted Wireless Provider</title>
         <meta name="description" content="America's most reliable wireless network. Stay connected with the latest phones, unlimited plans, and nationwide coverage." />
