@@ -11,8 +11,8 @@ import Search from '@/components/ui/search/Search';
 import { CartIcon } from '@/components/ui/layout/Cart/CartIcon';
 import Account from '@/components/ui/layout/Account';
 import Button from '@/components/ui/foundations/Button';
-import { headerConfig } from '@/data/header';
-import { navItems } from '@/data/navigation';
+import { headerConfig } from '@/data/config/header';
+import { primaryNavItems as navItems } from '@/data/config/navigation';
 
 /**
  * Standard Header component with default content and layout.

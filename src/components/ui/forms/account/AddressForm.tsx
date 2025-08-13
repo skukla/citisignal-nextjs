@@ -2,9 +2,9 @@
 
 import Input from '@/components/ui/foundations/Input';
 import Button from '@/components/ui/foundations/Button';
-import { addressValidation } from '@/data/account/validation';
+import { addressValidation } from '@/data/route-groups/account/validation';
 import { useForm } from '@/hooks/forms/useForm';
-import type { AddressFields } from '@/data/account/profile';
+import type { AddressFields } from '@/data/route-groups/account/profile';
 import Checkbox from '../../foundations/Checkbox';
 
 interface AddressFormProps {

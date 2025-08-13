@@ -1,7 +1,7 @@
 import { Phone, Watch, Accessory, Plan } from '@/types/commerce';
-import type { InternetDeal } from '@/data/pages/internet-deals';
-import type { StreamingService } from '@/data/pages/streaming';
-import type { GiftCard } from '@/data/pages/gift-cards';
+import type { InternetDeal } from '@/data/route-groups/products/internet-deals';
+import type { StreamingService } from '@/data/route-groups/products/streaming';
+import type { GiftCard } from '@/data/route-groups/products/gift-cards';
 import type { BaseComponentProps } from '@/types/ui';
 
 export type ProductType = Phone | Watch | Accessory | Plan | InternetDeal | StreamingService | GiftCard;

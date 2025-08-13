@@ -8,7 +8,7 @@ import SectionHeader from '@/components/ui/layout/SectionHeader';
 import SuccessMessage from '@/components/ui/feedback/SuccessMessage';
 import { useOrderDisplay } from '@/components/ui/layout/Checkout/hooks/useOrderDisplay';
 import type { OrderDetails } from '@/types/order';
-import { orderConfirmationPageData } from '@/data/pages/order-confirmation';
+import { orderConfirmationPageData } from '@/data/route-groups/checkout/order-confirmation';
 
 interface OrderConfirmationProps {
   order: OrderDetails;

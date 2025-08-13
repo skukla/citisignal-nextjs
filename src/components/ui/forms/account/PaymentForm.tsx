@@ -2,10 +2,10 @@
 
 import Input from '@/components/ui/foundations/Input';
 import Button from '@/components/ui/foundations/Button';
-import { paymentConfig } from '@/data/account/payment';
-import { paymentValidation } from '@/data/account/validation';
+import { paymentConfig } from '@/data/route-groups/account/payment';
+import { paymentValidation } from '@/data/route-groups/account/validation';
 import { useForm } from '@/hooks/forms/useForm';
-import type { CardFormFields } from '@/data/account/payment';
+import type { CardFormFields } from '@/data/route-groups/account/payment';
 
 interface PaymentFormProps {
   onSubmit: (values: CardFormFields) => Promise<void>;

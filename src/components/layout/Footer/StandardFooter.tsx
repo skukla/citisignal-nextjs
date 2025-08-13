@@ -5,7 +5,7 @@ import { FooterLogo } from './FooterLogo';
 import { FooterSocialLinks } from './FooterSocialLinks';
 import { FooterLinkGroup } from './FooterLinkGroup';
 import { FooterBottom } from './FooterBottom';
-import { socialLinks, shopLinks, supportLinks, companyLinks, footerContent } from '@/data/footer';
+import { socialLinks, shopLinks, supportLinks, companyLinks, footerContent } from '@/data/config/footer';
 
 /**
  * Standard Footer component with default content and layout.

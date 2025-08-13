@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Container from '@/components/ui/layout/Container';
-import { headerConfig } from '@/data/header';
+import { headerConfig } from '@/data/config/header';
 
 /**
  * TopBar component specifically for Header with announcement, auth links, and support info.

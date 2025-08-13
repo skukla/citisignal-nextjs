@@ -4,7 +4,7 @@ import { HeaderRoot } from '@/components/layout/Header/HeaderRoot';
 import { HeaderTopBar } from '@/components/layout/Header/HeaderTopBar';
 import Container from '@/components/ui/layout/Container';
 import { Logo } from '@/components/ui/foundations/Logo';
-import { headerConfig } from '@/data/route-groups/home/header';
+import { headerConfig } from '@/data/config/header';
 
 export default function CheckoutHeader() {
   return (

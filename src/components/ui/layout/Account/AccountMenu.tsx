@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
 import { useAuthContext } from './AuthContext';
-import { authenticatedMenuItems } from '@/data/account';
+import { accountMenuItems as authenticatedMenuItems } from '@/data/config/account';
 import type { AccountMenuProps } from './Account.types';
 
 export function AccountMenu({ className }: AccountMenuProps) {

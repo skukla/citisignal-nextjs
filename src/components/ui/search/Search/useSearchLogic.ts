@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import { phonesPageData } from '@/data/pages/phones';
+import { phonesPageData } from '@/data/route-groups/products/phones';
 import type { SearchResult } from './Search.types';
 
 export interface UseSearchLogicReturn {

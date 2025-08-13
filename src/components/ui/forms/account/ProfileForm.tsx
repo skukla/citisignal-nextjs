@@ -3,9 +3,9 @@
 import Input from '@/components/ui/foundations/Input';
 import Button from '@/components/ui/foundations/Button';
 import { useForm } from '@/hooks/forms/useForm';
-import { profileValidation } from '@/data/account/validation';
-import { profileConfig } from '@/data/account/profile';
-import type { ProfileFormFields } from '@/data/account/profile';
+import { profileValidation } from '@/data/route-groups/account/validation';
+import { profileConfig } from '@/data/route-groups/account/profile';
+import type { ProfileFormFields } from '@/data/route-groups/account/profile';
 
 interface ProfileFormProps {
   onSubmit: (values: ProfileFormFields) => Promise<void>;
