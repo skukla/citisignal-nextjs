@@ -16,7 +16,7 @@ export interface BaseProduct {
   review_count: number;
   
   // Media
-  media_gallery: Array<{
+  images: Array<{
     url: string;
     label: string;
     roles: string[];
