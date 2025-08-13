@@ -18,7 +18,6 @@ export default function CheckoutPage() {
     // 1. Clear the cart
     // 2. Save order details
     // 3. Redirect to order confirmation
-    console.log('Order completed:', orderDetails);
     router.push('/checkout/confirmation');
   };
 

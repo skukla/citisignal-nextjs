@@ -102,7 +102,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       // TODO: Replace with actual API call
-      console.log('Adding address:', address);
       
       // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
@@ -124,7 +123,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Updating address:', id, updates);
       await new Promise(resolve => setTimeout(resolve, 1000));
       // TODO: API call and state update
     } catch (err) {
@@ -140,7 +138,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Deleting address:', id);
       await new Promise(resolve => setTimeout(resolve, 1000));
       // TODO: API call and state update
     } catch (err) {
@@ -156,7 +153,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Setting default address:', id);
       await new Promise(resolve => setTimeout(resolve, 500));
       // TODO: API call and state update
     } catch (err) {
@@ -173,7 +169,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Adding payment method:', method);
       await new Promise(resolve => setTimeout(resolve, 1000));
       // TODO: Secure payment method API call
     } catch (err) {
@@ -189,7 +184,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Updating payment method:', id, updates);
       await new Promise(resolve => setTimeout(resolve, 1000));
       // TODO: API call
     } catch (err) {
@@ -205,7 +199,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Deleting payment method:', id);
       await new Promise(resolve => setTimeout(resolve, 1000));
       // TODO: API call
     } catch (err) {
@@ -221,7 +214,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Setting default payment method:', id);
       await new Promise(resolve => setTimeout(resolve, 500));
       // TODO: API call
     } catch (err) {
@@ -238,7 +230,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Updating profile:', updates);
       await new Promise(resolve => setTimeout(resolve, 1000));
       // TODO: API call
     } catch (err) {
@@ -254,7 +245,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Changing password');
       await new Promise(resolve => setTimeout(resolve, 1000));
       // TODO: Secure password change API call
     } catch (err) {
@@ -275,7 +265,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Reordering items from order:', orderId);
       await new Promise(resolve => setTimeout(resolve, 1000));
       // TODO: Add items to cart and navigate to checkout
       router.push('/checkout');
@@ -292,7 +281,6 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      console.log('Cancelling order:', orderId);
       await new Promise(resolve => setTimeout(resolve, 1000));
       // TODO: API call to cancel order
     } catch (err) {
@@ -305,7 +293,6 @@ export function useAccountActions(): UseAccountActionsReturn {
 
   const trackOrder = useCallback((orderId: string) => {
     // Navigate to order tracking page or open tracking modal
-    console.log('Tracking order:', orderId);
     // TODO: Implement order tracking navigation
   }, []);
 

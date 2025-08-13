@@ -58,7 +58,7 @@ export function useProductActions(): UseProductActionsReturn {
       id: product.id,
       name: product.name,
       price: product.price,
-      imageUrl: product.media_gallery?.[0]?.url || ''
+      imageUrl: product.images?.[0]?.url || ''
     });
     
     // Business logic for cart addition

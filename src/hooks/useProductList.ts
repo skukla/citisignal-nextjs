@@ -15,7 +15,7 @@ interface Product {
   review_count?: number;
   sku?: string;
   original_price?: number;
-  media_gallery?: { url: string; }[];
+  images?: { url: string; }[];
   category?: string;
   stock_status?: string;
 }
@@ -89,7 +89,7 @@ export function useProductList<T extends Product>({
   const filteredAndSortedProducts = useMemo(() => {
     // First filter by search
     let filtered = products.filter(product => {
-      if (searchQuery && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+      if (searchQuery && product.name && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) {
         return false;
       }
       return true;

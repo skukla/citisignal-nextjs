@@ -43,7 +43,7 @@ export function useSearchLogic(): UseSearchLogicReturn {
           description: phone.description 
             ? `${phone.description} - Starting at $${phone.price}`
             : `Starting at $${phone.price}`,
-          url: `/phones/${phone.url_key}`
+          url: `/phones/${phone.urlKey}`
         }));
 
       setIsLoading(false);

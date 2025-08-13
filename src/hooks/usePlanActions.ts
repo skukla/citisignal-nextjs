@@ -79,7 +79,7 @@ export function usePlanActions(): UsePlanActionsReturn {
       id: plan.id,
       name: plan.name,
       price: plan.price,
-      imageUrl: plan.media_gallery?.[0]?.url || ''
+      imageUrl: plan.images?.[0]?.url || ''
     });
     
     // TODO: In a real app, you might want to:
