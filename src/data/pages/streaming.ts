@@ -25,13 +25,13 @@ export const streamingPageData = {
       id: '1',
       sku: 'STREAM-NETFLIX-PREMIUM',
       name: 'Netflix Premium',
-      url_key: 'netflix-premium',
+      urlKey: 'netflix-premium',
       description: 'Watch unlimited movies and TV shows in Ultra HD.',
       price: 15.49,
       currency: '$',
       rating_summary: 92,
       review_count: 15420,
-      media_gallery: [
+      images: [
         {
           url: '/streaming/netflix-premium.jpg',
           label: 'Netflix Premium Plan',
@@ -54,13 +54,13 @@ export const streamingPageData = {
       id: '2',
       sku: 'STREAM-DISNEY-BUNDLE',
       name: 'Disney+ Bundle',
-      url_key: 'disney-plus-bundle',
+      urlKey: 'disney-plus-bundle',
       description: 'Disney+, Hulu, and ESPN+ all in one package.',
       price: 19.99,
       currency: '$',
       rating_summary: 89,
       review_count: 8934,
-      media_gallery: [
+      images: [
         {
           url: '/streaming/disney-bundle.jpg',
           label: 'Disney+ Bundle',

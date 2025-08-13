@@ -23,13 +23,13 @@ export const giftCardsPageData = {
       id: '1',
       sku: 'GIFT-DIGITAL-50',
       name: 'Digital Gift Card - $50',
-      url_key: 'digital-gift-card-50',
+      urlKey: 'digital-gift-card-50',
       description: 'Perfect for any occasion. Delivered instantly via email.',
       price: 50,
       currency: '$',
       rating_summary: 96,
       review_count: 1234,
-      media_gallery: [
+      images: [
         {
           url: '/gift-cards/digital-50.jpg',
           label: 'Digital Gift Card $50',
@@ -49,13 +49,13 @@ export const giftCardsPageData = {
       id: '2',
       sku: 'GIFT-PHYSICAL-100',
       name: 'Physical Gift Card - $100',
-      url_key: 'physical-gift-card-100',
+      urlKey: 'physical-gift-card-100',
       description: 'Beautiful physical card perfect for gifting.',
       price: 100,
       currency: '$',
       rating_summary: 94,
       review_count: 567,
-      media_gallery: [
+      images: [
         {
           url: '/gift-cards/physical-100.jpg',
           label: 'Physical Gift Card $100',

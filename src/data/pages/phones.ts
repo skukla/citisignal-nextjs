@@ -23,13 +23,13 @@ export const phonesPageData = {
       id: '1',
       sku: 'PHONE-IPHONE-15-PRO',
       name: 'iPhone 15 Pro',
-      url_key: 'iphone-15-pro',
+      urlKey: 'iphone-15-pro',
       description: 'The most advanced iPhone ever.',
       price: 999,
       currency: '$',
       rating_summary: 95,
       review_count: 1250,
-      media_gallery: [
+      images: [
         {
           url: '/phones/iphone-15-pro.jpg',
           label: 'iPhone 15 Pro',
@@ -55,13 +55,13 @@ export const phonesPageData = {
       id: '2',
       sku: 'PHONE-SAMSUNG-S24',
       name: 'Samsung Galaxy S24',
-      url_key: 'samsung-galaxy-s24',
+      urlKey: 'samsung-galaxy-s24',
       description: 'Galaxy AI is here. Search like never before, get real-time interpretation on a call, format your notes into a clear summary, and edit your photos effortlessly.',
       price: 799,
       currency: '$',
       rating_summary: 91,
       review_count: 890,
-      media_gallery: [
+      images: [
         {
           url: '/phones/samsung-s24.jpg',
           label: 'Samsung Galaxy S24',
@@ -87,14 +87,14 @@ export const phonesPageData = {
       id: '3',
       sku: 'PHONE-IPHONE-15',
       name: 'iPhone 15',
-      url_key: 'iphone-15',
+      urlKey: 'iphone-15',
       description: 'The powerful iPhone for everyone.',
       price: 799,
       original_price: 899,
       currency: '$',
       rating_summary: 90,
       review_count: 950,
-      media_gallery: [
+      images: [
         {
           url: '/phones/iphone-15.jpg',
           label: 'iPhone 15',
@@ -121,13 +121,13 @@ export const phonesPageData = {
       id: '4',
       sku: 'PHONE-CITISIGNAL-ULTRA',
       name: 'CitiSignal Ultra 5G',
-      url_key: 'citisignal-ultra-5g',
+      urlKey: 'citisignal-ultra-5g',
       description: 'Our most advanced 5G phone yet.',
       price: 899,
       currency: '$',
       rating_summary: 88,
       review_count: 450,
-      media_gallery: [
+      images: [
         {
           url: '/phones/citisignal-ultra.jpg',
           label: 'CitiSignal Ultra 5G',

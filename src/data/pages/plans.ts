@@ -15,13 +15,13 @@ export const plansPageData = {
       id: '1',
       sku: 'PLAN-UNLIMITED-MAX',
       name: 'CitiSignal Unlimited Max',
-      url_key: 'citisignal-unlimited-max',
+      urlKey: 'citisignal-unlimited-max',
       description: 'Our premium unlimited plan with all the perks.',
       price: 85,
       currency: '$',
       rating_summary: 94,
       review_count: 1250,
-      media_gallery: [
+      images: [
         {
           url: '/plans/unlimited-max.jpg',
           label: 'CitiSignal Unlimited Max Plan',
@@ -45,14 +45,14 @@ export const plansPageData = {
       id: '2',
       sku: 'PLAN-FAMILY-SHARE',
       name: 'CitiSignal Family Share',
-      url_key: 'citisignal-family-share',
+      urlKey: 'citisignal-family-share',
       description: 'Perfect for families with shared data and individual lines.',
       price: 120,
       original_price: 140,
       currency: '$',
       rating_summary: 88,
       review_count: 850,
-      media_gallery: [
+      images: [
         {
           url: '/plans/family-share.jpg',
           label: 'CitiSignal Family Share Plan',
@@ -76,13 +76,13 @@ export const plansPageData = {
       id: '3',
       sku: 'PLAN-ESSENTIALS',
       name: 'CitiSignal Essentials',
-      url_key: 'citisignal-essentials',
+      urlKey: 'citisignal-essentials',
       description: 'Basic plan with everything you need.',
       price: 45,
       currency: '$',
       rating_summary: 86,
       review_count: 620,
-      media_gallery: [
+      images: [
         {
           url: '/plans/essentials.jpg',
           label: 'CitiSignal Essentials Plan',

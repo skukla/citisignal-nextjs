@@ -14,13 +14,13 @@ export const watchesPageData = {
       id: '1',
       sku: 'WATCH-APPLE-SERIES-9',
       name: 'Apple Watch Series 9',
-      url_key: 'apple-watch-series-9',
+      urlKey: 'apple-watch-series-9',
       description: 'The most advanced Apple Watch yet with new health features.',
       price: 399,
       currency: '$',
       rating_summary: 94,
       review_count: 567,
-      media_gallery: [
+      images: [
         {
           url: '/watches/apple-watch-series-9.jpg',
           label: 'Apple Watch Series 9',
@@ -48,13 +48,13 @@ export const watchesPageData = {
       id: '2',
       sku: 'WATCH-SAMSUNG-GALAXY-6',
       name: 'Samsung Galaxy Watch 6',
-      url_key: 'samsung-galaxy-watch-6',
+      urlKey: 'samsung-galaxy-watch-6',
       description: 'Advanced health monitoring with sleek design.',
       price: 329,
       currency: '$',
       rating_summary: 89,
       review_count: 432,
-      media_gallery: [
+      images: [
         {
           url: '/watches/samsung-galaxy-watch-6.jpg',
           label: 'Samsung Galaxy Watch 6',

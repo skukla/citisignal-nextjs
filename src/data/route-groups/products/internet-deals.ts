@@ -25,13 +25,13 @@ export const internetDealsPageData = {
       id: '1',
       sku: 'INTERNET-FIBER-GIGA',
       name: 'CitiSignal Fiber Gigabit',
-      url_key: 'citisignal-fiber-gigabit',
+      urlKey: 'citisignal-fiber-gigabit',
       description: 'Lightning-fast fiber internet with speeds up to 1 Gig.',
       price: 79.99,
       currency: '$',
       rating_summary: 95,
       review_count: 2340,
-      media_gallery: [
+      images: [
         {
           url: '/internet/fiber-gigabit.jpg',
           label: 'CitiSignal Fiber Gigabit',
@@ -54,14 +54,14 @@ export const internetDealsPageData = {
       id: '2',
       sku: 'INTERNET-5G-HOME',
       name: 'CitiSignal 5G Home Internet',
-      url_key: 'citisignal-5g-home-internet',
+      urlKey: 'citisignal-5g-home-internet',
       description: 'Wireless home internet powered by our 5G network.',
       price: 49.99,
       original_price: 69.99,
       currency: '$',
       rating_summary: 88,
       review_count: 1567,
-      media_gallery: [
+      images: [
         {
           url: '/internet/5g-home.jpg',
           label: 'CitiSignal 5G Home Internet',

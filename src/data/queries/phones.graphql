@@ -10,9 +10,9 @@ query TestProductsFromPhonesCategory {
       productView {
         name
         sku
-        url_key
+        urlKey
         description
-        media_gallery {
+        images {
           url
           label
           roles

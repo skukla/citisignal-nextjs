@@ -15,13 +15,13 @@ export const accessoriesPageData = {
       id: '1',
       sku: 'ACC-CASE-IPHONE-15',
       name: 'iPhone 15 Clear Case',
-      url_key: 'iphone-15-clear-case',
+      urlKey: 'iphone-15-clear-case',
       description: 'Crystal clear protection for your iPhone 15.',
       price: 29.99,
       currency: '$',
       rating_summary: 92,
       review_count: 245,
-      media_gallery: [
+      images: [
         {
           url: '/accessories/iphone-15-case.jpg',
           label: 'iPhone 15 Clear Case',
@@ -43,13 +43,13 @@ export const accessoriesPageData = {
       id: '2',
       sku: 'ACC-CHARGER-WIRELESS',
       name: 'Wireless Charging Pad',
-      url_key: 'wireless-charging-pad',
+      urlKey: 'wireless-charging-pad',
       description: 'Fast wireless charging for compatible devices.',
       price: 39.99,
       currency: '$',
       rating_summary: 88,
       review_count: 156,
-      media_gallery: [
+      images: [
         {
           url: '/accessories/wireless-charger.jpg',
           label: 'Wireless Charging Pad',
