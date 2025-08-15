@@ -11,12 +11,22 @@ import Button from '@/components/ui/foundations/Button';
 import { ArrowRightIcon } from '@heroicons/react/24/outline';
 import { phonesPageData } from '@/data/route-groups/products/phones';
 import { useProductList } from '@/hooks/useProductList';
-import { useAllPhones } from '@/hooks/products/usePhones';
+import { useProductCards } from '@/hooks/products/useProductCards';
 import type { Phone } from '@/types/commerce';
 
 export default function PhonesPage() {
   // Fetch phones from Adobe Commerce with infinite loading
-  const { phones, loading, error, hasMoreItems, loadMore, totalCount } = useAllPhones(12);
+  const { 
+    items: phones, 
+    loading, 
+    error, 
+    hasMoreItems, 
+    loadMore, 
+    totalCount 
+  } = useProductCards({
+    filter: { category: 'phones' },
+    limit: 12
+  });
   
   // Use product list hook with dynamic data
   const {
@@ -30,7 +40,7 @@ export default function PhonesPage() {
     handleFilterChange,
     handleClearFilters,
     filteredAndSortedProducts
-  } = useProductList({ products: phones });
+  } = useProductList({ products: phones as Phone[] });
 
   // Page configuration and content
   const { filters, breadcrumbs, pageHeader, search, emptyState, techReviews, buyingGuides, tips } = phonesPageData;

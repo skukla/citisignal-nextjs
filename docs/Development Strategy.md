@@ -161,3 +161,132 @@ The application simulates a complete telecommunications e-commerce experience:
 - Keep commits atomic and focused
 - Write clear, descriptive commit messages
 - Do not include AI assistant attribution in commit messages
+
+## Key Learnings & Best Practices
+
+### Adobe API Mesh Integration
+
+#### Consuming the Mesh API
+The frontend integrates with Adobe Commerce API Mesh deployed at:
+`https://edge-sandbox-graph.adobe.io/api/d5818ebf-e560-45b3-9830-79183dbfaf27/graphql`
+
+#### Available Custom Fields
+The mesh provides enhanced fields on product types:
+- `secure_image` / `secure_images`: HTTPS-converted image URLs
+- `manufacturer`: Clean manufacturer name
+- `is_on_sale`: Computed sale status
+- `discount_percentage`: Calculated discount
+- `memory_options` / `available_colors`: Extracted product options
+
+#### Query Strategy
+- **Custom Queries** (`Citisignal_productCards`): Use for listing pages with optimized data shape
+- **Native Queries** (`Catalog_productSearch`): Use when you need full Adobe Commerce features
+- **Secure Fields**: Use `secure_image` instead of `image` for HTTPS URLs
+
+### Next.js Configuration
+
+#### Image Optimization
+```javascript
+// next.config.ts - Support both HTTP and HTTPS protocols
+remotePatterns: [
+  { protocol: 'https', hostname: commerceUrl.hostname, pathname: '/media/**' },
+  { protocol: 'http', hostname: commerceUrl.hostname, pathname: '/media/**' }
+]
+```
+
+#### Environment Variables
+- Use `.env.local` for Next.js to automatically load environment variables
+- Required variables for Adobe Commerce integration:
+  - `ADOBE_COMMERCE_URL`
+  - `ADOBE_COMMERCE_ENVIRONMENT_ID`
+  - `ADOBE_COMMERCE_WEBSITE_CODE`
+  - `ADOBE_COMMERCE_STORE_CODE`
+  - `ADOBE_COMMERCE_STORE_VIEW_CODE`
+
+### Data Fetching Strategy
+
+#### SWR vs Apollo Client
+After testing both approaches, **SWR proved simpler** for our use case:
+
+**SWR Advantages** (chosen approach):
+- Simpler pagination with `useSWRInfinite`
+- Less boilerplate code
+- Automatic request deduplication
+- Built-in error retry
+- Smaller bundle size
+
+**Apollo Would Be Better For**:
+- Complex cache manipulation
+- Optimistic UI updates
+- GraphQL subscriptions
+- Shared cache across components
+
+#### GraphQL Query Organization
+- Keep queries in separate `.graphql` files for reusability
+- Use webpack loader (`@graphql-tools/webpack-loader`) to import queries
+- Organize by domain: `/graphql/queries/`, `/graphql/mutations/`
+
+### TypeScript Best Practices
+
+#### Type Safety with Optional Properties
+```typescript
+// Always use optional chaining for potentially undefined arrays
+hasColors(product) && product.colors?.[0]?.name ? product.colors[0].name : undefined
+```
+
+#### Product Type Hierarchy
+- Use type guards (`hasColors`, `hasManufacturer`) to narrow types
+- Keep base interfaces minimal, extend for specific product types
+- Leverage discriminated unions for product variants
+
+### Component Patterns
+
+#### Compound Components
+Highly effective for complex UI components:
+- Provides flexibility in composition
+- Encapsulates related functionality
+- Makes components self-documenting
+- Example: `ProductCard.Root`, `ProductCard.Image`, etc.
+
+#### Context Usage
+- Use Context for cross-component state (Cart, Auth, Checkout)
+- Keep contexts focused and single-purpose
+- Provide custom hooks (`useCart`, `useAuth`) for better DX
+
+### Performance Considerations
+
+#### Data Fetching
+- Implement pagination early (infinite scroll vs traditional)
+- Use `revalidateOnFocus: false` for SWR to prevent unnecessary refetches
+- Consider caching strategy based on data volatility
+
+#### Bundle Size
+- SWR adds ~30KB vs Apollo's ~140KB
+- Use dynamic imports for heavy components
+- Leverage Next.js automatic code splitting
+
+### Debugging Tips
+
+#### Frontend Debugging
+1. **GraphQL Queries**: Test in GraphQL playground first
+2. **Environment Variables**: Require server restart after changes
+3. **Image URLs**: Check Next.js config supports both HTTP/HTTPS protocols
+4. **Type Errors**: Use type guards for optional product properties
+
+#### Integration Issues
+- **API Response Delays**: Mesh changes take 2-3 minutes to propagate
+- **CORS Issues**: Ensure proper headers in mesh configuration
+- **Missing Fields**: Check if using correct query (custom vs native)
+
+### Architectural Decisions
+
+#### Why Separate Mesh from Frontend
+1. **Separation of Concerns**: UI logic vs data transformation
+2. **Independent Scaling**: Frontend and API can scale separately
+3. **Team Collaboration**: Frontend and backend teams can work independently
+4. **Reusability**: Mesh can serve multiple frontends
+
+#### Custom Queries vs Native Queries
+- **Custom Queries**: Best for listing pages, search results
+- **Native Queries**: Best when you need all Adobe Commerce features
+- **Hybrid Approach**: Use both based on specific needs

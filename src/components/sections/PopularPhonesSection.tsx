@@ -7,8 +7,9 @@ import ContentSection from '@/components/ui/layout/ContentSection';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
 import ProductGrid from '@/components/ui/grids/ProductGrid';
 import { popularPhonesContent } from '@/data/sections/popularPhones';
-import { usePopularPhones } from '@/hooks/products/usePhones';
+import { useProductCards } from '@/hooks/products/useProductCards';
 import type { PopularPhonesContent } from '@/data/sections/popularPhones';
+import type { Phone } from '@/types/commerce';
 
 export interface PopularPhonesSectionProps {
   content?: PopularPhonesContent;
@@ -27,8 +28,18 @@ function PopularPhonesSection({
   content = popularPhonesContent,
   className
 }: PopularPhonesSectionProps) {
-  // Fetch popular phones from Adobe Commerce mesh
-  const { phones, loading, error } = usePopularPhones(content.phoneCount);
+  // Fetch popular phones from Adobe Commerce mesh (on sale phones)
+  const { 
+    items: phones, 
+    loading, 
+    error 
+  } = useProductCards({
+    filter: { 
+      category: 'phones',
+      onSaleOnly: true  // Popular phones are those on sale
+    },
+    limit: content.phoneCount
+  });
   
   // Show loading skeleton while fetching
   if (loading && phones.length === 0) {
@@ -69,7 +80,7 @@ function PopularPhonesSection({
 
       {/* Phones Grid */}
       <ProductGrid 
-        products={phones}
+        products={phones as Phone[]}
         columns={{ sm: 1, md: 2, lg: 4 }}
         gap="lg"
       />

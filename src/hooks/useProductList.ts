@@ -6,7 +6,7 @@ import { SortOption } from '@/lib/constants';
 interface Product {
   id: string;
   name: string;
-  price: number;
+  price: string | number;  // Accept both string (from API) and number
   manufacturer?: string;
   memory?: string[];
   available_colors?: { name: string; hex: string; }[];
@@ -14,7 +14,7 @@ interface Product {
   isNew?: boolean;
   review_count?: number;
   sku?: string;
-  original_price?: number;
+  original_price?: string | number;
   images?: { url: string; }[];
   category?: string;
   stock_status?: string;
@@ -117,9 +117,13 @@ export function useProductList<T extends Product>({
     return [...filtered].sort((a, b) => {
       switch (sortBy) {
         case 'price-low':
-          return a.price - b.price;
+          const aPrice = typeof a.price === 'string' ? parseFloat(a.price) : a.price;
+          const bPrice = typeof b.price === 'string' ? parseFloat(b.price) : b.price;
+          return aPrice - bPrice;
         case 'price-high':
-          return b.price - a.price;
+          const aPriceHigh = typeof a.price === 'string' ? parseFloat(a.price) : a.price;
+          const bPriceHigh = typeof b.price === 'string' ? parseFloat(b.price) : b.price;
+          return bPriceHigh - aPriceHigh;
         case 'newest':
           return ((b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
         default: // popular
