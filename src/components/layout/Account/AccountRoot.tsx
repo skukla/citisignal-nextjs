@@ -3,8 +3,6 @@
 import { ReactNode } from 'react';
 import Container from '@/components/ui/layout/Container';
 import Section from '@/components/ui/layout/Section';
-import PageHeader from '@/components/ui/layout/PageHeader';
-import { UserIcon } from '@heroicons/react/24/outline';
 
 interface AccountRootProps {
   children: ReactNode;

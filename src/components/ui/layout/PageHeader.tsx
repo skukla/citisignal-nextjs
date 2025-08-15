@@ -1,21 +1,24 @@
 'use client';
 
 import { twMerge } from 'tailwind-merge';
-import Content from '@/components/layout/Content';
 import type { PageHeaderProps } from '@/types/header';
 
 /**
  * PageHeader component for consistent page headers across the application.
  * Provides a standardized layout for page title, description, and optional actions.
  * 
+ * Does NOT wrap in Content - compose with Content when needed.
+ * 
  * @example
  * ```tsx
- * // Basic usage
- * <PageHeader
- *   title="Products"
- *   description="Browse our latest products"
- *   icon={ShoppingBagIcon}
- * />
+ * // Inside a Content wrapper (composable pattern)
+ * <Content>
+ *   <PageHeader
+ *     title="Products"
+ *     description="Browse our latest products"
+ *     icon={ShoppingBagIcon}
+ *   />
+ * </Content>
  * 
  * // With actions
  * <PageHeader
@@ -28,13 +31,6 @@ import type { PageHeaderProps } from '@/types/header';
  *     </Button>
  *   }
  * />
- * 
- * // Without description
- * <PageHeader
- *   title="Settings"
- *   icon={CogIcon}
- *   className="mb-12"
- * />
  * ```
  */
 export default function PageHeader({
@@ -46,27 +42,25 @@ export default function PageHeader({
   'aria-label': ariaLabel,
 }: PageHeaderProps) {
   return (
-    <Content>
-      <header role="banner" aria-label={ariaLabel || title}>
-        <div className={twMerge('mb-8', className)}>
-          <div className="flex items-center justify-between gap-4 mb-4">
-            <div className="flex items-center gap-3">
-              <Icon className="w-8 h-8 text-purple-600" aria-hidden="true" />
-              <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
-            </div>
-            {actions && (
-              <div className="flex items-center gap-3">
-                {actions}
-              </div>
-            )}
+    <header role="banner" aria-label={ariaLabel || title}>
+      <div className={twMerge('mb-8', className)}>
+        <div className="flex items-center justify-between gap-4 mb-4">
+          <div className="flex items-center gap-3">
+            <Icon className="w-8 h-8 text-purple-600" aria-hidden="true" />
+            <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
           </div>
-          {description && (
-            <p className="text-lg text-gray-600 max-w-3xl">
-              {description}
-            </p>
+          {actions && (
+            <div className="flex items-center gap-3">
+              {actions}
+            </div>
           )}
         </div>
+        {description && (
+          <p className="text-lg text-gray-600 max-w-3xl">
+            {description}
+          </p>
+        )}
+      </div>
     </header>
-    </Content>
   );
 }
