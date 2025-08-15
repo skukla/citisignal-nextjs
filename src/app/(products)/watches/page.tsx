@@ -1,68 +1,52 @@
 'use client';
 
-import { ProductRoot } from '@/components/layout/Product/ProductRoot';
-import EmptyState from '@/components/ui/feedback/EmptyState';
-import ProductGrid from '@/components/ui/grids/ProductGrid';
-import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
+import { ProductPage, ProductPageProvider } from '@/components/layout/ProductPage';
 import { watchesPageData } from '@/data/route-groups/products/watches';
-import { useProductList } from '@/hooks/useProductList';
-import type { Watch } from '@/types/commerce';
 
 export default function WatchesPage() {
-  const {
-    searchQuery,
-    setSearchQuery,
-    sortBy,
-    handleSortChange,
-    activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
-    handleFilterChange,
-    handleClearFilters,
-    filteredAndSortedProducts
-  } = useProductList({ products: watchesPageData.products });
-
-  // Page configuration
-  const { filters, breadcrumbs, pageHeader, search, emptyState } = watchesPageData;
+  // Extract page data for the provider
+  const pageData = {
+    breadcrumbs: watchesPageData.breadcrumbs,
+    pageHeader: watchesPageData.pageHeader,
+    search: watchesPageData.search,
+    filters: watchesPageData.filters,
+    emptyState: watchesPageData.emptyState,
+    loadingSkeletonCount: 12
+  };
 
   return (
-    <ProductRoot
-      breadcrumbs={breadcrumbs}
-      title={pageHeader.title}
-      description={pageHeader.description}
-      searchProps={{
-        searchQuery,
-        onSearchChange: setSearchQuery,
-        sortBy,
-        onSortChange: handleSortChange,
-        placeholder: search.placeholder
-      }}
-      resultsCount={filteredAndSortedProducts.length}
+    <ProductPageProvider 
+      category="watches"
+      pageData={pageData}
+      limit={12}
     >
-      <FilterSidebarResponsive 
-        filters={filters}
-        activeFilters={activeFilters}
-        onFilterChange={handleFilterChange}
-        onClearFilters={handleClearFilters}
-        showMobileFilters={showMobileFilters}
-        setShowMobileFilters={setShowMobileFilters}
-      />
-      
-      {filteredAndSortedProducts.length > 0 ? (
-        <ProductGrid 
-          products={filteredAndSortedProducts as Watch[]}
-          columns={{ sm: 1, md: 2, lg: 3 }}
-          gap="lg"
-        />
-      ) : (
-        <EmptyState
-          icon={emptyState.icon}
-          title={emptyState.title}
-          description={emptyState.description}
-          actionLabel={emptyState.actionLabel}
-          onAction={handleClearFilters}
-        />
-      )}
-    </ProductRoot>
+      <ProductPage.Background color="gray">
+        <ProductPage.Container>
+          <ProductPage.Breadcrumbs />
+          <ProductPage.Header />
+          
+          <ProductPage.Toolbar>
+            <ProductPage.Search />
+            <ProductPage.Sort />
+            <ProductPage.MobileFilterButton />
+          </ProductPage.Toolbar>
+          
+          <ProductPage.ResultCount />
+          
+          <ProductPage.Layout>
+            <ProductPage.Sidebar>
+              <ProductPage.Filters />
+            </ProductPage.Sidebar>
+            
+            <ProductPage.Main>
+              <ProductPage.Content />
+              <ProductPage.LoadMore />
+            </ProductPage.Main>
+          </ProductPage.Layout>
+        </ProductPage.Container>
+        
+        <ProductPage.Newsletter />
+      </ProductPage.Background>
+    </ProductPageProvider>
   );
 }
