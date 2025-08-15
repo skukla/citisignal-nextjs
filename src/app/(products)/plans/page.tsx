@@ -1,72 +1,52 @@
 'use client';
 
-import { ProductRoot } from '@/components/layout/Product/ProductRoot';
-import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
-import EmptyState from '@/components/ui/feedback/EmptyState';
-import PlanGrid from '@/components/ui/grids/PlanGrid';
+import { ProductPage, ProductPageProvider } from '@/components/layout/ProductPage';
 import { plansPageData } from '@/data/route-groups/products/plans';
-import { useProductList } from '@/hooks/useProductList';
-import { usePlanActions } from '@/hooks/usePlanActions';
 
 export default function PlansPage() {
-  const {
-    searchQuery,
-    setSearchQuery,
-    sortBy,
-    handleSortChange,
-    activeFilters,
-    showMobileFilters,
-    setShowMobileFilters,
-    handleFilterChange,
-    handleClearFilters,
-    filteredAndSortedProducts
-  } = useProductList({ products: plansPageData.products });
-
-  const { selectPlan, learnMore, toggleWishlist } = usePlanActions();
-
-  // Page configuration  
-  const { filters, breadcrumbs, pageHeader, search, emptyState } = plansPageData;
+  // Extract page data for the provider
+  const pageData = {
+    breadcrumbs: plansPageData.breadcrumbs,
+    pageHeader: plansPageData.pageHeader,
+    search: plansPageData.search,
+    filters: plansPageData.filters,
+    emptyState: plansPageData.emptyState,
+    loadingSkeletonCount: 12
+  };
 
   return (
-    <ProductRoot
-      breadcrumbs={breadcrumbs}
-      title={pageHeader.title}
-      description={pageHeader.description}
-      searchProps={{
-        searchQuery,
-        onSearchChange: setSearchQuery,
-        sortBy,
-        onSortChange: handleSortChange,
-        placeholder: search.placeholder
-      }}
-      resultsCount={filteredAndSortedProducts.length}
-      itemLabel={search.itemLabel}
+    <ProductPageProvider 
+      category="plans"
+      pageData={pageData}
+      limit={12}
     >
-      <FilterSidebarResponsive 
-        filters={filters}
-        activeFilters={activeFilters}
-        onFilterChange={handleFilterChange}
-        onClearFilters={handleClearFilters}
-        showMobileFilters={showMobileFilters}
-        setShowMobileFilters={setShowMobileFilters}
-      />
-      
-      {filteredAndSortedProducts.length > 0 ? (
-        <PlanGrid
-          plans={filteredAndSortedProducts}
-          onSelectPlan={selectPlan}
-          onLearnMore={learnMore}
-          onWishlistToggle={toggleWishlist}
-        />
-      ) : (
-        <EmptyState
-          icon={emptyState.icon}
-          title={emptyState.title}
-          description={emptyState.description}
-          actionLabel={emptyState.actionLabel}
-          onAction={handleClearFilters}
-        />
-      )}
-    </ProductRoot>
+      <ProductPage.Background color="gray">
+        <ProductPage.Container>
+          <ProductPage.Breadcrumbs />
+          <ProductPage.Header />
+          
+          <ProductPage.Toolbar>
+            <ProductPage.Search />
+            <ProductPage.Sort />
+            <ProductPage.MobileFilterButton />
+          </ProductPage.Toolbar>
+          
+          <ProductPage.ResultCount />
+          
+          <ProductPage.Layout>
+            <ProductPage.Sidebar>
+              <ProductPage.Filters />
+            </ProductPage.Sidebar>
+            
+            <ProductPage.Main>
+              <ProductPage.Content />
+              <ProductPage.LoadMore />
+            </ProductPage.Main>
+          </ProductPage.Layout>
+        </ProductPage.Container>
+        
+        <ProductPage.Newsletter />
+      </ProductPage.Background>
+    </ProductPageProvider>
   );
 }

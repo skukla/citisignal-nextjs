@@ -17,8 +17,7 @@ export const primaryNavItems: readonly NavItem[] = [
   { href: '/accessories', label: 'Accessories', category: 'shop' },
   { href: '/gift-cards', label: 'Gift Cards', category: 'shop' },
   { href: '/plans', label: 'Plans', category: 'plans' },
-  { href: '/streaming', label: 'Streaming', category: 'plans' },
-  { href: '/internet-deals', label: 'Internet Deals', category: 'plans' }
+  { href: '/streaming', label: 'Streaming', category: 'plans' }
 ] as const;
 
 // Footer navigation organized by category
