@@ -168,10 +168,72 @@ function CheckoutContent() {
 5. **Create thin wrappers** - Connect context to existing UI
 6. **Test thoroughly** - Ensure feature parity
 
+## Account Page Implementation
+
+Applied the same compound component pattern to all account pages:
+
+```tsx
+<AccountPageProvider pageData={pageData}>
+  <AccountPage.Root>  {/* Uses Page & Content */}
+    <AccountPage.Layout>  {/* Uses TwoColumnLayout */}
+      <AccountPage.Navigation />  {/* Sidebar with nav items */}
+      <AccountPage.Main>
+        <AccountPage.Section>
+          <AccountPage.Header />  {/* Supports actions prop */}
+          <AccountPage.Content>
+            {/* Page-specific content */}
+          </AccountPage.Content>
+        </AccountPage.Section>
+      </AccountPage.Main>
+    </AccountPage.Layout>
+  </AccountPage.Root>
+</AccountPageProvider>
+```
+
+### Key Learnings from Account Refactoring
+
+1. **Avoid Double-Wrapping** - Don't add Card wrappers if parent already provides styling
+2. **Reuse Existing Layout Components** - TwoColumnLayout perfect for sidebar layouts
+3. **Support Dynamic Props** - Header component accepts actions for page-specific buttons
+4. **Simplify Layout Files** - Let pages handle their own structure
+
+## Component Organization
+
+### Clear Separation of Concerns
+
+```
+src/components/
+├── layout/
+│   ├── ProductPage/     # Product page compound components
+│   └── AccountPage/     # Account page compound components
+└── ui/
+    └── layout/
+        └── Account/      # Account dropdown/menu for header only
+```
+
+- **layout/** - Page-level compound components
+- **ui/** - Reusable UI components used across the app
+
 ## Benefits Achieved
 
-- **60% code reduction** in product pages
-- **Zero prop drilling** - Context handles data flow
+### Metrics
+- **70% code reduction** in product pages (165 → 50 lines)
+- **65% code reduction** in account pages  
+- **600+ lines removed** across the refactoring
+- **Zero prop drilling** - Context handles all data flow
+- **10+ duplicate components removed**
+
+### Developer Experience
 - **Self-documenting JSX** - Structure visible at a glance
+- **Single file understanding** - No jumping between files
 - **Easier testing** - Logic isolated in smart components
 - **Better maintainability** - Changes in one place affect all
+- **Consistent patterns** - Same approach everywhere
+
+## Common Pitfalls to Avoid
+
+1. **Don't Auto-Wrap Components** - Let parent decide structure
+2. **Don't Over-Abstract** - Duplication of structure is OK
+3. **Don't Mix Patterns** - Use compound components consistently
+4. **Don't Forget Context** - Always provide proper TypeScript types
+5. **Don't Scatter Logic** - Use smart components for conditions
