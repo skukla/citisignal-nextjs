@@ -12,7 +12,7 @@ interface ProductCardProviderProps {
 export function ProductCardProvider({ product, children }: ProductCardProviderProps) {
   const { isWishlisted, toggleWishlist } = useWishlist();
   const [selectedColor, setSelectedColor] = useState<string | undefined>(
-    hasColors(product) ? product.available_colors[0]?.name : undefined
+    hasColors(product) && product.colors?.[0]?.name ? product.colors[0].name : undefined
   );
 
   const value = useMemo(() => ({

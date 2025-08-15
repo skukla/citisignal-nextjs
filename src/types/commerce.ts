@@ -1,64 +1,42 @@
 export interface BaseProduct {
-  // Basic product info
   id: string;
   sku: string;
   name: string;
-  url_key: string;
-  description?: string;
-  
-  // Pricing
-  price: number;
-  original_price?: number;
-  currency: string;
-  
-  // Ratings & Reviews
-  rating_summary: number; // 0-100 scale
-  review_count: number;
-  
-  // Media
-  images: Array<{
+  urlKey: string;
+  price: string;
+  originalPrice?: string;
+  discountPercent?: number;
+  image?: {
     url: string;
     label: string;
-    roles: string[];
-  }>;
-  
-  // Categories & Stock
-  category: string;
-  stock_status: 'in_stock' | 'out_of_stock';
-
-  // Flags
-  isNew?: boolean;
-  isSale?: boolean;
+  };
+  inStock: boolean;
+  manufacturer?: string;
 }
 
 // Custom attribute interfaces
 export interface PhoneAttributes {
-  manufacturer: 'Apple' | 'Samsung' | 'CitiSignal';
-  memory: string[];
-  extended_capacity_5g: boolean;
-  extended_range_5g: boolean;
-  available_colors: Array<{
+  memory?: string[];
+  colors?: Array<{
     name: string;
     hex: string;
   }>;
 }
 
 export interface WatchAttributes {
-  manufacturer: 'Apple' | 'Samsung' | 'CitiSignal';
-  sizes: string[];
-  connectivity: string;
-  battery_life: string;
-  water_resistant: string;
-  available_colors: Array<{
+  sizes?: string[];
+  connectivity?: string;
+  batteryLife?: string;
+  waterResistant?: string;
+  colors?: Array<{
     name: string;
     hex: string;
   }>;
 }
 
 export interface AccessoryAttributes {
-  manufacturer: string;
-  compatibility: string[];
-  available_colors: Array<{
+  compatibility?: string[];
+  colors?: Array<{
     name: string;
     hex: string;
   }>;
@@ -71,8 +49,8 @@ export interface PlanAttributes {
   text: string;
   hotspot: string;
   streaming: string[];
-  network_priority: 'premium' | 'standard' | 'basic';
-  contract_required: boolean;
+  networkPriority: 'premium' | 'standard' | 'basic';
+  contractRequired: boolean;
 }
 
 // Product type interfaces

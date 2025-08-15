@@ -1,0 +1,40 @@
+# Query for product cards using our custom mesh query
+# Returns canonically formatted data ready for display
+
+query GetProductCards(
+  $phrase: String
+  $filter: Citisignal_ProductFilter
+  $limit: Int = 20
+  $page: Int = 1
+) {
+  Citisignal_productCards(
+    phrase: $phrase
+    filter: $filter
+    limit: $limit
+    page: $page
+  ) {
+    items {
+      id
+      sku
+      urlKey
+      name
+      manufacturer
+      price           # Formatted "$999.99"
+      originalPrice   # Only when on sale
+      discountPercent
+      inStock
+      image {
+        url
+        label
+      }
+      memory
+      colors {
+        name
+        hex
+      }
+    }
+    totalCount
+    hasMoreItems
+    currentPage
+  }
+}

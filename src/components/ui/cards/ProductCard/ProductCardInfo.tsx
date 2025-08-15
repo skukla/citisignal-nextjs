@@ -3,9 +3,9 @@ import { useProductCard } from './ProductCardContext';
 import { hasManufacturer } from './ProductCard.types';
 import { twMerge } from 'tailwind-merge';
 
-export function ProductCardInfo({ className, showDescription }: ProductCardInfoProps) {
+export function ProductCardInfo({ className }: ProductCardInfoProps) {
   const { product } = useProductCard();
-  const { name, description } = product;
+  const { name } = product;
 
   return (
     <div className={twMerge('p-4', className)}>
@@ -13,9 +13,6 @@ export function ProductCardInfo({ className, showDescription }: ProductCardInfoP
         <p className="text-sm text-gray-500">{product.manufacturer}</p>
       )}
       <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">{name}</h3>
-      {showDescription && description && (
-        <p className="mt-2 text-sm text-gray-600">{description}</p>
-      )}
 
       {/* Memory */}
       {'memory' in product && product.memory && product.memory.length > 0 && (

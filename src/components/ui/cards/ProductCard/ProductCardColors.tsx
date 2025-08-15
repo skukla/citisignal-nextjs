@@ -11,11 +11,11 @@ const sizeClasses = {
 export function ProductCardColors({ className, size = 'md' }: ProductCardColorsProps) {
   const { product } = useProductCard();
 
-  if (!hasColors(product) || product.available_colors.length === 0) {
+  if (!hasColors(product) || !product.colors || product.colors.length === 0) {
     return null;
   }
 
-  const colors = product.available_colors;
+  const colors = product.colors;
   const colorSize = sizeClasses[size];
 
   return (

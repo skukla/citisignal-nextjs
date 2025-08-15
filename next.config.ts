@@ -11,9 +11,15 @@ const assetsUrl = process.env.ADOBE_ASSETS_URL ? new URL(process.env.ADOBE_ASSET
 const nextConfig: NextConfig = {
   images: {
     remotePatterns: [
-      // Adobe Commerce media files (required)
+      // Adobe Commerce media files with HTTPS (required)
       {
-        protocol: commerceUrl.protocol.replace(':', '') as 'http' | 'https',
+        protocol: 'https',
+        hostname: commerceUrl.hostname,
+        pathname: '/media/**',
+      },
+      // Adobe Commerce media files with HTTP (for legacy/dev environments)
+      {
+        protocol: 'http',
         hostname: commerceUrl.hostname,
         pathname: '/media/**',
       },

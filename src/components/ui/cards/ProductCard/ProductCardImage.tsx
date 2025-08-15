@@ -7,7 +7,7 @@ import { twMerge } from 'tailwind-merge';
 
 export function ProductCardImage({ className, width = 300, height = 300, priority }: ProductCardImageProps) {
   const { product } = useProductCard();
-  const mainImage = product.images?.find((img: { url: string; label: string; roles: string[] }) => img.roles?.includes('main')) || product.images?.[0];
+  const mainImage = product.image;
 
   if (!mainImage) {
     return (

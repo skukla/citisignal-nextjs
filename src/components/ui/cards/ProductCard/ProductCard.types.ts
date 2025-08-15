@@ -25,9 +25,7 @@ export interface ProductCardImageProps extends BaseComponentProps {
 
 export type ProductCardBadgesProps = BaseComponentProps;
 
-export interface ProductCardInfoProps extends BaseComponentProps {
-  showDescription?: boolean;
-}
+export type ProductCardInfoProps = BaseComponentProps;
 
 export interface ProductCardPriceProps extends BaseComponentProps {
   showSavings?: boolean;
@@ -41,10 +39,10 @@ export type ProductCardActionsProps = BaseComponentProps;
 
 // Type guards
 export function hasColors(product: ProductType): product is Phone | Watch | Accessory {
-  return 'available_colors' in product && Array.isArray(product.available_colors);
+  return 'colors' in product && Array.isArray(product.colors);
 }
 
-export function hasManufacturer(product: ProductType): product is Phone | Watch {
+export function hasManufacturer(product: ProductType): product is Phone | Watch | Accessory {
   return 'manufacturer' in product && typeof product.manufacturer === 'string';
 }
 

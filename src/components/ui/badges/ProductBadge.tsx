@@ -1,11 +1,9 @@
 import { twMerge } from 'tailwind-merge';
 import Badge from '@/components/ui/foundations/Badge';
-import { calculateDiscount } from '@/lib/product';
 
 interface ProductBadgeProps {
   variant: 'new' | 'discount' | 'out-of-stock';
-  originalPrice?: number;
-  price?: number;
+  discountPercent?: number;
 }
 
 /**
@@ -17,18 +15,17 @@ interface ProductBadgeProps {
  * // New product badge
  * <ProductBadge variant="new" />
  * 
- * // Discount badge with price calculation
+ * // Discount badge with percentage
  * <ProductBadge 
  *   variant="discount" 
- *   originalPrice={100} 
- *   price={80} 
+ *   discountPercent={20} 
  * />
  * 
  * // Out of stock badge
  * <ProductBadge variant="out-of-stock" />
  * ```
  */
-export default function ProductBadge({ variant, originalPrice, price }: ProductBadgeProps) {
+export default function ProductBadge({ variant, discountPercent }: ProductBadgeProps) {
   // Inline content logic - no function-in-component pattern
   let content = '';
   switch (variant) {
@@ -36,8 +33,8 @@ export default function ProductBadge({ variant, originalPrice, price }: ProductB
       content = 'NEW';
       break;
     case 'discount':
-      if (originalPrice && price) {
-        content = `-${calculateDiscount(originalPrice, price)}%`;
+      if (discountPercent) {
+        content = `-${discountPercent}%`;
       }
       break;
     case 'out-of-stock':

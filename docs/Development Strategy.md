@@ -1,6 +1,15 @@
-# CLAUDE.md
+# Development Strategy
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+
+## Project Relationship
+
+This project is the **frontend UI layer** that works with the Adobe Commerce API Mesh backend:
+- **citisignal-nextjs** (this project): Next.js 15 e-commerce frontend for telecommunications
+- **commerce-mesh**: Adobe API Mesh backend that provides the GraphQL API endpoint
+- **Integration**: Frontend consumes the mesh API at `https://edge-sandbox-graph.adobe.io/api/d5818ebf-e560-45b3-9830-79183dbfaf27/graphql`
+
+The separation allows this frontend to focus on UI/UX while the mesh handles complex data federation and transformation from multiple Adobe Commerce services.
 
 ## API Integration Architecture
 

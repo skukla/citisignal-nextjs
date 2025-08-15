@@ -1,6 +1,4 @@
 'use client';
-
-import { useState } from 'react';
 import { ProductPageWrapper } from '@/components/layout/Product/ProductPageWrapper';
 import EmptyState from '@/components/ui/feedback/EmptyState';
 import ProductGrid from '@/components/ui/grids/ProductGrid';
@@ -17,10 +15,8 @@ import { useAllPhones } from '@/hooks/products/usePhones';
 import type { Phone } from '@/types/commerce';
 
 export default function PhonesPage() {
-  const [pageSize] = useState(12); // Products per page
-  
-  // Fetch phones from Adobe Commerce
-  const { phones, loading, error, pageInfo, loadMore, totalCount } = useAllPhones(pageSize, 1);
+  // Fetch phones from Adobe Commerce with infinite loading
+  const { phones, loading, error, hasMoreItems, loadMore, totalCount } = useAllPhones(12);
   
   // Use product list hook with dynamic data
   const {
@@ -69,7 +65,7 @@ export default function PhonesPage() {
         onSortChange: handleSortChange,
         placeholder: search.placeholder
       }}
-      loadingSkeletonCount={pageSize}
+      loadingSkeletonCount={12}
       errorTitle="Unable to load phones"
       errorDescription="There was an error loading the phones. Please try again later."
     >
@@ -91,7 +87,7 @@ export default function PhonesPage() {
           />
 
           {/* Load More Button */}
-          {pageInfo && pageInfo.current_page < pageInfo.total_pages && (
+          {hasMoreItems && (
             <div className="flex justify-center mt-8">
               <Button
                 onClick={handleLoadMore}

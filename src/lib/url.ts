@@ -100,3 +100,33 @@ export function getDomain(url: string): string {
     return '';
   }
 }
+
+/**
+ * Ensures image URLs use HTTPS protocol for secure delivery
+ * Converts HTTP URLs to HTTPS for Adobe Commerce media files
+ * 
+ * @param url - The image URL to convert
+ * @returns the URL with HTTPS protocol
+ * 
+ * @example
+ * ```ts
+ * ensureHttpsImageUrl('http://citisignal-com774.adobedemo.com/media/catalog/product/image.jpg')
+ * // Returns: 'https://citisignal-com774.adobedemo.com/media/catalog/product/image.jpg'
+ * 
+ * ensureHttpsImageUrl('https://example.com/image.jpg') // 'https://example.com/image.jpg'
+ * ensureHttpsImageUrl('/local/image.jpg')              // '/local/image.jpg'
+ * ```
+ */
+export function ensureHttpsImageUrl(url: string): string {
+  if (!url || typeof url !== 'string') {
+    return '';
+  }
+
+  // If it's already HTTPS or not an external URL, return as-is
+  if (url.startsWith('https://') || !url.startsWith('http://')) {
+    return url;
+  }
+
+  // Convert HTTP to HTTPS
+  return url.replace(/^http:\/\//, 'https://');
+}
