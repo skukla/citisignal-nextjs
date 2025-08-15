@@ -26,7 +26,7 @@ export function ProductCardImage({ className, width = 300, height = 300, priorit
       <div className="relative aspect-square bg-gray-50 rounded-lg p-4">
         <Image
           src={mainImage.url}
-          alt={mainImage.label || product.name}
+          alt={mainImage.altText || product.name}
           fill
           sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
           className="object-contain"

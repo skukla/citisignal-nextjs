@@ -25,7 +25,7 @@ query GetProductCards(
       inStock
       image {
         url
-        label
+        altText
       }
       memory
       colors {

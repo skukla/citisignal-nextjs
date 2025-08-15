@@ -43,3 +43,6 @@ next-env.d.ts
 
 # workspace
 citisignal-nextjs.code-workspace
+
+# fnm
+.node-version
