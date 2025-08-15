@@ -1,7 +1,6 @@
 'use client';
 
-import { AccountDashboard } from '@/components/ui/layout/Account/AccountDashboard';
-import AccountSection from '@/components/ui/layout/AccountSection';
+import { AccountPage, AccountPageProvider } from '@/components/layout/AccountPage';
 import ProfileForm from '@/components/ui/forms/account/ProfileForm';
 import { profileConfig, ProfileFormFields } from '@/data/route-groups/account/profile';
 
@@ -12,18 +11,27 @@ export default function ProfilePage() {
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 
+  const pageData = {
+    title: profileConfig.personalInfo.title,
+    description: profileConfig.personalInfo.description
+  };
+
   return (
-    <AccountDashboard>
-      <AccountSection
-        title={profileConfig.personalInfo.title}
-        description={profileConfig.personalInfo.description}
-      >
-        <div className="bg-white rounded-lg shadow-sm">
-          <div className="p-6">
-            <ProfileForm onSubmit={handleProfileSubmit} />
-          </div>
-        </div>
-      </AccountSection>
-    </AccountDashboard>
+    <AccountPageProvider pageData={pageData}>
+      <AccountPage.Root>
+        <AccountPage.Layout>
+          <AccountPage.Navigation />
+          
+          <AccountPage.Main>
+            <AccountPage.Section>
+              <AccountPage.Header />
+              <AccountPage.Content>
+                <ProfileForm onSubmit={handleProfileSubmit} />
+              </AccountPage.Content>
+            </AccountPage.Section>
+          </AccountPage.Main>
+        </AccountPage.Layout>
+      </AccountPage.Root>
+    </AccountPageProvider>
   );
 }

@@ -1,4 +1,5 @@
 import {
+  HomeIcon,
   UserIcon,
   ShoppingBagIcon,
   MapPinIcon,
@@ -8,6 +9,12 @@ import {
 } from '@heroicons/react/24/outline';
 
 export const accountNavigation = [
+  {
+    id: 'dashboard',
+    label: 'Dashboard',
+    href: '/account/dashboard',
+    icon: HomeIcon
+  },
   {
     id: 'profile',
     label: 'Profile',
