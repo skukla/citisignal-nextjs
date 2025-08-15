@@ -33,7 +33,7 @@ interface UseProductCardsOptions {
 export function useProductCards({
   phrase,
   filter,
-  limit = 20
+  limit = 12
 }: UseProductCardsOptions = {}): ProductCardsResult {
   
   // Fetches pages of data sequentially, accumulating results.

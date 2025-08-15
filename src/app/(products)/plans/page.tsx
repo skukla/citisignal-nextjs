@@ -18,7 +18,6 @@ export default function PlansPage() {
     <ProductPageProvider 
       category="plans"
       pageData={pageData}
-      limit={12}
     >
       <ProductPage.Background color="gray">
         <ProductPage.Container>

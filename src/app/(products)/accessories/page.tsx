@@ -18,7 +18,6 @@ export default function AccessoriesPage() {
     <ProductPageProvider 
       category="accessories"
       pageData={pageData}
-      limit={12}
     >
       <ProductPage.Background color="gray">
         <ProductPage.Container>

@@ -18,7 +18,6 @@ export default function GiftCardsPage() {
     <ProductPageProvider 
       category="gift-cards"
       pageData={pageData}
-      limit={12}
     >
       <ProductPage.Background color="gray">
         <ProductPage.Container>

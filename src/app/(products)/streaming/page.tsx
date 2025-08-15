@@ -18,7 +18,6 @@ export default function StreamingPage() {
     <ProductPageProvider 
       category="streaming"
       pageData={pageData}
-      limit={12}
     >
       <ProductPage.Background color="gray">
         <ProductPage.Container>

@@ -21,7 +21,6 @@ export default function PhonesPage() {
     <ProductPageProvider 
       category="phones"
       pageData={pageData}
-      limit={12}
     >
       <ProductPage.Background color="gray">
         <ProductPage.Container>
