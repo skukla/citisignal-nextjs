@@ -19,7 +19,7 @@ remotePatterns: [
 
 ### Environment Variables
 - Changes require server restart
-- Must be in `.env.local` for Next.js
+- Must be in `.env` file
 - Required Adobe Commerce variables:
   - `ADOBE_COMMERCE_URL`
   - `ADOBE_COMMERCE_ENVIRONMENT_ID`
@@ -56,7 +56,7 @@ if (hasColors(product)) {
 1. **Check Browser Console** - Network and JS errors
 2. **Verify API Response** - GraphQL playground
 3. **Check TypeScript** - `npm run typecheck`
-4. **Review Environment** - `.env.local` variables
+4. **Review Environment** - `.env` variables
 5. **Clear Cache** - `.next` folder and browser
 
 ## Git Workflow

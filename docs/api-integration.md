@@ -67,7 +67,7 @@ const { filteredProducts, searchQuery, sortBy } = useProductList({
 
 ## Environment Variables
 
-Required in `.env.local`:
+Required in `.env`:
 ```
 ADOBE_COMMERCE_URL=
 ADOBE_COMMERCE_ENVIRONMENT_ID=
