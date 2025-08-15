@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { AccountDashboard } from '@/components/ui/layout/Account/AccountDashboard';
-import AccountSection from '@/components/ui/layout/AccountSection';
+import { AccountPage, AccountPageProvider } from '@/components/layout/AccountPage';
 import { paymentConfig } from '@/data/route-groups/account/payment';
 import Button from '@/components/ui/foundations/Button';
 import IconButton from '@/components/ui/foundations/IconButton';
@@ -30,22 +29,31 @@ export default function PaymentPage() {
   // const [showAddForm, setShowAddForm] = useState(false);
   // const [editingMethod, setEditingMethod] = useState<number | null>(null);
 
-  return (
-    <AccountDashboard>
-      <AccountSection
-        title={paymentConfig.list.title}
-        description={paymentConfig.list.description}
-        actions={
-          <Button
-            variant="outline"
-            leftIcon={PlusIcon}
-            onClick={() => {/* TODO: Implement add payment method */}}
-          >
-            {paymentConfig.list.addButton}
-          </Button>
-        }
+  const pageData = {
+    title: paymentConfig.list.title,
+    description: paymentConfig.list.description,
+    actions: (
+      <Button
+        variant="outline"
+        leftIcon={PlusIcon}
+        onClick={() => {/* TODO: Implement add payment method */}}
       >
-        <div className="space-y-6">
+        {paymentConfig.list.addButton}
+      </Button>
+    )
+  };
+
+  return (
+    <AccountPageProvider pageData={pageData}>
+      <AccountPage.Root>
+        <AccountPage.Layout>
+          <AccountPage.Navigation />
+          
+          <AccountPage.Main>
+            <AccountPage.Section>
+              <AccountPage.Header />
+              <AccountPage.Content className="p-6">
+                <div className="space-y-6">
           {paymentMethods.length > 0 ? (
             <div className="grid gap-4">
               {paymentMethods.map((method, index) => (
@@ -94,8 +102,12 @@ export default function PaymentPage() {
               onAction={() => {/* TODO: Implement add payment method */}}
             />
           )}
-        </div>
-      </AccountSection>
-    </AccountDashboard>
+                </div>
+              </AccountPage.Content>
+            </AccountPage.Section>
+          </AccountPage.Main>
+        </AccountPage.Layout>
+      </AccountPage.Root>
+    </AccountPageProvider>
   );
 }

@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     // Build headers object - Note: Headers are case-sensitive!
     const headers = {
       'Content-Type': 'application/json',
-      'X-Api-Key': process.env.ADOBE_CATALOG_API_KEY || process.env.ADOBE_API_KEY || '',
+      'X-Api-Key': process.env.ADOBE_CATALOG_API_KEY || '',
       'Magento-Environment-Id': process.env.ADOBE_COMMERCE_ENVIRONMENT_ID || '',
       'Magento-Website-Code': process.env.ADOBE_COMMERCE_WEBSITE_CODE || '',
       'Magento-Store-Code': process.env.ADOBE_COMMERCE_STORE_CODE || '',

@@ -1,13 +1,13 @@
 'use client';
 
-import { createContext, useContext } from 'react';
+import { createContext, useContext, ReactNode } from 'react';
 import type { User } from '@/types/user';
 import type { NavigationItem } from '@/components/ui/layout/Account/Account.types';
 
 export interface AccountPageData {
   title: string;
   description?: string;
-  showBackButton?: boolean;
+  actions?: ReactNode;
 }
 
 export interface AccountPageContextValue {
