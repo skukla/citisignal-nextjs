@@ -1,10 +1,10 @@
 'use client';
 
 import Breadcrumb from '@/components/ui/layout/Breadcrumb';
-import { useProductPage } from './ProductPageContext';
+import { useProductFilters } from '../providers/ProductFilterContext';
 
 export function ProductPageBreadcrumbs() {
-  const { pageData } = useProductPage();
+  const { pageData } = useProductFilters();
   
   return <Breadcrumb items={pageData.breadcrumbs} />;
 }

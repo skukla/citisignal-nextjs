@@ -1,11 +1,11 @@
 'use client';
 
 import ProductGrid from '@/components/ui/grids/ProductGrid';
-import { useProductPage } from './ProductPageContext';
+import { useProductData } from '../providers/ProductDataContext';
 import type { ProductType } from '@/components/ui/cards/ProductCard/ProductCard.types';
 
 export default function ProductPageProducts() {
-  const { filteredProducts } = useProductPage();
+  const { filteredProducts } = useProductData();
   
   return (
     <ProductGrid 

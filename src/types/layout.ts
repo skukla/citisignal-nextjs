@@ -8,3 +8,8 @@ export interface SectionProps extends BaseComponentProps {
   noPadding?: boolean;
   style?: CSSProperties;
 }
+
+export interface BreadcrumbItem {
+  name: string;
+  href?: string;
+}

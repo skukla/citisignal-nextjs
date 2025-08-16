@@ -1,10 +1,10 @@
 'use client';
 
 import EmptyState from '@/components/ui/feedback/EmptyState';
-import { useProductPage } from './ProductPageContext';
+import { useProductFilters } from '../providers/ProductFilterContext';
 
 export default function ProductPageEmpty() {
-  const { pageData, clearFilters } = useProductPage();
+  const { pageData, clearFilters } = useProductFilters();
   const { icon, title, description, actionLabel } = pageData.emptyState;
   
   return (

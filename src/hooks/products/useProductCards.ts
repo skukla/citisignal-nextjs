@@ -24,6 +24,15 @@ export interface ProductCardsResult {
   facets?: Facet[];
 }
 
+// Sort options that match our GraphQL schema
+export type SortAttribute = 'RELEVANCE' | 'PRICE' | 'NAME' | 'NEWEST' | 'POPULARITY';
+export type SortDirection = 'ASC' | 'DESC';
+
+export interface SortInput {
+  attribute: SortAttribute;
+  direction: SortDirection;
+}
+
 interface UseProductCardsOptions {
   phrase?: string;
   filter?: {
@@ -35,6 +44,7 @@ interface UseProductCardsOptions {
     priceMax?: number;
     onSaleOnly?: boolean;
   };
+  sort?: SortInput;
   limit?: number;
   facets?: boolean;
 }
@@ -47,6 +57,7 @@ interface UseProductCardsOptions {
 export function useProductCards({
   phrase,
   filter,
+  sort,
   limit = 12,
   facets = false
 }: UseProductCardsOptions = {}): ProductCardsResult {
@@ -60,15 +71,15 @@ export function useProductCards({
     }
     
     // Include all parameters in the key so filter changes create new cache entries
-    return ['productCards', phrase, filter, limit, facets, pageIndex + 1];
+    return ['productCards', phrase, filter, sort, limit, facets, pageIndex + 1];
   };
   
   // Fetches pages of data sequentially, accumulating results.
   const { data, error, size, setSize, isLoading } = useInfiniteQuery(
     getKey,
     (key) => {
-      const [, phrase, filter, limit, facets, page] = key;
-      return graphqlFetcher(GET_PRODUCT_CARDS, { phrase, filter, limit, page, facets });
+      const [, phrase, filter, sort, limit, facets, page] = key;
+      return graphqlFetcher(GET_PRODUCT_CARDS, { phrase, filter, sort, limit, page, facets });
     },
     { revalidateOnFocus: false }
   );

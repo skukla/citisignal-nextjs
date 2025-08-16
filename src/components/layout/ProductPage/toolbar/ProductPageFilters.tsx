@@ -1,17 +1,21 @@
 'use client';
 
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
-import { useProductPage } from './ProductPageContext';
+import { useProductFilters } from '../providers/ProductFilterContext';
+import { useProductUI } from '../providers/ProductUIContext';
 
 export function ProductPageFilters() {
   const { 
     pageData,
     activeFilters,
     setFilter,
-    clearFilters,
+    clearFilters
+  } = useProductFilters();
+  
+  const {
     showMobileFilters,
     setShowMobileFilters
-  } = useProductPage();
+  } = useProductUI();
   
   return (
     <FilterSidebarResponsive 

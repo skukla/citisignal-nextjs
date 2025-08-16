@@ -14,6 +14,19 @@ export interface BaseProduct {
   manufacturer?: string;
 }
 
+// Facet types for filtering
+export interface FacetOption {
+  label: string;
+  value: string;
+  count: number;
+}
+
+export interface Facet {
+  attribute: string;
+  label: string;
+  options: FacetOption[];
+}
+
 // Custom attribute interfaces
 export interface PhoneAttributes {
   memory?: string[];
