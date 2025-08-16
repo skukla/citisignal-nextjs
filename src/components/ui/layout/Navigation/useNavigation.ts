@@ -22,7 +22,8 @@ export function useNavigation(props?: UseNavigationProps): UseNavigationReturn {
   const pathname = usePathname();
   const { isOpen, toggle, close, panelRef } = useNavigationPanel();
 
-  const isMenuOpen = props?.isOpen ?? isOpen;
+  // Use props.isOpen if provided, otherwise fall back to internal state
+  const isMenuOpen = props?.isOpen !== undefined ? props.isOpen : isOpen;
   const toggleMenu = useCallback(() => {
     if (props?.onToggle) {
       props.onToggle();
