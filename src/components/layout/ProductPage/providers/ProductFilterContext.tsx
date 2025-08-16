@@ -12,6 +12,7 @@ interface ProductFilterContextValue {
   activeFilters: Record<string, any>;
   hasActiveFilters: boolean;
   filterCount: number;
+  category?: string;
   
   // Filter actions
   setSearchQuery: (query: string) => void;

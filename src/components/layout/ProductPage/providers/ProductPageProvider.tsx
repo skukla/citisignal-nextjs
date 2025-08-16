@@ -5,8 +5,10 @@ import { ProductDataContext } from './ProductDataContext';
 import { ProductFilterContext } from './ProductFilterContext';
 import { ProductUIContext } from './ProductUIContext';
 import { useProductCards } from '@/hooks/products/useProductCards';
+import { useProductFacets } from '@/hooks/products/useProductFacets';
 import { useProductList } from '../hooks/useProductList';
 import { useProductPageParams } from '../hooks/useProductPageParams';
+import { usePageLoading } from '../hooks/usePageLoading';
 import type { BaseProduct } from '@/types/commerce';
 import type { PageData } from '../types';
 
@@ -62,9 +64,22 @@ export function ProductPageProvider({
     facets: urlState.hasActiveFilters || !!urlState.search
   });
   
+  // Step 2b: Fetch facets
+  const facetsData = useProductFacets({
+    phrase: urlState.search,
+    filter: { category }
+  });
+  
   // Step 3: Manage UI preferences (independent of URL)
   const uiState = useProductList({ 
     products: normalizeProducts(productData.items) 
+  });
+  
+  // Step 4: Single source of truth for page loading state
+  const pageLoading = usePageLoading({
+    productsLoading: productData.loading,
+    facetsLoading: facetsData.loading,
+    searchQuery: urlState.search
   });
   
   // Now just provide the data to children
@@ -75,9 +90,10 @@ export function ProductPageProvider({
       error: productData.error,
       totalCount: normalizeDataValue(productData.totalCount, 0),
       hasMore: normalizeDataValue(productData.hasMoreItems, false),
-      facets: productData.facets,
+      facets: facetsData.facets,
       loadMore: productData.loadMore,
-      filteredProducts: normalizeDataValue(uiState.displayProducts, [])
+      filteredProducts: normalizeDataValue(uiState.displayProducts, []),
+      isInitialLoading: pageLoading
     }}>
       <ProductFilterContext.Provider value={{
         searchQuery: normalizeDataValue(urlState.search, ''),
@@ -85,6 +101,7 @@ export function ProductPageProvider({
         activeFilters: normalizeDataValue(urlState.activeFilters, {}),
         hasActiveFilters: normalizeDataValue(urlState.hasActiveFilters, false),
         filterCount: normalizeDataValue(urlState.filterCount, 0),
+        category,
         setSearchQuery: urlState.updateSearch,
         setSortBy: urlState.updateSort,
         setFilter: urlState.updateFilter,

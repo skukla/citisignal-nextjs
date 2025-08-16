@@ -1,0 +1,25 @@
+# Query for product facets (filter sidebar)
+# Returns available filter options based on current search/filter context
+# Separate from product cards for better performance and caching
+
+query GetProductFacets(
+  $phrase: String
+  $filter: Citisignal_ProductFilter
+) {
+  Citisignal_productFacets(
+    phrase: $phrase
+    filter: $filter
+  ) {
+    facets {
+      title
+      key
+      type
+      options {
+        id
+        name
+        count
+      }
+    }
+    totalCount
+  }
+}
