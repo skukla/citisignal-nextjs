@@ -8,11 +8,11 @@ import ProductPageEmpty from '../states/ProductPageEmpty';
 import ProductPageProducts from './ProductPageProducts';
 
 export function ProductPageContent() {
-  const { loading, error, filteredProducts } = useProductData();
+  const { error, filteredProducts, isInitialLoading, loading } = useProductData();
   const { pageData } = useProductFilters();
   
-  // Initial loading state
-  if (loading && filteredProducts.length === 0) {
+  // Show skeleton on initial load (coordinated) or when loading with no products
+  if (isInitialLoading || (loading && filteredProducts.length === 0)) {
     return <ProductPageSkeleton count={pageData.loadingSkeletonCount || 12} />;
   }
   

@@ -19,6 +19,9 @@ interface ProductDataContextValue {
   
   // Computed
   filteredProducts: BaseProduct[];
+  
+  // Coordinated loading state
+  isInitialLoading: boolean;  // True when ANY component is still loading on first render
 }
 
 export const ProductDataContext = createContext<ProductDataContextValue | undefined>(undefined);

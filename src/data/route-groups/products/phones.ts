@@ -158,9 +158,9 @@ export const phonesPageData = {
       key: 'manufacturer',
       type: 'checkbox' as const,
       options: [
-        { id: 'apple', name: 'Apple' },
-        { id: 'samsung', name: 'Samsung' },
-        { id: 'citisignal', name: 'CitiSignal' }
+        { id: 'Apple', name: 'Apple' },
+        { id: 'Samsung', name: 'Samsung' },
+        { id: 'CitiSignal', name: 'CitiSignal' }
       ]
     },
     {

@@ -4,16 +4,6 @@ import { graphqlFetcher } from '@/lib/graphql-fetcher';
 import GET_PRODUCT_CARDS from '@/graphql/queries/GetProductCards.graphql';
 import type { BaseProduct } from '@/types/commerce';
 
-export interface Facet {
-  attribute: string;
-  label: string;
-  options: Array<{
-    label: string;
-    value: string;
-    count: number;
-  }>;
-}
-
 export interface ProductCardsResult {
   items: BaseProduct[];
   loading: boolean;
@@ -21,7 +11,6 @@ export interface ProductCardsResult {
   hasMoreItems: boolean;
   loadMore: () => void;
   totalCount: number;
-  facets?: Facet[];
 }
 
 // Sort options that match our GraphQL schema
@@ -46,20 +35,18 @@ interface UseProductCardsOptions {
   };
   sort?: SortInput;
   limit?: number;
-  facets?: boolean;
 }
 
 /**
  * Fetches product cards with infinite loading support.
  * Loads more items when loadMore() is called.
- * Optionally includes facets for dynamic filtering.
+ * Facets are now fetched separately using useProductFacets hook.
  */
 export function useProductCards({
   phrase,
   filter,
   sort,
-  limit = 12,
-  facets = false
+  limit = 12
 }: UseProductCardsOptions = {}): ProductCardsResult {
   
   // Create a stable key that includes all filter parameters
@@ -71,15 +58,15 @@ export function useProductCards({
     }
     
     // Include all parameters in the key so filter changes create new cache entries
-    return ['productCards', phrase, filter, sort, limit, facets, pageIndex + 1];
+    return ['productCards', phrase, filter, sort, limit, pageIndex + 1];
   };
   
   // Fetches pages of data sequentially, accumulating results.
   const { data, error, size, setSize, isLoading } = useInfiniteQuery(
     getKey,
     (key) => {
-      const [, phrase, filter, sort, limit, facets, page] = key;
-      return graphqlFetcher(GET_PRODUCT_CARDS, { phrase, filter, sort, limit, page, facets });
+      const [, phrase, filter, sort, limit, page] = key;
+      return graphqlFetcher(GET_PRODUCT_CARDS, { phrase, filter, sort, limit, page });
     },
     { revalidateOnFocus: false }
   );
@@ -89,7 +76,6 @@ export function useProductCards({
   const latestPage = data?.[data.length - 1];
   const hasMoreItems = latestPage?.Citisignal_productCards?.hasMoreItems || false;
   const totalCount = latestPage?.Citisignal_productCards?.totalCount || 0;
-  const facetData = latestPage?.Citisignal_productCards?.facets || undefined;
 
   return {
     items: allItems,
@@ -97,7 +83,6 @@ export function useProductCards({
     error,
     hasMoreItems,
     loadMore: () => setSize(size + 1),
-    totalCount,
-    facets: facetData
+    totalCount
   };
 }
