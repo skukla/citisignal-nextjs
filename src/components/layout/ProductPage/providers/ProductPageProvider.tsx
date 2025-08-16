@@ -79,7 +79,8 @@ export function ProductPageProvider({
   const pageLoading = usePageLoading({
     productsLoading: productData.loading,
     facetsLoading: facetsData.loading,
-    searchQuery: urlState.search
+    searchQuery: urlState.search,
+    sortBy: urlState.formattedSort
   });
   
   // Now just provide the data to children
