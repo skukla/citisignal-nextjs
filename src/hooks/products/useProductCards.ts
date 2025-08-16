@@ -14,7 +14,7 @@ export interface ProductCardsResult {
 }
 
 // Sort options that match our GraphQL schema
-export type SortAttribute = 'RELEVANCE' | 'PRICE' | 'NAME' | 'NEWEST' | 'POPULARITY';
+export type SortAttribute = 'RELEVANCE' | 'PRICE' | 'NAME';
 export type SortDirection = 'ASC' | 'DESC';
 
 export interface SortInput {
