@@ -5,6 +5,7 @@ import type { BaseProduct } from '@/types/commerce';
 import type { SortOption } from '@/lib/constants';
 import type { FilterSection } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 import type { HeroIcon } from '@/types/hero-icons';
+import type { Facet } from '@/hooks/products/useProductCards';
 
 export interface BreadcrumbItem {
   name: string;
@@ -63,6 +64,9 @@ export interface ProductPageContextValue {
   
   // Page Configuration
   pageData: PageData;
+  
+  // Dynamic facets from Live Search
+  facets?: Facet[];
 }
 
 const ProductPageContext = createContext<ProductPageContextValue | null>(null);

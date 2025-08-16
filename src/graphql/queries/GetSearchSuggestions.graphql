@@ -1,0 +1,16 @@
+# Query for search suggestions using Live Search
+# Returns top 5 product suggestions for autocomplete
+
+query GetSearchSuggestions($phrase: String!) {
+  Citisignal_searchSuggestions(phrase: $phrase) {
+    suggestions {
+      id
+      name
+      sku
+      urlKey
+      price
+      image
+    }
+    totalCount
+  }
+}

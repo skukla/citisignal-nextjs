@@ -1,17 +1,20 @@
 # Query for product cards using our custom mesh query
 # Returns canonically formatted data ready for display
+# Now supports facets for dynamic filtering
 
 query GetProductCards(
   $phrase: String
   $filter: Citisignal_ProductFilter
   $limit: Int = 20
   $page: Int = 1
+  $facets: Boolean = false
 ) {
   Citisignal_productCards(
     phrase: $phrase
     filter: $filter
     limit: $limit
     page: $page
+    facets: $facets
   ) {
     items {
       id
@@ -36,5 +39,14 @@ query GetProductCards(
     totalCount
     hasMoreItems
     currentPage
+    facets {          # Dynamic facets from Live Search
+      attribute
+      label
+      options {
+        label
+        value
+        count
+      }
+    }
   }
 }

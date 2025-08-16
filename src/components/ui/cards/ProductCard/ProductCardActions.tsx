@@ -11,15 +11,18 @@ export function ProductCardActions({
 }: BaseComponentProps) {
   const { product } = useProductCard();
   const { addItem } = useCart();
-  const isOutOfStock = product?.stock_status === 'out_of_stock';
+  const isOutOfStock = !product?.inStock;
 
   const handleAddToCartClick = () => {
     if (!isOutOfStock && product) {
+      // Parse the price string (e.g., "$999.99") to get the numeric value
+      const numericPrice = parseFloat(product.price.replace('$', ''));
+      
       addItem({
         id: product.id,
         name: product.name,
-        price: product.price,
-        imageUrl: product.images?.[0]?.url
+        price: numericPrice,
+        imageUrl: product.image?.url
       });
     }
   };
