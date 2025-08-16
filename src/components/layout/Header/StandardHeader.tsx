@@ -32,7 +32,7 @@ export function StandardHeader() {
   }, []);
 
   return (
-    <NavigationRoot isOpen={isMobileMenuOpen} onClose={closeMobileMenu}>
+    <NavigationRoot isOpen={isMobileMenuOpen} onToggle={toggleMobileMenu} onClose={closeMobileMenu}>
       <HeaderRoot>
         <HeaderTopBar />
         <Container>
@@ -95,10 +95,11 @@ export function StandardHeader() {
             </div>
           </div>
 
-          {/* Mobile Navigation */}
-          <Navigation.Mobile items={navItems} />
         </Container>
       </HeaderRoot>
+      
+      {/* Mobile Navigation - Outside of Container for full-width slide */}
+      <Navigation.Mobile items={navItems} />
     </NavigationRoot>
   );
 }
