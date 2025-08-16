@@ -58,32 +58,21 @@ src/
 
 ### Hybrid Search Architecture
 
-**Two-Step Search Process**
-When users search, we use a hybrid approach for optimal results:
+When users search, we run Live Search + Catalog in parallel:
+- **Live Search**: AI relevance ranking (SKUs only)
+- **Catalog Service**: Complete product details
+- **Result**: AI-ranked products with full attributes (50% faster than sequential)
 
-1. **Live Search** - AI-powered relevance ranking (understands "latest phone" = newest models)
-2. **Catalog Service** - Complete product details (memory options, colors, manufacturer)
-3. **Merge** - Maintain Live Search ordering with Catalog data
+Service selection:
+- Search text → Hybrid (both services in parallel)
+- No search → Catalog only
+- Facets → Always Live Search (Catalog has no support)
 
-**Performance Optimizations:**
-- **Parallel Queries** - Both API calls run simultaneously (50% faster)
-- **Search Debouncing** - 300ms delay reduces API calls by 80%
-- **Smart Service Selection**:
-  - Search text → Live Search + Catalog (parallel)
-  - Filters only → Catalog with facets
-  - Initial load → Basic Catalog (no facets)
-
-**Trade-offs & Findings:**
-- Live Search alone lacks product attributes (memory, colors)
-- Catalog alone lacks AI search understanding
-- Parallel queries solve performance concerns
-- Debouncing essential for responsive search UX
-
-**Implementation Note:** The mesh resolver automatically handles this complexity, frontend just calls `Citisignal_productCards`
+The mesh resolver handles this complexity - frontend just calls `Citisignal_productCards`
 
 ## Tech Stack
 
-- **Next.js 15.4.2** - App Router, Turbopack
+- **Next.js 15.4.2** - App Router
 - **React 19** - TypeScript 5
 - **Tailwind CSS 4** - Custom theming
 - **SWR** - Data fetching with infinite scroll
@@ -103,66 +92,20 @@ When users search, we use a hybrid approach for optimal results:
 - **Smart Components** - Encapsulate logic, keep JSX clean
 - **Reuse UI Components** - Check `/ui` folder before creating new
 
-### Code Quality
-- **TypeScript Strict** - Define all types and interfaces
-- **Path Alias** - Use `@/*` instead of relative imports
-- **Single Source of Truth** - Constants in one place
-- **No Debug Code** - Remove console.logs and debug fields before commit
+### Code Standards
 
-### Simplicity & Maintainability
-- **Extract Complex Logic** - If logic needs a comment, extract it to a named function
-- **Limit useMemo Dependencies** - Over 10 dependencies suggests component does too much
-- **No Inline Business Logic** - Extract complex conditions to descriptive functions
-- **Flat Over Nested** - Avoid deeply nested ternaries and object spreads
-- **One Concern Per Hook** - Hooks should do one thing well
-- **Descriptive Names** - `isUserEligibleForDiscount` not `checkUser`
-- **Early Returns** - Exit early instead of nesting conditionals
-- **No Magic Numbers** - Use named constants for all values
-- **Limit Context Values** - Large contexts (>15 values) need splitting
+**[→ See detailed code standards documentation](./docs/code-standards.md)**
 
-### Code Smells to Avoid
+- Extract complex logic to named functions
+- Use Tailwind classes, not inline styles
+- Early returns over nested conditionals
+- TypeScript strict mode with proper types
+- Remove all debug code before commit
 
-**❌ BAD: Complex inline logic**
-```tsx
-sortBy: (() => {
-  if (!sort) return 'RELEVANCE';
-  const attribute = sort.attribute;
-  const direction = sort.direction;
-  if (attribute === 'RELEVANCE') return 'RELEVANCE';
-  return `${attribute}_${direction}`;
-})()
-```
+## 🔴 Required Checklists After Every Change
 
-**✅ GOOD: Extract to function**
-```tsx
-const formatSortValue = (sort) => {
-  if (!sort || sort.attribute === 'RELEVANCE') return 'RELEVANCE';
-  return `${sort.attribute}_${sort.direction}`;
-};
-// Then use: sortBy: formatSortValue(sort)
-```
-
-**❌ BAD: Nested conditional spreads**
-```tsx
-activeFilters: {
-  ...(manufacturer ? { manufacturer: [manufacturer] } : {}),
-  ...(memory?.length ? { memory } : {}),
-  ...(priceMin !== undefined || priceMax !== undefined ? { 
-    price: [`${priceMin || 0}-${priceMax || 999999}`] 
-  } : {})
-}
-```
-
-**✅ GOOD: Build object clearly**
-```tsx
-const buildActiveFilters = (filters) => {
-  const active = {};
-  if (filters.manufacturer) active.manufacturer = [filters.manufacturer];
-  if (filters.memory?.length) active.memory = filters.memory;
-  if (filters.hasPrice) active.price = [filters.priceRange];
-  return active;
-};
-```
+1. **[Code Review Checklist](./docs/code-review-checklist.md)** - Check for over-engineering, patterns, types
+2. **[Documentation Checklist](./docs/documentation-checklist.md)** - Update all affected docs
 
 ## Documentation
 
@@ -170,6 +113,8 @@ const buildActiveFilters = (filters) => {
 - [Component Patterns](./docs/component-patterns.md) - Compound components guide
 - [Troubleshooting](./docs/troubleshooting.md) - Common issues
 - [Future Improvements](./docs/future-improvements.md) - Planned enhancements
+- [Code Standards](./docs/code-standards.md) - Best practices and patterns
+- [Loading Strategy](./docs/loading-strategy.md) - Coordinated loading approach
 
 ## Product Categories
 
@@ -197,62 +142,13 @@ Removed: `internet-deals` (not suitable for e-commerce catalog)
 
 ## Coordinated Loading Strategy
 
-### The Problem
-When products and facets load independently, users see jarring sequential renders:
-1. Nav loads instantly (static)
-2. Facets appear (fast query)
-3. Products appear (slower query)
-4. Result: Multiple layout shifts, poor UX
+**[→ See detailed loading strategy documentation](./docs/loading-strategy.md)**
 
-### The Solution: Simplified usePageLoading Hook
-Single source of truth for page-level loading state - a clean custom hook that returns a simple boolean:
-
-```typescript
-// hooks/usePageLoading.ts - Clean, focused hook
-export function usePageLoading({ productsLoading, facetsLoading, searchQuery }) {
-  const initialLoadComplete = useRef(false);
-  const [isInSearchTransition, setIsInSearchTransition] = useState(false);
-  
-  // Track initial load and search transitions
-  // Return true when coordinated skeletons should show
-  return isInitialLoad || isSearching;
-}
-
-// In ProductPageProvider - Just one line
-const pageLoading = usePageLoading({
-  productsLoading: productData.loading,
-  facetsLoading: facetsData.loading,
-  searchQuery: urlState.search
-});
-
-// All components use the same state via context
-const { isInitialLoading } = useProductData();
-if (isInitialLoading) return <Skeleton />;
-```
-
-### Loading Rules
-1. **Initial Page Load**: Show all skeletons until BOTH queries complete
-2. **Search Changes**: Show all skeletons until BOTH queries complete  
-3. **Filter Changes**: Each component handles its own loading (no coordination)
-
-### Why This Approach?
-**Simplicity Over Complexity**: We evolved from complex coordination logic to a single, clean hook that:
-- Lives in one place (no scattered loading logic)
-- Returns one value (boolean for "show skeletons")
-- Has clear rules (initial load + searches = coordinate, filters = independent)
-- Easy to test and reason about
-
-### Key Implementation Details
-- **Search Debouncing**: 500ms delay prevents skeleton flicker while typing
-- **keepPreviousData**: SWR option prevents facets from disappearing during revalidation
-- **Empty Facets**: Hide filter sidebar completely when category has no facets
-- **State Persistence**: Uses refs and state to track transitions properly
-
-### Benefits
-- **Clean Architecture**: Single `pageLoading` state instead of complex coordination
-- **No Jarring Renders**: Everything appears/disappears together
-- **Predictable Behavior**: Clear rules for when skeletons show
-- **Maintainable**: Easy to understand and modify
+- Single `usePageLoading` hook for coordinated skeletons
+- Shows all skeletons on: initial load, search changes, sort changes
+- Independent loading for filter changes
+- LayeredTransition prevents layout shifts
+- 500ms search debouncing prevents flicker
 
 ## Next Steps
 
