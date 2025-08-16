@@ -39,6 +39,11 @@ if (hasColors(product)) {
 }
 ```
 
+### Mobile Menu Not Showing
+- Ensure Navigation.Mobile is outside Container/HeaderRoot for proper positioning
+- Component must be within NavigationRoot to access context
+- Check that NavigationRoot receives isOpen, onToggle, and onClose props
+
 ## Performance Tips
 
 ### Data Fetching
