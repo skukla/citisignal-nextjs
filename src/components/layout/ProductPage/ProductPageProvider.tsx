@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useMemo } from 'react';
+import { ReactNode, useMemo, useState, useEffect } from 'react';
 import { ProductPageContext, type PageData } from './ProductPageContext';
 import { useProductCards } from '@/hooks/products/useProductCards';
 import { useProductList } from '@/hooks/useProductList';
@@ -19,17 +19,24 @@ export function ProductPageProvider({
   pageData,
   limit = 12 
 }: ProductPageProviderProps) {
-  // Fetch products with infinite loading
+  // Track if user has interacted (searched or filtered)
+  const [hasUserInteracted, setHasUserInteracted] = useState(false);
+  
+  // Fetch products with infinite loading and facets when user has interacted
   const { 
     items: products, 
     loading, 
     error, 
     hasMoreItems: hasMore, 
     loadMore, 
-    totalCount 
+    totalCount,
+    facets
   } = useProductCards({
-    filter: category ? { category } : undefined,
-    limit
+    filter: {
+      ...(category ? { category } : {})
+    },
+    limit,
+    facets: hasUserInteracted // Request facets after user interaction
   });
   
   // Manage filtering, sorting, and search
@@ -45,6 +52,18 @@ export function ProductPageProvider({
     handleClearFilters,
     filteredAndSortedProducts
   } = useProductList({ products: products as BaseProduct[] });
+
+  // Track user interaction for facets
+  useEffect(() => {
+    // Enable facets if user has searched or filtered
+    const hasSearched = searchQuery && searchQuery.trim() !== '';
+    const hasFiltered = Object.keys(activeFilters).length > 0;
+    
+    if ((hasSearched || hasFiltered) && !hasUserInteracted) {
+      setHasUserInteracted(true);
+    }
+  }, [searchQuery, activeFilters, hasUserInteracted]);
+
 
   const contextValue = useMemo(() => ({
     // Data
@@ -74,7 +93,10 @@ export function ProductPageProvider({
     filteredProducts: filteredAndSortedProducts,
     
     // Page Configuration
-    pageData
+    pageData,
+    
+    // Dynamic facets from Live Search
+    facets: facets || undefined
   }), [
     products,
     loading,
@@ -92,7 +114,8 @@ export function ProductPageProvider({
     showMobileFilters,
     setShowMobileFilters,
     filteredAndSortedProducts,
-    pageData
+    pageData,
+    facets
   ]);
 
   return (
