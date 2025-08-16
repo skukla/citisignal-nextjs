@@ -2,10 +2,10 @@
 
 import { MagnifyingGlassIcon } from '@heroicons/react/24/outline';
 import Input from '@/components/ui/foundations/Input';
-import { useProductPage } from './ProductPageContext';
+import { useProductFilters } from '../providers/ProductFilterContext';
 
 export function ProductPageSearch() {
-  const { searchQuery, setSearchQuery, pageData } = useProductPage();
+  const { searchQuery, setSearchQuery, pageData } = useProductFilters();
   
   return (
     <div className="flex-1">

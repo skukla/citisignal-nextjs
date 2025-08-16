@@ -1,20 +1,27 @@
-import { ProductPageBackground } from './ProductPageBackground';
-import { ProductPageContainer } from './ProductPageContainer';
-import { ProductPageLayout } from './ProductPageLayout';
-import { ProductPageSidebar } from './ProductPageSidebar';
-import { ProductPageMain } from './ProductPageMain';
-import { ProductPageBreadcrumbs } from './ProductPageBreadcrumbs';
-import { ProductPageHeader } from './ProductPageHeader';
-import { ProductPageToolbar } from './ProductPageToolbar';
-import { ProductPageSearch } from './ProductPageSearch';
-import { ProductPageSort } from './ProductPageSort';
-import { ProductPageResultCount } from './ProductPageResultCount';
-import { ProductPageMobileFilterButton } from './ProductPageMobileFilterButton';
-import { ProductPageFilters } from './ProductPageFilters';
-import { ProductPageContent } from './ProductPageContent';
-import { ProductPageLoadMore } from './ProductPageLoadMore';
-import { ProductPageContentSections } from './ProductPageContentSections';
-import { ProductPageNewsletter } from './ProductPageNewsletter';
+// Structure
+import { ProductPageBackground } from './structure/ProductPageBackground';
+import { ProductPageContainer } from './structure/ProductPageContainer';
+import { ProductPageLayout } from './structure/ProductPageLayout';
+import { ProductPageSidebar } from './structure/ProductPageSidebar';
+import { ProductPageMain } from './structure/ProductPageMain';
+import { ProductPageBreadcrumbs } from './structure/ProductPageBreadcrumbs';
+import { ProductPageHeader } from './structure/ProductPageHeader';
+
+// Toolbar
+import { ProductPageToolbar } from './toolbar/ProductPageToolbar';
+import { ProductPageSearch } from './toolbar/ProductPageSearch';
+import { ProductPageSort } from './toolbar/ProductPageSort';
+import { ProductPageResultCount } from './toolbar/ProductPageResultCount';
+import { ProductPageMobileFilterButton } from './toolbar/ProductPageMobileFilterButton';
+import { ProductPageFilters } from './toolbar/ProductPageFilters';
+
+// Products
+import { ProductPageContent } from './products/ProductPageContent';
+import { ProductPageLoadMore } from './products/ProductPageLoadMore';
+import { ProductPageContentSections } from './products/ProductPageContentSections';
+
+// States
+import { ProductPageNewsletter } from './states/ProductPageNewsletter';
 
 // Create compound component
 export const ProductPage = {
@@ -50,7 +57,10 @@ export const ProductPage = {
   Newsletter: ProductPageNewsletter
 };
 
-// Export provider and hook
-export { ProductPageProvider } from './ProductPageProvider';
-export { useProductPage } from './ProductPageContext';
-export type { ProductPageContextValue, PageData } from './ProductPageContext';
+// Export provider and hooks
+export { ProductPageProvider } from './providers/ProductPageProvider';
+export { useProductData } from './providers/ProductDataContext';
+export { useProductFilters } from './providers/ProductFilterContext';
+export { useProductUI } from './providers/ProductUIContext';
+export { useProductPage } from './hooks/useProductPage';
+export type { PageData } from './types';

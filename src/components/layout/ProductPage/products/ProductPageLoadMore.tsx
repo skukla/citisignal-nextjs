@@ -1,10 +1,10 @@
 'use client';
 
 import Button from '@/components/ui/foundations/Button';
-import { useProductPage } from './ProductPageContext';
+import { useProductData } from '../providers/ProductDataContext';
 
 export function ProductPageLoadMore() {
-  const { hasMore, loadMore, loading, totalCount, products } = useProductPage();
+  const { hasMore, loadMore, loading, totalCount, products } = useProductData();
   
   if (!hasMore) {
     return null;

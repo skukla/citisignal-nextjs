@@ -84,6 +84,61 @@ src/
 - **Single Source of Truth** - Constants in one place
 - **No Debug Code** - Remove console.logs and debug fields before commit
 
+### Simplicity & Maintainability
+- **Extract Complex Logic** - If logic needs a comment, extract it to a named function
+- **Limit useMemo Dependencies** - Over 10 dependencies suggests component does too much
+- **No Inline Business Logic** - Extract complex conditions to descriptive functions
+- **Flat Over Nested** - Avoid deeply nested ternaries and object spreads
+- **One Concern Per Hook** - Hooks should do one thing well
+- **Descriptive Names** - `isUserEligibleForDiscount` not `checkUser`
+- **Early Returns** - Exit early instead of nesting conditionals
+- **No Magic Numbers** - Use named constants for all values
+- **Limit Context Values** - Large contexts (>15 values) need splitting
+
+### Code Smells to Avoid
+
+**❌ BAD: Complex inline logic**
+```tsx
+sortBy: (() => {
+  if (!sort) return 'RELEVANCE';
+  const attribute = sort.attribute;
+  const direction = sort.direction;
+  if (attribute === 'RELEVANCE') return 'RELEVANCE';
+  return `${attribute}_${direction}`;
+})()
+```
+
+**✅ GOOD: Extract to function**
+```tsx
+const formatSortValue = (sort) => {
+  if (!sort || sort.attribute === 'RELEVANCE') return 'RELEVANCE';
+  return `${sort.attribute}_${sort.direction}`;
+};
+// Then use: sortBy: formatSortValue(sort)
+```
+
+**❌ BAD: Nested conditional spreads**
+```tsx
+activeFilters: {
+  ...(manufacturer ? { manufacturer: [manufacturer] } : {}),
+  ...(memory?.length ? { memory } : {}),
+  ...(priceMin !== undefined || priceMax !== undefined ? { 
+    price: [`${priceMin || 0}-${priceMax || 999999}`] 
+  } : {})
+}
+```
+
+**✅ GOOD: Build object clearly**
+```tsx
+const buildActiveFilters = (filters) => {
+  const active = {};
+  if (filters.manufacturer) active.manufacturer = [filters.manufacturer];
+  if (filters.memory?.length) active.memory = filters.memory;
+  if (filters.hasPrice) active.price = [filters.priceRange];
+  return active;
+};
+```
+
 ## Documentation
 
 - [API Integration](./docs/api-integration.md) - Adobe Commerce Mesh

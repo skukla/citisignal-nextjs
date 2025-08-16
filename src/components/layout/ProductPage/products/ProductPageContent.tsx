@@ -1,18 +1,15 @@
 'use client';
 
-import { useProductPage } from './ProductPageContext';
-import ProductPageSkeleton from './ProductPageSkeleton';
-import ProductPageError from './ProductPageError';
-import ProductPageEmpty from './ProductPageEmpty';
+import { useProductData } from '../providers/ProductDataContext';
+import { useProductFilters } from '../providers/ProductFilterContext';
+import ProductPageSkeleton from '../states/ProductPageSkeleton';
+import ProductPageError from '../states/ProductPageError';
+import ProductPageEmpty from '../states/ProductPageEmpty';
 import ProductPageProducts from './ProductPageProducts';
 
 export function ProductPageContent() {
-  const { 
-    loading, 
-    error, 
-    filteredProducts,
-    pageData 
-  } = useProductPage();
+  const { loading, error, filteredProducts } = useProductData();
+  const { pageData } = useProductFilters();
   
   // Initial loading state
   if (loading && filteredProducts.length === 0) {

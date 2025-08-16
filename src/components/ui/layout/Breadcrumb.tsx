@@ -1,10 +1,6 @@
 import Link from 'next/link';
 import { ChevronRightIcon, HomeIcon } from '@heroicons/react/24/outline';
-
-interface BreadcrumbItem {
-  name: string;
-  href?: string;
-}
+import type { BreadcrumbItem } from '@/types/layout';
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];
