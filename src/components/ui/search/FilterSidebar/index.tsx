@@ -61,7 +61,7 @@ function FilterSidebar({
   );
 
   return (
-    <div className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg p-6">
+    <div className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg p-6" data-inspector-source="search" data-inspector-type="filter-sidebar">
       <FilterSidebarHeader
         hasActiveFilters={hasFiltersActive}
         onClearFilters={onClearFilters}

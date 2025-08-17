@@ -3,6 +3,7 @@
 import Select from '@/components/ui/foundations/Select';
 import { useProductFilters } from '../providers/ProductFilterContext';
 import { SORT_OPTIONS } from '../hooks/useProductPageParams';
+import { useActiveProductService } from '@/hooks/products/useActiveProductService';
 
 export function ProductPageSort() {
   const { sortBy, setSortBy } = useProductFilters();
@@ -13,12 +14,17 @@ export function ProductPageSort() {
     label: opt.label
   }));
   
+  // Hook determines which service handles sorting
+  const dataSource = useActiveProductService();
+  
   return (
-    <Select
-      value={sortBy}
-      onChange={(e) => setSortBy(e.target.value)}
-      options={options}
-      containerClassName="w-48"
-    />
+    <div data-inspector-source={dataSource} data-inspector-type="sort-dropdown">
+      <Select
+        value={sortBy}
+        onChange={(e) => setSortBy(e.target.value)}
+        options={options}
+        containerClassName="w-48"
+      />
+    </div>
   );
 }

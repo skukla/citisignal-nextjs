@@ -34,5 +34,8 @@ export function ProductPageBreadcrumbs() {
     return pageData.breadcrumbs;
   }, [category, dynamicBreadcrumbs, loading, pageData.breadcrumbs]);
   
-  return <Breadcrumb items={breadcrumbItems} />;
+  // Breadcrumbs come from Commerce API when we have a category
+  const dataSource = category && !loading && dynamicBreadcrumbs?.items?.length > 0 ? 'commerce' : 'static';
+  
+  return <Breadcrumb items={breadcrumbItems} dataSource={dataSource} />;
 }

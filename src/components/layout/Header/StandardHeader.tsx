@@ -12,7 +12,6 @@ import { CartIcon } from '@/components/ui/layout/Cart/CartIcon';
 import Account from '@/components/ui/layout/Account';
 import Button from '@/components/ui/foundations/Button';
 import { headerConfig } from '@/data/config/header';
-import { staticNavItems } from '@/data/config/navigation';
 import { useCategoryNavigation } from '@/hooks/navigation';
 
 /**
@@ -35,10 +34,9 @@ export function StandardHeader() {
     setIsMobileMenuOpen(false);
   }, []);
   
-  // Build navigation from Commerce API categories + static non-shop items
+  // Build navigation from Commerce API categories
   const navItems = useMemo(() => {
-    const shopItems = categoryNav?.headerNav || [];
-    return [...shopItems, ...staticNavItems];
+    return categoryNav?.headerNav || [];
   }, [categoryNav?.headerNav]);
 
   return (

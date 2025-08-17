@@ -1,6 +1,7 @@
 import useSWRInfinite from 'swr/infinite';
 const useInfiniteQuery = useSWRInfinite; // rename for clarity
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
+import { graphqlFetcherWithTracking } from '@/lib/graphql-fetcher-with-tracking';
 import GET_PRODUCT_CARDS from '@/graphql/queries/GetProductCards.graphql';
 import type { BaseProduct } from '@/types/commerce';
 
@@ -62,11 +63,14 @@ export function useProductCards({
   };
   
   // Fetches pages of data sequentially, accumulating results.
+  // Use tracking fetcher if Demo Inspector might be enabled
+  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
+  
   const { data, error, size, setSize, isLoading } = useInfiniteQuery(
     getKey,
     (key) => {
       const [, phrase, filter, sort, limit, page] = key;
-      return graphqlFetcher(GET_PRODUCT_CARDS, { phrase, filter, sort, limit, page });
+      return fetcher(GET_PRODUCT_CARDS, { phrase, filter, sort, limit, page });
     },
     { revalidateOnFocus: false }
   );

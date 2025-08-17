@@ -3,6 +3,7 @@
 import useSWR from 'swr';
 import GetCategoryNavigationQuery from '@/graphql/queries/GetCategoryNavigation.graphql';
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
+import { graphqlFetcherWithTracking } from '@/lib/graphql-fetcher-with-tracking';
 
 interface NavItem {
   href: string;
@@ -63,10 +64,13 @@ export function useCategoryNavigation(options: UseCategoryNavigationOptions = {}
     rootCategoryId,
     includeInactive
   };
+  
+  // Use tracking fetcher if Demo Inspector might be enabled
+  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
 
   const { data, error, mutate } = useSWR<CategoryNavigationResponse>(
     ['Citisignal_categoryNavigation', variables],
-    () => graphqlFetcher<CategoryNavigationResponse>(
+    () => fetcher<CategoryNavigationResponse>(
       GetCategoryNavigationQuery,
       variables
     ),
