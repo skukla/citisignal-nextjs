@@ -34,6 +34,8 @@ src/
 - **Search Suggestions** - Autocomplete with `Citisignal_searchSuggestions`
 - **Dynamic Facets** - Ready for Live Search faceted navigation
 - **Unified Data Layer** - Consistent API responses via custom resolvers
+- **Category Navigation** - Dynamic navigation from Commerce API (header & footer)
+- **Breadcrumbs** - Category breadcrumb trails for SEO and navigation
 
 ### Architecture Patterns
 
