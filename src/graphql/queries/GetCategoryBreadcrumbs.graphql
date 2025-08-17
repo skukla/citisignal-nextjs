@@ -1,0 +1,10 @@
+query GetCategoryBreadcrumbs($categoryUrlKey: String!) {
+  Citisignal_categoryBreadcrumbs(categoryUrlKey: $categoryUrlKey) {
+    items {
+      categoryId
+      name
+      urlPath
+      level
+    }
+  }
+}

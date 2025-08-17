@@ -4,12 +4,7 @@ export const socialLinks = [
   { name: 'Instagram', href: '#', icon: 'instagram' }
 ] as const;
 
-export const shopLinks = [
-  { href: '/phones', label: 'Phones' },
-  { href: '/watches', label: 'Watches' },
-  { href: '/accessories', label: 'Accessories' },
-  { href: '/gift-cards', label: 'Gift Cards' }
-] as const;
+// Shop links are now dynamically loaded from Commerce API
 
 export const plansLinks = [
   { href: '/plans', label: 'View All Plans' },

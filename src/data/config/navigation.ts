@@ -10,24 +10,17 @@ export interface SocialLink {
   icon: string;
 }
 
-// Main navigation items
-export const primaryNavItems: readonly NavItem[] = [
-  { href: '/phones', label: 'Phones', category: 'shop' },
-  { href: '/watches', label: 'Watches', category: 'shop' },
-  { href: '/accessories', label: 'Accessories', category: 'shop' },
-  { href: '/gift-cards', label: 'Gift Cards', category: 'shop' },
-  { href: '/plans', label: 'Plans', category: 'plans' },
-  { href: '/streaming', label: 'Streaming', category: 'plans' }
-] as const;
+// Static navigation items (non-commerce pages only)
+// ALL commerce categories now come from Commerce API
+export const staticNavItems: readonly NavItem[] = [] as const;
+
+// Legacy - kept for footer navigation only
+export const primaryNavItems = staticNavItems;
 
 // Footer navigation organized by category
+// Shop items will be populated from Commerce API
 export const footerNavigation = {
-  shop: [
-    { href: '/phones', label: 'Phones' },
-    { href: '/watches', label: 'Watches' },
-    { href: '/accessories', label: 'Accessories' },
-    { href: '/gift-cards', label: 'Gift Cards' }
-  ],
+  shop: [],  // Populated dynamically from Commerce API
   plans: [
     { href: '/plans', label: 'View All Plans' },
     { href: '/plans/unlimited', label: 'Unlimited Plans' },

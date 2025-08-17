@@ -1,0 +1,89 @@
+'use client';
+
+import useSWR from 'swr';
+import GetCategoryNavigationQuery from '@/graphql/queries/GetCategoryNavigation.graphql';
+import { graphqlFetcher } from '@/lib/graphql-fetcher';
+
+interface NavItem {
+  href: string;
+  label: string;
+  category?: string;
+}
+
+interface FooterNavItem {
+  href: string;
+  label: string;
+}
+
+interface CategoryNavigationResult {
+  headerNav: NavItem[];
+  footerNav: FooterNavItem[];
+}
+
+interface CategoryNavigationResponse {
+  Citisignal_categoryNavigation: CategoryNavigationResult;
+}
+
+interface UseCategoryNavigationOptions {
+  rootCategoryId?: string;
+  includeInactive?: boolean;
+}
+
+/**
+ * Hook to fetch category navigation tree from Commerce API
+ * 
+ * @param options - Configuration options
+ * @returns SWR response with category navigation data
+ * 
+ * @example
+ * ```tsx
+ * const { data, error, isLoading } = useCategoryNavigation();
+ * 
+ * if (isLoading) return <Skeleton />;
+ * if (error) return <Error />;
+ * 
+ * return (
+ *   <Navigation>
+ *     {data.items.map(category => (
+ *       <NavItem key={category.id} href={category.urlPath}>
+ *         {category.name}
+ *       </NavItem>
+ *     ))}
+ *   </Navigation>
+ * );
+ * ```
+ */
+export function useCategoryNavigation(options: UseCategoryNavigationOptions = {}) {
+  const {
+    rootCategoryId,
+    includeInactive = false
+  } = options;
+
+  const variables = {
+    rootCategoryId,
+    includeInactive
+  };
+
+  const { data, error, mutate } = useSWR<CategoryNavigationResponse>(
+    ['Citisignal_categoryNavigation', variables],
+    () => graphqlFetcher<CategoryNavigationResponse>(
+      GetCategoryNavigationQuery,
+      variables
+    ),
+    {
+      // Categories change rarely, cache for 1 hour
+      dedupingInterval: 3600000,
+      revalidateOnFocus: false,
+      revalidateIfStale: false,
+      // Keep previous data while revalidating
+      keepPreviousData: true
+    }
+  );
+
+  return {
+    data: data?.Citisignal_categoryNavigation || { items: [] },
+    error,
+    loading: !data && !error,
+    mutate
+  };
+}

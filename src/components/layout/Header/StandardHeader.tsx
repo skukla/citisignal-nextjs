@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useMemo } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { HeaderRoot } from './HeaderRoot';
 import { HeaderTopBar } from './HeaderTopBar';
@@ -12,7 +12,8 @@ import { CartIcon } from '@/components/ui/layout/Cart/CartIcon';
 import Account from '@/components/ui/layout/Account';
 import Button from '@/components/ui/foundations/Button';
 import { headerConfig } from '@/data/config/header';
-import { primaryNavItems as navItems } from '@/data/config/navigation';
+import { staticNavItems } from '@/data/config/navigation';
+import { useCategoryNavigation } from '@/hooks/navigation';
 
 /**
  * Standard Header component with default content and layout.
@@ -22,6 +23,9 @@ import { primaryNavItems as navItems } from '@/data/config/navigation';
  */
 export function StandardHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  
+  // Fetch dynamic category navigation
+  const { data: categoryNav, loading: navLoading } = useCategoryNavigation();
 
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
@@ -30,6 +34,12 @@ export function StandardHeader() {
   const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
   }, []);
+  
+  // Build navigation from Commerce API categories + static non-shop items
+  const navItems = useMemo(() => {
+    const shopItems = categoryNav?.headerNav || [];
+    return [...shopItems, ...staticNavItems];
+  }, [categoryNav?.headerNav]);
 
   return (
     <NavigationRoot isOpen={isMobileMenuOpen} onToggle={toggleMobileMenu} onClose={closeMobileMenu}>
@@ -49,7 +59,16 @@ export function StandardHeader() {
 
             {/* Desktop Navigation */}
             <div className="hidden min-[1148px]:flex flex-1 justify-center max-w-3xl mx-auto px-4">
-              <Navigation.Desktop items={navItems} />
+              {navLoading ? (
+                // Show skeleton while loading categories
+                <div className="flex items-center space-x-6">
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="h-4 bg-gray-200 rounded w-20 animate-pulse" />
+                  ))}
+                </div>
+              ) : (
+                <Navigation.Desktop items={navItems} />
+              )}
             </div>
 
             {/* Actions */}
