@@ -33,7 +33,7 @@ export function ProductPageSearch() {
   }, []);
   
   return (
-    <div className="flex-1">
+    <div className="flex-1" data-inspector-source="search" data-inspector-type="search-bar">
       <Input
         type="text"
         placeholder={pageData.search.placeholder || 'Search...'}

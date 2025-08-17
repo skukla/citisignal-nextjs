@@ -4,11 +4,18 @@ import type { BreadcrumbItem } from '@/types/layout';
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];
+  dataSource?: 'commerce' | 'static';
 }
 
-export default function Breadcrumb({ items }: BreadcrumbProps) {
+export default function Breadcrumb({ items, dataSource }: BreadcrumbProps) {
   return (
-    <nav className="flex mb-6" aria-label="Breadcrumb">
+    <nav 
+      className="flex mb-6" 
+      aria-label="Breadcrumb"
+      {...(dataSource === 'commerce' && {
+        'data-inspector-source': 'commerce',
+        'data-inspector-type': 'breadcrumbs'
+      })}>
       <ol className="flex items-center space-x-2">
         {/* Home Link */}
         <li>

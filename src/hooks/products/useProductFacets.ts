@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
+import { graphqlFetcherWithTracking } from '@/lib/graphql-fetcher-with-tracking';
 import GET_PRODUCT_FACETS from '@/graphql/queries/GetProductFacets.graphql';
 
 export interface Facet {
@@ -46,9 +47,12 @@ export function useProductFacets({
   // Create a stable key for SWR caching
   const key = ['productFacets', phrase, filter];
   
+  // Use tracking fetcher if Demo Inspector might be enabled
+  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
+  
   const { data, error, isLoading, isValidating } = useSWR(
     key,
-    () => graphqlFetcher(GET_PRODUCT_FACETS, { phrase, filter }),
+    () => fetcher(GET_PRODUCT_FACETS, { phrase, filter }),
     { 
       revalidateOnFocus: false,
       dedupingInterval: 5000, // Dedupe requests within 5 seconds

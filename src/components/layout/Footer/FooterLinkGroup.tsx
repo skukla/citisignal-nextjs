@@ -12,17 +12,25 @@ interface FooterLink {
 interface FooterLinkGroupProps extends BaseComponentProps {
   title: string;
   links: readonly FooterLink[];
+  dataSource?: 'commerce' | 'static';
 }
 
 export function FooterLinkGroup({
   title,
   links,
-  className
+  className,
+  dataSource
 }: FooterLinkGroupProps) {
   return (
     <div className={className}>
       <h3 className="text-lg font-semibold mb-4">{title}</h3>
-      <ul className="space-y-2">
+      <ul 
+        className="space-y-2"
+        {...(dataSource === 'commerce' && {
+          'data-inspector-source': 'commerce',
+          'data-inspector-type': 'footer-nav'
+        })}
+      >
         {links.map((link) => (
           <li key={link.href}>
             <Link

@@ -14,6 +14,7 @@ export interface ProductCardContextValue {
 // Component props
 export interface ProductCardRootProps extends BaseComponentProps {
   product: ProductType;
+  dataSource?: 'catalog' | 'search';
 }
 
 export interface ProductCardImageProps extends BaseComponentProps {

@@ -18,6 +18,8 @@ export const NavigationDesktop: FC<NavigationDesktopProps> = ({ items, className
       className={twMerge('flex items-center', className)}
       role="navigation"
       aria-label="Desktop navigation"
+      data-inspector-source="commerce"
+      data-inspector-type="navigation-desktop"
     >
       <div 
         role="menubar" 
