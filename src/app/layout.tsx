@@ -7,6 +7,8 @@ import { StandardFooter } from '@/components/layout/Footer/StandardFooter';
 import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
 import CartRootProvider from '@/components/ui/layout/Cart/CartRootProvider';
 import Root from '@/components/layout/Root';
+import { DemoInspectorProvider } from '@/contexts/DemoInspectorContext';
+import DemoInspector from '@/components/demo-inspector/DemoInspector';
 import './globals.css';
 
 interface RootLayoutProps {
@@ -24,19 +26,22 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="description" content="America's most reliable wireless network. Stay connected with the latest phones, unlimited plans, and nationwide coverage." />
       </head>
       <body className="h-full bg-white antialiased" suppressHydrationWarning>
-        <AuthProvider>
-          <AccountProvider>
-            <CartRootProvider>
-              <Root>
-                {!isCheckoutPage && <StandardHeader />}
-                <main>
-                  {children}
-                </main>
-                <StandardFooter />
-              </Root>
-            </CartRootProvider>
-          </AccountProvider>
-        </AuthProvider>
+        <DemoInspectorProvider>
+          <AuthProvider>
+            <AccountProvider>
+              <CartRootProvider>
+                <Root>
+                  {!isCheckoutPage && <StandardHeader />}
+                  <main>
+                    {children}
+                  </main>
+                  <StandardFooter />
+                </Root>
+              </CartRootProvider>
+            </AccountProvider>
+          </AuthProvider>
+          <DemoInspector />
+        </DemoInspectorProvider>
       </body>
     </html>
   );
