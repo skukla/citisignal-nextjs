@@ -1,0 +1,16 @@
+query GetCategoryNavigation($rootCategoryId: String, $includeInactive: Boolean = false) {
+  Citisignal_categoryNavigation(
+    rootCategoryId: $rootCategoryId
+    includeInactive: $includeInactive
+  ) {
+    headerNav {
+      href
+      label
+      category
+    }
+    footerNav {
+      href
+      label
+    }
+  }
+}
