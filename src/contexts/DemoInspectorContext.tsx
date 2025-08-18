@@ -76,11 +76,11 @@ interface DemoInspectorProviderProps {
 export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) {
   // Start with default values to avoid hydration mismatch
   const [enabled, setEnabled] = useState(false);
-  const [panelCollapsed, setPanelCollapsed] = useState(false);
+  const [panelCollapsed, setPanelCollapsed] = useState(true); // Default to collapsed (less intrusive)
   const [activeSources, setActiveSources] = useState<Set<DataSource>>(new Set());
   const [trackedQueries, setTrackedQueries] = useState<TrackedQuery[]>([]);
   const [inspectorPosition, setInspectorPosition] = useState<'left' | 'right'>('right');
-  const [singleQueryMode, setSingleQueryMode] = useState(false);
+  const [singleQueryMode, setSingleQueryMode] = useState(true); // Default to single query mode (production-like)
   const [isHydrated, setIsHydrated] = useState(false);
   
   // Load saved preferences after hydration
@@ -92,11 +92,18 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
           const prefs = JSON.parse(saved);
           setEnabled(prefs.enabled || false);
           setInspectorPosition(prefs.position || 'right');
-          setSingleQueryMode(prefs.singleQueryMode || false);
+          // Only override default if explicitly saved
+          if (prefs.singleQueryMode !== undefined) {
+            setSingleQueryMode(prefs.singleQueryMode);
+          }
+          if (prefs.panelCollapsed !== undefined) {
+            setPanelCollapsed(prefs.panelCollapsed);
+          }
         } catch (e) {
           console.error('Failed to load inspector preferences:', e);
         }
       }
+      // If no saved prefs, keep the defaults
       setIsHydrated(true);
     }
   }, []);
@@ -107,10 +114,11 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
       localStorage.setItem('demo-inspector-prefs', JSON.stringify({
         enabled,
         position: inspectorPosition,
-        singleQueryMode
+        singleQueryMode,
+        panelCollapsed
       }));
     }
-  }, [enabled, inspectorPosition, singleQueryMode]);
+  }, [enabled, inspectorPosition, singleQueryMode, panelCollapsed]);
   
   // Keyboard shortcuts
   useEffect(() => {
