@@ -15,7 +15,16 @@ export interface PageData {
     placeholder: string;
     itemLabel: string;
   };
-  filters: any[]; // Filter configuration
+  filters: Array<{
+    id: string;
+    label: string;
+    type: string;
+    options?: Array<{
+      value: string;
+      label: string;
+      count?: number;
+    }>;
+  }>; // Filter configuration
   emptyState: {
     icon: React.ComponentType<{ className?: string }>;
     title: string;
