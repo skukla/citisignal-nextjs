@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { useProductPageData } from '@/hooks/products/useProductPageData';
 import { ProductPageLayout } from './structure/ProductPageLayout';
 import { ProductPageHeader } from './structure/ProductPageHeader';

@@ -27,24 +27,22 @@ export function useDataSource({
     if (!enabled) return;
     
     // Mark the element with data attributes if ref is provided
-    if (elementRef?.current) {
-      elementRef.current.setAttribute('data-inspector-source', source);
-      elementRef.current.setAttribute('data-inspector-component', componentName);
-      elementRef.current.setAttribute('data-inspector-id', componentId.current);
+    const element = elementRef?.current;
+    if (element) {
+      element.setAttribute('data-inspector-source', source);
+      element.setAttribute('data-inspector-component', componentName);
+      element.setAttribute('data-inspector-id', componentId.current);
     }
     
     // Register component mount
-    if (typeof window !== 'undefined') {
-      // This could be expanded to track component lifecycle
-      console.debug(`[Demo Inspector] Component registered: ${componentName} (${source})`);
-    }
+    // Component registration is handled by data attributes
     
     return () => {
       // Clean up on unmount
-      if (elementRef?.current) {
-        elementRef.current.removeAttribute('data-inspector-source');
-        elementRef.current.removeAttribute('data-inspector-component');
-        elementRef.current.removeAttribute('data-inspector-id');
+      if (element) {
+        element.removeAttribute('data-inspector-source');
+        element.removeAttribute('data-inspector-component');
+        element.removeAttribute('data-inspector-id');
       }
     };
   }, [enabled, componentName, source, elementRef]);

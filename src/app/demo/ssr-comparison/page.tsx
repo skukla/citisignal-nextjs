@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useProductPageData } from '@/hooks/products/useProductPageData';
 import { useCategoryPageData } from '@/hooks/products/useCategoryPageData';
 import { 
@@ -23,13 +23,12 @@ export default function SSRComparisonDemo() {
   
   // Track client-side pattern timing (multiple queries)
   const clientStartTime = Date.now();
-  const clientQueries = [
-    useProductPageData({
-      filter: [{ attribute: 'category_uid', eq: 'phones' }],
-      pageSize: 12,
-      currentPage: 1
-    })
-  ];
+  const clientQuery = useProductPageData({
+    filter: [{ attribute: 'category_uid', eq: 'phones' }],
+    pageSize: 12,
+    currentPage: 1
+  });
+  const clientQueries = useMemo(() => [clientQuery], [clientQuery]);
   
   // Track SSR pattern timing (unified query)
   const ssrStartTime = Date.now();
@@ -39,11 +38,12 @@ export default function SSRComparisonDemo() {
     currentPage: 1
   });
   
+  const firstQueryData = clientQueries[0].data;
   useEffect(() => {
-    if (clientQueries[0].data && clientQueryTime === null) {
+    if (firstQueryData && clientQueryTime === null) {
       setClientQueryTime(Date.now() - clientStartTime);
     }
-  }, [clientQueries[0].data, clientStartTime, clientQueryTime]);
+  }, [firstQueryData, clientStartTime, clientQueryTime, clientQueries]);
   
   useEffect(() => {
     if (ssrQuery.data && ssrQueryTime === null) {

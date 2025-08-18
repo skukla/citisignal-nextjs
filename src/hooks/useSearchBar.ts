@@ -11,10 +11,6 @@ interface UseSearchBarProps {
  * @param {Object} props - Hook configuration
  * @param {Function} [props.onSearch] - Callback when search value changes
  * @returns {Object} Search state and handlers
- * @example
- * const { value, setValue, debouncedValue } = useSearchBar({
- *   onSearch: (value) => console.log(value)
- * });
  */
 export function useSearchBar({ onSearch }: UseSearchBarProps) {
   const [isOpen, setIsOpen] = useState(false);

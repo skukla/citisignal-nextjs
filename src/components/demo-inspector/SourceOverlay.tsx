@@ -142,7 +142,7 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
             nestedInput.style.boxShadow = nestedInput.dataset.originalBoxShadow || '';
             delete nestedInput.dataset.originalBoxShadow;
           }
-        } catch (e) {
+        } catch {
           // Reset to defaults if parsing fails
           element.style.backgroundColor = element.dataset.originalBackground || '';
           element.style.boxShadow = '';
@@ -220,7 +220,7 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
             nestedInput.style.boxShadow = nestedInput.dataset.originalBoxShadow || '';
             delete nestedInput.dataset.originalBoxShadow;
           }
-        } catch (e) {
+        } catch {
           element.style.backgroundColor = element.dataset.originalBackground || '';
           element.style.boxShadow = '';
           element.style.position = '';
