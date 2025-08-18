@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import { useDemoInspector, DATA_SOURCES } from '@/contexts/DemoInspectorContext';
 import { SourceOverlay } from './SourceOverlay';
@@ -15,18 +15,17 @@ export default function DemoInspector() {
   const pathname = usePathname();
   const {
     enabled,
+    panelCollapsed,
     activeSources,
     trackedQueries,
     inspectorPosition,
     toggleInspector,
+    setPanelCollapsed,
     toggleSource,
     clearSources,
     clearQueries,
-    setInspectorPosition,
     trackQuery
   } = useDemoInspector();
-  
-  const [panelOpen, setPanelOpen] = useState(true);
   
   // Clear queries when route changes
   useEffect(() => {
@@ -62,20 +61,18 @@ export default function DemoInspector() {
       
       {/* Floating Inspector Panel */}
       <div className={`fixed top-20 ${position} z-50 space-y-4`}>
-        {/* Toggle Button (when closed) */}
-        {!panelOpen && (
-          <InspectorToggleButton onClick={() => setPanelOpen(true)} />
+        {/* Toggle Button (when collapsed) */}
+        {panelCollapsed && (
+          <InspectorToggleButton onClick={() => setPanelCollapsed(false)} />
         )}
         
         {/* Main Panel */}
-        {panelOpen && (
+        {!panelCollapsed && (
           <InspectorPanel>
             {/* Header */}
             <InspectorHeader
-              onPositionToggle={() => setInspectorPosition(inspectorPosition === 'left' ? 'right' : 'left')}
-              onMinimize={() => setPanelOpen(false)}
+              onMinimize={() => setPanelCollapsed(true)}
               onClose={toggleInspector}
-              position={inspectorPosition}
             />
             
             {/* Data Sources */}
@@ -119,7 +116,8 @@ export default function DemoInspector() {
             
             {/* Help Text */}
             <div className="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-500">
-              <div>Toggle: Cmd+Shift+D</div>
+              <div>On/Off: Cmd+Shift+D</div>
+              <div>Collapse/Expand: Cmd+Shift+E</div>
               <div>Move: Cmd+Shift+← →</div>
               <div>Click sources to highlight page sections</div>
             </div>
