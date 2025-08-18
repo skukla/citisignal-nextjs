@@ -1,6 +1,7 @@
 'use client';
 
-import { ProductPage, ProductPageProvider } from '@/components/layout/ProductPage';
+import { ProductPage } from '@/components/layout/ProductPage';
+import { ProductPageProviderSSR } from '@/components/layout/ProductPage/providers/ProductPageProviderSSR';
 import PhonesTechReviews from '@/components/sections/phones/PhonesTechReviews';
 import PhonesBuyingGuides from '@/components/sections/phones/PhonesBuyingGuides';
 import PhonesTips from '@/components/sections/phones/PhonesTips';
@@ -18,7 +19,7 @@ export default function PhonesPage() {
   };
 
   return (
-    <ProductPageProvider 
+    <ProductPageProviderSSR 
       category="phones"
       pageData={pageData}
     >
@@ -55,6 +56,6 @@ export default function PhonesPage() {
         
         <ProductPage.Newsletter />
       </ProductPage.Background>
-    </ProductPageProvider>
+    </ProductPageProviderSSR>
   );
 }
