@@ -25,6 +25,7 @@ The Demo Inspector is a development tool that provides real-time visualization o
 
 ### Keyboard Shortcuts
 - **Cmd+Shift+D** (Mac) / **Ctrl+Shift+D** (Windows) - Toggle inspector on/off
+- **Cmd+Shift+E** (Mac) / **Ctrl+Shift+E** (Windows) - Collapse/expand inspector panel
 - **Cmd+Shift+←** (Mac) / **Ctrl+Shift+←** (Windows) - Move inspector to left
 - **Cmd+Shift+→** (Mac) / **Ctrl+Shift+→** (Windows) - Move inspector to right
 
@@ -67,6 +68,13 @@ src/
 
 The inspector is automatically available in development mode. Toggle it with:
 - Keyboard shortcut: **Cmd+Shift+D**
+
+### Keyboard Shortcuts
+
+- **Cmd+Shift+D** - Toggle inspector on/off (show/hide completely)
+- **Cmd+Shift+E** - Collapse/expand inspector panel (when enabled)
+- **Cmd+Shift+LeftArrow** - Move inspector to left side
+- **Cmd+Shift+RightArrow** - Move inspector to right side
 - Or programmatically: `useDemoInspector().setEnabled(true)`
 
 ### Tagging Components
