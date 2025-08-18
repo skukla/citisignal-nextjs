@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 import { fetchCategoryPageData } from '@/hooks/products/useCategoryPageData';
-import { ProductPageProviderSSR } from './providers/ProductPageProviderSSR';
+import { ProductPageProvider } from './providers/ProductPageProvider';
 import type { PageData } from './types';
 
 interface ProductPageSSRWrapperProps {
@@ -47,13 +47,13 @@ export default async function ProductPageSSRWrapper({
   
   // Pass the SSR data to the enhanced provider
   return (
-    <ProductPageProviderSSR
+    <ProductPageProvider
       category={category}
       pageData={pageData}
       initialData={initialData}
       limit={pageSize}
     >
       {children}
-    </ProductPageProviderSSR>
+    </ProductPageProvider>
   );
 }
