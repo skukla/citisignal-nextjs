@@ -15,7 +15,7 @@ export function ProductPageContent() {
   // Determine which state to show
   const showSkeleton = isInitialLoading || (loading && filteredProducts.length === 0);
   const hasError = !!error;
-  const isEmpty = !error && filteredProducts.length === 0;
+  const isEmpty = !error && !loading && filteredProducts.length === 0;
   const hasProducts = !error && filteredProducts.length > 0;
   
   // Special handling for error and empty states

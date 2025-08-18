@@ -8,6 +8,7 @@ import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
 import CartRootProvider from '@/components/ui/layout/Cart/CartRootProvider';
 import Root from '@/components/layout/Root';
 import { DemoInspectorProvider } from '@/contexts/DemoInspectorContext';
+import { NavigationProvider } from '@/contexts/NavigationContext';
 import DemoInspector from '@/components/demo-inspector/DemoInspector';
 import './globals.css';
 
@@ -27,19 +28,21 @@ export default function RootLayout({ children }: RootLayoutProps) {
       </head>
       <body className="h-full bg-white antialiased" suppressHydrationWarning>
         <DemoInspectorProvider>
-          <AuthProvider>
-            <AccountProvider>
-              <CartRootProvider>
-                <Root>
-                  {!isCheckoutPage && <StandardHeader />}
-                  <main>
-                    {children}
-                  </main>
-                  <StandardFooter />
-                </Root>
-              </CartRootProvider>
-            </AccountProvider>
-          </AuthProvider>
+          <NavigationProvider>
+            <AuthProvider>
+              <AccountProvider>
+                <CartRootProvider>
+                  <Root>
+                    {!isCheckoutPage && <StandardHeader />}
+                    <main>
+                      {children}
+                    </main>
+                    <StandardFooter />
+                  </Root>
+                </CartRootProvider>
+              </AccountProvider>
+            </AuthProvider>
+          </NavigationProvider>
           <DemoInspector />
         </DemoInspectorProvider>
       </body>
