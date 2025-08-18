@@ -4,7 +4,7 @@ import { createContext, useContext, useState, useEffect, useCallback, ReactNode 
 
 type DataSource = 'commerce' | 'catalog' | 'search';
 
-interface SourceInfo {
+export interface SourceInfo {
   id: DataSource;
   name: string;
   color: string;
@@ -12,7 +12,7 @@ interface SourceInfo {
   description: string;
 }
 
-interface TrackedQuery {
+export interface TrackedQuery {
   id: string;
   name: string;
   source: DataSource;
@@ -100,7 +100,7 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
     }
   }, [enabled, inspectorPosition]);
   
-  // Keyboard shortcut
+  // Keyboard shortcuts
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       // Cmd+Shift+D (Mac) or Ctrl+Shift+D (Windows/Linux)
@@ -108,6 +108,18 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
       if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === 'D' || e.key === 'd')) {
         e.preventDefault();
         setEnabled(prev => !prev);
+      }
+      
+      // Cmd+Shift+LeftArrow - Move inspector to left
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'ArrowLeft') {
+        e.preventDefault();
+        setInspectorPosition('left');
+      }
+      
+      // Cmd+Shift+RightArrow - Move inspector to right
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'ArrowRight') {
+        e.preventDefault();
+        setInspectorPosition('right');
       }
     };
     

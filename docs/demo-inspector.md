@@ -13,15 +13,20 @@ The Demo Inspector is a development tool that provides real-time visualization o
   - Green: Live Search
 - **Rounded corners** respect component styling
 - **Smart nesting** prevents double borders on nested elements
+- **Toggle all sources** with a single switch
 
 ### Query Tracking
 - Real-time monitoring of GraphQL queries
 - Response time tracking
 - Query count per service
 - Collapsible query details panel
+- **Auto-clears on navigation** to show only current page queries
+- **Clear button always visible** outside scrollable list
 
-### Keyboard Shortcut
+### Keyboard Shortcuts
 - **Cmd+Shift+D** (Mac) / **Ctrl+Shift+D** (Windows) - Toggle inspector on/off
+- **Cmd+Shift+←** (Mac) / **Ctrl+Shift+←** (Windows) - Move inspector to left
+- **Cmd+Shift+→** (Mac) / **Ctrl+Shift+→** (Windows) - Move inspector to right
 
 ## Architecture
 
@@ -29,10 +34,17 @@ The Demo Inspector is a development tool that provides real-time visualization o
 ```
 src/
 ├── components/demo-inspector/
-│   ├── DemoInspector.tsx      # Main inspector UI panel
-│   └── SourceOverlay.tsx      # Visual highlighting logic
+│   ├── DemoInspector.tsx           # Main inspector orchestrator
+│   ├── SourceOverlay.tsx           # Visual highlighting logic
+│   ├── InspectorPanel.tsx          # Panel container component
+│   ├── InspectorHeader.tsx         # Panel header with controls
+│   ├── InspectorToggleButton.tsx   # Minimized state button
+│   ├── DataSourceButton.tsx        # Individual source toggles
+│   ├── QueryTracker.tsx            # Query list manager
+│   ├── QueryItem.tsx               # Individual query display
+│   └── SourceToggle.tsx            # Highlight all toggle switch
 ├── contexts/
-│   └── DemoInspectorContext.tsx  # Global state management
+│   └── DemoInspectorContext.tsx    # Global state management
 ├── lib/
 │   └── graphql-fetcher-with-tracking.ts  # Query interception
 └── hooks/
@@ -114,6 +126,16 @@ export function useActiveProductService(): 'search' | 'catalog' {
 - MutationObserver for reactive updates
 - Debounced highlight recalculation
 - Smart filtering to avoid duplicate borders
+
+## UI Components
+
+The inspector is built with modular, reusable components:
+- **InspectorPanel**: Main container with glass morphism effect
+- **InspectorHeader**: Draggable header with position/minimize/close controls
+- **DataSourceButton**: Individual source toggles with gradient backgrounds when active
+- **SourceToggle**: Master toggle switch for all sources
+- **QueryTracker**: Collapsible query list with performance metrics
+- **QueryItem**: Individual query display with source icon and response time
 
 ## Configuration
 
