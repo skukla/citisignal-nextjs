@@ -3,7 +3,6 @@
 import useSWR from 'swr';
 import GetCategoryBreadcrumbsQuery from '@/graphql/queries/GetCategoryBreadcrumbs.graphql';
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
-import { graphqlFetcherWithTracking } from '@/lib/graphql-fetcher-with-tracking';
 
 export interface BreadcrumbItem {
   categoryId?: string;
@@ -61,12 +60,9 @@ export function useCategoryBreadcrumbs(options: UseCategoryBreadcrumbsOptions) {
     categoryUrlKey
   };
   
-  // Use tracking fetcher if Demo Inspector might be enabled
-  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
-
   const { data, error, mutate } = useSWR<CategoryBreadcrumbsResponse>(
     categoryUrlKey ? ['Citisignal_categoryBreadcrumbs', variables] : null,
-    () => fetcher<CategoryBreadcrumbsResponse>(
+    () => graphqlFetcher<CategoryBreadcrumbsResponse>(
       GetCategoryBreadcrumbsQuery,
       variables
     ),
