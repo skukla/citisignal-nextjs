@@ -36,7 +36,7 @@ src/
 - **Unified Data Layer** - Consistent API responses via custom resolvers
 - **Category Navigation** - Dynamic navigation from Commerce API (header & footer)
 - **Breadcrumbs** - Category breadcrumb trails for SEO and navigation
-- **Demo Inspector** - Visual debugging tool (Cmd+Shift+D) showing data sources
+- **Demo Inspector** - Visual debugging tool (Cmd+Shift+D toggle, Cmd+Shift+E expand/collapse) showing data sources
 - **SSR Implementation** - Server-side rendering for product pages (62% faster)
 - **Unified Query System** - Single GraphQL query for all page data (75% fewer requests)
 
@@ -82,6 +82,37 @@ The mesh resolver handles this complexity - frontend just calls `Citisignal_prod
 - **Tailwind CSS 4** - Custom theming
 - **SWR** - Data fetching with infinite scroll
 - **Adobe API Mesh** - GraphQL gateway for Commerce services
+
+## API Mesh Resolver Architecture
+
+### Resolver Pattern
+All resolvers follow a consistent 9-section structure due to API Mesh limitations (no external imports):
+
+1. **File Header** - Purpose and service orchestration description
+2. **Constants** - `DEFAULT_PAGE_SIZE = 24`, price limits
+3. **Filter Conversion** - Convert frontend filters to service formats
+4. **Attribute Extraction** - Clean and extract product attributes
+5. **Price Utilities** - Price extraction and formatting
+6. **URL Utilities** - HTTPS enforcement
+7. **Product Transformation** - Consistent product format
+8. **Service Queries** - Abstracted service calls
+9. **Main Resolver** - Orchestration with error handling
+
+### Shared Utilities Template
+`commerce-mesh/resolvers/shared-utilities-template.js` contains all common functions that must be copied into each resolver. This duplication is necessary because API Mesh doesn't support imports.
+
+### Filter Architecture
+- **`Citisignal_ProductFilter`** - Used by standalone queries (includes category field)
+- **`Citisignal_PageFilter`** - Used by page-level resolvers (category comes from resolver parameter)
+- Clean separation prevents conflicting category values and improves developer experience
+
+### Resolver Types
+- **Page Resolvers** (`category-page`, `product-page`) - Complete SSR data in one query
+  - Use `Citisignal_PageFilter` for filtering within context
+  - Category parameter is separate and required for `category-page`
+- **Focused Resolvers** (`product-cards`, `product-facets`) - Single responsibility
+  - Use `Citisignal_ProductFilter` including category field
+- **All resolvers expose consistent field shapes** regardless of internal implementation
 
 ## Development Standards
 
