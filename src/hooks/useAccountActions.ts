@@ -56,28 +56,11 @@ export interface UseAccountActionsReturn {
 }
 
 /**
- * Business logic hook for account management operations.
- * Handles addresses, payment methods, profile updates, and order management.
- * 
- * @returns {Object} Account management functions and state
- * @example
- * const {
- *   addAddress,
- *   updateProfile,
- *   viewOrderDetails,
- *   isLoading,
- *   error
- * } = useAccountActions();
- * 
- * const handleAddAddress = async (addressData) => {
- *   try {
- *     await addAddress(addressData);
- *     // Address added successfully
- *   } catch (err) {
- *     // Handle error
- *   }
- * };
+ * Account management operations hook.
+ * NOTE: Currently using mock implementations pending API integration.
+ * Replace setTimeout calls with actual API endpoints when available.
  */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 export function useAccountActions(): UseAccountActionsReturn {
   const router = useRouter();
   const [loadingStates, setLoadingStates] = useState<Record<string, boolean>>({});
@@ -101,15 +84,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     setError(null);
     
     try {
-      // TODO: Replace with actual API call
-      
-      // Simulate API delay
       await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // In a real app, you would:
-      // const response = await api.post('/user/addresses', address);
-      // updateLocalAddresses(response.data);
-      
+      // API: POST /user/addresses with ${JSON.stringify(address)}
     } catch (err) {
       setError('Failed to add address. Please try again.');
       throw err;
@@ -124,7 +100,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // TODO: API call and state update
+      // API: PATCH /user/addresses/:id
+      // Will use: id, updates
     } catch (err) {
       setError('Failed to update address. Please try again.');
       throw err;
@@ -139,7 +116,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // TODO: API call and state update
+      // API: DELETE /user/addresses/:id
+      // Will use: id
     } catch (err) {
       setError('Failed to delete address. Please try again.');
       throw err;
@@ -154,7 +132,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 500));
-      // TODO: API call and state update
+      // API: PUT /user/addresses/:id/default
+      // Will use: id
     } catch (err) {
       setError('Failed to set default address. Please try again.');
       throw err;
@@ -170,7 +149,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // TODO: Secure payment method API call
+      // API: POST /user/payment-methods (PCI compliant)
+      // Will use: method
     } catch (err) {
       setError('Failed to add payment method. Please try again.');
       throw err;
@@ -185,7 +165,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // TODO: API call
+      // API: PATCH /user/payment-methods/:id
+      // Will use: id, updates
     } catch (err) {
       setError('Failed to update payment method. Please try again.');
       throw err;
@@ -200,7 +181,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // TODO: API call
+      // API: DELETE /user/payment-methods/:id
+      // Will use: id
     } catch (err) {
       setError('Failed to delete payment method. Please try again.');
       throw err;
@@ -215,7 +197,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 500));
-      // TODO: API call
+      // API: PUT /user/payment-methods/:id/default
+      // Will use: id
     } catch (err) {
       setError('Failed to set default payment method. Please try again.');
       throw err;
@@ -231,7 +214,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // TODO: API call
+      // API: PATCH /user/profile
+      // Will use: updates
     } catch (err) {
       setError('Failed to update profile. Please try again.');
       throw err;
@@ -240,13 +224,14 @@ export function useAccountActions(): UseAccountActionsReturn {
     }
   }, [setLoading]);
 
-  const changePassword = useCallback(async (_currentPassword: string, _newPassword: string) => { // eslint-disable-line @typescript-eslint/no-unused-vars
+  const changePassword = useCallback(async (currentPassword: string, newPassword: string) => {
     setLoading('changePassword', true);
     setError(null);
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // TODO: Secure password change API call
+      // API: POST /user/change-password
+      // Will use: currentPassword, newPassword
     } catch (err) {
       setError('Failed to change password. Please check your current password and try again.');
       throw err;
@@ -266,7 +251,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // TODO: Add items to cart and navigate to checkout
+      // API: POST /orders/:orderId/reorder
+      // Will use: orderId
       router.push('/checkout');
     } catch (err) {
       setError('Failed to reorder items. Please try again.');
@@ -282,7 +268,8 @@ export function useAccountActions(): UseAccountActionsReturn {
     
     try {
       await new Promise(resolve => setTimeout(resolve, 1000));
-      // TODO: API call to cancel order
+      // API: POST /orders/:orderId/cancel
+      // Will use: orderId
     } catch (err) {
       setError('Failed to cancel order. Please contact customer support.');
       throw err;
@@ -292,9 +279,8 @@ export function useAccountActions(): UseAccountActionsReturn {
   }, [setLoading]);
 
   const trackOrder = useCallback((orderId: string) => {
-    // Navigate to order tracking page or open tracking modal
-    // TODO: Implement order tracking navigation
-  }, []);
+    router.push(`/account/orders/${orderId}/tracking`);
+  }, [router]);
 
   // Account navigation
   const navigateToSection = useCallback((section: string) => {

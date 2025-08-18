@@ -1,4 +1,4 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect } from 'react';
 import type { BaseProduct } from '@/types/commerce';
 
 // Animation duration for view mode transitions

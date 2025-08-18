@@ -4,6 +4,10 @@ import { useState, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import type { UserProfile, AuthContextValue } from './Account.types';
 
+/**
+ * Authentication hook with mock implementation.
+ * Replace with actual API integration when available.
+ */
 export function useAuth(): AuthContextValue {
   const router = useRouter();
   const [user, setUser] = useState<UserProfile | null>(null);
@@ -15,7 +19,7 @@ export function useAuth(): AuthContextValue {
     setError(null);
 
     try {
-      // TODO: Implement actual authentication API call
+      // API: POST /auth/login
       // Simulated successful login
       setUser({
         id: '1',
@@ -36,7 +40,7 @@ export function useAuth(): AuthContextValue {
     setError(null);
 
     try {
-      // TODO: Implement actual signup API call
+      // API: POST /auth/signup
       // Simulated successful signup
       setUser({
         id: '1',
@@ -57,7 +61,7 @@ export function useAuth(): AuthContextValue {
     setError(null);
 
     try {
-      // TODO: Implement actual logout API call
+      // API: POST /auth/logout
       setUser(null);
       router.push('/');
     } catch (err) {

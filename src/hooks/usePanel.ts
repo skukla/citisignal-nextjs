@@ -22,10 +22,6 @@ export interface UsePanelReturn {
  * @param {boolean} [options.isOpen] - Controlled open state
  * @param {Function} [options.onOpenChange] - Callback when open state changes
  * @returns {Object} Panel state and refs
- * @example
- * const { isOpen, toggle, panelRef } = usePanel({
- *   onOpenChange: (isOpen) => console.log(isOpen)
- * });
  */
 export function usePanel(options: UsePanelOptions = {}): UsePanelReturn {
   const { isOpen: controlledIsOpen, onOpenChange } = options;
