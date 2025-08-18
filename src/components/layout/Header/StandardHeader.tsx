@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useCallback, useMemo } from 'react';
+import { useState, useCallback, useMemo, useEffect } from 'react';
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline';
 import { HeaderRoot } from './HeaderRoot';
 import { HeaderTopBar } from './HeaderTopBar';
@@ -13,6 +13,7 @@ import Account from '@/components/ui/layout/Account';
 import Button from '@/components/ui/foundations/Button';
 import { headerConfig } from '@/data/config/header';
 import { useCategoryNavigation } from '@/hooks/navigation';
+import { useNavigation } from '@/contexts/NavigationContext';
 
 /**
  * Standard Header component with default content and layout.
@@ -23,8 +24,21 @@ import { useCategoryNavigation } from '@/hooks/navigation';
 export function StandardHeader() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   
-  // Fetch dynamic category navigation
-  const { data: categoryNav, loading: navLoading } = useCategoryNavigation();
+  // First check NavigationProvider for navigation data
+  const { navigation: contextNav, isStale, setNavigation, isLoadingFromUnified } = useNavigation();
+  
+  // Only fetch if no navigation in context or if it's stale, AND not loading from unified query
+  const shouldFetch = (!contextNav || isStale()) && !isLoadingFromUnified;
+  const { data: categoryNav, loading: navLoading } = useCategoryNavigation({
+    enabled: shouldFetch
+  });
+  
+  // Update context when we fetch new data
+  useEffect(() => {
+    if (categoryNav && shouldFetch) {
+      setNavigation(categoryNav, 'standalone');
+    }
+  }, [categoryNav, shouldFetch, setNavigation]);
 
   const toggleMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(prev => !prev);
@@ -34,10 +48,11 @@ export function StandardHeader() {
     setIsMobileMenuOpen(false);
   }, []);
   
-  // Build navigation from Commerce API categories
+  // Use context navigation if available, otherwise use fetched data
   const navItems = useMemo(() => {
-    return categoryNav?.headerNav || [];
-  }, [categoryNav?.headerNav]);
+    const navData = contextNav || categoryNav;
+    return navData?.headerNav || [];
+  }, [contextNav, categoryNav]);
 
   return (
     <NavigationRoot isOpen={isMobileMenuOpen} onToggle={toggleMobileMenu} onClose={closeMobileMenu}>
@@ -57,8 +72,8 @@ export function StandardHeader() {
 
             {/* Desktop Navigation */}
             <div className="hidden min-[1148px]:flex flex-1 justify-center max-w-3xl mx-auto px-4">
-              {navLoading ? (
-                // Show skeleton while loading categories
+              {navLoading && navItems.length === 0 ? (
+                // Show skeleton only when actually loading and no data yet
                 <div className="flex items-center space-x-6">
                   {[1, 2, 3, 4].map(i => (
                     <div key={i} className="h-4 bg-gray-200 rounded w-20 animate-pulse" />

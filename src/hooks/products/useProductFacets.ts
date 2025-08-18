@@ -19,6 +19,7 @@ export interface ProductFacetsResult {
   totalCount: number;
   loading: boolean;
   error?: Error;
+  isValidating?: boolean;
 }
 
 interface UseProductFacetsOptions {
@@ -39,13 +40,15 @@ interface UseProductFacetsOptions {
  * Updates when search phrase or filters change.
  * Separate from product cards for better performance.
  */
-export function useProductFacets({
-  phrase,
-  filter
-}: UseProductFacetsOptions = {}): ProductFacetsResult {
+export function useProductFacets(
+  options: UseProductFacetsOptions | null = {}
+): ProductFacetsResult {
+  // Extract options or use defaults
+  const { phrase, filter } = options || {};
   
   // Create a stable key for SWR caching
-  const key = ['productFacets', phrase, filter];
+  // Pass null as key if options is null to prevent fetching
+  const key = options ? ['productFacets', phrase, filter] : null;
   
   // Use tracking fetcher if Demo Inspector might be enabled
   const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
@@ -67,7 +70,7 @@ export function useProductFacets({
     facets: facetsData || [],
     totalCount: data?.Citisignal_productFacets?.totalCount || 0,
     loading: isLoading,  // True when loading, regardless of previous data
-    isValidating,  // True when fetching, even with existing data
-    error
+    error,
+    isValidating  // True when fetching, even with existing data
   };
 }
