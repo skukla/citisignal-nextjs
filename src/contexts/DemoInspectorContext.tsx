@@ -24,13 +24,16 @@ export interface TrackedQuery {
 interface DemoInspectorContextValue {
   // State
   enabled: boolean;
+  panelCollapsed: boolean;
   activeSources: Set<DataSource>;
   trackedQueries: TrackedQuery[];
   inspectorPosition: 'left' | 'right';
   
   // Actions
   toggleInspector: () => void;
+  togglePanelCollapse: () => void;
   setEnabled: (enabled: boolean) => void;
+  setPanelCollapsed: (collapsed: boolean) => void;
   toggleSource: (source: DataSource) => void;
   clearSources: () => void;
   trackQuery: (query: TrackedQuery) => void;
@@ -70,6 +73,7 @@ interface DemoInspectorProviderProps {
 
 export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) {
   const [enabled, setEnabled] = useState(false);
+  const [panelCollapsed, setPanelCollapsed] = useState(false);
   const [activeSources, setActiveSources] = useState<Set<DataSource>>(new Set());
   const [trackedQueries, setTrackedQueries] = useState<TrackedQuery[]>([]);
   const [inspectorPosition, setInspectorPosition] = useState<'left' | 'right'>('right');
@@ -110,6 +114,16 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
         setEnabled(prev => !prev);
       }
       
+      // Cmd+Shift+E - Collapse/expand inspector panel
+      // E for "Expand"
+      if ((e.metaKey || e.ctrlKey) && e.shiftKey && (e.key === 'E' || e.key === 'e')) {
+        e.preventDefault();
+        // Only toggle collapse if inspector is enabled
+        if (enabled) {
+          setPanelCollapsed(prev => !prev);
+        }
+      }
+      
       // Cmd+Shift+LeftArrow - Move inspector to left
       if ((e.metaKey || e.ctrlKey) && e.shiftKey && e.key === 'ArrowLeft') {
         e.preventDefault();
@@ -125,10 +139,14 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
     
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, []);
+  }, [enabled]);
   
   const toggleInspector = useCallback(() => {
     setEnabled(prev => !prev);
+  }, []);
+  
+  const togglePanelCollapse = useCallback(() => {
+    setPanelCollapsed(prev => !prev);
   }, []);
   
   const toggleSource = useCallback((source: DataSource) => {
@@ -161,11 +179,14 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
   
   const value: DemoInspectorContextValue = {
     enabled,
+    panelCollapsed,
     activeSources,
     trackedQueries,
     inspectorPosition,
     toggleInspector,
+    togglePanelCollapse,
     setEnabled,
+    setPanelCollapsed,
     toggleSource,
     clearSources,
     trackQuery,

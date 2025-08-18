@@ -1,17 +1,13 @@
 'use client';
 
 interface InspectorHeaderProps {
-  onPositionToggle: () => void;
   onMinimize: () => void;
   onClose: () => void;
-  position: 'left' | 'right';
 }
 
 export function InspectorHeader({ 
-  onPositionToggle, 
   onMinimize, 
-  onClose, 
-  position 
+  onClose
 }: InspectorHeaderProps) {
   return (
     <div className="flex items-center justify-between mb-4">
@@ -21,16 +17,9 @@ export function InspectorHeader({
       </h3>
       <div className="flex items-center gap-2">
         <button
-          onClick={onPositionToggle}
-          className="text-gray-400 hover:text-gray-600 cursor-pointer"
-          title={`Move to ${position === 'left' ? 'right' : 'left'}`}
-        >
-          ↔️
-        </button>
-        <button
           onClick={onMinimize}
           className="text-gray-400 hover:text-gray-600 cursor-pointer"
-          title="Minimize"
+          title="Expand/Collapse Panel (Cmd+Shift+E)"
         >
           −
         </button>
