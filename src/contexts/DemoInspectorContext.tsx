@@ -28,6 +28,7 @@ interface DemoInspectorContextValue {
   activeSources: Set<DataSource>;
   trackedQueries: TrackedQuery[];
   inspectorPosition: 'left' | 'right';
+  singleQueryMode: boolean;
   
   // Actions
   toggleInspector: () => void;
@@ -39,6 +40,7 @@ interface DemoInspectorContextValue {
   trackQuery: (query: TrackedQuery) => void;
   clearQueries: () => void;
   setInspectorPosition: (position: 'left' | 'right') => void;
+  setSingleQueryMode: (enabled: boolean) => void;
 }
 
 const DemoInspectorContext = createContext<DemoInspectorContextValue | undefined>(undefined);
@@ -72,13 +74,16 @@ interface DemoInspectorProviderProps {
 }
 
 export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) {
+  // Start with default values to avoid hydration mismatch
   const [enabled, setEnabled] = useState(false);
   const [panelCollapsed, setPanelCollapsed] = useState(false);
   const [activeSources, setActiveSources] = useState<Set<DataSource>>(new Set());
   const [trackedQueries, setTrackedQueries] = useState<TrackedQuery[]>([]);
   const [inspectorPosition, setInspectorPosition] = useState<'left' | 'right'>('right');
+  const [singleQueryMode, setSingleQueryMode] = useState(false);
+  const [isHydrated, setIsHydrated] = useState(false);
   
-  // Load saved preferences
+  // Load saved preferences after hydration
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('demo-inspector-prefs');
@@ -87,10 +92,12 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
           const prefs = JSON.parse(saved);
           setEnabled(prefs.enabled || false);
           setInspectorPosition(prefs.position || 'right');
+          setSingleQueryMode(prefs.singleQueryMode || false);
         } catch (e) {
           console.error('Failed to load inspector preferences:', e);
         }
       }
+      setIsHydrated(true);
     }
   }, []);
   
@@ -99,10 +106,11 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
     if (typeof window !== 'undefined') {
       localStorage.setItem('demo-inspector-prefs', JSON.stringify({
         enabled,
-        position: inspectorPosition
+        position: inspectorPosition,
+        singleQueryMode
       }));
     }
-  }, [enabled, inspectorPosition]);
+  }, [enabled, inspectorPosition, singleQueryMode]);
   
   // Keyboard shortcuts
   useEffect(() => {
@@ -183,6 +191,7 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
     activeSources,
     trackedQueries,
     inspectorPosition,
+    singleQueryMode,
     toggleInspector,
     togglePanelCollapse,
     setEnabled,
@@ -191,7 +200,8 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
     clearSources,
     trackQuery,
     clearQueries,
-    setInspectorPosition
+    setInspectorPosition,
+    setSingleQueryMode
   };
   
   return (
