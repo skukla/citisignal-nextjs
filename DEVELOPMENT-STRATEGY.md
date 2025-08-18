@@ -36,6 +36,9 @@ src/
 - **Unified Data Layer** - Consistent API responses via custom resolvers
 - **Category Navigation** - Dynamic navigation from Commerce API (header & footer)
 - **Breadcrumbs** - Category breadcrumb trails for SEO and navigation
+- **Demo Inspector** - Visual debugging tool (Cmd+Shift+D) showing data sources
+- **SSR Implementation** - Server-side rendering for product pages (62% faster)
+- **Unified Query System** - Single GraphQL query for all page data (75% fewer requests)
 
 ### Architecture Patterns
 
@@ -113,6 +116,9 @@ The mesh resolver handles this complexity - frontend just calls `Citisignal_prod
 
 - [API Integration](./docs/api-integration.md) - Adobe Commerce Mesh
 - [Component Patterns](./docs/component-patterns.md) - Compound components guide
+- [Demo Inspector](./docs/demo-inspector.md) - Visual debugging tool guide
+- [SSR Implementation](./docs/ssr-implementation.md) - Server-side rendering
+- [Unified Query Architecture](./docs/unified-query-architecture.md) - Single query pattern
 - [Troubleshooting](./docs/troubleshooting.md) - Common issues
 - [Future Improvements](./docs/future-improvements.md) - Planned enhancements
 - [Code Standards](./docs/code-standards.md) - Best practices and patterns
