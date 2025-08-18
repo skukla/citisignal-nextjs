@@ -28,6 +28,7 @@ interface CategoryNavigationResponse {
 interface UseCategoryNavigationOptions {
   rootCategoryId?: string;
   includeInactive?: boolean;
+  enabled?: boolean;  // Whether to fetch data
 }
 
 /**
@@ -57,7 +58,8 @@ interface UseCategoryNavigationOptions {
 export function useCategoryNavigation(options: UseCategoryNavigationOptions = {}) {
   const {
     rootCategoryId,
-    includeInactive = false
+    includeInactive = false,
+    enabled = true
   } = options;
 
   const variables = {
@@ -69,7 +71,7 @@ export function useCategoryNavigation(options: UseCategoryNavigationOptions = {}
   const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
 
   const { data, error, mutate } = useSWR<CategoryNavigationResponse>(
-    ['Citisignal_categoryNavigation', variables],
+    enabled ? ['Citisignal_categoryNavigation', variables] : null,
     () => fetcher<CategoryNavigationResponse>(
       GetCategoryNavigationQuery,
       variables
@@ -85,7 +87,7 @@ export function useCategoryNavigation(options: UseCategoryNavigationOptions = {}
   );
 
   return {
-    data: data?.Citisignal_categoryNavigation || { items: [] },
+    data: data?.Citisignal_categoryNavigation || null,
     error,
     loading: !data && !error,
     mutate
