@@ -12,6 +12,7 @@ export interface ProductCardsResult {
   hasMoreItems: boolean;
   loadMore: () => void;
   totalCount: number;
+  facets?: any[];  // Can include facets when requested
 }
 
 // Sort options that match our GraphQL schema
@@ -36,6 +37,7 @@ interface UseProductCardsOptions {
   };
   sort?: SortInput;
   limit?: number;
+  facets?: boolean;  // Whether to include facets in response
 }
 
 /**
@@ -43,16 +45,20 @@ interface UseProductCardsOptions {
  * Loads more items when loadMore() is called.
  * Facets are now fetched separately using useProductFacets hook.
  */
-export function useProductCards({
-  phrase,
-  filter,
-  sort,
-  limit = 12
-}: UseProductCardsOptions = {}): ProductCardsResult {
+export function useProductCards(
+  options: UseProductCardsOptions | null = {}
+): ProductCardsResult {
+  // Extract options or use defaults
+  const { phrase, filter, sort, limit = 12, facets } = options || {};
   
   // Create a stable key that includes all filter parameters
   // This ensures SWR creates a new cache entry when filters change
   const getKey = (pageIndex: number, previousPageData: any) => {
+    // If options is null, don't fetch
+    if (!options) {
+      return null;
+    }
+    
     // Stop if previous page was empty
     if (previousPageData && !previousPageData.Citisignal_productCards?.items?.length) {
       return null;
@@ -80,6 +86,7 @@ export function useProductCards({
   const latestPage = data?.[data.length - 1];
   const hasMoreItems = latestPage?.Citisignal_productCards?.hasMoreItems || false;
   const totalCount = latestPage?.Citisignal_productCards?.totalCount || 0;
+  const productFacets = latestPage?.Citisignal_productCards?.facets;
 
   return {
     items: allItems,
@@ -87,6 +94,7 @@ export function useProductCards({
     error,
     hasMoreItems,
     loadMore: () => setSize(size + 1),
-    totalCount
+    totalCount,
+    facets: productFacets
   };
 }

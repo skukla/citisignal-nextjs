@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useMemo, useEffect } from 'react';
 import { FooterRoot } from './FooterRoot';
 import { FooterLogo } from './FooterLogo';
 import { FooterSocialLinks } from './FooterSocialLinks';
@@ -8,6 +8,7 @@ import { FooterLinkGroup } from './FooterLinkGroup';
 import { FooterBottom } from './FooterBottom';
 import { socialLinks, supportLinks, companyLinks, footerContent } from '@/data/config/footer';
 import { useCategoryNavigation } from '@/hooks/navigation';
+import { useNavigation } from '@/contexts/NavigationContext';
 
 /**
  * Standard Footer component with default content and layout.
@@ -16,13 +17,27 @@ import { useCategoryNavigation } from '@/hooks/navigation';
  * For custom footer layouts, use the Footer compound components directly.
  */
 export function StandardFooter() {
-  // Fetch categories from Commerce API
-  const { data: categoryNav } = useCategoryNavigation();
+  // First check NavigationProvider for navigation data
+  const { navigation: contextNav, isStale, setNavigation, isLoadingFromUnified } = useNavigation();
   
-  // Use pre-formatted footer navigation from mesh
+  // Only fetch if no navigation in context or if it's stale, AND not loading from unified query
+  const shouldFetch = (!contextNav || isStale()) && !isLoadingFromUnified;
+  const { data: categoryNav } = useCategoryNavigation({
+    enabled: shouldFetch
+  });
+  
+  // Update context when we fetch new data
+  useEffect(() => {
+    if (categoryNav && shouldFetch) {
+      setNavigation(categoryNav, 'standalone');
+    }
+  }, [categoryNav, shouldFetch, setNavigation]);
+  
+  // Use context navigation if available, otherwise use fetched data
   const shopLinks = useMemo(() => {
-    return categoryNav?.footerNav || [];
-  }, [categoryNav?.footerNav]);
+    const navData = contextNav || categoryNav;
+    return navData?.footerNav || [];
+  }, [contextNav, categoryNav]);
   
   return (
     <FooterRoot>
