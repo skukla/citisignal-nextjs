@@ -7,7 +7,7 @@ import { profileConfig, ProfileFormFields } from '@/data/route-groups/account/pr
 export default function ProfilePage() {
   const handleProfileSubmit = async (data: ProfileFormFields) => {
     // TODO: Implement profile update
-    console.log('Profile update:', data);
+    // Will use: data
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 

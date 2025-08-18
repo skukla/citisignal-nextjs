@@ -30,7 +30,6 @@ export default function AddressesPage() {
 
   const handleAddressSubmit = async (data: AddressFields) => {
     // TODO: Implement address update/create
-    console.log('Address update:', data);
     await new Promise(resolve => setTimeout(resolve, 1000));
     
     if (editingAddress !== null) {

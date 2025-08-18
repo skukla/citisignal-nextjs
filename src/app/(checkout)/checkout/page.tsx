@@ -16,7 +16,7 @@ export default function CheckoutPage() {
   const handleOrderComplete = (orderDetails: OrderDetails) => {
     // Here you would typically:
     // 1. Clear the cart
-    // 2. Save order details
+    // 2. Save order details: orderDetails
     // 3. Redirect to order confirmation
     router.push('/checkout/confirmation');
   };

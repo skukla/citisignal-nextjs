@@ -26,16 +26,6 @@ interface UseCheckoutOptions {
  * @param {Object} [options] - Checkout configuration
  * @param {Function} [options.onComplete] - Callback when order completes
  * @returns {Object} Checkout state and handlers
- * @example
- * const {
- *   currentStep,
- *   shippingDetails,
- *   paymentDetails,
- *   updateShipping,
- *   placeOrder
- * } = useCheckout({
- *   onComplete: (order) => console.log(order)
- * });
  */
 export function useCheckout({ onComplete }: UseCheckoutOptions = {}): CheckoutContextValue {
   const { items, getSubtotal } = useCart();

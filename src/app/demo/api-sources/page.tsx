@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import { ProductPage } from '@/components/layout/ProductPage';
 import { ProductPageProvider } from '@/components/layout/ProductPage/providers/ProductPageProvider';
 import { phonesPageData } from '@/data/route-groups/products/phones';
@@ -329,7 +329,7 @@ export default function APISourcesDemo() {
                     })}
                   </div>
                   <div className="text-xs text-gray-600 mt-2">
-                    These services provide data through Adobe's API Mesh orchestration layer.
+                    These services provide data through Adobe&apos;s API Mesh orchestration layer.
                   </div>
                 </div>
               )}
