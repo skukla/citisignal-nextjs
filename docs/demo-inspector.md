@@ -8,8 +8,8 @@ The Demo Inspector is a development tool that provides real-time visualization o
 
 ### Visual Highlighting
 - **Color-coded borders** around components based on their data source
-  - Blue: Commerce Core (GraphQL)
-  - Orange: Catalog Service
+  - Purple: Commerce Core (GraphQL)
+  - Blue: Catalog Service
   - Green: Live Search
 - **Rounded corners** respect component styling
 - **Smart nesting** prevents double borders on nested elements
