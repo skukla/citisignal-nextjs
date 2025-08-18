@@ -3,7 +3,7 @@
 query GetProductPageData(
   $category: String
   $phrase: String
-  $filter: [Citisignal_FilterInput]
+  $filter: Citisignal_PageFilter
   $sort: Citisignal_SortInput
   $pageSize: Int
   $currentPage: Int
