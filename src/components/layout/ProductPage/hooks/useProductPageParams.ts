@@ -58,14 +58,14 @@ interface UseProductPageParamsResult extends ProductPageParams {
   // Update functions
   updateSearch: (search: string) => void;
   updateSort: (sortKey: string) => void;
-  updateFilter: (filterKey: string, value: any, checked?: boolean) => void;
+  updateFilter: (filterKey: string, value: string | string[] | number | boolean, checked?: boolean) => void;
   updatePage: (page: number) => void;
   clearFilters: () => void;
   
   // Helper values
   hasActiveFilters: boolean;
   filterCount: number;
-  activeFilters: Record<string, any>;
+  activeFilters: Record<string, string | string[] | number | boolean>;
   formattedSort: string;
 }
 
@@ -107,7 +107,7 @@ export function useProductPageParams(): UseProductPageParamsResult {
   }, [searchParams]);
   
   // Generic function to update URL parameters
-  const updateParams = useCallback((updates: Record<string, any>) => {
+  const updateParams = useCallback((updates: Record<string, string | string[] | number | boolean | null | undefined>) => {
     const newParams = new URLSearchParams(searchParams.toString());
     
     Object.entries(updates).forEach(([key, value]) => {
@@ -143,11 +143,6 @@ export function useProductPageParams(): UseProductPageParamsResult {
     updateParams({ sort: sortKey || undefined });
   }, [updateParams]);
   
-  // Update a specific filter (basic version for direct updates)
-  const updateFilterDirect = useCallback((filterType: string, value: any) => {
-    updateParams({ [filterType]: value });
-  }, [updateParams]);
-  
   // Update page number
   const updatePage = useCallback((page: number) => {
     updateParams({ page: page > 1 ? page : undefined });
@@ -171,7 +166,7 @@ export function useProductPageParams(): UseProductPageParamsResult {
   
   // Build active filters for display
   const activeFilters = useMemo(() => {
-    const filters: Record<string, any> = {};
+    const filters: Record<string, string | string[] | number | boolean> = {};
     if (params.manufacturer) filters.manufacturer = [params.manufacturer];
     if (params.memory?.length) filters.memory = params.memory;
     if (params.colors?.length) filters.colors = params.colors;
@@ -189,14 +184,15 @@ export function useProductPageParams(): UseProductPageParamsResult {
   }, [params.sort]);
   
   // Simplified filter update that handles all types
-  const updateFilter = useCallback((filterKey: string, value: any, checked?: boolean) => {
+  const updateFilter = useCallback((filterKey: string, value: string | string[] | number | boolean, checked?: boolean) => {
     if (filterKey === 'manufacturer') {
-      updateParams({ manufacturer: checked ? value : undefined });
+      updateParams({ manufacturer: checked ? String(value) : undefined });
     } else if (filterKey === 'memory' || filterKey === 'colors') {
       const currentValues = params[filterKey as keyof typeof params] as string[] | undefined;
+      const stringValue = String(value);
       const newValues = checked 
-        ? [...(currentValues || []), value]
-        : (currentValues || []).filter(v => v !== value);
+        ? [...(currentValues || []), stringValue]
+        : (currentValues || []).filter(v => v !== stringValue);
       updateParams({ [filterKey]: newValues.length > 0 ? newValues : undefined });
     }
   }, [params, updateParams]);

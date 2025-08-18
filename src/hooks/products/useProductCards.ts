@@ -1,7 +1,6 @@
 import useSWRInfinite from 'swr/infinite';
 const useInfiniteQuery = useSWRInfinite; // rename for clarity
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
-import { graphqlFetcherWithTracking } from '@/lib/graphql-fetcher-with-tracking';
 import GET_PRODUCT_CARDS from '@/graphql/queries/GetProductCards.graphql';
 import type { BaseProduct } from '@/types/commerce';
 
@@ -12,7 +11,16 @@ export interface ProductCardsResult {
   hasMoreItems: boolean;
   loadMore: () => void;
   totalCount: number;
-  facets?: any[];  // Can include facets when requested
+  facets?: Array<{
+    title: string;
+    key: string;
+    type: string;
+    options: Array<{
+      id: string;
+      name: string;
+      count: number;
+    }>;
+  }>;
 }
 
 // Sort options that match our GraphQL schema
@@ -49,11 +57,11 @@ export function useProductCards(
   options: UseProductCardsOptions | null = {}
 ): ProductCardsResult {
   // Extract options or use defaults
-  const { phrase, filter, sort, limit = 12, facets } = options || {};
+  const { phrase, filter, sort, limit = 12 } = options || {};
   
   // Create a stable key that includes all filter parameters
   // This ensures SWR creates a new cache entry when filters change
-  const getKey = (pageIndex: number, previousPageData: any) => {
+  const getKey = (pageIndex: number, previousPageData: { Citisignal_productCards?: { items?: unknown[] } } | null) => {
     // If options is null, don't fetch
     if (!options) {
       return null;
@@ -69,14 +77,11 @@ export function useProductCards(
   };
   
   // Fetches pages of data sequentially, accumulating results.
-  // Use tracking fetcher if Demo Inspector might be enabled
-  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
-  
   const { data, error, size, setSize, isLoading } = useInfiniteQuery(
     getKey,
     (key) => {
       const [, phrase, filter, sort, limit, page] = key;
-      return fetcher(GET_PRODUCT_CARDS, { phrase, filter, sort, limit, page });
+      return graphqlFetcher(GET_PRODUCT_CARDS, { phrase, filter, sort, limit, page });
     },
     { revalidateOnFocus: false }
   );
