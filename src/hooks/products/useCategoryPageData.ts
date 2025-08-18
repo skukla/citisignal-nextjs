@@ -1,6 +1,5 @@
 import useSWR from 'swr';
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
-import { graphqlFetcherWithTracking } from '@/lib/graphql-fetcher-with-tracking';
 
 interface Citisignal_FilterInput {
   attribute?: string;
@@ -131,7 +130,7 @@ interface CategoryPageDataResponse {
       footerNav: Array<{ href: string; label: string }>;
     };
     products: {
-      items: any[];
+      items: Array<Record<string, unknown>>;
       totalCount: number;
       hasMoreItems: boolean;
       currentPage: number;
@@ -140,10 +139,28 @@ interface CategoryPageDataResponse {
         page_size: number;
         total_pages: number;
       };
-      facets: any[];
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
     };
     facets: {
-      facets: any[];
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
     };
     breadcrumbs: {
       items: Array<{ name: string; urlPath: string }>;
