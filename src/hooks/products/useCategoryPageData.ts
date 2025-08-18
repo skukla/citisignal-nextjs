@@ -1,5 +1,6 @@
 import useSWR from 'swr';
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
+import { graphqlFetcherWithTracking } from '@/lib/graphql-fetcher-with-tracking';
 
 interface Citisignal_PageFilter {
   manufacturer?: string;
@@ -172,12 +173,15 @@ interface CategoryPageDataResponse {
  * @param variables Query variables for the category page
  * @returns SWR response with complete category page data
  */
-export function useCategoryPageData(variables: CategoryPageDataVariables) {
+export function useCategoryPageData(variables: CategoryPageDataVariables | null) {
   const key = variables ? [GET_CATEGORY_PAGE_DATA, variables] : null;
+  
+  // Use tracking fetcher if Demo Inspector might be enabled
+  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
   
   return useSWR<CategoryPageDataResponse>(
     key,
-    ([query, vars]) => graphqlFetcher(query, vars),
+    key ? ([query, vars]) => fetcher(query, vars) : null,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,

@@ -1,14 +1,17 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useEffect } from 'react';
 import { ProductDataContext } from './ProductDataContext';
 import { ProductFilterContext } from './ProductFilterContext';
 import { ProductUIContext } from './ProductUIContext';
 import { useProductCards } from '@/hooks/products/useProductCards';
 import { useProductFacets } from '@/hooks/products/useProductFacets';
+import { useCategoryPageData } from '@/hooks/products/useCategoryPageData';
 import { useProductList } from '../hooks/useProductList';
 import { useProductPageParams } from '../hooks/useProductPageParams';
 import { usePageLoading } from '../hooks/usePageLoading';
+import { useDemoInspector } from '@/contexts/DemoInspectorContext';
+import { useNavigation } from '@/contexts/NavigationContext';
 import type { BaseProduct } from '@/types/commerce';
 import type { PageData } from '../types';
 
@@ -32,7 +35,7 @@ interface CategoryPageSSRData {
       footerNav: Array<{ href: string; label: string }>;
     };
     products: {
-      items: any[];
+      items: BaseProduct[];
       totalCount: number;
       hasMoreItems: boolean;
       currentPage: number;
@@ -41,10 +44,28 @@ interface CategoryPageSSRData {
         page_size: number;
         total_pages: number;
       };
-      facets: any[];
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
     };
     facets: {
-      facets: any[];
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
     };
     breadcrumbs: {
       items: Array<{ name: string; urlPath: string }>;
@@ -69,13 +90,14 @@ interface Props {
 }
 
 /**
- * ProductPageProviderSSR - Enhanced version with SSR support
+ * ProductPageProviderSSR - Enhanced version with SSR and Single Query Mode support
  * 
- * This provider supports both SSR and client-side data fetching:
- * - With initialData: Uses pre-fetched SSR data, then hydrates with client queries
- * - Without initialData: Falls back to original client-side behavior
+ * This provider supports three data fetching modes:
+ * 1. SSR mode: With initialData, uses pre-fetched SSR data
+ * 2. Single Query mode: Uses unified categoryPageData query for initial load
+ * 3. Multiple Query mode: Uses individual focused queries (original behavior)
  * 
- * This allows gradual migration to SSR pattern while maintaining backward compatibility.
+ * Filter/sort updates always use focused queries for efficiency.
  */
 export function ProductPageProviderSSR({ 
   children, 
@@ -84,6 +106,12 @@ export function ProductPageProviderSSR({
   limit = DEFAULT_PRODUCTS_PER_PAGE,
   initialData 
 }: Props) {
+  // Get single query mode from Demo Inspector
+  const { singleQueryMode } = useDemoInspector();
+  
+  // Get navigation context to populate from unified query
+  const { setNavigation, setBreadcrumbs, setIsLoadingFromUnified } = useNavigation();
+  
   // Step 1: Get URL state (what the user is filtering/searching for)
   const urlState = useProductPageParams();
   
@@ -91,81 +119,174 @@ export function ProductPageProviderSSR({
   const ssrProducts = initialData?.Citisignal_categoryPageData?.products;
   const ssrFacets = initialData?.Citisignal_categoryPageData?.facets;
   
-  // Step 2: Fetch products based on URL state (with SSR fallback)
-  const productData = useProductCards({
-    phrase: urlState.search,
-    filter: {
+  // Determine which query mode to use for initial load
+  // Use single query mode only for initial load without filters/search
+  const shouldUseSingleQuery = singleQueryMode && !initialData && !urlState.hasActiveFilters && !urlState.search;
+  const shouldUseMultipleQueries = !singleQueryMode && !initialData;
+  
+  // Step 2a: Unified query for single query mode (initial load only)
+  const unifiedData = useCategoryPageData(
+    shouldUseSingleQuery && category ? {
       category,
-      manufacturer: urlState.manufacturer,
-      memory: urlState.memory,
-      colors: urlState.colors,
-      priceMin: urlState.priceMin,
-      priceMax: urlState.priceMax
-    },
-    sort: urlState.sort,
-    limit,
-    facets: urlState.hasActiveFilters || !!urlState.search
-  }, {
-    // Use SSR data as fallback for initial render
-    fallbackData: ssrProducts ? {
-      items: ssrProducts.items,
-      totalCount: ssrProducts.totalCount,
-      hasMoreItems: ssrProducts.hasMoreItems,
-      loading: false,
-      error: null,
-      loadMore: () => {},
-      reset: () => {}
-    } : undefined
-  });
+      phrase: urlState.search || undefined,
+      filter: {
+        manufacturer: urlState.manufacturer,
+        memory: urlState.memory,
+        colors: urlState.colors,
+        priceMin: urlState.priceMin,
+        priceMax: urlState.priceMax
+      },
+      sort: urlState.sort ? {
+        attribute: urlState.sort.attribute,
+        direction: urlState.sort.direction
+      } : undefined,
+      pageSize: limit,
+      currentPage: 1
+    } : null
+  );
   
-  // Step 2b: Fetch facets (with SSR fallback)
-  const facetsData = useProductFacets({
-    phrase: urlState.search,
-    filter: { category }
-  }, {
-    // Use SSR facets as fallback
-    fallbackData: ssrFacets ? {
-      facets: ssrFacets.facets,
-      loading: false,
-      error: null
-    } : undefined
-  });
+  // Set loading state when using single query mode
+  useEffect(() => {
+    if (shouldUseSingleQuery) {
+      setIsLoadingFromUnified(true);
+    }
+  }, [shouldUseSingleQuery, setIsLoadingFromUnified]);
   
-  // Step 3: Manage UI preferences (independent of URL)
+  // Update navigation context when unified data arrives
+  useEffect(() => {
+    if (unifiedData.data?.Citisignal_categoryPageData?.navigation) {
+      setNavigation(unifiedData.data.Citisignal_categoryPageData.navigation, 'unified');
+      setIsLoadingFromUnified(false);
+    }
+    if (unifiedData.data?.Citisignal_categoryPageData?.breadcrumbs) {
+      setBreadcrumbs(unifiedData.data.Citisignal_categoryPageData.breadcrumbs);
+    }
+  }, [unifiedData.data, setNavigation, setBreadcrumbs, setIsLoadingFromUnified]);
+  
+  // Also update from SSR data if available
+  useEffect(() => {
+    if (initialData?.Citisignal_categoryPageData?.navigation) {
+      setNavigation(initialData.Citisignal_categoryPageData.navigation, 'unified');
+    }
+    if (initialData?.Citisignal_categoryPageData?.breadcrumbs) {
+      setBreadcrumbs(initialData.Citisignal_categoryPageData.breadcrumbs);
+    }
+  }, [initialData, setNavigation, setBreadcrumbs]);
+  
+  // Step 2b: Fetch products based on URL state
+  // Use this for multiple query mode OR when filters/search are active (even in single query mode)
+  const shouldFetchProducts = shouldUseMultipleQueries || (urlState.hasActiveFilters || urlState.search);
+  
+  // Pass null to prevent fetching when using single query mode
+  const productData = useProductCards(
+    shouldFetchProducts ? {
+      phrase: urlState.search,
+      filter: {
+        category,
+        manufacturer: urlState.manufacturer,
+        memory: urlState.memory,
+        colors: urlState.colors,
+        priceMin: urlState.priceMin,
+        priceMax: urlState.priceMax
+      },
+      sort: urlState.sort,
+      limit,
+      facets: urlState.hasActiveFilters || !!urlState.search
+    } : null
+  );
+  
+  // Step 2c: Fetch facets
+  // Only fetch facets in multiple query mode (unified query includes facets)
+  const facetsData = useProductFacets(
+    shouldUseMultipleQueries ? {
+      phrase: urlState.search,
+      filter: { category }
+    } : null
+  );
+  
+  // Step 3: Merge data based on mode
+  let products, loading, error, totalCount, hasMore, facets;
+  
+  if (shouldUseSingleQuery) {
+    // Using single query mode
+    if (unifiedData.data) {
+      // Extract from unified data when available
+      const pageData = unifiedData.data.Citisignal_categoryPageData;
+      products = pageData?.products?.items || [];
+      loading = unifiedData.isLoading;
+      error = unifiedData.error;
+      totalCount = pageData?.products?.totalCount || 0;
+      hasMore = pageData?.products?.hasMoreItems || false;
+      facets = pageData?.facets?.facets || [];
+    } else {
+      // Still loading unified data
+      products = [];
+      loading = unifiedData.isLoading;
+      error = unifiedData.error;
+      totalCount = 0;
+      hasMore = false;
+      facets = [];
+    }
+  } else if (urlState.hasActiveFilters || urlState.search) {
+    // Use focused queries for updates (even in single query mode)
+    products = productData.items;
+    loading = productData.loading;
+    error = productData.error;
+    totalCount = productData.totalCount;
+    hasMore = productData.hasMoreItems;
+    facets = productData.facets || facetsData.facets;
+  } else if (ssrProducts) {
+    // Use SSR data
+    products = ssrProducts.items;
+    loading = false;
+    error = null;
+    totalCount = ssrProducts.totalCount;
+    hasMore = ssrProducts.hasMoreItems;
+    facets = ssrFacets?.facets;
+  } else {
+    // Use multiple queries data
+    products = productData.items;
+    loading = productData.loading;
+    error = productData.error;
+    totalCount = productData.totalCount;
+    hasMore = productData.hasMoreItems;
+    facets = facetsData.facets;
+  }
+  
+  // Step 4: Manage UI preferences (independent of URL)
   const uiState = useProductList({ 
-    products: normalizeProducts(productData.items || ssrProducts?.items) 
+    products: normalizeProducts(products || []) 
   });
   
-  // Step 4: Single source of truth for page loading state
-  // In SSR mode, we start with loading=false since data is pre-fetched
+  // Step 5: Single source of truth for page loading state
   const pageLoading = usePageLoading({
-    productsLoading: initialData ? false : productData.loading,
-    facetsLoading: initialData ? false : facetsData.loading,
+    productsLoading: loading || false,
+    facetsLoading: shouldUseSingleQuery ? false : facetsData.loading || false,
     searchQuery: urlState.search,
     sortBy: urlState.formattedSort
   });
   
-  // Merge SSR navigation data with pageData if available
-  const enhancedPageData = initialData ? {
+  // Merge SSR/unified navigation data with pageData if available
+  const enhancedPageData = (initialData || (shouldUseSingleQuery && unifiedData.data)) ? {
     ...pageData,
-    breadcrumbs: initialData.Citisignal_categoryPageData.breadcrumbs?.items?.map(item => ({
+    breadcrumbs: (initialData?.Citisignal_categoryPageData || unifiedData.data?.Citisignal_categoryPageData)?.breadcrumbs?.items?.map(item => ({
       label: item.name,
       href: item.urlPath
     })) || pageData.breadcrumbs,
-    navigation: initialData.Citisignal_categoryPageData.navigation,
-    categoryInfo: initialData.Citisignal_categoryPageData.categoryInfo
+    navigation: (initialData?.Citisignal_categoryPageData || unifiedData.data?.Citisignal_categoryPageData)?.navigation,
+    categoryInfo: (initialData?.Citisignal_categoryPageData || unifiedData.data?.Citisignal_categoryPageData)?.categoryInfo
   } : pageData;
   
   // Now just provide the data to children
   return (
     <ProductDataContext.Provider value={{
-      products: normalizeDataValue(productData.items || ssrProducts?.items, []),
-      loading: normalizeDataValue(productData.loading, false),
-      error: productData.error,
-      totalCount: normalizeDataValue(productData.totalCount || ssrProducts?.totalCount, 0),
-      hasMore: normalizeDataValue(productData.hasMoreItems || ssrProducts?.hasMoreItems, false),
-      facets: facetsData.facets || ssrFacets?.facets,
-      loadMore: productData.loadMore,
+      products: normalizeDataValue(products, []),
+      loading: normalizeDataValue(loading, false),
+      error: error,
+      totalCount: normalizeDataValue(totalCount, 0),
+      hasMore: normalizeDataValue(hasMore, false),
+      facets: normalizeDataValue(facets, []),
+      loadMore: productData.loadMore || (() => {}),
       filteredProducts: normalizeDataValue(uiState.displayProducts, []),
       isInitialLoading: pageLoading
     }}>
