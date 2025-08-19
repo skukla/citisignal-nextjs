@@ -3,7 +3,7 @@ import { graphqlFetcher } from '@/lib/graphql-fetcher';
 
 const UNIFIED_QUERY = `
   query TestUnifiedQuery($category: String, $pageSize: Int) {
-    Citisignal_productPageData(category: $category, pageSize: $pageSize, currentPage: 1) {
+    Citisignal_categoryPageData(category: $category, pageSize: $pageSize, currentPage: 1) {
       navigation {
         headerNav {
           href

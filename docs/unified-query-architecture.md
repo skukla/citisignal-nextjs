@@ -130,8 +130,8 @@ export function useProductPageData(options: ProductPageOptions) {
 ### Component Integration
 
 ```tsx
-// UnifiedProductPage.tsx
-export function UnifiedProductPage({ category }: Props) {
+// ProductPageProvider.tsx (with single query mode)
+export function ProductPageProvider({ category }: Props) {
   const { searchParams } = useSearchParams();
   
   const { data, loading, error } = useProductPageData({

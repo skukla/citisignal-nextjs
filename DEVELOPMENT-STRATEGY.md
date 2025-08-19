@@ -29,6 +29,38 @@ src/
 
 This branch demonstrates a pure client-side rendering approach with full Demo Inspector functionality including single query mode toggle.
 
+### Single Query Mode Implementation Details
+
+**Query Behavior**
+- **Initial load**: Only `GetCategoryPageData` runs (unified query)
+- **First user interaction**: Switches to `GetProductCards` + `GetProductFacets` (individual queries)
+- **Filter changes**: Both queries run (products update, facets update contextually per Adobe docs)
+- **Sort changes**: Only `GetProductCards` runs (facets use SWR cache, no network request)
+
+**Facet Preservation During Loading**
+To prevent facets from disappearing during loading (which causes layout shift):
+
+1. **Problem**: When switching query modes or updating filters, facets briefly disappear
+2. **Solution**: Store previous facets in a ref and reuse them during loading
+3. **Implementation**: 
+   - `ProductPageProvider` uses `previousFacetsRef` to store last known facets
+   - During loading, facets fall back to previous values instead of empty array
+   - Applies to both unified and individual query modes
+   - Prevents the sidebar from collapsing and products taking full width
+
+**Dynamic Facet Updates**
+Per Adobe Live Search documentation, facets are **contextual** - they update based on applied filters:
+- Filter by "Apple" → Memory facet shows only Apple phone memory options
+- Uses selective exclusion: each facet excludes itself but includes other filters
+- Both queries must run when filters change for accurate contextual facets
+- SWR deduplication prevents unnecessary facet requests when only sort changes
+
+**Implementation Notes**
+- `userHasInteracted` flag tracks when to switch from unified to individual queries
+- Resets when switching modes or changing categories
+- Unified query uses frozen initial URL state to prevent re-runs
+- Individual queries use current URL state for real-time updates
+
 ## Current State
 
 ### ✅ Completed Features
@@ -161,21 +193,6 @@ Removed: `internet-deals` (not suitable for e-commerce catalog)
 - Independent loading for filter changes
 - LayeredTransition prevents layout shifts
 - 500ms search debouncing prevents flicker
-
-## Known Limitations
-
-### Filter Handling
-The current implementation has hard-coded filter types in `useProductPageParams` (manufacturer, memory, colors, price). This means:
-- New facet types from the API won't automatically work without code changes
-- Category-specific facets need manual implementation
-- The `activeFilters` object is built from predefined filter types
-
-**Future Refactor Needed**: The entire URL parameter handling system needs refactoring to:
-- Dynamically handle any facet type returned by the API
-- Support category-specific facets without code changes
-- Build `activeFilters` from URL params generically
-
-This limitation exists in both client-only and hybrid SSR branches and requires significant refactoring of the URL state management system.
 
 ## Next Steps
 
