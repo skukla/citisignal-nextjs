@@ -7,16 +7,15 @@ The Demo Inspector includes a "Single Query" toggle that demonstrates two data f
 ## Query Modes
 
 ### Single Query ON (Unified)
-- Uses `Citisignal_categoryPageData` resolver from Adobe API Mesh
+- Uses `Citisignal_productPageData` resolver from Adobe API Mesh
 - One GraphQL query returns all page data:
   - Navigation (header and footer)
   - Products with pagination
   - Facets for filtering
   - Breadcrumbs
-  - Category information
 - Reduces network overhead for initial page load (75% fewer queries)
-- Ideal for SSR scenarios
-- Demonstrates the power of API Mesh orchestration
+- Ideal for demonstrating API Mesh orchestration capabilities
+- Shows how multiple backend services can be unified
 
 ### Single Query OFF (Multiple)
 - Uses focused resolvers for granular control:
@@ -30,22 +29,36 @@ The Demo Inspector includes a "Single Query" toggle that demonstrates two data f
 
 ## Implementation Details
 
-### ProductPageProviderSSR Component
+### ProductPageProvider Component (Client-Only Branch)
 
-The `ProductPageProviderSSR` component manages both query modes:
+The `ProductPageProvider` component manages both query modes:
 
 ```typescript
 // Determines query mode based on Demo Inspector toggle
 const { singleQueryMode } = useDemoInspector();
 
-// Single query mode for initial load without filters
-const shouldUseSingleQuery = singleQueryMode && !initialData && !urlState.hasActiveFilters && !urlState.search;
+// Prepare filter for unified query
+const unifiedFilter = singleQueryMode ? {
+  manufacturer: urlState.manufacturer,
+  memory: urlState.memory,
+  colors: urlState.colors,
+  priceMin: urlState.priceMin,
+  priceMax: urlState.priceMax
+} : undefined;
 
-// Uses categoryPageData hook when in single query mode
-const unifiedData = useCategoryPageData(shouldUseSingleQuery ? {...} : null);
+// Single query mode - uses productPageData hook
+const unifiedData = useProductPageData(singleQueryMode ? {
+  category,
+  phrase: urlState.search,
+  filter: unifiedFilter,
+  sort: urlState.sort,
+  pageSize: limit,
+  currentPage: 1
+} : {});
 
-// Falls back to multiple queries otherwise
-const productData = useProductCards(shouldUseMultipleQueries ? {...} : null);
+// Multiple query mode - uses separate hooks
+const productData = useProductCards(singleQueryMode ? null : {...});
+const facetsData = useProductFacets(singleQueryMode ? null : {...});
 ```
 
 ### Important Behaviors

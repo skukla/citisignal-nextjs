@@ -25,6 +25,10 @@ src/
 └── utils/            # Utilities
 ```
 
+## Branch: demo-inspector-client-only
+
+This branch demonstrates a pure client-side rendering approach with full Demo Inspector functionality including single query mode toggle.
+
 ## Current State
 
 ### ✅ Completed Features
@@ -36,9 +40,9 @@ src/
 - **Unified Data Layer** - Consistent API responses via custom resolvers
 - **Category Navigation** - Dynamic navigation from Commerce API (header & footer)
 - **Breadcrumbs** - Category breadcrumb trails for SEO and navigation
-- **Demo Inspector** - Visual debugging tool (Cmd+Shift+D) showing data sources
-- **SSR Implementation** - Server-side rendering for product pages (62% faster)
-- **Unified Query System** - Single GraphQL query for all page data (75% fewer requests)
+- **Demo Inspector** - Visual debugging tool (Cmd+Shift+D toggle, Cmd+Shift+E expand/collapse)
+- **Single Query Mode** - Toggle between unified and multiple queries for demonstration
+- **Client-Side Rendering** - All data fetched on the client for maximum interactivity
 
 ### Architecture Patterns
 
@@ -157,6 +161,21 @@ Removed: `internet-deals` (not suitable for e-commerce catalog)
 - Independent loading for filter changes
 - LayeredTransition prevents layout shifts
 - 500ms search debouncing prevents flicker
+
+## Known Limitations
+
+### Filter Handling
+The current implementation has hard-coded filter types in `useProductPageParams` (manufacturer, memory, colors, price). This means:
+- New facet types from the API won't automatically work without code changes
+- Category-specific facets need manual implementation
+- The `activeFilters` object is built from predefined filter types
+
+**Future Refactor Needed**: The entire URL parameter handling system needs refactoring to:
+- Dynamically handle any facet type returned by the API
+- Support category-specific facets without code changes
+- Build `activeFilters` from URL params generically
+
+This limitation exists in both client-only and hybrid SSR branches and requires significant refactoring of the URL state management system.
 
 ## Next Steps
 
