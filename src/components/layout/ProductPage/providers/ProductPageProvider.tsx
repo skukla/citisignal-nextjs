@@ -6,9 +6,11 @@ import { ProductFilterContext } from './ProductFilterContext';
 import { ProductUIContext } from './ProductUIContext';
 import { useProductCards } from '@/hooks/products/useProductCards';
 import { useProductFacets } from '@/hooks/products/useProductFacets';
+import { useProductPageData } from '@/hooks/products/useProductPageData';
 import { useProductList } from '../hooks/useProductList';
 import { useProductPageParams } from '../hooks/useProductPageParams';
 import { usePageLoading } from '../hooks/usePageLoading';
+import { useDemoInspector } from '@/contexts/DemoInspectorContext';
 import type { BaseProduct } from '@/types/commerce';
 import type { PageData } from '../types';
 
@@ -47,9 +49,33 @@ export function ProductPageProvider({
 }: Props) {
   // Step 1: Get URL state (what the user is filtering/searching for)
   const urlState = useProductPageParams();
+  const { singleQueryMode } = useDemoInspector();
   
-  // Step 2: Fetch products based on URL state
-  const productData = useProductCards({
+  // Step 2: Prepare filter for unified query (if in single query mode)
+  // Convert activeFilters to Citisignal_PageFilter format
+  const unifiedFilter = singleQueryMode ? {
+    manufacturer: urlState.manufacturer,
+    memory: urlState.memory,
+    colors: urlState.colors,
+    priceMin: urlState.priceMin,
+    priceMax: urlState.priceMax
+  } : undefined;
+  
+  // Step 2a: Unified query mode - single query for everything
+  const unifiedData = useProductPageData(singleQueryMode ? {
+    category,
+    phrase: urlState.search,
+    filter: unifiedFilter,
+    sort: urlState.sort ? {
+      attribute: urlState.sort.attribute,
+      direction: urlState.sort.direction
+    } : undefined,
+    pageSize: limit,
+    currentPage: 1
+  } : {});
+  
+  // Step 2b: Multiple query mode - separate queries
+  const productData = useProductCards(singleQueryMode ? null : {
     phrase: urlState.search,
     filter: {
       category,
@@ -64,21 +90,38 @@ export function ProductPageProvider({
     facets: urlState.hasActiveFilters || !!urlState.search
   });
   
-  // Step 2b: Fetch facets
-  const facetsData = useProductFacets({
+  // Step 2c: Fetch facets separately (in multiple query mode)
+  const facetsData = useProductFacets(singleQueryMode ? null : {
     phrase: urlState.search,
     filter: { category }
   });
   
-  // Step 3: Manage UI preferences (independent of URL)
+  // Step 3: Merge data based on mode
+  const finalProductData = singleQueryMode ? {
+    items: unifiedData.data?.Citisignal_productPageData?.products?.items || [],
+    loading: unifiedData.isLoading || (!unifiedData.data && !unifiedData.error),
+    error: unifiedData.error,
+    totalCount: unifiedData.data?.Citisignal_productPageData?.products?.items?.length || 0,
+    hasMoreItems: false, // Unified query doesn't support pagination yet
+    loadMore: () => {} // No-op for unified query
+  } : productData;
+  
+  const finalFacetsData = singleQueryMode ? {
+    facets: unifiedData.data?.Citisignal_productPageData?.facets?.facets || 
+            unifiedData.data?.Citisignal_productPageData?.products?.aggregations || [],
+    loading: unifiedData.isLoading || (!unifiedData.data && !unifiedData.error),
+    error: unifiedData.error
+  } : facetsData;
+  
+  // Step 4: Manage UI preferences (independent of URL)
   const uiState = useProductList({ 
-    products: normalizeProducts(productData.items) 
+    products: normalizeProducts(finalProductData.items) 
   });
   
-  // Step 4: Single source of truth for page loading state
+  // Step 5: Single source of truth for page loading state
   const pageLoading = usePageLoading({
-    productsLoading: productData.loading,
-    facetsLoading: facetsData.loading,
+    productsLoading: finalProductData.loading,
+    facetsLoading: finalFacetsData.loading,
     searchQuery: urlState.search,
     sortBy: urlState.formattedSort
   });
@@ -86,13 +129,13 @@ export function ProductPageProvider({
   // Now just provide the data to children
   return (
     <ProductDataContext.Provider value={{
-      products: normalizeDataValue(productData.items, []),
-      loading: normalizeDataValue(productData.loading, false),
-      error: productData.error,
-      totalCount: normalizeDataValue(productData.totalCount, 0),
-      hasMore: normalizeDataValue(productData.hasMoreItems, false),
-      facets: facetsData.facets,
-      loadMore: productData.loadMore,
+      products: normalizeDataValue(finalProductData.items, []),
+      loading: normalizeDataValue(finalProductData.loading, false),
+      error: finalProductData.error,
+      totalCount: normalizeDataValue(finalProductData.totalCount, 0),
+      hasMore: normalizeDataValue(finalProductData.hasMoreItems, false),
+      facets: finalFacetsData.facets,
+      loadMore: finalProductData.loadMore,
       filteredProducts: normalizeDataValue(uiState.displayProducts, []),
       isInitialLoading: pageLoading
     }}>

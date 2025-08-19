@@ -1,14 +1,13 @@
 import useSWR from 'swr';
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
 
-interface Citisignal_FilterInput {
-  attribute?: string;
-  in?: string[];
-  eq?: string;
-  range?: {
-    from?: number;
-    to?: number;
-  };
+interface Citisignal_PageFilter {
+  manufacturer?: string;
+  memory?: string[];
+  colors?: string[];
+  priceMin?: number;
+  priceMax?: number;
+  onSaleOnly?: boolean;
 }
 
 interface Citisignal_SortInput {
@@ -20,7 +19,7 @@ const GET_PRODUCT_PAGE_DATA = `
   query GetProductPageData(
     $category: String
     $phrase: String
-    $filter: [Citisignal_FilterInput]
+    $filter: Citisignal_PageFilter
     $sort: Citisignal_SortInput
     $pageSize: Int
     $currentPage: Int
@@ -106,7 +105,7 @@ const GET_PRODUCT_PAGE_DATA = `
 interface ProductPageDataVariables {
   category?: string;
   phrase?: string;
-  filter?: Citisignal_FilterInput[];
+  filter?: Citisignal_PageFilter;
   sort?: Citisignal_SortInput;
   pageSize?: number;
   currentPage?: number;
@@ -140,7 +139,8 @@ interface ProductPageDataResponse {
  * @returns SWR response with unified product page data
  */
 export function useProductPageData(variables: ProductPageDataVariables) {
-  const key = variables ? [GET_PRODUCT_PAGE_DATA, variables] : null;
+  // Only create key if we have actual variables to query with
+  const key = variables && Object.keys(variables).length > 0 ? [GET_PRODUCT_PAGE_DATA, variables] : null;
   
   return useSWR<ProductPageDataResponse>(
     key,
