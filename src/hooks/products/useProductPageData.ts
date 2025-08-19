@@ -123,11 +123,11 @@ export function useProductPageData({
   );
   
   // Merge data based on mode
-  if (shouldUseSingleQuery && unifiedData.data) {
-    const pageData = unifiedData.data.Citisignal_categoryPageData;
+  if (shouldUseSingleQuery) {
+    const pageData = unifiedData.data?.Citisignal_categoryPageData;
     return {
       products: normalizeProducts(pageData?.products?.items || []),
-      loading: unifiedData.isLoading,
+      loading: unifiedData.isLoading || (!unifiedData.data && !unifiedData.error),
       error: unifiedData.error,
       totalCount: pageData?.products?.totalCount || 0,
       hasMore: pageData?.products?.hasMoreItems || false,

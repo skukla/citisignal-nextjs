@@ -25,6 +25,10 @@ src/
 └── utils/            # Utilities
 ```
 
+## Branch: demo-inspector-hybrid-ssr
+
+This branch demonstrates a hybrid SSR approach where navigation and breadcrumbs are server-rendered (no loading skeletons) while products remain client-side for optimal interactivity.
+
 ## Current State
 
 ### ✅ Completed Features
@@ -37,7 +41,7 @@ src/
 - **Category Navigation** - Dynamic navigation from Commerce API (header & footer)
 - **Breadcrumbs** - Category breadcrumb trails for SEO and navigation
 - **Demo Inspector** - Visual debugging tool (Cmd+Shift+D toggle, Cmd+Shift+E expand/collapse, Single Query toggle) showing data sources
-- **SSR Implementation** - Server-side rendering for product pages (62% faster)
+- **Hybrid SSR** - Server-side rendering for navigation & breadcrumbs only (instant header/nav, no loading skeletons)
 - **Unified Query System** - Single GraphQL query for all page data (75% fewer requests)
 - **Single Query Mode** - Toggle between unified and multiple queries for demonstration
 
