@@ -1,5 +1,6 @@
 'use client';
 
+import { useState, useEffect } from 'react';
 import FilterSidebarResponsive from '@/components/ui/search/FilterSidebar/FilterSidebarResponsive';
 import FilterSidebarSkeleton from '@/components/ui/search/FilterSidebar/FilterSidebarSkeleton';
 import { LayeredTransition } from '@/components/ui/transitions/LayeredTransition';
@@ -21,26 +22,73 @@ export function ProductPageFilters() {
   
   const { facets, isInitialLoading } = useProductData();
   
-  // Hide completely if no facets after loading
-  if (!isInitialLoading && (!facets || facets.length === 0)) {
+  // Persist the last valid facets to prevent flicker during refetch
+  const [persistedFacets, setPersistedFacets] = useState(facets);
+  
+  // Optimistic filter state for immediate UI feedback
+  const [optimisticFilters, setOptimisticFilters] = useState(activeFilters);
+  
+  useEffect(() => {
+    // Only update persisted facets when we get new valid facets
+    if (facets && facets.length > 0) {
+      setPersistedFacets(facets);
+    }
+  }, [facets]);
+  
+  useEffect(() => {
+    // Sync optimistic filters with actual filters
+    setOptimisticFilters(activeFilters);
+  }, [activeFilters]);
+  
+  // Handle filter change with optimistic update
+  const handleFilterChange = (filterKey: string, value: string, checked: boolean) => {
+    // Update optimistic state immediately
+    setOptimisticFilters(prev => {
+      const currentValues = prev[filterKey] || [];
+      if (checked) {
+        return { ...prev, [filterKey]: [...currentValues, value] };
+      } else {
+        return { ...prev, [filterKey]: currentValues.filter(v => v !== value) };
+      }
+    });
+    
+    // Then update actual filters (which updates URL)
+    setFilter(filterKey, value, checked);
+  };
+  
+  // Handle clear filters with optimistic update
+  const handleClearFilters = () => {
+    setOptimisticFilters({});
+    clearFilters();
+  };
+  
+  // Use persisted facets to prevent flicker
+  const displayFacets = facets && facets.length > 0 ? facets : persistedFacets;
+  const hasFacets = displayFacets && displayFacets.length > 0;
+  
+  // Only show skeleton on initial load when we have no facets at all
+  const showSkeleton = isInitialLoading && !hasFacets;
+  
+  // Hide completely only if we've loaded and confirmed no facets ever
+  if (!isInitialLoading && !hasFacets) {
     return null;
   }
   
-  // Layered transition for skeleton -> filters
+  // Always show content once we have facets, never go back to skeleton
   return (
     <LayeredTransition
       skeleton={<FilterSidebarSkeleton />}
       content={
         <FilterSidebarResponsive 
-          filters={facets || []}
-          activeFilters={activeFilters}
-          onFilterChange={setFilter}
-          onClearFilters={clearFilters}
+          filters={displayFacets || []}
+          activeFilters={optimisticFilters}
+          onFilterChange={handleFilterChange}
+          onClearFilters={handleClearFilters}
           showMobileFilters={showMobileFilters}
           setShowMobileFilters={setShowMobileFilters}
         />
       }
-      showContent={!isInitialLoading && facets && facets.length > 0}
+      showContent={hasFacets}
       duration={300}
     />
   );

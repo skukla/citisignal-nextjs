@@ -193,12 +193,9 @@ interface CategoryPageDataResponse {
 export function useCategoryPageData(variables: CategoryPageDataVariables | null) {
   const key = variables ? [GET_CATEGORY_PAGE_DATA, variables] : null;
   
-  // Use tracking fetcher if Demo Inspector might be enabled
-  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
-  
   return useSWR<CategoryPageDataResponse>(
     key,
-    key ? ([query, vars]) => fetcher(query, vars) : null,
+    key ? ([query, vars]) => graphqlFetcher(query, vars) : null,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
@@ -207,13 +204,3 @@ export function useCategoryPageData(variables: CategoryPageDataVariables | null)
   );
 }
 
-/**
- * Server-side data fetching function for Next.js SSR/SSG.
- * Use this in getServerSideProps or getStaticProps.
- * 
- * @param variables Query variables for the category page
- * @returns Promise with category page data
- */
-export async function fetchCategoryPageData(variables: CategoryPageDataVariables): Promise<CategoryPageDataResponse> {
-  return graphqlFetcher(GET_CATEGORY_PAGE_DATA, variables);
-}

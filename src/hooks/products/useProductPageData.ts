@@ -9,29 +9,6 @@ import type { BaseProduct } from '@/types/commerce';
 
 interface UseProductPageDataOptions {
   category?: string;
-  initialData?: {
-    Citisignal_categoryPageData?: {
-      products?: {
-        items: unknown[];
-        totalCount: number;
-        hasMoreItems: boolean;
-      };
-      facets?: {
-        facets: Array<{
-          title: string;
-          key: string;
-          type: string;
-          options: Array<{
-            id: string;
-            name: string;
-            count: number;
-          }>;
-        }>;
-      };
-      navigation?: unknown;
-      breadcrumbs?: unknown;
-    };
-  };
   search?: string;
   filters?: Record<string, string | string[] | number | boolean | undefined>;
   sort?: {
@@ -40,6 +17,7 @@ interface UseProductPageDataOptions {
   };
   limit?: number;
   hasActiveFilters?: boolean;
+  initialData?: any;
 }
 
 interface ProductPageData {
@@ -84,6 +62,8 @@ export function useProductPageData({
   // Determine query mode
   const shouldUseSingleQuery = singleQueryMode && !initialData && !hasActiveFilters && !search;
   const shouldUseMultipleQueries = !singleQueryMode && !initialData;
+  // When neither single nor multiple query mode, we still need to fetch products
+  const shouldFetchSomehow = !shouldUseSingleQuery && category;
   
   // Single query mode - unified data
   const unifiedData = useCategoryPageData(
@@ -116,7 +96,8 @@ export function useProductPageData({
   }, [unifiedData.data, setNavigation, setBreadcrumbs, setIsLoadingFromUnified]);
   
   // Multiple query mode - focused queries
-  const shouldFetchProducts = shouldUseMultipleQueries || hasActiveFilters || search;
+  // Always fetch products when we have a category and are not in single query mode
+  const shouldFetchProducts = shouldFetchSomehow;
   
   const productData = useProductCards(
     shouldFetchProducts ? {
@@ -131,10 +112,13 @@ export function useProductPageData({
     } : null
   );
   
+  // Always fetch facets when we have a category and are not in single query mode
+  // Important: Don't pass active filters to facets query - we want all available options
+  const shouldFetchFacets = shouldFetchSomehow;
   const facetsData = useProductFacets(
-    shouldUseMultipleQueries ? {
+    shouldFetchFacets ? {
       phrase: search,
-      filter: { category }
+      filter: { category }  // Only pass category, not active filters
     } : null
   );
   
@@ -159,7 +143,7 @@ export function useProductPageData({
       error: productData.error,
       totalCount: productData.totalCount,
       hasMore: productData.hasMoreItems,
-      facets: productData.facets || facetsData.facets,
+      facets: facetsData.facets || productData.facets || [],
       loadMore: productData.loadMore
     };
   }
@@ -183,7 +167,7 @@ export function useProductPageData({
     error: productData.error,
     totalCount: productData.totalCount,
     hasMore: productData.hasMoreItems,
-    facets: facetsData.facets,
+    facets: facetsData.facets || [],
     loadMore: productData.loadMore
   };
 }

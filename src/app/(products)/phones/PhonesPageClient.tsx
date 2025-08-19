@@ -1,29 +1,39 @@
-import { ProductPage } from '@/components/layout/ProductPage';
-import ProductPageSSRWrapper from '@/components/layout/ProductPage/ProductPageSSRWrapper';
+'use client';
+
+import { useEffect } from 'react';
+import { ProductPage, ProductPageProvider } from '@/components/layout/ProductPage';
 import PhonesTechReviews from '@/components/sections/phones/PhonesTechReviews';
 import PhonesBuyingGuides from '@/components/sections/phones/PhonesBuyingGuides';
 import PhonesTips from '@/components/sections/phones/PhonesTips';
 import { phonesPageData } from '@/data/route-groups/products/phones';
+import { useNavigation } from '@/contexts/NavigationContext';
 
-/**
- * SSR-Optimized Phones Page
- * 
- * This is the server-side rendered version of the phones page that:
- * 1. Fetches all data server-side in a single GraphQL query
- * 2. Renders complete HTML with data (no loading states)
- * 3. Provides excellent SEO and initial load performance
- * 4. Falls back to client-side fetching for dynamic updates
- * 
- * Performance improvements:
- * - 75% fewer API calls (1 vs 4+)
- * - ~60% faster initial load time
- * - Zero layout shift
- * - Full SEO optimization
- */
-export default async function PhonesPageSSR() {
+interface PhonesPageClientProps {
+  breadcrumbs?: {
+    items: Array<{
+      name: string;
+      urlPath: string;
+    }>;
+  } | null;
+}
+
+export default function PhonesPageClient({ breadcrumbs }: PhonesPageClientProps) {
+  const { setBreadcrumbs } = useNavigation();
+
+  // Set breadcrumbs in context when provided from SSR
+  useEffect(() => {
+    if (breadcrumbs) {
+      setBreadcrumbs(breadcrumbs);
+    }
+  }, [breadcrumbs, setBreadcrumbs]);
+
   // Extract page data for the provider
+  // Use SSR breadcrumbs if available, otherwise fall back to static
   const pageData = {
-    breadcrumbs: phonesPageData.breadcrumbs,
+    breadcrumbs: breadcrumbs ? breadcrumbs.items.map(item => ({
+      label: item.name,  // Use 'label' to match the expected format
+      href: item.urlPath
+    })) : phonesPageData.breadcrumbs,
     pageHeader: phonesPageData.pageHeader,
     search: phonesPageData.search,
     filters: phonesPageData.filters,
@@ -31,12 +41,10 @@ export default async function PhonesPageSSR() {
     loadingSkeletonCount: 12
   };
 
-  // The wrapper fetches data server-side
   return (
-    <ProductPageSSRWrapper 
+    <ProductPageProvider 
       category="phones"
       pageData={pageData}
-      pageSize={24}
     >
       <ProductPage.Background color="gray">
         <ProductPage.Container>
@@ -71,6 +79,6 @@ export default async function PhonesPageSSR() {
         
         <ProductPage.Newsletter />
       </ProductPage.Background>
-    </ProductPageSSRWrapper>
+    </ProductPageProvider>
   );
 }

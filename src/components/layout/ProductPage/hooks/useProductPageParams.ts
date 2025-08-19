@@ -129,7 +129,9 @@ export function useProductPageParams(): UseProductPageParamsResult {
       newParams.delete('page');
     }
     
-    router.push(`${pathname}?${newParams.toString()}`);
+    // Use replace instead of push to ensure the URL updates
+    const newUrl = newParams.toString() ? `${pathname}?${newParams.toString()}` : pathname;
+    router.replace(newUrl, { scroll: false });
   }, [searchParams, router, pathname]);
   
   // Update search query
@@ -150,7 +152,7 @@ export function useProductPageParams(): UseProductPageParamsResult {
   
   // Clear all filters
   const clearFilters = useCallback(() => {
-    router.push(pathname);
+    router.replace(pathname, { scroll: false });
   }, [router, pathname]);
   
   // Calculate active filter count

@@ -93,9 +93,12 @@ export function useProductCards(
   const totalCount = latestPage?.Citisignal_productCards?.totalCount || 0;
   const productFacets = latestPage?.Citisignal_productCards?.facets;
 
+  // Consider it loading if we're fetching OR if we have no data yet
+  const isLoadingData = isLoading || (!data && !error);
+  
   return {
     items: allItems,
-    loading: isLoading,
+    loading: isLoadingData,
     error,
     hasMoreItems,
     loadMore: () => setSize(size + 1),

@@ -1,24 +1,17 @@
-'use client';
-
 import { ReactNode } from 'react';
-import { usePathname } from 'next/navigation';
 import { StandardHeader } from '@/components/layout/Header/StandardHeader';
 import { StandardFooter } from '@/components/layout/Footer/StandardFooter';
-import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
-import CartRootProvider from '@/components/ui/layout/Cart/CartRootProvider';
-import Root from '@/components/layout/Root';
-import { DemoInspectorProvider } from '@/contexts/DemoInspectorContext';
-import { NavigationProvider } from '@/contexts/NavigationContext';
-import DemoInspector from '@/components/demo-inspector/DemoInspector';
+import ClientBoundary from '@/components/layout/ClientBoundary';
+import { fetchNavigationSSR } from '@/lib/ssr-fetchers';
 import './globals.css';
 
 interface RootLayoutProps {
   children: ReactNode;
 }
 
-export default function RootLayout({ children }: RootLayoutProps) {
-  const pathname = usePathname();
-  const isCheckoutPage = pathname?.startsWith('/checkout');
+export default async function RootLayout({ children }: RootLayoutProps) {
+  // Fetch navigation data server-side for instant rendering
+  const navigationData = await fetchNavigationSSR();
 
   return (
     <html lang="en" className="h-full" data-scroll-behavior="smooth">
@@ -27,24 +20,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <meta name="description" content="America's most reliable wireless network. Stay connected with the latest phones, unlimited plans, and nationwide coverage." />
       </head>
       <body className="h-full bg-white antialiased" suppressHydrationWarning>
-        <DemoInspectorProvider>
-          <NavigationProvider>
-            <AuthProvider>
-              <AccountProvider>
-                <CartRootProvider>
-                  <Root>
-                    {!isCheckoutPage && <StandardHeader />}
-                    <main>
-                      {children}
-                    </main>
-                    <StandardFooter />
-                  </Root>
-                </CartRootProvider>
-              </AccountProvider>
-            </AuthProvider>
-          </NavigationProvider>
-          <DemoInspector />
-        </DemoInspectorProvider>
+        <ClientBoundary initialNavigation={navigationData}>
+          <StandardHeader />
+          <main>
+            {children}
+          </main>
+          <StandardFooter />
+        </ClientBoundary>
       </body>
     </html>
   );

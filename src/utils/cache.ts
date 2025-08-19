@@ -110,7 +110,7 @@ export function clearAllCache(prefix?: string): void {
 /**
  * Create a memoized cache key from object
  */
-export function createCacheKeyFromObject(obj: Record<string, any>): string {
+export function createCacheKeyFromObject(obj: Record<string, unknown>): string {
   const sorted = Object.keys(obj)
     .sort()
     .reduce((result, key) => {
@@ -118,7 +118,7 @@ export function createCacheKeyFromObject(obj: Record<string, any>): string {
         result[key] = obj[key];
       }
       return result;
-    }, {} as Record<string, any>);
+    }, {} as Record<string, unknown>);
   
   return JSON.stringify(sorted);
 }

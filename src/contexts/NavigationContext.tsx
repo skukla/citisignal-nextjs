@@ -68,14 +68,15 @@ export function NavigationProvider({
   const hasStartedUnifiedQuery = useRef(false);
   const [isHydrated, setIsHydrated] = useState(false);
   
-  const [navigation, setNavigationState] = useState<NavigationData | null>(null);
-  const [breadcrumbs, setBreadcrumbsState] = useState<BreadcrumbData | null>(null);
-  const [lastUpdated, setLastUpdated] = useState<number | null>(null);
-  const [source, setSource] = useState<'unified' | 'standalone' | 'cache' | null>(null);
+  const [navigation, setNavigationState] = useState<NavigationData | null>(initialNavigation || null);
+  const [breadcrumbs, setBreadcrumbsState] = useState<BreadcrumbData | null>(initialBreadcrumbs || null);
+  const [lastUpdated, setLastUpdated] = useState<number | null>(initialNavigation ? Date.now() : null);
+  const [source, setSource] = useState<'unified' | 'standalone' | 'cache' | null>(initialNavigation ? 'unified' : null);
   
   // During SSR and initial hydration, block queries to prevent race conditions
   // We'll determine the actual state after hydration completes
-  const [isLoadingFromUnified, setIsLoadingFromUnifiedState] = useState(true);
+  // If we have initial navigation from SSR, don't block queries
+  const [isLoadingFromUnified, setIsLoadingFromUnifiedState] = useState(!initialNavigation);
   
   // Mark as hydrated after mount
   useEffect(() => {
@@ -125,6 +126,14 @@ export function NavigationProvider({
       setNavigationState(initialNavigation);
       setSource('unified');
       setLastUpdated(Date.now());
+    }
+    
+    if (initialBreadcrumbs) {
+      setBreadcrumbsState(initialBreadcrumbs);
+    }
+    
+    // If we have initial data, don't load from cache
+    if (initialNavigation || initialBreadcrumbs) {
       return;
     }
     
@@ -148,7 +157,7 @@ export function NavigationProvider({
     } catch (e) {
       // Ignore cache errors
     }
-  }, [initialNavigation]);
+  }, [initialNavigation, initialBreadcrumbs]);
 
   // Save to cache when navigation updates
   useEffect(() => {

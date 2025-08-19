@@ -11,33 +11,11 @@ import { usePageLoading } from '../hooks/usePageLoading';
 import { normalizeProducts } from '@/utils/products';
 import type { PageData } from '../types';
 
-interface CategoryPageSSRData {
-  Citisignal_categoryPageData: {
-    navigation?: unknown;
-    breadcrumbs?: {
-      items?: Array<{
-        name: string;
-        urlPath: string;
-      }>;
-    };
-    categoryInfo?: unknown;
-    products?: {
-      items: unknown[];
-      totalCount: number;
-      hasMoreItems: boolean;
-    };
-    facets?: {
-      facets: unknown[];
-    };
-  };
-}
-
 interface Props {
   children: ReactNode;
   category?: string;
   pageData: PageData;
   limit?: number;
-  initialData?: CategoryPageSSRData;
 }
 
 /**
@@ -52,8 +30,7 @@ export function ProductPageProvider({
   children, 
   category,
   pageData,
-  limit = 12,
-  initialData 
+  limit = 12
 }: Props) {
   // URL state management
   const urlState = useProductPageParams();
@@ -61,7 +38,6 @@ export function ProductPageProvider({
   // Orchestrated data fetching
   const data = useProductPageData({
     category,
-    initialData,
     search: urlState.search,
     filters: {
       manufacturer: urlState.manufacturer,
@@ -88,16 +64,8 @@ export function ProductPageProvider({
     sortBy: urlState.formattedSort
   });
   
-  // Enhanced page data with SSR/unified data if available
-  const enhancedPageData = initialData ? {
-    ...pageData,
-    breadcrumbs: initialData.Citisignal_categoryPageData?.breadcrumbs?.items?.map((item) => ({
-      name: item.name,
-      href: item.urlPath
-    })) || pageData.breadcrumbs,
-    navigation: initialData.Citisignal_categoryPageData?.navigation,
-    categoryInfo: initialData.Citisignal_categoryPageData?.categoryInfo
-  } : pageData;
+  // Use page data as-is (no SSR enhancement needed)
+  const enhancedPageData = pageData;
   
   return (
     <ProductDataContext.Provider value={{
