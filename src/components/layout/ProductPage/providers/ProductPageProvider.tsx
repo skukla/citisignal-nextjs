@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode } from 'react';
+import { ReactNode, useRef, useEffect, useState } from 'react';
 import { ProductDataContext } from './ProductDataContext';
 import { ProductFilterContext } from './ProductFilterContext';
 import { ProductUIContext } from './ProductUIContext';
@@ -51,31 +51,83 @@ export function ProductPageProvider({
   const urlState = useProductPageParams();
   const { singleQueryMode } = useDemoInspector();
   
-  // Step 2: Prepare filter for unified query (if in single query mode)
-  // Convert activeFilters to Citisignal_PageFilter format
-  const unifiedFilter = singleQueryMode ? {
-    manufacturer: urlState.manufacturer,
-    memory: urlState.memory,
-    colors: urlState.colors,
-    priceMin: urlState.priceMin,
-    priceMax: urlState.priceMax
+  // Store previous facets to prevent them from disappearing during loading in single query mode
+  const previousFacetsRef = useRef<any[]>([]);
+  
+  // Track if user has interacted with filters/sort (to switch from unified to individual queries)
+  const [userHasInteracted, setUserHasInteracted] = useState(false);
+  
+  // Store initial URL state for unified query (frozen after initial load)
+  const initialUrlStateRef = useRef(urlState);
+  
+  // Track the previous URL state to detect user interactions
+  const previousUrlStateRef = useRef(urlState);
+  
+  // Track if this is the initial mount to skip reset effect
+  const isInitialMountRef = useRef(true);
+  
+  // Detect user interaction with filters/sort
+  useEffect(() => {
+    if (isInitialMountRef.current) {
+      return; // Skip on initial mount
+    }
+    
+    // Check if any filter or sort values changed
+    const filtersChanged = 
+      urlState.manufacturer !== previousUrlStateRef.current.manufacturer ||
+      urlState.memory !== previousUrlStateRef.current.memory ||
+      urlState.colors !== previousUrlStateRef.current.colors ||
+      urlState.priceMin !== previousUrlStateRef.current.priceMin ||
+      urlState.priceMax !== previousUrlStateRef.current.priceMax ||
+      urlState.search !== previousUrlStateRef.current.search ||
+      urlState.formattedSort !== previousUrlStateRef.current.formattedSort;
+    
+    if (filtersChanged && singleQueryMode) {
+      setUserHasInteracted(true);
+    }
+    
+    previousUrlStateRef.current = urlState;
+  }, [urlState, singleQueryMode]);
+  
+  // Reset when switching modes or changing categories
+  useEffect(() => {
+    if (isInitialMountRef.current) {
+      isInitialMountRef.current = false;
+      return; // Skip on initial mount
+    }
+    setUserHasInteracted(false);
+    initialUrlStateRef.current = urlState; // Capture new initial state
+  }, [singleQueryMode, category]); // eslint-disable-line react-hooks/exhaustive-deps
+  
+  // Step 2: Determine query strategy
+  // In single query mode: use unified until user interacts, then switch to individual queries
+  // This demonstrates the hybrid SSR/CSR pattern even in client-side rendering
+  const useUnifiedQuery = singleQueryMode && !userHasInteracted;
+  
+  // Step 2a: Prepare filter for unified query (using frozen initial state)
+  const unifiedFilter = useUnifiedQuery ? {
+    manufacturer: initialUrlStateRef.current.manufacturer,
+    memory: initialUrlStateRef.current.memory,
+    colors: initialUrlStateRef.current.colors,
+    priceMin: initialUrlStateRef.current.priceMin,
+    priceMax: initialUrlStateRef.current.priceMax
   } : undefined;
   
-  // Step 2a: Unified query mode - single query for everything
-  const unifiedData = useProductPageData(singleQueryMode ? {
+  // Step 2b: Unified query - only for initial load in single query mode
+  const unifiedData = useProductPageData(useUnifiedQuery ? {
     category,
-    phrase: urlState.search,
+    phrase: initialUrlStateRef.current.search,
     filter: unifiedFilter,
-    sort: urlState.sort ? {
-      attribute: urlState.sort.attribute,
-      direction: urlState.sort.direction
+    sort: initialUrlStateRef.current.sort ? {
+      attribute: initialUrlStateRef.current.sort.attribute,
+      direction: initialUrlStateRef.current.sort.direction
     } : undefined,
     pageSize: limit,
     currentPage: 1
   } : {});
   
-  // Step 2b: Multiple query mode - separate queries
-  const productData = useProductCards(singleQueryMode ? null : {
+  // Step 2c: Individual queries - used after user interaction in single query mode, or always in multi-query mode
+  const productData = useProductCards(!useUnifiedQuery ? {
     phrase: urlState.search,
     filter: {
       category,
@@ -88,30 +140,55 @@ export function ProductPageProvider({
     sort: urlState.sort,
     limit,
     facets: urlState.hasActiveFilters || !!urlState.search
-  });
+  } : null);
   
-  // Step 2c: Fetch facets separately (in multiple query mode)
-  const facetsData = useProductFacets(singleQueryMode ? null : {
+  // Step 2d: Fetch facets separately (when not using unified query)
+  const facetsData = useProductFacets(!useUnifiedQuery ? {
     phrase: urlState.search,
-    filter: { category }
-  });
+    filter: {
+      category,
+      manufacturer: urlState.manufacturer,
+      memory: urlState.memory,
+      colors: urlState.colors,
+      priceMin: urlState.priceMin,
+      priceMax: urlState.priceMax
+    }
+  } : null);
   
-  // Step 3: Merge data based on mode
-  const finalProductData = singleQueryMode ? {
-    items: unifiedData.data?.Citisignal_productPageData?.products?.items || [],
+  // Step 3: Merge data based on query strategy
+  const finalProductData = useUnifiedQuery ? {
+    // Using unified query (initial load in single query mode)
+    items: unifiedData.data?.Citisignal_categoryPageData?.products?.items || [],
     loading: unifiedData.isLoading || (!unifiedData.data && !unifiedData.error),
     error: unifiedData.error,
-    totalCount: unifiedData.data?.Citisignal_productPageData?.products?.items?.length || 0,
+    totalCount: unifiedData.data?.Citisignal_categoryPageData?.products?.items?.length || 0,
     hasMoreItems: false, // Unified query doesn't support pagination yet
     loadMore: () => {} // No-op for unified query
-  } : productData;
+  } : productData; // Using individual queries
   
-  const finalFacetsData = singleQueryMode ? {
-    facets: unifiedData.data?.Citisignal_productPageData?.facets?.facets || 
-            unifiedData.data?.Citisignal_productPageData?.products?.aggregations || [],
+  // Extract facets from appropriate source
+  const unifiedFacets = unifiedData.data?.Citisignal_categoryPageData?.facets?.facets || 
+                        unifiedData.data?.Citisignal_categoryPageData?.products?.aggregations;
+  
+  // Update stored facets when we get new ones (from either source)
+  useEffect(() => {
+    const currentFacets = useUnifiedQuery ? unifiedFacets : facetsData?.facets;
+    if (currentFacets && currentFacets.length > 0) {
+      previousFacetsRef.current = currentFacets;
+    }
+  }, [unifiedFacets, facetsData?.facets, useUnifiedQuery]);
+  
+  const finalFacetsData = useUnifiedQuery ? {
+    // Using unified query
+    facets: unifiedFacets || (unifiedData.isLoading ? previousFacetsRef.current : []),
     loading: unifiedData.isLoading || (!unifiedData.data && !unifiedData.error),
     error: unifiedData.error
-  } : facetsData;
+  } : {
+    // Using individual queries - also preserve facets during loading
+    facets: facetsData.facets.length > 0 ? facetsData.facets : (facetsData.loading ? previousFacetsRef.current : []),
+    loading: facetsData.loading,
+    error: facetsData.error
+  };
   
   // Step 4: Manage UI preferences (independent of URL)
   const uiState = useProductList({ 

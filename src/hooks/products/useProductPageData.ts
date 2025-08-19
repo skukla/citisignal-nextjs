@@ -15,8 +15,8 @@ interface Citisignal_SortInput {
   direction?: 'ASC' | 'DESC';
 }
 
-const GET_PRODUCT_PAGE_DATA = `
-  query GetProductPageData(
+const GET_CATEGORY_PAGE_DATA = `
+  query GetCategoryPageData(
     $category: String
     $phrase: String
     $filter: Citisignal_PageFilter
@@ -24,7 +24,7 @@ const GET_PRODUCT_PAGE_DATA = `
     $pageSize: Int
     $currentPage: Int
   ) {
-    Citisignal_productPageData(
+    Citisignal_categoryPageData(
       category: $category
       phrase: $phrase
       filter: $filter
@@ -111,8 +111,8 @@ interface ProductPageDataVariables {
   currentPage?: number;
 }
 
-interface ProductPageDataResponse {
-  Citisignal_productPageData: {
+interface CategoryPageDataResponse {
+  Citisignal_categoryPageData: {
     navigation: {
       headerNav: Array<{ href: string; label: string; category: string }>;
       footerNav: Array<{ href: string; label: string }>;
@@ -140,9 +140,9 @@ interface ProductPageDataResponse {
  */
 export function useProductPageData(variables: ProductPageDataVariables) {
   // Only create key if we have actual variables to query with
-  const key = variables && Object.keys(variables).length > 0 ? [GET_PRODUCT_PAGE_DATA, variables] : null;
+  const key = variables && Object.keys(variables).length > 0 ? [GET_CATEGORY_PAGE_DATA, variables] : null;
   
-  return useSWR<ProductPageDataResponse>(
+  return useSWR<CategoryPageDataResponse>(
     key,
     ([query, vars]) => graphqlFetcher(query, vars),
     {

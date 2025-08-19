@@ -6,6 +6,7 @@ import { LayeredTransition } from '@/components/ui/transitions/LayeredTransition
 import { useProductFilters } from '../providers/ProductFilterContext';
 import { useProductUI } from '../providers/ProductUIContext';
 import { useProductData } from '../providers/ProductDataContext';
+import { useDemoInspector } from '@/contexts/DemoInspectorContext';
 
 export function ProductPageFilters() {
   const { 
@@ -19,12 +20,22 @@ export function ProductPageFilters() {
     setShowMobileFilters
   } = useProductUI();
   
-  const { facets, isInitialLoading } = useProductData();
+  const { facets, isInitialLoading, loading } = useProductData();
+  const { singleQueryMode } = useDemoInspector();
   
-  // Hide completely if no facets after loading
-  if (!isInitialLoading && (!facets || facets.length === 0)) {
+  // Determine if we have facets to show
+  const hasFacets = facets && facets.length > 0;
+  
+  // Hide completely if no facets exist and we're not in initial loading
+  if (!isInitialLoading && !loading && !hasFacets) {
     return null;
   }
+  
+  // Determine what to show:
+  // - During initial load: show skeleton
+  // - After initial load with facets: always show facets (never hide during updates)
+  // - In single query mode, facets should stay visible during loading to prevent layout shift
+  const showContent = !isInitialLoading && hasFacets;
   
   // Layered transition for skeleton -> filters
   return (
@@ -40,7 +51,7 @@ export function ProductPageFilters() {
           setShowMobileFilters={setShowMobileFilters}
         />
       }
-      showContent={!isInitialLoading && facets && facets.length > 0}
+      showContent={showContent}
       duration={300}
     />
   );
