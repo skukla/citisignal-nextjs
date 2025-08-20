@@ -2,6 +2,20 @@
  * URL state management utilities
  */
 
+/**
+ * Format a URL-friendly category key into a display name
+ * @param categoryKey The category URL key (e.g., "gift-cards")
+ * @returns Formatted display name (e.g., "Gift Cards")
+ */
+export function formatCategoryName(categoryKey: string): string {
+  if (!categoryKey) return '';
+  
+  return categoryKey
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
+}
+
 export interface SortOption {
   attribute: string;
   direction: 'ASC' | 'DESC';
