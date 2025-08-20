@@ -117,8 +117,39 @@ interface CategoryPageDataResponse {
       headerNav: Array<{ href: string; label: string; category: string }>;
       footerNav: Array<{ href: string; label: string }>;
     };
-    products: any;
-    facets: any;
+    products: {
+      items: Array<Record<string, unknown>>;
+      totalCount: number;
+      hasMoreItems: boolean;
+      currentPage: number;
+      page_info: {
+        current_page: number;
+        page_size: number;
+        total_pages: number;
+      };
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
+    };
+    facets: {
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
+    };
     breadcrumbs: {
       items: Array<{ name: string; urlPath: string }>;
     };
