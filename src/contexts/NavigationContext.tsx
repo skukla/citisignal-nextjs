@@ -61,8 +61,7 @@ interface NavigationProviderProps {
 
 export function NavigationProvider({ 
   children, 
-  initialNavigation,
-  initialBreadcrumbs 
+  initialNavigation
 }: NavigationProviderProps) {
   const { singleQueryMode } = useDemoInspector();
   const hasStartedUnifiedQuery = useRef(false);
@@ -145,7 +144,7 @@ export function NavigationProvider({
           setLastUpdated(timestamp);
         }
       }
-    } catch (e) {
+    } catch {
       // Ignore cache errors
     }
   }, [initialNavigation]);
@@ -161,7 +160,7 @@ export function NavigationProvider({
             navigation,
             timestamp: lastUpdated || Date.now()
           }));
-        } catch (e) {
+        } catch {
           // Ignore cache errors
         }
       }

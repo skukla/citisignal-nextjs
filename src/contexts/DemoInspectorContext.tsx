@@ -81,7 +81,6 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
   const [trackedQueries, setTrackedQueries] = useState<TrackedQuery[]>([]);
   const [inspectorPosition, setInspectorPosition] = useState<'left' | 'right'>('right');
   const [singleQueryMode, setSingleQueryMode] = useState(true); // Default to single query mode (production-like)
-  const [isHydrated, setIsHydrated] = useState(false);
   
   // Load saved preferences after hydration
   useEffect(() => {
@@ -104,7 +103,6 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
         }
       }
       // If no saved prefs, keep the defaults
-      setIsHydrated(true);
     }
   }, []);
   

@@ -6,7 +6,6 @@ import { LayeredTransition } from '@/components/ui/transitions/LayeredTransition
 import { useProductFilters } from '../providers/ProductFilterContext';
 import { useProductUI } from '../providers/ProductUIContext';
 import { useProductData } from '../providers/ProductDataContext';
-import { useDemoInspector } from '@/contexts/DemoInspectorContext';
 
 export function ProductPageFilters() {
   const { 
@@ -21,7 +20,6 @@ export function ProductPageFilters() {
   } = useProductUI();
   
   const { facets, isInitialLoading, loading } = useProductData();
-  const { singleQueryMode } = useDemoInspector();
   
   // Determine if we have facets to show
   const hasFacets = facets && facets.length > 0;

@@ -11,8 +11,10 @@ import { useProductList } from '../hooks/useProductList';
 import { useProductPageParams } from '../hooks/useProductPageParams';
 import { usePageLoading } from '../hooks/usePageLoading';
 import { useDemoInspector } from '@/contexts/DemoInspectorContext';
+import { useNavigation } from '@/contexts/NavigationContext';
 import type { BaseProduct } from '@/types/commerce';
 import type { PageData } from '../types';
+import type { FilterSection } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 
 // Constants
 const DEFAULT_PRODUCTS_PER_PAGE = 12;
@@ -21,6 +23,10 @@ const DEFAULT_PRODUCTS_PER_PAGE = 12;
 const normalizeProducts = (items: unknown[]): BaseProduct[] => {
   return (items || []) as BaseProduct[];
 };
+
+// Note: We don't need to normalize facets - they already have the correct structure
+// The GraphQL response already has { key, title, type, options: [ { id, name, count } ] }
+// which matches what FilterSection expects
 
 function normalizeDataValue<T>(value: T | undefined, fallback: T): T {
   return value ?? fallback;
@@ -50,9 +56,19 @@ export function ProductPageProvider({
   // Step 1: Get URL state (what the user is filtering/searching for)
   const urlState = useProductPageParams();
   const { singleQueryMode } = useDemoInspector();
+  const { setBreadcrumbs, setIsLoadingFromUnified } = useNavigation();
   
   // Store previous facets to prevent them from disappearing during loading in single query mode
-  const previousFacetsRef = useRef<any[]>([]);
+  const previousFacetsRef = useRef<Array<{
+    key: string;
+    title: string;
+    type: string;
+    options: Array<{
+      id: string;
+      name: string;
+      count: number;
+    }>;
+  }>>([]);
   
   // Track if user has interacted with filters/sort (to switch from unified to individual queries)
   const [userHasInteracted, setUserHasInteracted] = useState(false);
@@ -177,6 +193,23 @@ export function ProductPageProvider({
     }
   }, [unifiedFacets, facetsData?.facets, useUnifiedQuery]);
   
+  // Set breadcrumbs from unified query when in single query mode
+  useEffect(() => {
+    if (useUnifiedQuery) {
+      if (unifiedData.isLoading) {
+        // Mark that unified query is loading
+        setIsLoadingFromUnified(true);
+      } else if (unifiedData.data?.Citisignal_categoryPageData?.breadcrumbs) {
+        // Set breadcrumbs in navigation context
+        setBreadcrumbs({
+          items: unifiedData.data.Citisignal_categoryPageData.breadcrumbs.items || []
+        });
+        // Mark loading complete
+        setIsLoadingFromUnified(false);
+      }
+    }
+  }, [useUnifiedQuery, unifiedData.isLoading, unifiedData.data, setBreadcrumbs, setIsLoadingFromUnified]);
+  
   const finalFacetsData = useUnifiedQuery ? {
     // Using unified query
     facets: unifiedFacets || (unifiedData.isLoading ? previousFacetsRef.current : []),
@@ -205,26 +238,26 @@ export function ProductPageProvider({
   // Now just provide the data to children
   return (
     <ProductDataContext.Provider value={{
-      products: normalizeDataValue(finalProductData.items, []),
+      products: normalizeProducts(normalizeDataValue(finalProductData.items, [])),
       loading: normalizeDataValue(finalProductData.loading, false),
       error: finalProductData.error,
       totalCount: normalizeDataValue(finalProductData.totalCount, 0),
       hasMore: normalizeDataValue(finalProductData.hasMoreItems, false),
-      facets: finalFacetsData.facets,
+      facets: (finalFacetsData.facets || []) as FilterSection[],
       loadMore: finalProductData.loadMore,
-      filteredProducts: normalizeDataValue(uiState.displayProducts, []),
+      filteredProducts: normalizeProducts(normalizeDataValue(uiState.displayProducts, [])),
       isInitialLoading: pageLoading
     }}>
       <ProductFilterContext.Provider value={{
         searchQuery: normalizeDataValue(urlState.search, ''),
         sortBy: normalizeDataValue(urlState.formattedSort, 'RELEVANCE'),
-        activeFilters: normalizeDataValue(urlState.activeFilters, {}),
+        activeFilters: normalizeDataValue(urlState.activeFilters, {}) as Record<string, string | number | string[] | undefined>,
         hasActiveFilters: normalizeDataValue(urlState.hasActiveFilters, false),
         filterCount: normalizeDataValue(urlState.filterCount, 0),
         category,
         setSearchQuery: urlState.updateSearch,
         setSortBy: urlState.updateSort,
-        setFilter: urlState.updateFilter,
+        setFilter: urlState.updateFilter as (filterKey: string, value: string | number | string[] | undefined, checked?: boolean) => void,
         clearFilters: urlState.clearFilters,
         pageData
       }}>

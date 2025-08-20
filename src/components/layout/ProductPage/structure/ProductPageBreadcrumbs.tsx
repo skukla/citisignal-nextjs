@@ -13,13 +13,13 @@ export function ProductPageBreadcrumbs() {
   const { singleQueryMode } = useDemoInspector();
   
   // Check if we have breadcrumbs from NavigationContext (set by unified query)
-  const hasContextBreadcrumbs = contextBreadcrumbs?.items?.length > 0;
+  const hasContextBreadcrumbs = (contextBreadcrumbs?.items?.length ?? 0) > 0;
   
   // Check if pageData already has breadcrumbs from unified query
   const hasBreadcrumbsInPageData = pageData.breadcrumbs && 
     Array.isArray(pageData.breadcrumbs) && 
     pageData.breadcrumbs.length > 0 &&
-    pageData.breadcrumbs[0].label; // Unified query provides label/href format
+    'name' in pageData.breadcrumbs[0]; // Check for name property
   
   // Only fetch dynamic breadcrumbs if:
   // 1. Not loading from unified query
@@ -34,7 +34,7 @@ export function ProductPageBreadcrumbs() {
   // Use API breadcrumbs as single source of truth when category is provided
   const breadcrumbItems = useMemo(() => {
     // First priority: breadcrumbs from NavigationContext (unified query)
-    if (hasContextBreadcrumbs) {
+    if (hasContextBreadcrumbs && contextBreadcrumbs) {
       return contextBreadcrumbs.items.map(item => ({
         name: item.name,
         href: item.urlPath === '/' ? undefined : item.urlPath
@@ -44,7 +44,7 @@ export function ProductPageBreadcrumbs() {
     // Second priority: breadcrumbs in pageData from unified query
     if (hasBreadcrumbsInPageData) {
       return pageData.breadcrumbs.map(item => ({
-        name: item.label,
+        name: item.name, // BreadcrumbItem has 'name', not 'label'
         href: item.href
       }));
     }
@@ -61,8 +61,8 @@ export function ProductPageBreadcrumbs() {
           href: item.urlPath === '/' ? undefined : item.urlPath
         }));
       }
-      // API loaded but no breadcrumbs - show minimal trail
-      return [{ name: 'Home', href: '/' }, { name: 'Shop', href: '/shop' }];
+      // API loaded but no breadcrumbs - show minimal trail (no Home since icon is shown)
+      return [{ name: 'Shop', href: '/shop' }];
     }
     // No category specified - use static breadcrumbs (for non-shop pages)
     return pageData.breadcrumbs;
