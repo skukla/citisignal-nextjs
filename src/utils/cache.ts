@@ -47,7 +47,7 @@ export function getFromCache<T>(key: string, options?: CacheOptions): T | null {
     }
     
     return data;
-  } catch (error) {
+  } catch {
     // Silently fail on cache errors
     return null;
   }
@@ -68,7 +68,7 @@ export function setInCache<T>(key: string, data: T, options?: CacheOptions): voi
     };
     
     localStorage.setItem(cacheKey, JSON.stringify(cacheData));
-  } catch (error) {
+  } catch {
     // Silently fail on cache errors (e.g., quota exceeded)
   }
 }
@@ -82,7 +82,7 @@ export function clearCache(key: string, prefix?: string): void {
   try {
     const cacheKey = getCacheKey(key, prefix);
     localStorage.removeItem(cacheKey);
-  } catch (error) {
+  } catch {
     // Silently fail
   }
 }
@@ -102,7 +102,7 @@ export function clearAllCache(prefix?: string): void {
         localStorage.removeItem(key);
       }
     });
-  } catch (error) {
+  } catch {
     // Silently fail
   }
 }
@@ -110,7 +110,7 @@ export function clearAllCache(prefix?: string): void {
 /**
  * Create a memoized cache key from object
  */
-export function createCacheKeyFromObject(obj: Record<string, any>): string {
+export function createCacheKeyFromObject(obj: Record<string, unknown>): string {
   const sorted = Object.keys(obj)
     .sort()
     .reduce((result, key) => {
@@ -118,7 +118,7 @@ export function createCacheKeyFromObject(obj: Record<string, any>): string {
         result[key] = obj[key];
       }
       return result;
-    }, {} as Record<string, any>);
+    }, {} as Record<string, unknown>);
   
   return JSON.stringify(sorted);
 }

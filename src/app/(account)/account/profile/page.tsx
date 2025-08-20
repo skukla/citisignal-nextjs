@@ -5,9 +5,8 @@ import ProfileForm from '@/components/ui/forms/account/ProfileForm';
 import { profileConfig, ProfileFormFields } from '@/data/route-groups/account/profile';
 
 export default function ProfilePage() {
-  const handleProfileSubmit = async (data: ProfileFormFields) => {
+  const handleProfileSubmit = async (_data: ProfileFormFields) => {
     // TODO: Implement profile update
-    // Will use: data
     await new Promise(resolve => setTimeout(resolve, 1000));
   };
 

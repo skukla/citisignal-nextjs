@@ -2,7 +2,6 @@
 
 import Image from 'next/image';
 import Card from '@/components/ui/cards/Card';
-import Section from '@/components/ui/layout/Section';
 import Content from '@/components/layout/Content';
 import SectionHeader from '@/components/ui/layout/SectionHeader';
 import SuccessMessage from '@/components/ui/feedback/SuccessMessage';
