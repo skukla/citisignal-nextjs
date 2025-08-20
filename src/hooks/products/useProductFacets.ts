@@ -24,7 +24,7 @@ export interface ProductFacetsResult {
 interface UseProductFacetsOptions {
   phrase?: string;
   filter?: {
-    category?: string;
+    categoryUrlKey?: string;
     manufacturer?: string;
     memory?: string[];
     colors?: string[];

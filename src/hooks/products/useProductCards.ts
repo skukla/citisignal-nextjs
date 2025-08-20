@@ -35,7 +35,7 @@ export interface SortInput {
 interface UseProductCardsOptions {
   phrase?: string;
   filter?: {
-    category?: string;
+    categoryUrlKey?: string;
     manufacturer?: string;
     memory?: string[];
     colors?: string[];

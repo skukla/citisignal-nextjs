@@ -8,7 +8,7 @@ const VIEW_TRANSITION_DURATION = 300;
  * Simplified hook for managing UI-only product list state.
  * Handles view preferences, optimistic updates, and minor client-side refinements.
  * 
- * Major filtering and sorting is handled server-side via URL parameters.
+ * Major filtering and sorting is handled via URL parameters and API queries.
  * This hook only manages ephemeral UI state that doesn't need to be in the URL.
  */
 

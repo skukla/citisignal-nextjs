@@ -2,7 +2,7 @@ import { createContext, useContext } from 'react';
 import type { BaseProduct, Facet } from '@/types/commerce';
 
 /**
- * Context for product data and server-side operations
+ * Context for product data and operations
  * Handles data fetching, filtering, and pagination
  */
 interface ProductDataContextValue {

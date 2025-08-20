@@ -73,7 +73,7 @@ export function NavigationProvider({
   const [lastUpdated, setLastUpdated] = useState<number | null>(null);
   const [source, setSource] = useState<'unified' | 'standalone' | 'cache' | null>(null);
   
-  // During SSR and initial hydration, block queries to prevent race conditions
+  // During initial hydration, block queries to prevent race conditions
   // We'll determine the actual state after hydration completes
   const [isLoadingFromUnified, setIsLoadingFromUnifiedState] = useState(true);
   
@@ -120,7 +120,7 @@ export function NavigationProvider({
   useEffect(() => {
     if (typeof window === 'undefined') return;
     
-    // Use initial data if provided (SSR)
+    // Use initial data if provided
     if (initialNavigation) {
       setNavigationState(initialNavigation);
       setSource('unified');
