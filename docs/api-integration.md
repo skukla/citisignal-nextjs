@@ -89,6 +89,33 @@ const { filteredProducts, searchQuery, sortBy } = useProductList({
 - Built-in retry logic
 - Smaller bundle (30KB vs 140KB)
 
+## GraphQL Headers Configuration
+
+The Next.js GraphQL proxy (`/src/app/api/graphql/route.ts`) passes headers to the mesh:
+
+### Required Headers
+
+**For Commerce Core GraphQL (categoryList, storeConfig):**
+- `Store`: Store view code (e.g., `citisignal_us`)
+  - Specifies which store view to query
+  - Without this, multi-store instances may return empty categories
+
+**For Catalog Service/Live Search:**
+- `X-Api-Key`: API key for authentication
+- `Magento-Environment-Id`: Commerce environment ID
+- `Magento-Website-Code`: Website code (e.g., `citisignal`)  
+- `Magento-Store-Code`: Store code (e.g., `citisignal_store`)
+- `Magento-Store-View-Code`: Store view code (e.g., `citisignal_us`)
+- `Magento-Customer-Group`: Customer group for pricing
+
+### Header Conventions
+
+Adobe Commerce uses different header naming for different services:
+- **REST/Core GraphQL**: Simple `Store` header
+- **Catalog Services**: Prefixed `Magento-*` headers
+
+The proxy passes both sets to ensure compatibility with all services.
+
 ## Environment Variables
 
 Required in `.env`:

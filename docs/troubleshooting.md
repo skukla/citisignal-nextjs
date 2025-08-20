@@ -7,6 +7,22 @@
 - Mesh changes take 2-3 minutes to propagate
 - Check if using correct service (Catalog vs Search)
 
+### Multi-Store Configuration Issues
+
+**Navigation/Categories Not Loading:**
+- Adobe Commerce multi-store instances require the `Store` header
+- Without it, queries may return the "default" store which often has no categories
+- The GraphQL proxy in `/src/app/api/graphql/route.ts` must include:
+  ```typescript
+  'Store': process.env.ADOBE_COMMERCE_STORE_VIEW_CODE || ''
+  ```
+- This header tells Commerce which store view to use (e.g., `citisignal_us`)
+
+**Different Header Conventions:**
+- **Commerce Core GraphQL**: Uses `Store` header with store view code
+- **Catalog Service/Live Search**: Uses `Magento-Store-View-Code`, `Magento-Store-Code`, etc.
+- The mesh configuration passes both to support all services
+
 ### Images Not Loading
 - Use `secure_image` field for HTTPS URLs
 - Verify Next.js config supports both HTTP/HTTPS:
