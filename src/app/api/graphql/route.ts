@@ -18,10 +18,11 @@ export async function POST(request: NextRequest) {
     const headers = {
       'Content-Type': 'application/json',
       'X-Api-Key': process.env.ADOBE_CATALOG_API_KEY || '',
+      'Store': process.env.ADOBE_COMMERCE_STORE_VIEW_CODE || '',  // Used by Commerce GraphQL
       'Magento-Environment-Id': process.env.ADOBE_COMMERCE_ENVIRONMENT_ID || '',
-      'Magento-Website-Code': process.env.ADOBE_COMMERCE_WEBSITE_CODE || '',
-      'Magento-Store-Code': process.env.ADOBE_COMMERCE_STORE_CODE || '',
-      'Magento-Store-View-Code': process.env.ADOBE_COMMERCE_STORE_VIEW_CODE || '',
+      'Magento-Website-Code': process.env.ADOBE_COMMERCE_WEBSITE_CODE || '', // Used by Commerce Services
+      'Magento-Store-Code': process.env.ADOBE_COMMERCE_STORE_CODE || '', // Used by Commerce Services
+      'Magento-Store-View-Code': process.env.ADOBE_COMMERCE_STORE_VIEW_CODE || '', // Used by Commerce Services
       'Magento-Customer-Group': process.env.ADOBE_COMMERCE_CUSTOMER_GROUP || '',
     };
     
