@@ -2,14 +2,13 @@ import useSWR from 'swr';
 import { graphqlFetcher, graphqlFetcherWithTracking } from '@/lib/graphql-fetcher';
 import GET_CATEGORY_PAGE_DATA from '@/graphql/queries/GetCategoryPageData.graphql';
 
-interface Citisignal_FilterInput {
-  attribute?: string;
-  in?: string[];
-  eq?: string;
-  range?: {
-    from?: number;
-    to?: number;
-  };
+interface Citisignal_PageFilter {
+  manufacturer?: string;
+  memory?: string[];
+  colors?: string[];
+  priceMin?: number;
+  priceMax?: number;
+  onSaleOnly?: boolean;
 }
 
 interface Citisignal_SortInput {
@@ -20,7 +19,7 @@ interface Citisignal_SortInput {
 interface CategoryPageDataVariables {
   categoryUrlKey?: string;
   phrase?: string;
-  filter?: Citisignal_FilterInput[];
+  filter?: Citisignal_PageFilter;
   sort?: Citisignal_SortInput;
   pageSize?: number;
   currentPage?: number;

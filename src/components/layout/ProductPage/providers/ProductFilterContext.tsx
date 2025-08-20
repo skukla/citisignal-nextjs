@@ -9,7 +9,7 @@ interface ProductFilterContextValue {
   // Current filter state
   searchQuery: string;
   sortBy: string;
-  activeFilters: Record<string, any>;
+  activeFilters: Record<string, string | string[] | number | undefined>;
   hasActiveFilters: boolean;
   filterCount: number;
   category?: string;
@@ -17,7 +17,7 @@ interface ProductFilterContextValue {
   // Filter actions
   setSearchQuery: (query: string) => void;
   setSortBy: (sort: string) => void;
-  setFilter: (filterKey: string, value: any, checked?: boolean) => void;
+  setFilter: (filterKey: string, value: string | string[] | number | undefined, checked?: boolean) => void;
   clearFilters: () => void;
   
   // Page configuration

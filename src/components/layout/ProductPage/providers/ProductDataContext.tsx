@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react';
-import type { BaseProduct, Facet } from '@/types/commerce';
+import type { BaseProduct } from '@/types/commerce';
+import type { FilterSection } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 
 /**
  * Context for product data and operations
@@ -12,7 +13,7 @@ interface ProductDataContextValue {
   error?: Error;
   totalCount: number;
   hasMore: boolean;
-  facets?: Facet[];
+  facets: FilterSection[];
   
   // Pagination
   loadMore: () => void;
