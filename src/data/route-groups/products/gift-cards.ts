@@ -126,7 +126,6 @@ export const giftCardsPageData = {
    * Breadcrumb navigation for gift cards page
    */
   breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
     { name: 'Gift Cards' }
   ],
 

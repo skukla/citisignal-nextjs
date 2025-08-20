@@ -119,7 +119,6 @@ export const accessoriesPageData = {
    * Breadcrumb navigation for accessories page
    */
   breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
     { name: 'Accessories' }
   ],
 

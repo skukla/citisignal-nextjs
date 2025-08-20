@@ -155,7 +155,6 @@ export const plansPageData = {
    * Breadcrumb navigation for plans page
    */
   breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
     { name: 'Plans' }
   ],
 

@@ -135,7 +135,6 @@ export const watchesPageData = {
    * Breadcrumb navigation for watches page
    */
   breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
     { name: 'Watches' }
   ],
 

@@ -197,7 +197,6 @@ export const phonesPageData = {
    * Breadcrumb navigation for phones page
    */
   breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
     { name: 'Phones' }
   ],
 

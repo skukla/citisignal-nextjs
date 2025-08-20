@@ -61,8 +61,8 @@ export function ProductPageBreadcrumbs() {
           href: item.urlPath === '/' ? undefined : item.urlPath
         }));
       }
-      // API loaded but no breadcrumbs - show minimal trail (no Home since icon is shown)
-      return [{ name: 'Shop', href: '/shop' }];
+      // API loaded but no breadcrumbs - return empty array
+      return [];
     }
     // No category specified - use static breadcrumbs (for non-shop pages)
     return pageData.breadcrumbs;

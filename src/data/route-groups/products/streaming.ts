@@ -134,7 +134,6 @@ export const streamingPageData = {
    * Breadcrumb navigation for streaming page
    */
   breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
     { name: 'Streaming' }
   ],
 
