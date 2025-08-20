@@ -12,25 +12,14 @@ import { useProductPageParams } from '../hooks/useProductPageParams';
 import { usePageLoading } from '../hooks/usePageLoading';
 import { useDemoInspector } from '@/contexts/DemoInspectorContext';
 import { useNavigation } from '@/contexts/NavigationContext';
-import type { BaseProduct } from '@/types/commerce';
 import type { PageData } from '../types';
 import type { FilterSection } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 
 // Constants
 const DEFAULT_PRODUCTS_PER_PAGE = 12;
 
-// Helper functions for data normalization
-const normalizeProducts = (items: unknown[]): BaseProduct[] => {
-  return (items || []) as BaseProduct[];
-};
-
-// Note: We don't need to normalize facets - they already have the correct structure
-// The GraphQL response already has { key, title, type, options: [ { id, name, count } ] }
-// which matches what FilterSection expects
-
-function normalizeDataValue<T>(value: T | undefined, fallback: T): T {
-  return value ?? fallback;
-}
+// Note: The mesh already provides data in the correct format.
+// We're just doing type assertions here, not transformations.
 
 interface Props {
   children: ReactNode;
@@ -224,7 +213,7 @@ export function ProductPageProvider({
   
   // Step 4: Manage UI preferences (independent of URL)
   const uiState = useProductList({ 
-    products: normalizeProducts(finalProductData.items) 
+    products: (finalProductData.items || []) as any[] 
   });
   
   // Step 5: Single source of truth for page loading state
@@ -238,22 +227,22 @@ export function ProductPageProvider({
   // Now just provide the data to children
   return (
     <ProductDataContext.Provider value={{
-      products: normalizeProducts(normalizeDataValue(finalProductData.items, [])),
-      loading: normalizeDataValue(finalProductData.loading, false),
+      products: (finalProductData.items || []) as any[],
+      loading: finalProductData.loading ?? false,
       error: finalProductData.error,
-      totalCount: normalizeDataValue(finalProductData.totalCount, 0),
-      hasMore: normalizeDataValue(finalProductData.hasMoreItems, false),
-      facets: (finalFacetsData.facets || []) as FilterSection[],
+      totalCount: finalProductData.totalCount ?? 0,
+      hasMore: finalProductData.hasMoreItems ?? false,
+      facets: (finalFacetsData.facets || []) as FilterSection[],  // Type assertion needed until mesh is deployed
       loadMore: finalProductData.loadMore,
-      filteredProducts: normalizeProducts(normalizeDataValue(uiState.displayProducts, [])),
+      filteredProducts: (uiState.displayProducts || []) as any[],
       isInitialLoading: pageLoading
     }}>
       <ProductFilterContext.Provider value={{
-        searchQuery: normalizeDataValue(urlState.search, ''),
-        sortBy: normalizeDataValue(urlState.formattedSort, 'RELEVANCE'),
-        activeFilters: normalizeDataValue(urlState.activeFilters, {}) as Record<string, string | number | string[] | undefined>,
-        hasActiveFilters: normalizeDataValue(urlState.hasActiveFilters, false),
-        filterCount: normalizeDataValue(urlState.filterCount, 0),
+        searchQuery: urlState.search ?? '',
+        sortBy: urlState.formattedSort ?? 'RELEVANCE',
+        activeFilters: (urlState.activeFilters ?? {}) as Record<string, string | number | string[] | undefined>,
+        hasActiveFilters: urlState.hasActiveFilters ?? false,
+        filterCount: urlState.filterCount ?? 0,
         category,
         setSearchQuery: urlState.updateSearch,
         setSortBy: urlState.updateSort,
@@ -262,10 +251,10 @@ export function ProductPageProvider({
         pageData
       }}>
         <ProductUIContext.Provider value={{
-          viewMode: normalizeDataValue(uiState.viewMode, 'grid'),
+          viewMode: uiState.viewMode ?? 'grid',
           setViewMode: uiState.setViewMode,
-          isTransitioning: normalizeDataValue(uiState.isTransitioning, false),
-          showMobileFilters: normalizeDataValue(uiState.showMobileFilters, false),
+          isTransitioning: uiState.isTransitioning ?? false,
+          showMobileFilters: uiState.showMobileFilters ?? false,
           setShowMobileFilters: uiState.setShowMobileFilters
         }}>
           {children}
