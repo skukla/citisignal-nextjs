@@ -1,7 +1,7 @@
 # Unified category page query - demonstrates Adobe API Mesh value
 # Single query to orchestrate multiple backend services
 query GetCategoryPageData(
-  $category: String
+  $categoryUrlKey: String
   $phrase: String
   $filter: Citisignal_PageFilter
   $sort: Citisignal_SortInput
@@ -9,7 +9,7 @@ query GetCategoryPageData(
   $currentPage: Int
 ) {
   Citisignal_categoryPageData(
-    category: $category
+    categoryUrlKey: $categoryUrlKey
     phrase: $phrase
     filter: $filter
     sort: $sort
@@ -52,16 +52,6 @@ query GetCategoryPageData(
         current_page
         page_size
         total_pages
-      }
-      aggregations {
-        title
-        key
-        type
-        options {
-          id
-          name
-          count
-        }
       }
     }
     facets {

@@ -6,7 +6,7 @@ import { ProductFilterContext } from './ProductFilterContext';
 import { ProductUIContext } from './ProductUIContext';
 import { useProductCards } from '@/hooks/products/useProductCards';
 import { useProductFacets } from '@/hooks/products/useProductFacets';
-import { useProductPageData } from '@/hooks/products/useProductPageData';
+import { useCategoryPageData } from '@/hooks/products/useCategoryPageData';
 import { useProductList } from '../hooks/useProductList';
 import { useProductPageParams } from '../hooks/useProductPageParams';
 import { usePageLoading } from '../hooks/usePageLoading';
@@ -101,7 +101,7 @@ export function ProductPageProvider({
   
   // Step 2: Determine query strategy
   // In single query mode: use unified until user interacts, then switch to individual queries
-  // This demonstrates the hybrid SSR/CSR pattern even in client-side rendering
+  // This improves initial load performance by reducing the number of requests
   const useUnifiedQuery = singleQueryMode && !userHasInteracted;
   
   // Step 2a: Prepare filter for unified query (using frozen initial state)
@@ -114,8 +114,8 @@ export function ProductPageProvider({
   } : undefined;
   
   // Step 2b: Unified query - only for initial load in single query mode
-  const unifiedData = useProductPageData(useUnifiedQuery ? {
-    category,
+  const unifiedData = useCategoryPageData(useUnifiedQuery ? {
+    categoryUrlKey: category,
     phrase: initialUrlStateRef.current.search,
     filter: unifiedFilter,
     sort: initialUrlStateRef.current.sort ? {
@@ -124,13 +124,13 @@ export function ProductPageProvider({
     } : undefined,
     pageSize: limit,
     currentPage: 1
-  } : {});
+  } : null);
   
   // Step 2c: Individual queries - used after user interaction in single query mode, or always in multi-query mode
   const productData = useProductCards(!useUnifiedQuery ? {
     phrase: urlState.search,
     filter: {
-      category,
+      categoryUrlKey: category,
       manufacturer: urlState.manufacturer,
       memory: urlState.memory,
       colors: urlState.colors,
@@ -146,7 +146,7 @@ export function ProductPageProvider({
   const facetsData = useProductFacets(!useUnifiedQuery ? {
     phrase: urlState.search,
     filter: {
-      category,
+      categoryUrlKey: category,
       manufacturer: urlState.manufacturer,
       memory: urlState.memory,
       colors: urlState.colors,
@@ -167,8 +167,7 @@ export function ProductPageProvider({
   } : productData; // Using individual queries
   
   // Extract facets from appropriate source
-  const unifiedFacets = unifiedData.data?.Citisignal_categoryPageData?.facets?.facets || 
-                        unifiedData.data?.Citisignal_categoryPageData?.products?.aggregations;
+  const unifiedFacets = unifiedData.data?.Citisignal_categoryPageData?.facets?.facets;
   
   // Update stored facets when we get new ones (from either source)
   useEffect(() => {

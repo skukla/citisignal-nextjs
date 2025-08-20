@@ -1,5 +1,6 @@
 import useSWR from 'swr';
-import { graphqlFetcher } from '@/lib/graphql-fetcher';
+import { graphqlFetcher, graphqlFetcherWithTracking } from '@/lib/graphql-fetcher';
+import GET_CATEGORY_PAGE_DATA from '@/graphql/queries/GetCategoryPageData.graphql';
 
 interface Citisignal_FilterInput {
   attribute?: string;
@@ -16,106 +17,8 @@ interface Citisignal_SortInput {
   direction?: 'ASC' | 'DESC';
 }
 
-const GET_CATEGORY_PAGE_DATA = `
-  query GetCategoryPageData(
-    $category: String
-    $phrase: String
-    $filter: [Citisignal_FilterInput]
-    $sort: Citisignal_SortInput
-    $pageSize: Int
-    $currentPage: Int
-  ) {
-    Citisignal_categoryPageData(
-      category: $category
-      phrase: $phrase
-      filter: $filter
-      sort: $sort
-      pageSize: $pageSize
-      currentPage: $currentPage
-    ) {
-      navigation {
-        headerNav {
-          href
-          label
-          category
-        }
-        footerNav {
-          href
-          label
-        }
-      }
-      products {
-        items {
-          id
-          sku
-          name
-          urlKey
-          price
-          originalPrice
-          discountPercent
-          inStock
-          image {
-            url
-            altText
-          }
-          memory
-          colors {
-            name
-            hex
-          }
-          manufacturer
-        }
-        totalCount
-        hasMoreItems
-        currentPage
-        page_info {
-          current_page
-          page_size
-          total_pages
-        }
-        facets {
-          title
-          key
-          type
-          options {
-            id
-            name
-            count
-          }
-        }
-      }
-      facets {
-        facets {
-          title
-          key
-          type
-          options {
-            id
-            name
-            count
-          }
-        }
-      }
-      breadcrumbs {
-        items {
-          name
-          urlPath
-        }
-      }
-      categoryInfo {
-        id
-        name
-        urlKey
-        description
-        metaTitle
-        metaDescription
-      }
-    }
-  }
-`;
-
 interface CategoryPageDataVariables {
-  category?: string;
+  categoryUrlKey?: string;
   phrase?: string;
   filter?: Citisignal_FilterInput[];
   sort?: Citisignal_SortInput;
@@ -177,9 +80,9 @@ interface CategoryPageDataResponse {
 }
 
 /**
- * Hook for fetching complete category page data for SSR.
+ * Hook for fetching complete category page data in a single query.
  * 
- * This hook is optimized for server-side rendering where we need all
+ * This hook is optimized for initial page loads where we need all
  * page data in a single query. It orchestrates multiple backend services
  * through Adobe API Mesh to deliver:
  * - Navigation (Commerce Core)
@@ -203,14 +106,14 @@ export function useCategoryPageData(variables: CategoryPageDataVariables | null)
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      dedupingInterval: 60000, // Cache for 1 minute (SSR data is relatively stable)
+      dedupingInterval: 60000, // Cache for 1 minute (initial page data is relatively stable)
     }
   );
 }
 
 /**
- * Server-side data fetching function for Next.js SSR/SSG.
- * Use this in getServerSideProps or getStaticProps.
+ * Direct data fetching function for the unified category page query.
+ * Can be used for direct data fetching when needed.
  * 
  * @param variables Query variables for the category page
  * @returns Promise with category page data
