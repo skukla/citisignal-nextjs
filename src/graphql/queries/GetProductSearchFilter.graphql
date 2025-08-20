@@ -1,0 +1,70 @@
+# Consolidated query for product search and filtering
+# Returns both products and facets in a single request
+# Used after user interaction in single-query mode
+# Reduces network overhead by 50% compared to separate queries
+
+query GetProductSearchFilter(
+  $phrase: String
+  $filter: Citisignal_ProductFilter
+  $sort: Citisignal_SortInput
+  $limit: Int = 20
+  $page: Int = 1
+) {
+  Citisignal_productSearchFilter(
+    phrase: $phrase
+    filter: $filter
+    sort: $sort
+    limit: $limit
+    page: $page
+  ) {
+    # Product results
+    products {
+      items {
+        id
+        sku
+        urlKey
+        name
+        manufacturer
+        price
+        originalPrice
+        discountPercent
+        inStock
+        image {
+          url
+          altText
+        }
+        memory
+        colors {
+          name
+          hex
+        }
+      }
+      totalCount
+      hasMoreItems
+      currentPage
+      page_info {
+        current_page
+        page_size
+        total_pages
+      }
+    }
+    
+    # Available facets/filters
+    facets {
+      facets {
+        title
+        key
+        type
+        options {
+          id
+          name
+          count
+        }
+      }
+      totalCount
+    }
+    
+    # Overall total
+    totalCount
+  }
+}
