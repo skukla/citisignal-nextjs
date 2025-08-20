@@ -232,7 +232,7 @@ export function ProductPageProvider({
       error: finalProductData.error,
       totalCount: finalProductData.totalCount ?? 0,
       hasMore: finalProductData.hasMoreItems ?? false,
-      facets: (finalFacetsData.facets || []) as FilterSection[],  // Type assertion needed until mesh is deployed
+      facets: (finalFacetsData.facets || []) as FilterSection[],
       loadMore: finalProductData.loadMore,
       filteredProducts: (uiState.displayProducts || []) as any[],
       isInitialLoading: pageLoading
