@@ -7,18 +7,22 @@ This document captures key architectural decisions made during the CitiSignal Ne
 ## 1. Compound Component Pattern
 
 ### Decision
+
 Adopt compound components with React Context for all complex multi-component pages.
 
 ### Context
+
 Product pages suffered from 14+ layers of prop drilling, making the code hard to maintain and understand.
 
 ### Alternatives Considered
+
 1. **Redux/Zustand** - Too heavy for page-level state
 2. **Prop drilling** - Current approach, unmaintainable
 3. **Render props** - Less readable than compound components
 4. **HOCs** - Outdated pattern, poor TypeScript support
 
 ### Outcome
+
 - 70% code reduction in product pages
 - 65% code reduction in account pages
 - Zero prop drilling
@@ -27,12 +31,15 @@ Product pages suffered from 14+ layers of prop drilling, making the code hard to
 ## 2. Structural Duplication Over Abstraction
 
 ### Decision
+
 Keep page structure duplicated across similar pages rather than abstracting into a single component.
 
 ### Context
+
 All product pages have identical JSX structure. Traditional DRY principles would suggest creating a single `ProductPageLayout` component.
 
 ### Reasoning
+
 ```tsx
 // We chose this (explicit structure in each page):
 <ProductPage.Background>
@@ -47,6 +54,7 @@ All product pages have identical JSX structure. Traditional DRY principles would
 ```
 
 ### Benefits
+
 - **Debugging** - Everything visible in one file
 - **Flexibility** - Easy to make one page unique
 - **Onboarding** - New developers understand immediately
@@ -55,9 +63,11 @@ All product pages have identical JSX structure. Traditional DRY principles would
 ## 3. Thin Wrapper Components
 
 ### Decision
+
 Create thin wrapper components that connect context to existing UI components.
 
 ### Example
+
 ```tsx
 // Wrapper component
 function ProductPageHeader() {
@@ -67,6 +77,7 @@ function ProductPageHeader() {
 ```
 
 ### Reasoning
+
 - Maintains single responsibility principle
 - Reuses battle-tested UI components
 - Provides consistent compound component API
@@ -75,22 +86,25 @@ function ProductPageHeader() {
 ## 4. Smart Components for Logic
 
 ### Decision
+
 Encapsulate all conditional rendering logic in dedicated "smart" components.
 
 ### Example
+
 ```tsx
 function ProductPageContent() {
   const { loading, error, products } = useProductPage();
-  
+
   if (loading) return <ProductSkeleton />;
   if (error) return <ProductError error={error} />;
   if (!products.length) return <EmptyProducts />;
-  
+
   return <ProductGrid products={products} />;
 }
 ```
 
 ### Benefits
+
 - Parent components stay clean
 - Logic centralized and testable
 - Easy to modify conditions
@@ -99,15 +113,18 @@ function ProductPageContent() {
 ## 5. Context at Page Level
 
 ### Decision
+
 Provide context at the page level, not globally.
 
 ### Reasoning
+
 - Page-specific state doesn't pollute global scope
 - Better performance (no unnecessary re-renders)
 - Clearer data flow
 - Easier testing
 
 ### Implementation
+
 ```tsx
 // Each page has its own provider
 <ProductPageProvider>
@@ -122,14 +139,17 @@ Provide context at the page level, not globally.
 ## 6. Environment Variable Standardization
 
 ### Decision
+
 Use consistent environment variable names across all services.
 
 ### Changes Made
+
 - Renamed `ADOBE_SANDBOX_CATALOG_API_KEY` → `ADOBE_CATALOG_API_KEY`
 - Removed redundant `ADOBE_API_KEY`
 - Aligned commerce-mesh and citisignal-nextjs
 
 ### Benefits
+
 - Reduced confusion
 - Easier deployment
 - Single source of truth
@@ -138,9 +158,11 @@ Use consistent environment variable names across all services.
 ## 7. Component Organization
 
 ### Decision
+
 Separate page-level compound components from reusable UI components.
 
 ### Structure
+
 ```
 components/
 ├── layout/          # Page-level compound components
@@ -153,6 +175,7 @@ components/
 ```
 
 ### Reasoning
+
 - Clear separation of concerns
 - Easy to find components
 - Prevents mixing abstraction levels
@@ -161,9 +184,11 @@ components/
 ## 8. No Auto-Wrapping Components
 
 ### Decision
+
 Components should not wrap themselves in layout containers.
 
 ### Example
+
 ```tsx
 // ❌ Bad - Component decides its container
 function PageHeader() {
@@ -181,6 +206,7 @@ function PageHeader() {
 ```
 
 ### Benefits
+
 - Composability
 - Flexibility
 - Predictability
@@ -189,9 +215,11 @@ function PageHeader() {
 ## 9. TypeScript-First Context
 
 ### Decision
+
 Always provide full TypeScript types for context values.
 
 ### Implementation
+
 ```tsx
 interface ProductPageContextValue {
   products: Product[];
@@ -203,6 +231,7 @@ interface ProductPageContextValue {
 ```
 
 ### Benefits
+
 - Type safety
 - Better IntelliSense
 - Catch errors at compile time
@@ -211,29 +240,80 @@ interface ProductPageContextValue {
 ## 10. Delete Rather Than Deprecate
 
 ### Decision
+
 Remove old components immediately after migration rather than deprecating.
 
 ### Reasoning
+
 - Prevents accidental usage
 - Reduces codebase size
 - Forces complete migration
 - Cleaner git history
 
 ### Process
+
 1. Refactor all usages
 2. Verify functionality
 3. Delete old components
 4. Commit immediately
 
+## 11. Dynamic Facets Over Hard-Coded Filters
+
+### Decision
+
+Use dynamic facet system with JSON scalar type instead of hard-coded filter fields.
+
+### Context
+
+Initial implementation had hard-coded filter fields (manufacturer, memory, color), limiting business flexibility and requiring code changes for new filters.
+
+### Alternatives Considered
+
+1. **Hard-coded fields** - Simple but inflexible
+2. **Code generation** - Complex build process
+3. **Runtime discovery** - Performance overhead
+4. **Dynamic JSON** - Flexible and performant (chosen)
+
+### Implementation
+
+```typescript
+// Frontend: Clean URL keys
+const filters = {
+  facets: {
+    manufacturer: 'Apple',
+    storage: '256GB',
+  },
+};
+
+// Mesh: Handles mapping to Adobe codes
+// cs_manufacturer, cs_memory, etc.
+```
+
+### Benefits
+
+- Business users can add filters without code changes
+- SEO-friendly URLs without technical prefixes
+- Single source of truth (Adobe Commerce)
+- Frontend stays "dumb" - no business logic
+
+### Architecture
+
+- **Build-time injection** - Mappings injected into resolvers during build
+- **Bidirectional mapping** - URL keys ↔ Adobe attribute codes
+- **Configuration-driven** - `config/facet-mappings.json` controls behavior
+- **Zero runtime overhead** - All mapping done at build time
+
 ## Lessons Learned
 
 ### What Worked Well
+
 - Compound components eliminated complexity
-- Structural duplication improved developer experience  
+- Structural duplication improved developer experience
 - Smart components centralized logic effectively
 - Context at page level prevented global pollution
 
 ### What We'd Do Differently
+
 - Start with compound components from day one
 - Document patterns before implementing
 - Create migration checklist upfront
@@ -242,19 +322,23 @@ Remove old components immediately after migration rather than deprecating.
 ## Future Considerations
 
 ### When to Apply These Patterns
+
 ✅ **Use compound components when:**
+
 - Multiple components share state
 - Props are passed through 2+ layers
 - Page has 5+ related components
 - Building forms with multiple steps
 
 ❌ **Avoid when:**
+
 - Component is truly standalone
 - No shared state needed
 - Simple presentation component
 - One-off utility component
 
 ### Migration Priority
+
 1. **High:** Pages with heavy prop drilling
 2. **Medium:** Complex forms and wizards
 3. **Low:** Simple display components
