@@ -14,15 +14,17 @@ interface ProductDataContextValue {
   totalCount: number;
   hasMore: boolean;
   facets: FilterSection[];
-  
+
   // Pagination
   loadMore: () => void;
-  
+
   // Computed
   filteredProducts: BaseProduct[];
-  
+
   // Coordinated loading state
-  isInitialLoading: boolean;  // True when ANY component is still loading on first render
+  isInitialLoading: boolean; // True when ANY component is still loading on first render
+  isPageTransition: boolean; // True during any page-level transitions (search, sort, filter)
+  isValidating?: boolean; // True when revalidating data (even with existing data)
 }
 
 export const ProductDataContext = createContext<ProductDataContextValue | undefined>(undefined);

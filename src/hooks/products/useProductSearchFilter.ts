@@ -30,6 +30,9 @@ export interface ProductSearchFilterResult {
       count: number;
     }>;
   }>;
+
+  // Validation state
+  isValidating?: boolean;
 }
 
 // Sort options that match our GraphQL schema
@@ -96,7 +99,7 @@ export function useProductSearchFilter(
   };
 
   // Fetch pages of data
-  const { data, error, size, setSize, isLoading } = useInfiniteQuery(
+  const { data, error, size, setSize, isLoading, isValidating } = useInfiniteQuery(
     getKey,
     (key) => {
       const [, phrase, filter, sort, limit, page] = key;
@@ -140,5 +143,8 @@ export function useProductSearchFilter(
 
     // Facet data
     facets,
+
+    // Validation state
+    isValidating,
   };
 }

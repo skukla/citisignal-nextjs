@@ -284,7 +284,7 @@ export function ProductPageProvider({
   });
 
   // Step 5: Single source of truth for page loading state
-  const pageLoading = usePageLoading({
+  const pageLoadingState = usePageLoading({
     productsLoading: finalProductData.loading,
     facetsLoading: finalFacetsData.loading,
     searchQuery: urlState.search,
@@ -304,7 +304,13 @@ export function ProductPageProvider({
         facets: (finalFacetsData.facets || []) as FilterSection[],
         loadMore: finalProductData.loadMore,
         filteredProducts: (uiState.displayProducts || []) as BaseProduct[],
-        isInitialLoading: pageLoading,
+        isInitialLoading: pageLoadingState.isInitialLoad,
+        isPageTransition: pageLoadingState.isPageTransition,
+        isValidating: useUnifiedQuery
+          ? unifiedData.isValidating
+          : singleQueryMode
+            ? consolidatedData?.isValidating
+            : facetsData?.isValidating,
       }}
     >
       <ProductFilterContext.Provider
