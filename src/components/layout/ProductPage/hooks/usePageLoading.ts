@@ -24,7 +24,7 @@ export function usePageLoading({
   searchQuery,
   sortBy,
   activeFilters,
-}: PageLoadingState): boolean {
+}: PageLoadingState) {
   const initialLoadComplete = useRef(false);
   const lastSearchQuery = useRef(searchQuery);
   const lastSortBy = useRef(sortBy);
@@ -100,5 +100,8 @@ export function usePageLoading({
   const isSorting = isInSortTransition && (productsLoading || facetsLoading);
   const isFiltering = isInFilterTransition && (productsLoading || facetsLoading);
 
-  return isInitialLoad || isSearching || isSorting || isFiltering;
+  return {
+    isInitialLoad,
+    isPageTransition: isInitialLoad || isSearching || isSorting || isFiltering,
+  };
 }

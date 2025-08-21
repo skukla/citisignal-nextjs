@@ -161,7 +161,7 @@ export function useProductPageParams(): UseProductPageParamsResult {
 
   // Clear all filters
   const clearFilters = useCallback(() => {
-    router.push(pathname);
+    router.push(pathname, { scroll: false });
   }, [router, pathname]);
 
   // Calculate active filter count
