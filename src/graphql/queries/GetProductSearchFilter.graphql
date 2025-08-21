@@ -54,6 +54,7 @@ query GetProductSearchFilter(
       facets {
         title
         key
+        attributeCode
         type
         options {
           id
