@@ -47,9 +47,8 @@ interface UseProductSearchFilterOptions {
     categoryUrlKey?: string;
     manufacturer?: string;
     memory?: string[];
-    colors?: string[];
-    priceMin?: number;
-    priceMax?: number;
+    color?: string[];
+    price?: string[];
     onSaleOnly?: boolean;
   };
   sort?: SortInput;

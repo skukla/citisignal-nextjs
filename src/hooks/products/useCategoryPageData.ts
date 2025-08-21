@@ -5,9 +5,8 @@ import GET_CATEGORY_PAGE_DATA from '@/graphql/queries/GetCategoryPageData.graphq
 interface Citisignal_PageFilter {
   manufacturer?: string;
   memory?: string[];
-  colors?: string[];
-  priceMin?: number;
-  priceMax?: number;
+  color?: string[];
+  price?: string[];
   onSaleOnly?: boolean;
 }
 
@@ -80,7 +79,7 @@ interface CategoryPageDataResponse {
 
 /**
  * Hook for fetching complete category page data in a single query.
- * 
+ *
  * This hook is optimized for initial page loads where we need all
  * page data in a single query. It orchestrates multiple backend services
  * through Adobe API Mesh to deliver:
@@ -89,16 +88,16 @@ interface CategoryPageDataResponse {
  * - Facets (Live Search)
  * - Breadcrumbs (Commerce Core)
  * - Category Info (Commerce Core)
- * 
+ *
  * @param variables Query variables for the category page
  * @returns SWR response with complete category page data
  */
 export function useCategoryPageData(variables: CategoryPageDataVariables | null) {
   const key = variables ? [GET_CATEGORY_PAGE_DATA, variables] : null;
-  
+
   // Use tracking fetcher if Demo Inspector might be enabled
   const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
-  
+
   return useSWR<CategoryPageDataResponse>(
     key,
     key ? ([query, vars]) => fetcher(query, vars) : null,
@@ -113,10 +112,12 @@ export function useCategoryPageData(variables: CategoryPageDataVariables | null)
 /**
  * Direct data fetching function for the unified category page query.
  * Can be used for direct data fetching when needed.
- * 
+ *
  * @param variables Query variables for the category page
  * @returns Promise with category page data
  */
-export async function fetchCategoryPageData(variables: CategoryPageDataVariables): Promise<CategoryPageDataResponse> {
+export async function fetchCategoryPageData(
+  variables: CategoryPageDataVariables
+): Promise<CategoryPageDataResponse> {
   return graphqlFetcher(GET_CATEGORY_PAGE_DATA, variables);
 }

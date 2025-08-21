@@ -4,9 +4,8 @@ import { graphqlFetcher } from '@/lib/graphql-fetcher';
 interface Citisignal_PageFilter {
   manufacturer?: string;
   memory?: string[];
-  colors?: string[];
-  priceMin?: number;
-  priceMax?: number;
+  color?: string[];
+  price?: string[];
   onSaleOnly?: boolean;
 }
 
@@ -159,29 +158,26 @@ interface CategoryPageDataResponse {
 /**
  * Unified hook for fetching all product page data in a single query.
  * Demonstrates the power of Adobe API Mesh by orchestrating multiple backend services.
- * 
+ *
  * This replaces multiple separate queries with ONE unified query that gets:
  * - Navigation (from Commerce Core)
  * - Products (from Live Search + Catalog Service)
  * - Facets (from Live Search)
  * - Breadcrumbs (from Commerce Core)
- * 
+ *
  * @param variables Query variables for filtering, sorting, and pagination
  * @returns SWR response with unified product page data
  */
 export function useProductPageData(variables: ProductPageDataVariables) {
   // Only create key if we have actual variables to query with
-  const key = variables && Object.keys(variables).length > 0 ? [GET_CATEGORY_PAGE_DATA, variables] : null;
-  
-  return useSWR<CategoryPageDataResponse>(
-    key,
-    ([query, vars]) => graphqlFetcher(query, vars),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      dedupingInterval: 5000,
-    }
-  );
+  const key =
+    variables && Object.keys(variables).length > 0 ? [GET_CATEGORY_PAGE_DATA, variables] : null;
+
+  return useSWR<CategoryPageDataResponse>(key, ([query, vars]) => graphqlFetcher(query, vars), {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    dedupingInterval: 5000,
+  });
 }
 
 /**
@@ -190,6 +186,6 @@ export function useProductPageData(variables: ProductPageDataVariables) {
  */
 export function useUnifiedNavigation() {
   return useProductPageData({
-    pageSize: 0  // Optimize - don't fetch products when we only need navigation
+    pageSize: 0, // Optimize - don't fetch products when we only need navigation
   });
 }

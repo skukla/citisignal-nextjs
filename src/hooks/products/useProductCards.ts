@@ -38,14 +38,13 @@ interface UseProductCardsOptions {
     categoryUrlKey?: string;
     manufacturer?: string;
     memory?: string[];
-    colors?: string[];
-    priceMin?: number;
-    priceMax?: number;
+    color?: string[];
+    price?: string[];
     onSaleOnly?: boolean;
   };
   sort?: SortInput;
   limit?: number;
-  facets?: boolean;  // Whether to include facets in response
+  facets?: boolean; // Whether to include facets in response
 }
 
 /**
@@ -53,29 +52,30 @@ interface UseProductCardsOptions {
  * Loads more items when loadMore() is called.
  * Facets are now fetched separately using useProductFacets hook.
  */
-export function useProductCards(
-  options: UseProductCardsOptions | null = {}
-): ProductCardsResult {
+export function useProductCards(options: UseProductCardsOptions | null = {}): ProductCardsResult {
   // Extract options or use defaults
   const { phrase, filter, sort, limit = 12 } = options || {};
-  
+
   // Create a stable key that includes all filter parameters
   // This ensures SWR creates a new cache entry when filters change
-  const getKey = (pageIndex: number, previousPageData: { Citisignal_productCards?: { items?: unknown[] } } | null) => {
+  const getKey = (
+    pageIndex: number,
+    previousPageData: { Citisignal_productCards?: { items?: unknown[] } } | null
+  ) => {
     // If options is null, don't fetch
     if (!options) {
       return null;
     }
-    
+
     // Stop if previous page was empty
     if (previousPageData && !previousPageData.Citisignal_productCards?.items?.length) {
       return null;
     }
-    
+
     // Include all parameters in the key so filter changes create new cache entries
     return ['productCards', phrase, filter, sort, limit, pageIndex + 1];
   };
-  
+
   // Fetches pages of data sequentially, accumulating results.
   const { data, error, size, setSize, isLoading } = useInfiniteQuery(
     getKey,
@@ -87,7 +87,7 @@ export function useProductCards(
   );
 
   // Combine all pages into single array
-  const allItems = data?.flatMap(page => page?.Citisignal_productCards?.items || []) || [];
+  const allItems = data?.flatMap((page) => page?.Citisignal_productCards?.items || []) || [];
   const latestPage = data?.[data.length - 1];
   const hasMoreItems = latestPage?.Citisignal_productCards?.hasMoreItems || false;
   const totalCount = latestPage?.Citisignal_productCards?.totalCount || 0;
@@ -100,6 +100,6 @@ export function useProductCards(
     hasMoreItems,
     loadMore: () => setSize(size + 1),
     totalCount,
-    facets: productFacets
+    facets: productFacets,
   };
 }
