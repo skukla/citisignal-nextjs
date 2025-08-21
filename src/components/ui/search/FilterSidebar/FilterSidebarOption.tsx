@@ -12,14 +12,18 @@ function FilterSidebarOption({
   sectionKey,
   sectionType,
   isSelected,
-  onFilterChange
+  onFilterChange,
 }: FilterSidebarOptionProps) {
-  const handleChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    onFilterChange(sectionKey, option.id, e.target.checked);
-  }, [onFilterChange, sectionKey, option.id]);
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      onFilterChange(sectionKey, option.id, e.target.checked);
+    },
+    [onFilterChange, sectionKey, option.id]
+  );
   return (
     <div className="flex items-center">
       <Checkbox
+        type={sectionType}
         name={sectionType === 'radio' ? sectionKey : undefined}
         checked={isSelected}
         onChange={handleChange}
