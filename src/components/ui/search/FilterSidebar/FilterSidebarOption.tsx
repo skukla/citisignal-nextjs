@@ -20,13 +20,18 @@ function FilterSidebarOption({
     },
     [onFilterChange, sectionKey, option.id]
   );
+  const isDisabled = option.count === 0;
+
   return (
-    <div className="flex items-center">
+    <div
+      className={`flex items-center transition-opacity duration-200 ${isDisabled ? 'opacity-40' : ''}`}
+    >
       <Checkbox
         type={sectionType}
         name={sectionType === 'radio' ? sectionKey : undefined}
         checked={isSelected}
         onChange={handleChange}
+        disabled={isDisabled}
         label={option.name}
         containerClassName="flex-1"
       />

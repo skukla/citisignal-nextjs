@@ -13,13 +13,14 @@ function FilterSidebarSection({
   isExpanded,
   activeFilters,
   onToggleSection,
-  onFilterChange
+  onFilterChange,
+  isValidating,
 }: FilterSidebarSectionProps) {
   const handleToggle = useCallback(() => {
     onToggleSection(section.key);
   }, [onToggleSection, section.key]);
   return (
-    <div className="border-b border-gray-200 pb-6 last:border-b-0">
+    <div className="border-b border-gray-200 pb-6 last:border-b-0 relative transition-all duration-300">
       <button
         onClick={handleToggle}
         className="flex items-center justify-between w-full text-left mb-4"
@@ -33,7 +34,9 @@ function FilterSidebarSection({
       </button>
 
       {isExpanded && (
-        <div className="space-y-3">
+        <div
+          className={`space-y-3 transition-all duration-300 ${isValidating ? 'opacity-50' : ''}`}
+        >
           {section.options.map((option) => (
             <FilterSidebarOption
               key={option.id}
@@ -44,6 +47,12 @@ function FilterSidebarSection({
               onFilterChange={onFilterChange}
             />
           ))}
+        </div>
+      )}
+
+      {isExpanded && isValidating && (
+        <div className="absolute left-0 right-0 top-0 bottom-0 flex items-center justify-center pointer-events-none">
+          <div className="w-5 h-5 border-2 border-purple-600 border-t-transparent rounded-full animate-spin"></div>
         </div>
       )}
     </div>
