@@ -40,6 +40,7 @@ export interface FilterSidebarProps {
   activeFilters: Record<string, string[]>;
   onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
   onClearFilters: () => void;
+  isValidating?: boolean;
 }
 
 /**
@@ -59,6 +60,7 @@ export interface FilterSidebarSectionProps {
   activeFilters: Record<string, string[]>;
   onToggleSection: (key: string) => void;
   onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
+  isValidating?: boolean;
 }
 
 /**

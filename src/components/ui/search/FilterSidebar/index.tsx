@@ -7,11 +7,7 @@
 
 import { useMemo, useCallback, memo } from 'react';
 import { useExpandableSections } from '@/hooks/useExpandableSections';
-import { 
-  hasActiveFilters, 
-  getActiveFilterEntries, 
-  initializeExpandedSections
-} from '@/lib/filter';
+import { hasActiveFilters, getActiveFilterEntries, initializeExpandedSections } from '@/lib/filter';
 import type { FilterSidebarProps } from './FilterSidebar.types';
 import FilterSidebarHeader from './FilterSidebarHeader';
 import FilterSidebarSection from './FilterSidebarSection';
@@ -20,7 +16,7 @@ import FilterSidebarActiveFilters from './FilterSidebarActiveFilters';
 /**
  * FilterSidebar main component with compound architecture
  * Provides a complete filtering interface with expandable sections and active filter management
- * 
+ *
  * @param filters Array of filter sections to display
  * @param activeFilters Current filter selections
  * @param onFilterChange Callback when filter selection changes
@@ -30,7 +26,8 @@ function FilterSidebar({
   filters,
   activeFilters,
   onFilterChange,
-  onClearFilters
+  onClearFilters,
+  isValidating,
 }: FilterSidebarProps) {
   // Initialize expanded sections with business logic
   const initialExpandedSections = useMemo(
@@ -40,19 +37,19 @@ function FilterSidebar({
 
   // Use extracted expandable sections hook
   const { expandedSections, toggleSection } = useExpandableSections({
-    initialSections: initialExpandedSections
+    initialSections: initialExpandedSections,
   });
 
   // Memoize toggle section to prevent unnecessary re-renders
-  const handleToggleSection = useCallback((key: string) => {
-    toggleSection(key);
-  }, [toggleSection]);
+  const handleToggleSection = useCallback(
+    (key: string) => {
+      toggleSection(key);
+    },
+    [toggleSection]
+  );
 
   // Use extracted business logic for active filters
-  const hasFiltersActive = useMemo(
-    () => hasActiveFilters(activeFilters),
-    [activeFilters]
-  );
+  const hasFiltersActive = useMemo(() => hasActiveFilters(activeFilters), [activeFilters]);
 
   // Use extracted business logic for active filter entries
   const activeFilterEntries = useMemo(
@@ -61,11 +58,12 @@ function FilterSidebar({
   );
 
   return (
-    <div className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg p-6" data-inspector-source="search" data-inspector-type="filter-sidebar">
-      <FilterSidebarHeader
-        hasActiveFilters={hasFiltersActive}
-        onClearFilters={onClearFilters}
-      />
+    <div
+      className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg p-6"
+      data-inspector-source="search"
+      data-inspector-type="filter-sidebar"
+    >
+      <FilterSidebarHeader hasActiveFilters={hasFiltersActive} onClearFilters={onClearFilters} />
 
       <div className="space-y-6">
         {filters.map((section) => (
@@ -76,6 +74,7 @@ function FilterSidebar({
             activeFilters={activeFilters}
             onToggleSection={handleToggleSection}
             onFilterChange={onFilterChange}
+            isValidating={isValidating}
           />
         ))}
       </div>
