@@ -28,7 +28,7 @@ function PopularPhonesSection({
   content = popularPhonesContent,
   className,
 }: PopularPhonesSectionProps) {
-  // Fetch popular phones from Adobe Commerce mesh (on sale phones)
+  // Fetch popular phones from Adobe Commerce mesh
   const {
     items: phones,
     loading,
@@ -36,7 +36,8 @@ function PopularPhonesSection({
   } = useProductCards({
     filter: {
       categoryUrlKey: 'phones',
-      onSaleOnly: true, // Popular phones are those on sale
+      // Note: Remove onSaleOnly filter to show any phones if none are on sale
+      // onSaleOnly: true,
     },
     limit: content.phoneCount,
   });
