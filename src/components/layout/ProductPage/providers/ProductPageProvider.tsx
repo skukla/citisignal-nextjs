@@ -84,10 +84,9 @@ export function ProductPageProvider({
     // Check if any filter or sort values changed
     const filtersChanged =
       urlState.manufacturer !== previousUrlStateRef.current.manufacturer ||
-      urlState.memory !== previousUrlStateRef.current.memory ||
-      urlState.colors !== previousUrlStateRef.current.colors ||
-      urlState.priceMin !== previousUrlStateRef.current.priceMin ||
-      urlState.priceMax !== previousUrlStateRef.current.priceMax ||
+      JSON.stringify(urlState.memory) !== JSON.stringify(previousUrlStateRef.current.memory) ||
+      JSON.stringify(urlState.color) !== JSON.stringify(previousUrlStateRef.current.color) ||
+      JSON.stringify(urlState.price) !== JSON.stringify(previousUrlStateRef.current.price) ||
       urlState.search !== previousUrlStateRef.current.search ||
       urlState.formattedSort !== previousUrlStateRef.current.formattedSort;
 
@@ -118,9 +117,8 @@ export function ProductPageProvider({
     ? {
         manufacturer: initialUrlStateRef.current.manufacturer,
         memory: initialUrlStateRef.current.memory,
-        colors: initialUrlStateRef.current.colors,
-        priceMin: initialUrlStateRef.current.priceMin,
-        priceMax: initialUrlStateRef.current.priceMax,
+        color: initialUrlStateRef.current.color,
+        price: initialUrlStateRef.current.price,
       }
     : undefined;
 
@@ -153,9 +151,8 @@ export function ProductPageProvider({
             categoryUrlKey: category,
             manufacturer: urlState.manufacturer,
             memory: urlState.memory,
-            colors: urlState.colors,
-            priceMin: urlState.priceMin,
-            priceMax: urlState.priceMax,
+            color: urlState.color,
+            price: urlState.price,
           },
           sort: urlState.sort,
           limit,
@@ -172,9 +169,8 @@ export function ProductPageProvider({
             categoryUrlKey: category,
             manufacturer: urlState.manufacturer,
             memory: urlState.memory,
-            colors: urlState.colors,
-            priceMin: urlState.priceMin,
-            priceMax: urlState.priceMax,
+            color: urlState.color,
+            price: urlState.price,
           },
           sort: urlState.sort,
           limit,
@@ -192,9 +188,8 @@ export function ProductPageProvider({
             categoryUrlKey: category,
             manufacturer: urlState.manufacturer,
             memory: urlState.memory,
-            colors: urlState.colors,
-            priceMin: urlState.priceMin,
-            priceMax: urlState.priceMax,
+            color: urlState.color,
+            price: urlState.price,
           },
         }
       : null
@@ -294,6 +289,7 @@ export function ProductPageProvider({
     facetsLoading: finalFacetsData.loading,
     searchQuery: urlState.search,
     sortBy: urlState.formattedSort,
+    activeFilters: urlState.activeFilters,
   });
 
   // Now just provide the data to children
