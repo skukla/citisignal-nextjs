@@ -41,6 +41,9 @@ interface ProductPageParams {
   // Search and filtering
   search?: string;
   category?: string;
+  facets?: Record<string, string | string[]>; // Dynamic facets object
+
+  // Legacy filter fields (for backwards compatibility)
   manufacturer?: string;
   memory?: string[];
   color?: string[];
@@ -81,10 +84,23 @@ export function useProductPageParams(): UseProductPageParamsResult {
   const params = useMemo((): ProductPageParams => {
     const search = searchParams.get('search') || undefined;
     const category = searchParams.get('category') || undefined;
-    const manufacturer = searchParams.get('manufacturer') || undefined;
     const page = searchParams.get('page') ? parseInt(searchParams.get('page')!, 10) : undefined;
 
-    // Parse array parameters
+    // Parse dynamic facets from URL
+    const facets: Record<string, string | string[]> = {};
+
+    // Parse all URL params that aren't reserved keys
+    const reservedKeys = ['search', 'category', 'page', 'sort'];
+    searchParams.forEach((value, key) => {
+      if (!reservedKeys.includes(key)) {
+        // Handle comma-separated values as arrays
+        const values = value.split(',').filter(Boolean);
+        facets[key] = values.length === 1 ? values[0] : values;
+      }
+    });
+
+    // Legacy: Also extract specific filter fields for backwards compatibility
+    const manufacturer = searchParams.get('manufacturer') || undefined;
     const memory = searchParams.get('memory')?.split(',').filter(Boolean) || undefined;
     const color = searchParams.get('color')?.split(',').filter(Boolean) || undefined;
     const price = searchParams.get('price')?.split(',').filter(Boolean) || undefined;
@@ -96,6 +112,7 @@ export function useProductPageParams(): UseProductPageParamsResult {
     return {
       search,
       category,
+      facets: Object.keys(facets).length > 0 ? facets : undefined,
       manufacturer,
       memory,
       color,
@@ -168,19 +185,38 @@ export function useProductPageParams(): UseProductPageParamsResult {
   const filterCount = useMemo(() => {
     let count = 0;
     if (params.search) count++;
-    if (params.manufacturer) count++;
-    if (params.memory?.length) count++;
-    if (params.color?.length) count++;
-    if (params.price?.length) count++;
+
+    // Count dynamic facets
+    if (params.facets) {
+      count += Object.keys(params.facets).length;
+    } else {
+      // Legacy fallback
+      if (params.manufacturer) count++;
+      if (params.memory?.length) count++;
+      if (params.color?.length) count++;
+      if (params.price?.length) count++;
+    }
+
     return count;
   }, [params]);
 
   // Build active filters for display
   const activeFilters = useMemo(() => {
+    // Use dynamic facets if available, otherwise fall back to legacy fields
+    if (params.facets) {
+      // Convert all facet values to arrays for consistency
+      const filters: Record<string, string | string[] | number | boolean> = {};
+      Object.entries(params.facets).forEach(([key, value]) => {
+        filters[key] = Array.isArray(value) ? value : [value];
+      });
+      return filters;
+    }
+
+    // Legacy fallback
     const filters: Record<string, string | string[] | number | boolean> = {};
-    if (params.manufacturer) filters.manufacturer = [params.manufacturer];
-    if (params.memory?.length) filters.memory = params.memory;
-    if (params.color?.length) filters.color = params.color;
+    if (params.manufacturer) filters.cs_manufacturer = [params.manufacturer];
+    if (params.memory?.length) filters.cs_memory = params.memory;
+    if (params.color?.length) filters.cs_color = params.color;
     if (params.price?.length) filters.price = params.price;
     return filters;
   }, [params]);
@@ -192,21 +228,65 @@ export function useProductPageParams(): UseProductPageParamsResult {
     return `${params.sort.attribute}_${params.sort.direction}`;
   }, [params.sort]);
 
-  // Simplified filter update that handles all types
+  // Simplified filter update that handles all types dynamically
   const updateFilter = useCallback(
     (filterKey: string, value: string | string[] | number | boolean, checked?: boolean) => {
-      if (filterKey === 'manufacturer') {
-        updateParams({ manufacturer: checked ? String(value) : undefined });
-      } else if (filterKey === 'memory' || filterKey === 'color' || filterKey === 'price') {
-        const currentValues = params[filterKey as keyof typeof params] as string[] | undefined;
-        const stringValue = String(value);
-        const newValues = checked
-          ? [...(currentValues || []), stringValue]
-          : (currentValues || []).filter((v) => v !== stringValue);
-        updateParams({ [filterKey]: newValues.length > 0 ? newValues : undefined });
+      // Get current facets or initialize empty object
+      const currentFacets = params.facets || {};
+      const currentValues = currentFacets[filterKey];
+
+      // Convert current value to array for consistent handling
+      const currentArray = currentValues
+        ? Array.isArray(currentValues)
+          ? currentValues
+          : [currentValues]
+        : [];
+
+      const stringValue = String(value);
+
+      // Update the value based on checked state
+      let newValues: string | string[] | undefined;
+      if (checked) {
+        // Add value
+        newValues = [...currentArray, stringValue];
+      } else {
+        // Remove value
+        const filteredValues = currentArray.filter((v) => v !== stringValue);
+        newValues = filteredValues.length > 0 ? filteredValues : undefined;
       }
+
+      // Update all facets in URL at once
+      const updatedFacets = { ...currentFacets };
+      if (newValues) {
+        updatedFacets[filterKey] = newValues;
+      } else {
+        delete updatedFacets[filterKey];
+      }
+
+      // Clear all existing filter params and set new ones
+      const newParams = new URLSearchParams(searchParams.toString());
+
+      // Remove all dynamic filter params
+      const reservedKeys = ['search', 'category', 'page', 'sort'];
+      Array.from(newParams.keys()).forEach((key) => {
+        if (!reservedKeys.includes(key)) {
+          newParams.delete(key);
+        }
+      });
+
+      // Add updated facets back
+      Object.entries(updatedFacets).forEach(([key, val]) => {
+        if (val) {
+          newParams.set(key, Array.isArray(val) ? val.join(',') : val);
+        }
+      });
+
+      // Reset to page 1 when filters change
+      newParams.delete('page');
+
+      router.push(`${pathname}?${newParams.toString()}`, { scroll: false });
     },
-    [params, updateParams]
+    [params, searchParams, router, pathname]
   );
 
   return {

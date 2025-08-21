@@ -5,6 +5,7 @@ import GET_PRODUCT_FACETS from '@/graphql/queries/GetProductFacets.graphql';
 export interface Facet {
   title: string;
   key: string;
+  attributeCode: string; // Original Adobe attribute code for filtering
   type: string;
   options: Array<{
     id: string;

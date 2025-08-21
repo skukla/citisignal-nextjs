@@ -83,6 +83,7 @@ export function ProductPageProvider({
 
     // Check if any filter or sort values changed
     const filtersChanged =
+      JSON.stringify(urlState.facets) !== JSON.stringify(previousUrlStateRef.current.facets) ||
       urlState.manufacturer !== previousUrlStateRef.current.manufacturer ||
       JSON.stringify(urlState.memory) !== JSON.stringify(previousUrlStateRef.current.memory) ||
       JSON.stringify(urlState.color) !== JSON.stringify(previousUrlStateRef.current.color) ||
@@ -115,6 +116,9 @@ export function ProductPageProvider({
   // Step 2a: Prepare filter for unified query (using frozen initial state)
   const unifiedFilter = useUnifiedQuery
     ? {
+        // Use dynamic facets if available
+        facets: initialUrlStateRef.current.facets,
+        // Legacy fields for backwards compatibility
         manufacturer: initialUrlStateRef.current.manufacturer,
         memory: initialUrlStateRef.current.memory,
         color: initialUrlStateRef.current.color,
@@ -149,6 +153,9 @@ export function ProductPageProvider({
           phrase: urlState.search,
           filter: {
             categoryUrlKey: category,
+            // Use dynamic facets if available
+            facets: urlState.facets,
+            // Legacy fields for backwards compatibility
             manufacturer: urlState.manufacturer,
             memory: urlState.memory,
             color: urlState.color,
@@ -167,6 +174,9 @@ export function ProductPageProvider({
           phrase: urlState.search,
           filter: {
             categoryUrlKey: category,
+            // Use dynamic facets if available
+            facets: urlState.facets,
+            // Legacy fields for backwards compatibility
             manufacturer: urlState.manufacturer,
             memory: urlState.memory,
             color: urlState.color,
@@ -186,6 +196,9 @@ export function ProductPageProvider({
           phrase: urlState.search,
           filter: {
             categoryUrlKey: category,
+            // Use dynamic facets if available
+            facets: urlState.facets,
+            // Legacy fields for backwards compatibility
             manufacturer: urlState.manufacturer,
             memory: urlState.memory,
             color: urlState.color,

@@ -19,6 +19,7 @@ export interface FilterOption {
 export interface FilterSection {
   title: string;
   key: string;
+  attributeCode?: string; // Original Adobe attribute code for filtering
   options: FilterOption[];
   type: 'checkbox' | 'radio';
 }
