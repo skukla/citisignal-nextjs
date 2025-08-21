@@ -18,7 +18,7 @@ export interface PopularPhonesSectionProps {
 
 /**
  * PopularPhonesSection displays the most popular phones from Adobe Commerce.
- * 
+ *
  * @example
  * ```tsx
  * <PopularPhonesSection className="my-8" />
@@ -26,21 +26,21 @@ export interface PopularPhonesSectionProps {
  */
 function PopularPhonesSection({
   content = popularPhonesContent,
-  className
+  className,
 }: PopularPhonesSectionProps) {
   // Fetch popular phones from Adobe Commerce mesh (on sale phones)
-  const { 
-    items: phones, 
-    loading, 
-    error 
+  const {
+    items: phones,
+    loading,
+    error,
   } = useProductCards({
-    filter: { 
-      category: 'phones',
-      onSaleOnly: true  // Popular phones are those on sale
+    filter: {
+      categoryUrlKey: 'phones',
+      onSaleOnly: true, // Popular phones are those on sale
     },
-    limit: content.phoneCount
+    limit: content.phoneCount,
   });
-  
+
   // Show loading skeleton while fetching
   if (loading && phones.length === 0) {
     return (
@@ -79,19 +79,11 @@ function PopularPhonesSection({
       />
 
       {/* Phones Grid */}
-      <ProductGrid 
-        products={phones as Phone[]}
-        columns={{ sm: 1, md: 2, lg: 4 }}
-        gap="lg"
-      />
+      <ProductGrid products={phones as Phone[]} columns={{ sm: 1, md: 2, lg: 4 }} gap="lg" />
 
       {/* View All Button */}
       <div className="text-center mt-12">
-        <Button
-          href={content.viewAllLink.href}
-          variant="secondary"
-          rightIcon={ArrowRightIcon}
-        >
+        <Button href={content.viewAllLink.href} variant="secondary" rightIcon={ArrowRightIcon}>
           {content.viewAllLink.text}
         </Button>
       </div>
@@ -99,4 +91,4 @@ function PopularPhonesSection({
   );
 }
 
-export default memo(PopularPhonesSection); 
+export default memo(PopularPhonesSection);
