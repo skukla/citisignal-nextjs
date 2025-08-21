@@ -23,24 +23,38 @@ export default function FilterSidebarSkeleton({
     <>
       {/* Desktop skeleton */}
       <div className="hidden lg:block w-72 space-y-6 animate-pulse">
-        {/* Header skeleton */}
+        {/* Header skeleton with shimmer */}
         <div className="space-y-2">
-          <div className="h-6 bg-gray-200 rounded w-20"></div>
-          <div className="h-4 bg-gray-200 rounded w-32"></div>
+          <div className="h-6 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded w-20 bg-[length:200%_100%] animate-shimmer"></div>
+          <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded w-32 bg-[length:200%_100%] animate-shimmer"></div>
         </div>
 
-        {/* Filter sections skeleton */}
-        {skeletonSections.map((section) => (
-          <div key={section.key} className="space-y-3">
-            <div className="h-5 bg-gray-200 rounded w-24"></div>
+        {/* Filter sections skeleton with shimmer */}
+        {skeletonSections.map((section, sectionIndex) => (
+          <div
+            key={section.key}
+            className="space-y-3"
+            style={{
+              animationDelay: `${sectionIndex * 100}ms`,
+              animationFillMode: 'both',
+            }}
+          >
+            <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded w-24 bg-[length:200%_100%] animate-shimmer"></div>
             {/* Only show options if section is expanded or no expansion state provided */}
             {(!expandedSections || expandedSections[section.key] !== false) && (
               <div className="space-y-2">
                 {Array.from({ length: section.optionCount }, (_, i) => i).map((optionIndex) => (
-                  <div key={optionIndex} className="flex items-center space-x-2">
-                    <div className="h-4 w-4 bg-gray-200 rounded"></div>
-                    <div className="h-4 bg-gray-200 rounded w-20"></div>
-                    <div className="ml-auto h-4 bg-gray-200 rounded w-8"></div>
+                  <div
+                    key={optionIndex}
+                    className="flex items-center space-x-2"
+                    style={{
+                      animationDelay: `${sectionIndex * 100 + optionIndex * 50}ms`,
+                      animationFillMode: 'both',
+                    }}
+                  >
+                    <div className="h-4 w-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded bg-[length:200%_100%] animate-shimmer"></div>
+                    <div className="h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded w-20 bg-[length:200%_100%] animate-shimmer"></div>
+                    <div className="ml-auto h-4 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded w-8 bg-[length:200%_100%] animate-shimmer"></div>
                   </div>
                 ))}
               </div>
