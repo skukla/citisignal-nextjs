@@ -7,6 +7,7 @@ Our SSR implementation provides server-side rendering for product pages, signifi
 ## Architecture
 
 ### Component Structure
+
 ```
 src/
 ├── app/(products)/
@@ -34,8 +35,8 @@ import { ProductPageSSRWrapper } from '@/components/layout/ProductPage/ProductPa
 export default async function PhonesPageSSR() {
   // Fetch data on the server
   const initialData = await fetchCategoryPageData({
-    category: 'phones',
-    pageSize: 20
+    categoryUrlKey: 'phones',
+    pageSize: 20,
   });
 
   // Pass pre-fetched data to client components
@@ -45,7 +46,7 @@ export default async function PhonesPageSSR() {
       initialData={initialData}
       pageData={{
         title: 'Phones',
-        description: 'Browse our selection of phones'
+        description: 'Browse our selection of phones',
       }}
     >
       <ProductPageContent />
@@ -58,11 +59,7 @@ export default async function PhonesPageSSR() {
 
 ```tsx
 // ProductPageSSRWrapper.tsx
-export function ProductPageSSRWrapper({
-  category,
-  initialData,
-  children
-}: Props) {
+export function ProductPageSSRWrapper({ category, initialData, children }: Props) {
   return (
     <ProductPageProviderSSR
       category={category}
@@ -88,69 +85,58 @@ export function useCategoryPageData(options: Options) {
     () => fetchCategoryPageData(options),
     {
       fallbackData: options.initialData, // Use SSR data if available
-      revalidateOnMount: !options.initialData
+      revalidateOnMount: !options.initialData,
     }
   );
-  
+
   return { data, loading: !data && !error, error };
 }
 
 // Server-side fetch function
-export async function fetchCategoryPageData(options: Options) {
-  const response = await fetch(GRAPHQL_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({
-      query: GetCategoryPageDataQuery,
-      variables: options
-    }),
-    next: { 
-      revalidate: 60, // Cache for 60 seconds
-      tags: [`category-${options.category}`] 
-    }
-  });
-  
-  return response.json();
+export async function fetchCategoryPageData(
+  variables: CategoryPageDataVariables
+): Promise<CategoryPageDataResponse> {
+  return graphqlFetcher(GET_CATEGORY_PAGE_DATA, variables);
 }
 ```
 
 ## Data Flow
 
 ### 1. Initial Server Render
-```mermaid
-sequenceDiagram
-    Browser->>Next.js: Request /phones
-    Next.js->>API Mesh: Fetch category data
-    API Mesh->>Catalog Service: Get products
-    API Mesh->>Commerce Core: Get navigation
-    API Mesh-->>Next.js: Combined data
-    Next.js->>Next.js: Render HTML with data
-    Next.js-->>Browser: HTML + Embedded JSON
+
+```
+Browser → Next.js: Request /phones
+Next.js → API Mesh: Fetch category data
+API Mesh → Catalog Service: Get products
+API Mesh → Commerce Core: Get navigation
+API Mesh → Next.js: Combined data
+Next.js → Next.js: Render HTML with data
+Next.js → Browser: HTML + Embedded JSON
 ```
 
 ### 2. Client Hydration
-```mermaid
-sequenceDiagram
-    Browser->>React: Hydrate with embedded data
-    React->>Context: Initialize with SSR data
-    React->>Browser: Interactive page
-    User->>React: Apply filter
-    React->>API Mesh: Fetch filtered data
-    API Mesh-->>React: Updated products
-    React->>Browser: Update UI
+
+```
+Browser → React: Hydrate with embedded data
+React → Context: Initialize with SSR data
+React → Browser: Interactive page
+User → React: Apply filter
+React → API Mesh: Fetch filtered data
+API Mesh → React: Updated products
+React → Browser: Update UI
 ```
 
 ## Performance Benefits
 
 ### Metrics Comparison
 
-| Metric | CSR | SSR | Improvement |
-|--------|-----|-----|-------------|
-| First Contentful Paint | 2.1s | 0.8s | 62% faster |
-| Largest Contentful Paint | 3.2s | 1.4s | 56% faster |
-| Time to Interactive | 3.5s | 2.1s | 40% faster |
-| SEO Score | 72 | 98 | +26 points |
-| Core Web Vitals | Needs Improvement | Good | ✅ |
+| Metric                   | CSR               | SSR  | Improvement |
+| ------------------------ | ----------------- | ---- | ----------- |
+| First Contentful Paint   | 2.1s              | 0.8s | 62% faster  |
+| Largest Contentful Paint | 3.2s              | 1.4s | 56% faster  |
+| Time to Interactive      | 3.5s              | 2.1s | 40% faster  |
+| SEO Score                | 72                | 98   | +26 points  |
+| Core Web Vitals          | Needs Improvement | Good | ✅          |
 
 ### SEO Advantages
 
@@ -172,8 +158,8 @@ export const dynamicParams = true; // Allow dynamic segments
 fetch(url, {
   next: {
     revalidate: 3600,
-    tags: ['products', `category-${category}`]
-  }
+    tags: ['products', `category-${category}`],
+  },
 });
 ```
 
@@ -192,13 +178,14 @@ fetch(url, {
 ## Handling Dynamic Content
 
 ### User-Specific Data
+
 Keep user-specific data client-side:
 
 ```tsx
 export default async function ProductPage() {
   // Server: Fetch public data
   const products = await fetchProducts();
-  
+
   return (
     <ProductLayout products={products}>
       {/* Client: Fetch user data */}
@@ -212,13 +199,14 @@ export default async function ProductPage() {
 ```
 
 ### Real-Time Updates
+
 Use client-side fetching for real-time data:
 
 ```tsx
 function StockStatus({ sku, initialStock }) {
   // Start with SSR data
   const [stock, setStock] = useState(initialStock);
-  
+
   // Update with real-time data
   useEffect(() => {
     const ws = new WebSocket('/stock-updates');
@@ -228,7 +216,7 @@ function StockStatus({ sku, initialStock }) {
     };
     return () => ws.close();
   }, [sku]);
-  
+
   return <div>In Stock: {stock}</div>;
 }
 ```
@@ -239,13 +227,7 @@ function StockStatus({ sku, initialStock }) {
 
 ```tsx
 // app/(products)/phones/error.tsx
-export default function ErrorPage({
-  error,
-  reset
-}: {
-  error: Error;
-  reset: () => void;
-}) {
+export default function ErrorPage({ error, reset }: { error: Error; reset: () => void }) {
   return (
     <div>
       <h2>Something went wrong!</h2>
@@ -260,7 +242,7 @@ export default function ErrorPage({
 ```tsx
 export default async function ProductPage() {
   let products = [];
-  
+
   try {
     products = await fetchProducts();
   } catch (error) {
@@ -269,7 +251,7 @@ export default async function ProductPage() {
     // Fall back to client-side loading
     return <ClientSideProductPage />;
   }
-  
+
   return <ProductLayout products={products} />;
 }
 ```
@@ -279,6 +261,7 @@ export default async function ProductPage() {
 ### Converting CSR to SSR
 
 #### Step 1: Create Server Component
+
 ```tsx
 // From: app/(products)/phones/page.tsx (Client)
 'use client';
@@ -296,6 +279,7 @@ export default async function PhonesPage() {
 ```
 
 #### Step 2: Handle Interactivity
+
 ```tsx
 // Split into server and client components
 // Server: app/(products)/phones/page.tsx
@@ -305,7 +289,7 @@ export default async function PhonesPage() {
 }
 
 // Client: components/ProductPageShell.tsx
-'use client';
+('use client');
 export function ProductPageShell({ products }) {
   const [filtered, setFiltered] = useState(products);
   // Handle client-side filtering
@@ -316,7 +300,9 @@ export function ProductPageShell({ products }) {
 ## Best Practices
 
 ### 1. Minimize Client Components
+
 Only use 'use client' when necessary:
+
 ```tsx
 // ✅ Server component (default)
 export default async function ProductCard({ id }) {
@@ -325,24 +311,28 @@ export default async function ProductCard({ id }) {
 }
 
 // ✅ Client component (only for interactivity)
-'use client';
+('use client');
 export function AddToCartButton({ productId }) {
-  const handleClick = () => { /* ... */ };
+  const handleClick = () => {
+    /* ... */
+  };
   return <button onClick={handleClick}>Add to Cart</button>;
 }
 ```
 
 ### 2. Optimize Data Fetching
+
 Parallelize requests when possible:
+
 ```tsx
 export default async function ProductPage({ params }) {
   // Parallel fetching
   const [product, reviews, related] = await Promise.all([
     fetchProduct(params.id),
     fetchReviews(params.id),
-    fetchRelatedProducts(params.id)
+    fetchRelatedProducts(params.id),
   ]);
-  
+
   return (
     <Layout>
       <ProductDetails product={product} />
@@ -354,7 +344,9 @@ export default async function ProductPage({ params }) {
 ```
 
 ### 3. Implement Loading States
+
 Use Suspense for better UX:
+
 ```tsx
 import { Suspense } from 'react';
 
@@ -370,6 +362,7 @@ export default function ProductPage() {
 ## Testing SSR
 
 ### Unit Tests
+
 ```typescript
 // __tests__/ProductPageSSR.test.tsx
 import { render } from '@testing-library/react';
@@ -378,8 +371,8 @@ import ProductPageSSR from '@/app/(products)/phones/page-ssr';
 jest.mock('@/hooks/products/useCategoryPageData', () => ({
   fetchCategoryPageData: jest.fn().mockResolvedValue({
     products: mockProducts,
-    facets: mockFacets
-  })
+    facets: mockFacets,
+  }),
 }));
 
 test('renders with SSR data', async () => {
@@ -390,13 +383,14 @@ test('renders with SSR data', async () => {
 ```
 
 ### E2E Tests
+
 ```typescript
 // e2e/ssr.spec.ts
 test('SSR provides immediate content', async ({ page }) => {
   // Disable JavaScript to test SSR
   await page.setJavaScriptEnabled(false);
   await page.goto('/phones');
-  
+
   // Content should be visible without JS
   await expect(page.locator('h1')).toContainText('Phones');
   await expect(page.locator('.product-card')).toHaveCount(20);
@@ -406,26 +400,27 @@ test('SSR provides immediate content', async ({ page }) => {
 ## Monitoring
 
 ### Performance Tracking
+
 ```typescript
 // Track SSR performance
 export async function fetchWithMetrics(query, variables) {
   const start = performance.now();
-  
+
   try {
     const data = await fetch(ENDPOINT, {
       method: 'POST',
-      body: JSON.stringify({ query, variables })
+      body: JSON.stringify({ query, variables }),
     });
-    
+
     const duration = performance.now() - start;
-    
+
     // Log to monitoring service
     analytics.track('ssr_fetch', {
       query: query.name,
       duration,
-      cacheHit: data.headers.get('x-cache') === 'HIT'
+      cacheHit: data.headers.get('x-cache') === 'HIT',
     });
-    
+
     return data.json();
   } catch (error) {
     analytics.track('ssr_error', { error: error.message });

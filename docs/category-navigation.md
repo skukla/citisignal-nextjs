@@ -7,6 +7,7 @@ Category navigation and breadcrumbs are fetched from Commerce Core GraphQL API t
 ## Architecture
 
 ### Service Selection
+
 - **Commerce Core GraphQL**: Primary source for category data
   - Has complete category hierarchy with parent-child relationships
   - Provides breadcrumb trail information
@@ -16,28 +17,23 @@ Category navigation and breadcrumbs are fetched from Commerce Core GraphQL API t
 
 ### Custom Types
 
-All custom types are namespaced with `Citisignal_` prefix:
+The API returns simplified navigation structures:
 
 ```graphql
-type Citisignal_CategoryItem {
-  id: String!
-  name: String!
-  urlPath: String!
-  urlKey: String!
-  level: Int!
-  position: Int!
-  includeInMenu: Boolean!
-  isActive: Boolean!
-  children: [Citisignal_CategoryItem]
-  productCount: Int
-  parentId: String
+type NavItem {
+  href: String!
+  label: String!
+  category: String # Optional category identifier for product pages
 }
 
-type Citisignal_BreadcrumbItem {
-  categoryId: String
-  name: String!
-  urlPath: String!
-  level: Int!
+type FooterNavItem {
+  href: String!
+  label: String!
+}
+
+type CategoryNavigationResult {
+  headerNav: [NavItem]!
+  footerNav: [FooterNavItem]!
 }
 ```
 
@@ -46,45 +42,43 @@ type Citisignal_BreadcrumbItem {
 ### API Mesh Resolvers
 
 **category-navigation.js**:
-- Fetches top-level categories from Commerce Core
-- Transforms to consistent `Citisignal_CategoryItem` structure
-- Filters by `includeInMenu` and `isActive` flags
-- Recursively includes child categories
+
+- Returns pre-configured navigation items for header and footer
+- Provides simplified structure optimized for frontend consumption
+- Header navigation includes category identifiers for product pages
+- Footer navigation contains static links for company information
 
 **category-breadcrumbs.js**:
+
 - Fetches category by URL key
 - Builds complete breadcrumb trail
-- Always includes Home → Shop → [Categories]
 - Returns array of breadcrumb items with hierarchy levels
 
 ### GraphQL Queries
 
 **GetCategoryNavigation.graphql**:
+
 ```graphql
 query GetCategoryNavigation($rootCategoryId: String, $includeInactive: Boolean = false) {
   Citisignal_categoryNavigation(
     rootCategoryId: $rootCategoryId
     includeInactive: $includeInactive
   ) {
-    items {
-      id
-      name
-      urlPath
-      urlKey
-      level
-      position
-      includeInMenu
-      isActive
-      productCount
-      children {
-        # Nested structure up to 3 levels
-      }
+    headerNav {
+      href
+      label
+      category
+    }
+    footerNav {
+      href
+      label
     }
   }
 }
 ```
 
 **GetCategoryBreadcrumbs.graphql**:
+
 ```graphql
 query GetCategoryBreadcrumbs($categoryUrlKey: String!) {
   Citisignal_categoryBreadcrumbs(categoryUrlKey: $categoryUrlKey) {
@@ -101,21 +95,34 @@ query GetCategoryBreadcrumbs($categoryUrlKey: String!) {
 ### React Hooks
 
 **useCategoryNavigation**:
+
 ```typescript
+interface UseCategoryNavigationOptions {
+  rootCategoryId?: string;
+  includeInactive?: boolean;
+  enabled?: boolean; // Whether to fetch data
+}
+
 const { data, error, loading } = useCategoryNavigation({
   rootCategoryId: '2', // Optional, defaults to root
-  includeInactive: false // Optional, filter inactive categories
+  includeInactive: false, // Optional, filter inactive categories
+  enabled: true, // Optional, control when to fetch
 });
+
+// Returns:
+// data: { headerNav: NavItem[], footerNav: FooterNavItem[] } | null
 ```
 
 **useCategoryBreadcrumbs**:
+
 ```typescript
 const { data, error, loading } = useCategoryBreadcrumbs({
-  categoryUrlKey: 'electronics'
+  categoryUrlKey: 'electronics',
 });
 ```
 
 Both hooks use SWR with:
+
 - 1-hour cache duration (categories change rarely)
 - No revalidation on focus
 - Previous data kept while revalidating
@@ -123,38 +130,50 @@ Both hooks use SWR with:
 ## Usage Examples
 
 ### Navigation Menu
+
 ```tsx
-import { useCategoryNavigation } from '@/hooks/navigation';
+import { useCategoryNavigation } from '@/hooks/navigation/useCategoryNavigation';
 
 function NavigationMenu() {
   const { data, loading } = useCategoryNavigation();
-  
+
   if (loading) return <NavigationSkeleton />;
-  
+  if (!data) return null;
+
   return (
     <nav>
-      {data.items.map(category => (
-        <NavItem key={category.id} href={category.urlPath}>
-          {category.name}
-          {category.children && (
-            <SubMenu items={category.children} />
-          )}
-        </NavItem>
-      ))}
+      {/* Header Navigation */}
+      <div className="header-nav">
+        {data.headerNav.map((item, index) => (
+          <NavItem key={index} href={item.href}>
+            {item.label}
+          </NavItem>
+        ))}
+      </div>
+
+      {/* Footer Navigation */}
+      <div className="footer-nav">
+        {data.footerNav.map((item, index) => (
+          <FooterItem key={index} href={item.href}>
+            {item.label}
+          </FooterItem>
+        ))}
+      </div>
     </nav>
   );
 }
 ```
 
 ### Breadcrumb Trail
+
 ```tsx
 import { useCategoryBreadcrumbs } from '@/hooks/navigation';
 
 function Breadcrumbs({ categoryUrlKey }) {
   const { data, loading } = useCategoryBreadcrumbs({ categoryUrlKey });
-  
+
   if (loading) return <BreadcrumbSkeleton />;
-  
+
   return (
     <nav aria-label="Breadcrumb">
       <ol className="flex space-x-2">
@@ -193,10 +212,12 @@ function Breadcrumbs({ categoryUrlKey }) {
 ## Error Handling
 
 Resolvers return safe defaults on error:
+
 - **Navigation**: Empty items array
 - **Breadcrumbs**: Home-only breadcrumb trail
 
 Frontend hooks handle errors gracefully:
+
 - Return empty data structure
 - Allow components to show error states
 - Log errors for debugging
@@ -204,48 +225,50 @@ Frontend hooks handle errors gracefully:
 ## Testing
 
 ### Test Resolver Directly
+
 ```bash
 curl -X POST [mesh-endpoint] \
   -H "Content-Type: application/json" \
   -H "x-api-key: [api-key]" \
   -d '{
-    "query": "{ 
-      Citisignal_categoryNavigation { 
-        items { 
-          name 
-          urlPath 
-          children { name } 
-        } 
-      } 
+    "query": "{
+      Citisignal_categoryNavigation {
+        items {
+          name
+          urlPath
+          children { name }
+        }
+      }
     }"
   }'
 ```
 
 ### Verify Commerce Core Data
+
 ```bash
 # Check what Commerce Core returns
 curl -X POST [commerce-endpoint] \
   -H "Content-Type: application/json" \
   -H "Store: default" \
   -d '{
-    "query": "{ 
-      categoryList { 
-        items { 
-          name 
-          url_key 
-          breadcrumbs { 
-            category_name 
-          } 
-        } 
-      } 
+    "query": "{
+      categoryList {
+        items {
+          name
+          url_key
+          breadcrumbs {
+            category_name
+          }
+        }
+      }
     }"
   }'
 ```
 
 ## Key Considerations
 
-1. **Hierarchy Depth**: Currently fetches 3 levels of nested categories
-2. **Filtering**: Only shows categories with `includeInMenu: true` and `isActive: true`
-3. **Performance**: Single query fetches entire navigation tree
-4. **Breadcrumb Base**: Always includes Home and Shop as base items
-5. **URL Keys**: Categories identified by URL key for SEO-friendly URLs
+1. **Simplified Structure**: Returns flat arrays instead of nested hierarchy
+2. **Pre-configured**: Navigation items are configured in the mesh resolver
+3. **Performance**: Lightweight response with minimal data transfer
+4. **Category Integration**: Header nav items include category field for product page routing
+5. **Static Footer**: Footer navigation contains company/support links
