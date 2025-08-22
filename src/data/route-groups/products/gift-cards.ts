@@ -33,8 +33,8 @@ export const giftCardsPageData = {
         {
           url: '/gift-cards/digital-50.jpg',
           label: 'Digital Gift Card $50',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'gift-cards',
       stock_status: 'in_stock',
@@ -43,7 +43,7 @@ export const giftCardsPageData = {
       delivery_time: 'Instant',
       validity_period: '1 year',
       isNew: false,
-      isSale: false
+      isSale: false,
     },
     {
       id: '2',
@@ -59,8 +59,8 @@ export const giftCardsPageData = {
         {
           url: '/gift-cards/physical-100.jpg',
           label: 'Physical Gift Card $100',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'gift-cards',
       stock_status: 'in_stock',
@@ -69,8 +69,8 @@ export const giftCardsPageData = {
       delivery_time: '3-5 business days',
       validity_period: '2 years',
       isNew: true,
-      isSale: false
-    }
+      isSale: false,
+    },
   ] as GiftCard[],
 
   /**
@@ -84,8 +84,8 @@ export const giftCardsPageData = {
       options: [
         { id: 'physical', name: 'Physical Card' },
         { id: 'digital', name: 'Digital Card' },
-        { id: 'service', name: 'Service Credit' }
-      ]
+        { id: 'service', name: 'Service Credit' },
+      ],
     },
     {
       title: 'Amount',
@@ -95,8 +95,8 @@ export const giftCardsPageData = {
         { id: '25', name: '$25' },
         { id: '50', name: '$50' },
         { id: '100', name: '$100' },
-        { id: '200', name: '$200' }
-      ]
+        { id: '200', name: '$200' },
+      ],
     },
     {
       title: 'Delivery Time',
@@ -106,8 +106,8 @@ export const giftCardsPageData = {
         { id: 'instant', name: 'Instant' },
         { id: 'same-day', name: 'Same Day' },
         { id: '1-3-days', name: '1-3 Days' },
-        { id: '3-5-days', name: '3-5 Days' }
-      ]
+        { id: '3-5-days', name: '3-5 Days' },
+      ],
     },
     {
       title: 'Validity Period',
@@ -117,26 +117,24 @@ export const giftCardsPageData = {
         { id: '6-months', name: '6 Months' },
         { id: '1-year', name: '1 Year' },
         { id: '2-years', name: '2 Years' },
-        { id: 'no-expiry', name: 'No Expiry' }
-      ]
-    }
+        { id: 'no-expiry', name: 'No Expiry' },
+      ],
+    },
   ] as FilterSection[],
 
   /**
    * Breadcrumb navigation for gift cards page
    */
-  breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Gift Cards' }
-  ],
+  breadcrumbs: [{ name: 'Gift Cards' }],
 
   /**
    * Page header configuration
    */
   pageHeader: {
     title: 'Gift Cards',
-    description: 'Give the gift of choice with our flexible gift cards. Perfect for any occasion, available in physical and digital formats with various denominations.',
-    icon: GiftIcon
+    description:
+      'Give the gift of choice with our flexible gift cards. Perfect for any occasion, available in physical and digital formats with various denominations.',
+    icon: GiftIcon,
   },
 
   /**
@@ -144,7 +142,7 @@ export const giftCardsPageData = {
    */
   search: {
     placeholder: 'Search gift cards...',
-    itemLabel: 'gift cards'
+    itemLabel: 'gift cards',
   },
 
   /**
@@ -153,7 +151,7 @@ export const giftCardsPageData = {
   emptyState: {
     icon: Bars3Icon,
     title: 'No gift cards found',
-    description: 'Try adjusting your search or filter criteria to find what you\'re looking for.',
-    actionLabel: 'Clear all filters'
-  }
+    description: "Try adjusting your search or filter criteria to find what you're looking for.",
+    actionLabel: 'Clear all filters',
+  },
 };

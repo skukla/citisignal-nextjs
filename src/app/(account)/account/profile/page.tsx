@@ -5,15 +5,14 @@ import ProfileForm from '@/components/ui/forms/account/ProfileForm';
 import { profileConfig, ProfileFormFields } from '@/data/route-groups/account/profile';
 
 export default function ProfilePage() {
-  const handleProfileSubmit = async (data: ProfileFormFields) => {
+  const handleProfileSubmit = async (_data: ProfileFormFields) => {
     // TODO: Implement profile update
-    console.log('Profile update:', data);
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    await new Promise((resolve) => setTimeout(resolve, 1000));
   };
 
   const pageData = {
     title: profileConfig.personalInfo.title,
-    description: profileConfig.personalInfo.description
+    description: profileConfig.personalInfo.description,
   };
 
   return (
@@ -21,7 +20,7 @@ export default function ProfilePage() {
       <AccountPage.Root>
         <AccountPage.Layout>
           <AccountPage.Navigation />
-          
+
           <AccountPage.Main>
             <AccountPage.Section>
               <AccountPage.Header />

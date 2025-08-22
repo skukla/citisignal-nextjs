@@ -10,6 +10,8 @@ import { InspectorToggleButton } from './InspectorToggleButton';
 import { DataSourceButton } from './DataSourceButton';
 import { QueryTracker } from './QueryTracker';
 import { SourceToggle } from './SourceToggle';
+import { SingleQueryToggle } from './SingleQueryToggle';
+import { CacheToggle } from './CacheToggle';
 
 export default function DemoInspector() {
   const pathname = usePathname();
@@ -24,62 +26,55 @@ export default function DemoInspector() {
     toggleSource,
     clearSources,
     clearQueries,
-    trackQuery
+    trackQuery,
   } = useDemoInspector();
-  
+
   // Clear queries when route changes
   useEffect(() => {
     clearQueries();
   }, [pathname, clearQueries]);
-  
+
   // Set up query tracking function
   useEffect(() => {
     if (typeof window !== 'undefined') {
       // Extend window object for Demo Inspector
-      const windowWithInspector = window as Window & { 
-        __demoInspectorTrackQuery?: typeof trackQuery 
+      const windowWithInspector = window as Window & {
+        __demoInspectorTrackQuery?: typeof trackQuery;
       };
       windowWithInspector.__demoInspectorTrackQuery = trackQuery;
     }
-    
+
     return () => {
-      const windowWithInspector = window as Window & { 
-        __demoInspectorTrackQuery?: typeof trackQuery 
+      const windowWithInspector = window as Window & {
+        __demoInspectorTrackQuery?: typeof trackQuery;
       };
       delete windowWithInspector.__demoInspectorTrackQuery;
     };
   }, [trackQuery]);
-  
+
   if (!enabled) return null;
-  
+
   const position = inspectorPosition === 'left' ? 'left-4' : 'right-4';
-  
+
   return (
     <>
       {/* Source Overlay */}
       <SourceOverlay activeSources={activeSources} />
-      
+
       {/* Floating Inspector Panel */}
       <div className={`fixed top-20 ${position} z-50 space-y-4`}>
         {/* Toggle Button (when collapsed) */}
-        {panelCollapsed && (
-          <InspectorToggleButton onClick={() => setPanelCollapsed(false)} />
-        )}
-        
+        {panelCollapsed && <InspectorToggleButton onClick={() => setPanelCollapsed(false)} />}
+
         {/* Main Panel */}
         {!panelCollapsed && (
           <InspectorPanel>
             {/* Header */}
-            <InspectorHeader
-              onMinimize={() => setPanelCollapsed(true)}
-              onClose={toggleInspector}
-            />
-            
+            <InspectorHeader onMinimize={() => setPanelCollapsed(true)} onClose={toggleInspector} />
+
             {/* Data Sources */}
             <div className="space-y-2">
-              <div className="text-xs text-gray-500 uppercase font-medium mb-2">
-                Data Sources
-              </div>
+              <div className="text-xs text-gray-500 uppercase font-medium mb-2">Data Sources</div>
               {DATA_SOURCES.map((source) => (
                 <DataSourceButton
                   key={source.id}
@@ -89,14 +84,20 @@ export default function DemoInspector() {
                 />
               ))}
             </div>
-            
+
+            {/* Query Settings */}
+            <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
+              <SingleQueryToggle />
+              <CacheToggle />
+            </div>
+
             {/* Toggle All Sources */}
             <SourceToggle
               isActive={activeSources.size === DATA_SOURCES.length}
               onChange={(active) => {
                 if (active) {
                   // Show all sources
-                  DATA_SOURCES.forEach(source => {
+                  DATA_SOURCES.forEach((source) => {
                     if (!activeSources.has(source.id)) {
                       toggleSource(source.id);
                     }
@@ -107,13 +108,10 @@ export default function DemoInspector() {
                 }
               }}
             />
-            
+
             {/* Query Tracker */}
-            <QueryTracker 
-              queries={trackedQueries}
-              onClearQueries={clearQueries}
-            />
-            
+            <QueryTracker queries={trackedQueries} onClearQueries={clearQueries} />
+
             {/* Help Text */}
             <div className="mt-4 pt-4 border-t border-gray-200 text-xs text-gray-500">
               <div>On/Off: Cmd+Shift+D</div>

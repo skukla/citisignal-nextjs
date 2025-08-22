@@ -25,8 +25,8 @@ export const plansPageData = {
         {
           url: '/plans/unlimited-max.jpg',
           label: 'CitiSignal Unlimited Max Plan',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'plans',
       stock_status: 'in_stock',
@@ -39,7 +39,7 @@ export const plansPageData = {
       network_priority: 'premium',
       contract_required: false,
       isNew: false,
-      isSale: false
+      isSale: false,
     },
     {
       id: '2',
@@ -56,8 +56,8 @@ export const plansPageData = {
         {
           url: '/plans/family-share.jpg',
           label: 'CitiSignal Family Share Plan',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'plans',
       stock_status: 'in_stock',
@@ -70,7 +70,7 @@ export const plansPageData = {
       network_priority: 'standard',
       contract_required: true,
       isNew: true,
-      isSale: true
+      isSale: true,
     },
     {
       id: '3',
@@ -86,8 +86,8 @@ export const plansPageData = {
         {
           url: '/plans/essentials.jpg',
           label: 'CitiSignal Essentials Plan',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'plans',
       stock_status: 'in_stock',
@@ -100,8 +100,8 @@ export const plansPageData = {
       network_priority: 'basic',
       contract_required: false,
       isNew: false,
-      isSale: false
-    }
+      isSale: false,
+    },
   ] as Plan[],
 
   /**
@@ -116,8 +116,8 @@ export const plansPageData = {
         { id: 'individual', name: 'Individual' },
         { id: 'family', name: 'Family' },
         { id: 'unlimited', name: 'Unlimited' },
-        { id: 'prepaid', name: 'Prepaid' }
-      ]
+        { id: 'prepaid', name: 'Prepaid' },
+      ],
     },
     {
       title: 'Price Range',
@@ -126,8 +126,8 @@ export const plansPageData = {
       options: [
         { id: 'under-50', name: 'Under $50' },
         { id: '50-100', name: '$50 - $100' },
-        { id: 'over-100', name: 'Over $100' }
-      ]
+        { id: 'over-100', name: 'Over $100' },
+      ],
     },
     {
       title: 'Data Amount',
@@ -136,8 +136,8 @@ export const plansPageData = {
       options: [
         { id: '50gb', name: '50GB' },
         { id: '100gb', name: '100GB' },
-        { id: 'unlimited', name: 'Unlimited' }
-      ]
+        { id: 'unlimited', name: 'Unlimited' },
+      ],
     },
     {
       title: 'Features',
@@ -146,26 +146,24 @@ export const plansPageData = {
       options: [
         { id: 'hotspot', name: 'Mobile Hotspot' },
         { id: 'streaming', name: 'HD Streaming' },
-        { id: 'international', name: 'International' }
-      ]
-    }
+        { id: 'international', name: 'International' },
+      ],
+    },
   ] as FilterSection[],
 
   /**
    * Breadcrumb navigation for plans page
    */
-  breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Plans' }
-  ],
+  breadcrumbs: [{ name: 'Plans' }],
 
   /**
    * Page header configuration
    */
   pageHeader: {
     title: 'Wireless Plans',
-    description: 'Choose the perfect wireless plan for your needs. From unlimited data to family plans, we have flexible options with no hidden fees and the reliability of our nationwide network.',
-    icon: SignalIcon
+    description:
+      'Choose the perfect wireless plan for your needs. From unlimited data to family plans, we have flexible options with no hidden fees and the reliability of our nationwide network.',
+    icon: SignalIcon,
   },
 
   /**
@@ -173,7 +171,7 @@ export const plansPageData = {
    */
   search: {
     placeholder: 'Search plans...',
-    itemLabel: 'plans'
+    itemLabel: 'plans',
   },
 
   /**
@@ -182,7 +180,7 @@ export const plansPageData = {
   emptyState: {
     icon: Bars3Icon,
     title: 'No plans found',
-    description: 'Try adjusting your search or filter criteria to find what you\'re looking for.',
-    actionLabel: 'Clear all filters'
-  }
+    description: "Try adjusting your search or filter criteria to find what you're looking for.",
+    actionLabel: 'Clear all filters',
+  },
 };

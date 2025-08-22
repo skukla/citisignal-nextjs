@@ -5,30 +5,34 @@ interface PageLoadingState {
   facetsLoading: boolean;
   searchQuery?: string;
   sortBy?: string;
+  activeFilters?: Record<string, string[] | boolean | undefined>;
 }
 
 /**
  * Single source of truth for page-level loading state.
  * Returns true when coordinated skeletons should be shown.
- * 
+ *
  * Shows skeletons for:
  * - Initial page load (until both queries complete)
  * - Search changes (until both queries complete)
  * - Sort changes (until both queries complete)
- * - Not for filter changes (handled individually)
+ * - Filter changes (until both queries complete)
  */
 export function usePageLoading({
   productsLoading,
   facetsLoading,
   searchQuery,
-  sortBy
-}: PageLoadingState): boolean {
+  sortBy,
+  activeFilters,
+}: PageLoadingState) {
   const initialLoadComplete = useRef(false);
   const lastSearchQuery = useRef(searchQuery);
   const lastSortBy = useRef(sortBy);
+  const lastActiveFilters = useRef(activeFilters);
   const [isInSearchTransition, setIsInSearchTransition] = useState(false);
   const [isInSortTransition, setIsInSortTransition] = useState(false);
-  
+  const [isInFilterTransition, setIsInFilterTransition] = useState(false);
+
   // Mark initial load complete when both queries finish
   useEffect(() => {
     if (!productsLoading && !facetsLoading) {
@@ -42,9 +46,18 @@ export function usePageLoading({
       if (isInSortTransition) {
         setIsInSortTransition(false);
       }
+      if (isInFilterTransition) {
+        setIsInFilterTransition(false);
+      }
     }
-  }, [productsLoading, facetsLoading, isInSearchTransition, isInSortTransition]);
-  
+  }, [
+    productsLoading,
+    facetsLoading,
+    isInSearchTransition,
+    isInSortTransition,
+    isInFilterTransition,
+  ]);
+
   // Detect search changes and start transition
   useEffect(() => {
     if (searchQuery !== lastSearchQuery.current) {
@@ -55,7 +68,7 @@ export function usePageLoading({
       }
     }
   }, [searchQuery]);
-  
+
   // Detect sort changes and start transition
   useEffect(() => {
     if (sortBy !== lastSortBy.current) {
@@ -66,11 +79,29 @@ export function usePageLoading({
       }
     }
   }, [sortBy]);
-  
-  // Show loading for initial load, search, or sort transitions
+
+  // Detect filter changes and start transition
+  useEffect(() => {
+    const activeFiltersString = JSON.stringify(activeFilters || {});
+    const lastActiveFiltersString = JSON.stringify(lastActiveFilters.current || {});
+
+    if (activeFiltersString !== lastActiveFiltersString) {
+      lastActiveFilters.current = activeFilters;
+      // Only set filter transition if we've already loaded initially
+      if (initialLoadComplete.current) {
+        setIsInFilterTransition(true);
+      }
+    }
+  }, [activeFilters]);
+
+  // Show loading for initial load, search, sort, or filter transitions
   const isInitialLoad = !initialLoadComplete.current && (productsLoading || facetsLoading);
   const isSearching = isInSearchTransition && (productsLoading || facetsLoading);
   const isSorting = isInSortTransition && (productsLoading || facetsLoading);
-  
-  return isInitialLoad || isSearching || isSorting;
+  const isFiltering = isInFilterTransition && (productsLoading || facetsLoading);
+
+  return {
+    isInitialLoad,
+    isPageTransition: isInitialLoad || isSearching || isSorting || isFiltering,
+  };
 }

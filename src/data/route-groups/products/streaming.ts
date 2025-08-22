@@ -35,8 +35,8 @@ export const streamingPageData = {
         {
           url: '/streaming/netflix-premium.jpg',
           label: 'Netflix Premium Plan',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'streaming',
       stock_status: 'in_stock',
@@ -48,7 +48,7 @@ export const streamingPageData = {
       trial_period: '30 days',
       content: ['Movies', 'TV Shows', 'Documentaries', 'Originals'],
       isNew: false,
-      isSale: false
+      isSale: false,
     },
     {
       id: '2',
@@ -64,8 +64,8 @@ export const streamingPageData = {
         {
           url: '/streaming/disney-bundle.jpg',
           label: 'Disney+ Bundle',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'streaming',
       stock_status: 'in_stock',
@@ -77,8 +77,8 @@ export const streamingPageData = {
       trial_period: '7 days',
       content: ['Movies', 'TV Shows', 'Sports', 'Kids'],
       isNew: true,
-      isSale: true
-    }
+      isSale: true,
+    },
   ] as StreamingService[],
 
   /**
@@ -93,8 +93,8 @@ export const streamingPageData = {
         { id: 'netflix', name: 'Netflix' },
         { id: 'disney', name: 'Disney+' },
         { id: 'hbo', name: 'HBO Max' },
-        { id: 'citisignal', name: 'CitiSignal+' }
-      ]
+        { id: 'citisignal', name: 'CitiSignal+' },
+      ],
     },
     {
       title: 'Price Range',
@@ -104,8 +104,8 @@ export const streamingPageData = {
         { id: 'under-10', name: 'Under $10' },
         { id: '10-15', name: '$10 - $15' },
         { id: '15-20', name: '$15 - $20' },
-        { id: 'over-20', name: 'Over $20' }
-      ]
+        { id: 'over-20', name: 'Over $20' },
+      ],
     },
     {
       title: 'Content Type',
@@ -115,8 +115,8 @@ export const streamingPageData = {
         { id: 'movies', name: 'Movies' },
         { id: 'tv-shows', name: 'TV Shows' },
         { id: 'sports', name: 'Sports' },
-        { id: 'kids', name: 'Kids' }
-      ]
+        { id: 'kids', name: 'Kids' },
+      ],
     },
     {
       title: 'Video Quality',
@@ -125,26 +125,24 @@ export const streamingPageData = {
       options: [
         { id: '4k', name: '4K Ultra HD' },
         { id: 'hd', name: 'HD' },
-        { id: 'sd', name: 'SD' }
-      ]
-    }
+        { id: 'sd', name: 'SD' },
+      ],
+    },
   ] as FilterSection[],
 
   /**
    * Breadcrumb navigation for streaming page
    */
-  breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Streaming' }
-  ],
+  breadcrumbs: [{ name: 'Streaming' }],
 
   /**
    * Page header configuration
    */
   pageHeader: {
     title: 'Streaming Services',
-    description: 'Discover the best streaming services for movies, TV shows, sports, and more. Compare plans and find the perfect entertainment package for your needs.',
-    icon: PlayIcon
+    description:
+      'Discover the best streaming services for movies, TV shows, sports, and more. Compare plans and find the perfect entertainment package for your needs.',
+    icon: PlayIcon,
   },
 
   /**
@@ -152,7 +150,7 @@ export const streamingPageData = {
    */
   search: {
     placeholder: 'Search streaming services...',
-    itemLabel: 'streaming services'
+    itemLabel: 'streaming services',
   },
 
   /**
@@ -161,7 +159,7 @@ export const streamingPageData = {
   emptyState: {
     icon: Bars3Icon,
     title: 'No streaming services found',
-    description: 'Try adjusting your search or filter criteria to find what you\'re looking for.',
-    actionLabel: 'Clear all filters'
-  }
+    description: "Try adjusting your search or filter criteria to find what you're looking for.",
+    actionLabel: 'Clear all filters',
+  },
 };

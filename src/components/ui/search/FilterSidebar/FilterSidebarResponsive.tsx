@@ -10,19 +10,20 @@ export interface FilterSidebarResponsiveProps {
   onClearFilters: () => void;
   showMobileFilters: boolean;
   setShowMobileFilters: (show: boolean) => void;
+  isValidating?: boolean;
 }
 
 /**
  * Responsive FilterSidebar that handles both mobile and desktop experiences.
- * 
+ *
  * Mobile: Full-screen overlay with backdrop and close button
  * Desktop: Clean persistent sidebar
- * 
+ *
  * This component encapsulates both responsive states since they're always used together
  * on product listing pages, avoiding prop duplication while maintaining clear UX separation.
- * 
+ *
  * @example
- * <FilterSidebarResponsive 
+ * <FilterSidebarResponsive
  *   filters={filters}
  *   activeFilters={activeFilters}
  *   onFilterChange={handleFilterChange}
@@ -37,7 +38,8 @@ export default function FilterSidebarResponsive({
   onFilterChange,
   onClearFilters,
   showMobileFilters,
-  setShowMobileFilters
+  setShowMobileFilters,
+  isValidating,
 }: FilterSidebarResponsiveProps) {
   return (
     <>
@@ -47,19 +49,20 @@ export default function FilterSidebarResponsive({
           <div className="bg-white w-80 h-full overflow-y-auto p-6">
             <div className="flex justify-between items-center mb-6">
               <h3 className="text-lg font-semibold">Filters</h3>
-              <button 
-                onClick={() => setShowMobileFilters(false)} 
+              <button
+                onClick={() => setShowMobileFilters(false)}
                 className="text-gray-500 hover:text-gray-700"
                 aria-label="Close filters"
               >
                 ×
               </button>
             </div>
-            <FilterSidebar 
+            <FilterSidebar
               filters={filters}
               activeFilters={activeFilters}
               onFilterChange={onFilterChange}
               onClearFilters={onClearFilters}
+              isValidating={isValidating}
             />
           </div>
         </div>
@@ -67,11 +70,12 @@ export default function FilterSidebarResponsive({
 
       {/* Desktop: Clean persistent sidebar experience */}
       <div className="hidden lg:block flex-shrink-0">
-        <FilterSidebar 
+        <FilterSidebar
           filters={filters}
           activeFilters={activeFilters}
           onFilterChange={onFilterChange}
           onClearFilters={onClearFilters}
+          isValidating={isValidating}
         />
       </div>
     </>

@@ -24,8 +24,8 @@ export const watchesPageData = {
         {
           url: '/watches/apple-watch-series-9.jpg',
           label: 'Apple Watch Series 9',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'watches',
       stock_status: 'in_stock',
@@ -37,12 +37,12 @@ export const watchesPageData = {
         { name: 'Midnight', hex: '#191970' },
         { name: 'Starlight', hex: '#F5F5DC' },
         { name: 'Silver', hex: '#C0C0C0' },
-        { name: 'Red', hex: '#FF0000' }
+        { name: 'Red', hex: '#FF0000' },
       ],
       battery_life: 'Up to 18 hours',
       water_resistant: '50 meters',
       isNew: true,
-      isSale: false
+      isSale: false,
     },
     {
       id: '2',
@@ -58,8 +58,8 @@ export const watchesPageData = {
         {
           url: '/watches/samsung-galaxy-watch-6.jpg',
           label: 'Samsung Galaxy Watch 6',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'watches',
       stock_status: 'in_stock',
@@ -69,13 +69,13 @@ export const watchesPageData = {
       available_colors: [
         { name: 'Graphite', hex: '#36454F' },
         { name: 'Silver', hex: '#C0C0C0' },
-        { name: 'Gold', hex: '#FFD700' }
+        { name: 'Gold', hex: '#FFD700' },
       ],
       battery_life: 'Up to 40 hours',
       water_resistant: '50 meters',
       isNew: false,
-      isSale: true
-    }
+      isSale: true,
+    },
   ] as Watch[],
 
   /**
@@ -89,8 +89,8 @@ export const watchesPageData = {
       options: [
         { id: 'apple', name: 'Apple' },
         { id: 'samsung', name: 'Samsung' },
-        { id: 'citisignal', name: 'CitiSignal' }
-      ]
+        { id: 'citisignal', name: 'CitiSignal' },
+      ],
     },
     {
       title: 'Sizes',
@@ -99,14 +99,14 @@ export const watchesPageData = {
       options: [
         { id: '41mm', name: '41mm' },
         { id: '45mm', name: '45mm' },
-        { id: '49mm', name: '49mm' }
-      ]
+        { id: '49mm', name: '49mm' },
+      ],
     },
     {
       title: 'Colors',
       key: 'colors',
       type: 'checkbox' as const,
-      options: colorOptions
+      options: colorOptions,
     },
     {
       title: 'Price Range',
@@ -115,8 +115,8 @@ export const watchesPageData = {
       options: [
         { id: 'under-300', name: 'Under $300' },
         { id: '300-500', name: '$300 - $500' },
-        { id: 'over-500', name: 'Over $500' }
-      ]
+        { id: 'over-500', name: 'Over $500' },
+      ],
     },
     {
       title: 'Features',
@@ -126,26 +126,24 @@ export const watchesPageData = {
         { id: 'gps', name: 'GPS' },
         { id: 'cellular', name: 'Cellular' },
         { id: 'heart-rate', name: 'Heart Rate Monitor' },
-        { id: 'water-resistant', name: 'Water Resistant' }
-      ]
-    }
+        { id: 'water-resistant', name: 'Water Resistant' },
+      ],
+    },
   ] as FilterSection[],
 
   /**
    * Breadcrumb navigation for watches page
    */
-  breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Watches' }
-  ],
+  breadcrumbs: [{ name: 'Watches' }],
 
   /**
    * Page header configuration
    */
   pageHeader: {
     title: 'Watches',
-    description: 'Stay connected and track your health with our collection of smart watches. From fitness tracking to notifications, find the perfect wearable technology.',
-    icon: ClockIcon
+    description:
+      'Stay connected and track your health with our collection of smart watches. From fitness tracking to notifications, find the perfect wearable technology.',
+    icon: ClockIcon,
   },
 
   /**
@@ -153,7 +151,7 @@ export const watchesPageData = {
    */
   search: {
     placeholder: 'Search watches...',
-    itemLabel: 'watches'
+    itemLabel: 'watches',
   },
 
   /**
@@ -162,7 +160,7 @@ export const watchesPageData = {
   emptyState: {
     icon: Bars3Icon,
     title: 'No watches found',
-    description: 'Try adjusting your search or filter criteria to find what you\'re looking for.',
-    actionLabel: 'Clear all filters'
-  }
+    description: "Try adjusting your search or filter criteria to find what you're looking for.",
+    actionLabel: 'Clear all filters',
+  },
 };

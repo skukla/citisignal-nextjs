@@ -22,25 +22,24 @@ export interface UsePanelReturn {
  * @param {boolean} [options.isOpen] - Controlled open state
  * @param {Function} [options.onOpenChange] - Callback when open state changes
  * @returns {Object} Panel state and refs
- * @example
- * const { isOpen, toggle, panelRef } = usePanel({
- *   onOpenChange: (isOpen) => console.log(isOpen)
- * });
  */
 export function usePanel(options: UsePanelOptions = {}): UsePanelReturn {
   const { isOpen: controlledIsOpen, onOpenChange } = options;
-  
+
   // Handle controlled/uncontrolled state
   const [uncontrolledIsOpen, setUncontrolledIsOpen] = useState(false);
   const isOpen = controlledIsOpen ?? uncontrolledIsOpen;
-  
+
   const panelRef = useRef<HTMLDivElement | null>(null);
   const triggerRef = useRef<HTMLButtonElement | null>(null);
 
-  const setIsOpen = useCallback((newIsOpen: boolean) => {
-    setUncontrolledIsOpen(newIsOpen);
-    onOpenChange?.(newIsOpen);
-  }, [onOpenChange]);
+  const setIsOpen = useCallback(
+    (newIsOpen: boolean) => {
+      setUncontrolledIsOpen(newIsOpen);
+      onOpenChange?.(newIsOpen);
+    },
+    [onOpenChange]
+  );
 
   const toggle = useCallback(() => setIsOpen(!isOpen), [isOpen, setIsOpen]);
   const close = useCallback(() => setIsOpen(false), [setIsOpen]);
@@ -83,6 +82,6 @@ export function usePanel(options: UsePanelOptions = {}): UsePanelReturn {
     toggle,
     close,
     panelRef,
-    triggerRef
+    triggerRef,
   };
 }

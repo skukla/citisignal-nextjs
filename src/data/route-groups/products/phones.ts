@@ -1,9 +1,9 @@
-import { 
-  DevicePhoneMobileIcon, 
+import {
+  DevicePhoneMobileIcon,
   BoltIcon,
   ShieldCheckIcon,
   CameraIcon,
-  Bars3Icon
+  Bars3Icon,
 } from '@heroicons/react/24/outline';
 
 import { Phone, colorOptions } from '@/types/commerce';
@@ -32,8 +32,8 @@ export const phonesPageData = {
         {
           url: '/phones/iphone-15-pro.jpg',
           label: 'iPhone 15 Pro',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'phones',
       stock_status: 'in_stock',
@@ -43,19 +43,20 @@ export const phonesPageData = {
         { name: 'Natural Titanium', hex: '#9FA1A3' },
         { name: 'Blue Titanium', hex: '#515B6F' },
         { name: 'White Titanium', hex: '#F5F5F0' },
-        { name: 'Black Titanium', hex: '#3D3C41' }
+        { name: 'Black Titanium', hex: '#3D3C41' },
       ],
       extended_capacity_5g: true,
       extended_range_5g: true,
       isNew: true,
-      isSale: false
+      isSale: false,
     },
     {
       id: '2',
       sku: 'PHONE-SAMSUNG-S24',
       name: 'Samsung Galaxy S24',
       urlKey: 'samsung-galaxy-s24',
-      description: 'Galaxy AI is here. Search like never before, get real-time interpretation on a call, format your notes into a clear summary, and edit your photos effortlessly.',
+      description:
+        'Galaxy AI is here. Search like never before, get real-time interpretation on a call, format your notes into a clear summary, and edit your photos effortlessly.',
       price: 799,
       currency: '$',
       rating_summary: 91,
@@ -64,8 +65,8 @@ export const phonesPageData = {
         {
           url: '/phones/samsung-s24.jpg',
           label: 'Samsung Galaxy S24',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'phones',
       stock_status: 'in_stock',
@@ -75,12 +76,12 @@ export const phonesPageData = {
         { name: 'Titanium Black', hex: '#2A2A2C' },
         { name: 'Titanium Gray', hex: '#7C7C7E' },
         { name: 'Titanium Violet', hex: '#7B6C7E' },
-        { name: 'Titanium Yellow', hex: '#F3E0B6' }
+        { name: 'Titanium Yellow', hex: '#F3E0B6' },
       ],
       extended_capacity_5g: true,
       extended_range_5g: false,
       isNew: false,
-      isSale: true
+      isSale: true,
     },
     {
       id: '3',
@@ -97,8 +98,8 @@ export const phonesPageData = {
         {
           url: '/phones/iphone-15.jpg',
           label: 'iPhone 15',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'phones',
       stock_status: 'in_stock',
@@ -109,12 +110,12 @@ export const phonesPageData = {
         { name: 'Yellow', hex: '#F3E3B6' },
         { name: 'Green', hex: '#A7C1B5' },
         { name: 'Blue', hex: '#B4C4DE' },
-        { name: 'Black', hex: '#3F3F3D' }
+        { name: 'Black', hex: '#3F3F3D' },
       ],
       extended_capacity_5g: true,
       extended_range_5g: false,
       isNew: true,
-      isSale: true
+      isSale: true,
     },
     {
       id: '4',
@@ -130,8 +131,8 @@ export const phonesPageData = {
         {
           url: '/phones/citisignal-ultra.jpg',
           label: 'CitiSignal Ultra 5G',
-          roles: ['small_image', 'thumbnail']
-        }
+          roles: ['small_image', 'thumbnail'],
+        },
       ],
       category: 'phones',
       stock_status: 'in_stock',
@@ -140,13 +141,13 @@ export const phonesPageData = {
       available_colors: [
         { name: 'Midnight Blue', hex: '#1F2330' },
         { name: 'Silver', hex: '#F1F3EE' },
-        { name: 'Graphite', hex: '#5F5E5A' }
+        { name: 'Graphite', hex: '#5F5E5A' },
       ],
       extended_capacity_5g: true,
       extended_range_5g: true,
       isNew: true,
-      isSale: false
-    }
+      isSale: false,
+    },
   ] as Phone[],
 
   /**
@@ -160,8 +161,8 @@ export const phonesPageData = {
       options: [
         { id: 'Apple', name: 'Apple' },
         { id: 'Samsung', name: 'Samsung' },
-        { id: 'CitiSignal', name: 'CitiSignal' }
-      ]
+        { id: 'CitiSignal', name: 'CitiSignal' },
+      ],
     },
     {
       title: 'Memory',
@@ -171,14 +172,14 @@ export const phonesPageData = {
         { id: '128gb', name: '128GB' },
         { id: '256gb', name: '256GB' },
         { id: '512gb', name: '512GB' },
-        { id: '1tb', name: '1TB' }
-      ]
+        { id: '1tb', name: '1TB' },
+      ],
     },
     {
       title: 'Colors',
       key: 'colors',
       type: 'checkbox' as const,
-      options: colorOptions
+      options: colorOptions,
     },
     {
       title: 'Price Range',
@@ -188,26 +189,24 @@ export const phonesPageData = {
         { id: 'under-500', name: 'Under $500' },
         { id: '500-800', name: '$500 - $800' },
         { id: '800-1200', name: '$800 - $1,200' },
-        { id: 'over-1200', name: 'Over $1,200' }
-      ]
-    }
+        { id: 'over-1200', name: 'Over $1,200' },
+      ],
+    },
   ] as FilterSection[],
 
   /**
    * Breadcrumb navigation for phones page
    */
-  breadcrumbs: [
-    { name: 'Shop', href: '/shop' },
-    { name: 'Phones' }
-  ],
+  breadcrumbs: [{ name: 'Phones' }],
 
   /**
    * Page header configuration
    */
   pageHeader: {
     title: 'Phones',
-    description: 'Discover the latest smartphones with cutting-edge technology, exceptional cameras, and lightning-fast performance. Find your perfect device from top brands.',
-    icon: DevicePhoneMobileIcon
+    description:
+      'Discover the latest smartphones with cutting-edge technology, exceptional cameras, and lightning-fast performance. Find your perfect device from top brands.',
+    icon: DevicePhoneMobileIcon,
   },
 
   /**
@@ -215,7 +214,7 @@ export const phonesPageData = {
    */
   search: {
     placeholder: 'Search phones...',
-    itemLabel: 'phones'
+    itemLabel: 'phones',
   },
 
   /**
@@ -224,8 +223,8 @@ export const phonesPageData = {
   emptyState: {
     icon: Bars3Icon,
     title: 'No phones found',
-    description: 'Try adjusting your search or filter criteria to find what you\'re looking for.',
-    actionLabel: 'Clear all filters'
+    description: "Try adjusting your search or filter criteria to find what you're looking for.",
+    actionLabel: 'Clear all filters',
   },
 
   /**
@@ -235,21 +234,24 @@ export const phonesPageData = {
     {
       id: '1',
       title: 'iPhone 15 Pro Review: A Titanium Powerhouse',
-      description: 'Apple\'s latest flagship brings titanium construction, improved cameras, and the new Action Button.',
-      slug: 'iphone-15-pro-review'
+      description:
+        "Apple's latest flagship brings titanium construction, improved cameras, and the new Action Button.",
+      slug: 'iphone-15-pro-review',
     },
     {
       id: '2',
       title: 'Samsung Galaxy S24 vs iPhone 15: The Ultimate Comparison',
-      description: 'We pit Samsung\'s latest against Apple\'s flagship to see which offers better value.',
-      slug: 'samsung-s24-vs-iphone-15'
+      description:
+        "We pit Samsung's latest against Apple's flagship to see which offers better value.",
+      slug: 'samsung-s24-vs-iphone-15',
     },
     {
       id: '3',
       title: '5G Speed Test: Real World Results',
-      description: 'We tested 5G speeds across different phones and locations. See which devices offer the fastest connectivity.',
-      slug: '5g-speed-test-results'
-    }
+      description:
+        'We tested 5G speeds across different phones and locations. See which devices offer the fastest connectivity.',
+      slug: '5g-speed-test-results',
+    },
   ] as TechReview[],
 
   buyingGuides: [
@@ -257,35 +259,37 @@ export const phonesPageData = {
       id: '1',
       icon: ShieldCheckIcon,
       title: 'How to Choose the Right Smartphone in 2024',
-      description: 'Everything you need to know about selecting the perfect phone for your needs and budget.'
+      description:
+        'Everything you need to know about selecting the perfect phone for your needs and budget.',
     },
     {
       id: '2',
       icon: CameraIcon,
       title: 'Camera Phone Showdown: Which Takes the Best Photos?',
-      description: 'Compare camera quality across flagship phones to find the best for photography.'
-    }
+      description:
+        'Compare camera quality across flagship phones to find the best for photography.',
+    },
   ] as BuyingGuide[],
 
   tips: [
     {
       id: '1',
       title: 'Extend Your Battery Life',
-      description: 'Simple settings changes that can double your phone\'s battery life.',
-      category: 'Battery Tips'
+      description: "Simple settings changes that can double your phone's battery life.",
+      category: 'Battery Tips',
     },
     {
       id: '2',
       title: 'Take Professional Photos',
-      description: 'Master your phone\'s camera with these pro photography techniques.',
-      category: 'Photography'
+      description: "Master your phone's camera with these pro photography techniques.",
+      category: 'Photography',
     },
     {
       id: '3',
       title: 'Secure Your Device',
       description: 'Essential security features every smartphone user should enable.',
-      category: 'Security'
-    }
+      category: 'Security',
+    },
   ] as Tip[],
 
   accessories: [
@@ -293,13 +297,13 @@ export const phonesPageData = {
       id: '1',
       icon: BoltIcon,
       name: 'Wireless Charging Stand',
-      price: '$49.99'
+      price: '$49.99',
     },
     {
       id: '2',
       icon: ShieldCheckIcon,
       name: 'Premium Phone Case',
-      price: '$34.99'
-    }
-  ] as Accessory[]
+      price: '$34.99',
+    },
+  ] as Accessory[],
 };

@@ -7,15 +7,17 @@ The Unified Query Architecture consolidates multiple GraphQL queries into a sing
 ## Problem Statement
 
 ### Traditional Approach (Multiple Queries)
+
 ```typescript
 // ❌ Old approach - 4+ separate queries
-const { products } = useProductCards();      // Query 1
-const { facets } = useProductFacets();       // Query 2  
-const { breadcrumbs } = useBreadcrumbs();    // Query 3
-const { navigation } = useNavigation();      // Query 4
+const { products } = useProductCards(); // Query 1
+const { facets } = useProductFacets(); // Query 2
+const { breadcrumbs } = useBreadcrumbs(); // Query 3
+const { navigation } = useNavigation(); // Query 4
 ```
 
 **Issues:**
+
 - Multiple network round trips
 - Waterfall loading patterns
 - Complex loading state management
@@ -23,11 +25,12 @@ const { navigation } = useNavigation();      // Query 4
 - Poor performance metrics
 
 ### Unified Approach (Single Query)
+
 ```typescript
 // ✅ New approach - 1 comprehensive query
 const { data, loading, error } = useProductPageData({
   category: 'phones',
-  filters: { brand: ['Apple'] }
+  filters: { brand: ['Apple'] },
 });
 
 // All data available at once
@@ -59,13 +62,13 @@ query GetProductPageData(
     page_info { ... }
     aggregations { ... }
   }
-  
+
   # Navigation
   categoryList(filters: { url_key: { eq: $category } }) {
     breadcrumbs { ... }
     children { ... }
   }
-  
+
   # Store configuration
   storeConfig {
     base_currency_code
@@ -87,7 +90,7 @@ The Adobe API Mesh provides a custom resolver that intelligently routes to diffe
         resolve: async (root, args, context) => {
           // Intelligently route based on context
           const hasSearch = !!args.phrase;
-          
+
           if (hasSearch) {
             // Use Live Search for search queries
             return context.LiveSearchAPI.productSearch(args);
@@ -95,7 +98,7 @@ The Adobe API Mesh provides a custom resolver that intelligently routes to diffe
             // Use Catalog Service for browsing
             return context.CatalogAPI.products(args);
           }
-        }
+        };
       }
     }
   }
@@ -122,7 +125,7 @@ export function useProductPageData(options: ProductPageOptions) {
     data: data?.Citisignal_productPageData,
     loading: !data && !error,
     error,
-    refetch: mutate
+    refetch: mutate,
   };
 }
 ```
@@ -130,15 +133,15 @@ export function useProductPageData(options: ProductPageOptions) {
 ### Component Integration
 
 ```tsx
-// UnifiedProductPage.tsx
-export function UnifiedProductPage({ category }: Props) {
+// ProductPageProvider.tsx (with single query mode)
+export function ProductPageProvider({ category }: Props) {
   const { searchParams } = useSearchParams();
-  
+
   const { data, loading, error } = useProductPageData({
     category,
     filters: parseFilters(searchParams),
     sort: searchParams.get('sort'),
-    page: Number(searchParams.get('page')) || 1
+    page: Number(searchParams.get('page')) || 1,
   });
 
   if (loading) return <LoadingSkeleton />;
@@ -159,12 +162,12 @@ export function UnifiedProductPage({ category }: Props) {
 
 ### Performance Improvements
 
-| Metric | Multiple Queries | Unified Query | Improvement |
-|--------|-----------------|---------------|-------------|
-| Network Requests | 4-6 | 1 | 75-83% reduction |
-| Time to Interactive | 2.4s | 1.1s | 54% faster |
-| First Contentful Paint | 1.8s | 0.9s | 50% faster |
-| Total Payload | 124KB | 89KB | 28% smaller |
+| Metric                 | Multiple Queries | Unified Query | Improvement      |
+| ---------------------- | ---------------- | ------------- | ---------------- |
+| Network Requests       | 4-6              | 1             | 75-83% reduction |
+| Time to Interactive    | 2.4s             | 1.1s          | 54% faster       |
+| First Contentful Paint | 1.8s             | 0.9s          | 50% faster       |
+| Total Payload          | 124KB            | 89KB          | 28% smaller      |
 
 ### Developer Experience
 
@@ -186,6 +189,7 @@ export function UnifiedProductPage({ category }: Props) {
 ## Migration Guide
 
 ### Step 1: Update Hooks
+
 Replace multiple hooks with single unified hook:
 
 ```typescript
@@ -199,6 +203,7 @@ const { products, facets } = data;
 ```
 
 ### Step 2: Update Components
+
 Adjust component props to use unified data:
 
 ```tsx
@@ -212,6 +217,7 @@ Adjust component props to use unified data:
 ```
 
 ### Step 3: Update Error Handling
+
 Consolidate error handling:
 
 ```tsx
@@ -229,6 +235,7 @@ if (error) {
 ## Best Practices
 
 ### 1. Use Fragment Definitions
+
 Define reusable fragments for consistent data shapes:
 
 ```graphql
@@ -242,6 +249,7 @@ fragment ProductFields on Product {
 ```
 
 ### 2. Implement Proper Caching
+
 Configure SWR for optimal caching:
 
 ```typescript
@@ -254,6 +262,7 @@ Configure SWR for optimal caching:
 ```
 
 ### 3. Handle Partial Failures
+
 Design for resilience:
 
 ```typescript
@@ -267,13 +276,17 @@ const facets = data?.facets || defaultFacets;
 ## Troubleshooting
 
 ### Query Too Large
+
 If the query becomes too large, consider:
+
 - Lazy loading non-critical data
 - Implementing field-level pagination
 - Using persisted queries
 
 ### Cache Invalidation
+
 For real-time data requirements:
+
 ```typescript
 // Force refresh
 const { refetch } = useProductPageData();
@@ -284,7 +297,9 @@ await refetch();
 ```
 
 ### Type Generation
+
 Keep types in sync with GraphQL schema:
+
 ```bash
 npm run graphql:codegen
 ```

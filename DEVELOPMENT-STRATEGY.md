@@ -25,9 +25,49 @@ src/
 └── utils/            # Utilities
 ```
 
+## Branch: demo-inspector-client-only
+
+This branch demonstrates a pure client-side rendering approach with full Demo Inspector functionality including single query mode toggle.
+
+### Single Query Mode Implementation Details
+
+**Query Behavior**
+
+- **Initial load**: Only `GetCategoryPageData` runs (unified query)
+- **First user interaction**: Switches to `GetProductCards` + `GetProductFacets` (individual queries)
+- **Filter changes**: Both queries run (products update, facets update contextually per Adobe docs)
+- **Sort changes**: Only `GetProductCards` runs (facets use SWR cache, no network request)
+
+**Facet Preservation During Loading**
+To prevent facets from disappearing during loading (which causes layout shift):
+
+1. **Problem**: When switching query modes or updating filters, facets briefly disappear
+2. **Solution**: Store previous facets in a ref and reuse them during loading
+3. **Implementation**:
+   - `ProductPageProvider` uses `previousFacetsRef` to store last known facets
+   - During loading, facets fall back to previous values instead of empty array
+   - Applies to both unified and individual query modes
+   - Prevents the sidebar from collapsing and products taking full width
+
+**Dynamic Facet Updates**
+Per Adobe Live Search documentation, facets are **contextual** - they update based on applied filters:
+
+- Filter by "Apple" → Memory facet shows only Apple phone memory options
+- Uses selective exclusion: each facet excludes itself but includes other filters
+- Both queries must run when filters change for accurate contextual facets
+- SWR deduplication prevents unnecessary facet requests when only sort changes
+
+**Implementation Notes**
+
+- `userHasInteracted` flag tracks when to switch from unified to individual queries
+- Resets when switching modes or changing categories
+- Unified query uses frozen initial URL state to prevent re-runs
+- Individual queries use current URL state for real-time updates
+
 ## Current State
 
 ### ✅ Completed Features
+
 - **Product Pages** - All 6 pages using compound components (70% code reduction)
 - **Account Pages** - All 7 pages using compound components (65% code reduction)
 - **Hybrid API Integration** - Intelligent Catalog/Live Search selection
@@ -36,25 +76,27 @@ src/
 - **Unified Data Layer** - Consistent API responses via custom resolvers
 - **Category Navigation** - Dynamic navigation from Commerce API (header & footer)
 - **Breadcrumbs** - Category breadcrumb trails for SEO and navigation
-- **Demo Inspector** - Visual debugging tool (Cmd+Shift+D toggle, Cmd+Shift+E expand/collapse) showing data sources
-- **SSR Implementation** - Server-side rendering for product pages (62% faster)
-- **Unified Query System** - Single GraphQL query for all page data (75% fewer requests)
+- **Demo Inspector** - Visual debugging tool (Cmd+Shift+D toggle, Cmd+Shift+E expand/collapse)
+- **Single Query Mode** - Toggle between unified and multiple queries for demonstration
+- **Client-Side Rendering** - All data fetched on the client for maximum interactivity
 
 ### Architecture Patterns
 
 **Compound Components with Context**
+
 ```tsx
 <ProductPageProvider category="phones" pageData={pageData}>
   <ProductPage.Background>
     <ProductPage.Container>
       <ProductPage.Header />
-      <ProductPage.Content />  {/* Smart component with logic */}
+      <ProductPage.Content /> {/* Smart component with logic */}
     </ProductPage.Container>
   </ProductPage.Background>
 </ProductPageProvider>
 ```
 
 **Key Principles:**
+
 1. Context for data flow (no prop drilling)
 2. Smart components for conditional logic
 3. Thin wrappers for context integration
@@ -64,11 +106,13 @@ src/
 ### Hybrid Search Architecture
 
 When users search, we run Live Search + Catalog in parallel:
+
 - **Live Search**: AI relevance ranking (SKUs only)
 - **Catalog Service**: Complete product details
 - **Result**: AI-ranked products with full attributes (50% faster than sequential)
 
 Service selection:
+
 - Search text → Hybrid (both services in parallel)
 - No search → Catalog only
 - Facets → Always Live Search (Catalog has no support)
@@ -83,46 +127,17 @@ The mesh resolver handles this complexity - frontend just calls `Citisignal_prod
 - **SWR** - Data fetching with infinite scroll
 - **Adobe API Mesh** - GraphQL gateway for Commerce services
 
-## API Mesh Resolver Architecture
-
-### Resolver Pattern
-All resolvers follow a consistent 9-section structure due to API Mesh limitations (no external imports):
-
-1. **File Header** - Purpose and service orchestration description
-2. **Constants** - `DEFAULT_PAGE_SIZE = 24`, price limits
-3. **Filter Conversion** - Convert frontend filters to service formats
-4. **Attribute Extraction** - Clean and extract product attributes
-5. **Price Utilities** - Price extraction and formatting
-6. **URL Utilities** - HTTPS enforcement
-7. **Product Transformation** - Consistent product format
-8. **Service Queries** - Abstracted service calls
-9. **Main Resolver** - Orchestration with error handling
-
-### Shared Utilities Template
-`commerce-mesh/resolvers/shared-utilities-template.js` contains all common functions that must be copied into each resolver. This duplication is necessary because API Mesh doesn't support imports.
-
-### Filter Architecture
-- **`Citisignal_ProductFilter`** - Used by standalone queries (includes category field)
-- **`Citisignal_PageFilter`** - Used by page-level resolvers (category comes from resolver parameter)
-- Clean separation prevents conflicting category values and improves developer experience
-
-### Resolver Types
-- **Page Resolvers** (`category-page`, `product-page`) - Complete SSR data in one query
-  - Use `Citisignal_PageFilter` for filtering within context
-  - Category parameter is separate and required for `category-page`
-- **Focused Resolvers** (`product-cards`, `product-facets`) - Single responsibility
-  - Use `Citisignal_ProductFilter` including category field
-- **All resolvers expose consistent field shapes** regardless of internal implementation
-
 ## Development Standards
 
 ### API Integration
+
 - **Use Custom Resolvers** - `Citisignal_*` queries for consistent data
 - **Hybrid Service Selection** - Catalog for initial loads, Live Search for user interaction
 - **Normalize in Resolver** - Don't transform data in frontend
 - **Handle Images Properly** - Use `productView.images` for Live Search
 
 ### UI/UX Patterns
+
 - **Show All Products** - Display out-of-stock with badges, don't filter
 - **Compound Components** - Use Context to avoid prop drilling
 - **Smart Components** - Encapsulate logic, keep JSX clean
@@ -154,6 +169,9 @@ All resolvers follow a consistent 9-section structure due to API Mesh limitation
 - [Future Improvements](./docs/future-improvements.md) - Planned enhancements
 - [Code Standards](./docs/code-standards.md) - Best practices and patterns
 - [Loading Strategy](./docs/loading-strategy.md) - Coordinated loading approach
+- [Adaptive Loading Patterns](./docs/patterns/adaptive-loading.md) - Context-aware loading states
+- [Skeleton Loader Best Practices](./docs/patterns/skeleton-loaders.md) - When and how to use skeletons
+- [Loading States Troubleshooting](./docs/troubleshooting/loading-states.md) - Common issues & fixes
 
 ## Product Categories
 
@@ -163,18 +181,21 @@ Removed: `internet-deals` (not suitable for e-commerce catalog)
 ## Architecture Decisions
 
 ### Why Compound Components?
+
 - **Eliminates prop drilling** - Data flows through context
 - **Self-documenting** - JSX structure shows intent
 - **Composable** - Mix and match components as needed
 - **Maintainable** - Logic isolated in smart components
 
 ### Why Keep Page Structure Duplication?
+
 - **Developer experience** - Everything visible in one file
 - **Debugging** - No jumping between files
 - **Flexibility** - Easy to make one page unique
 - **Structure != Logic** - Logic is properly abstracted
 
 ### Component Organization
+
 - `/components/layout/` - Page-level compound components
 - `/components/ui/` - Reusable UI components
 - Thin wrappers connect context to existing UI components
@@ -189,9 +210,92 @@ Removed: `internet-deals` (not suitable for e-commerce catalog)
 - LayeredTransition prevents layout shifts
 - 500ms search debouncing prevents flicker
 
+## Adaptive Loading Pattern (2024-01-08)
+
+**[→ See detailed adaptive loading documentation](./docs/patterns/adaptive-loading.md)**
+
+### Problem Solved
+
+- Skeleton loader appeared on every filter change, causing jarring UX
+- Users lost context when applying filters
+- Constant UI resets disrupted browsing experience
+
+### Solution Implemented
+
+**Adaptive loading** that shows different UI based on context:
+
+- **Initial load**: Show skeleton (no previous data exists)
+- **Filter/sort changes**: Show inline loading (preserve UI, add spinner)
+- **Clear filters**: Maintain scroll position
+
+### Key Implementation Details
+
+#### 1. Store Previous Data
+
+```typescript
+const previousFacetsRef = useRef(facets);
+useEffect(() => {
+  if (facets?.length > 0) previousFacetsRef.current = facets;
+}, [facets]);
+```
+
+#### 2. Adaptive Display Logic
+
+```typescript
+const showContent = hasFacets || hasPreviousFacets;
+const showSkeleton = !hasPreviousFacets && isLoading;
+```
+
+#### 3. Inline Loading Indicators
+
+- 50% opacity on content during loading
+- Absolutely positioned spinner (no layout shift)
+- Smooth 300ms transitions
+
+### Adobe API Mesh Constraints
+
+**Critical limitations discovered:**
+
+- **No template literals** - Use string concatenation: `'$' + price`
+- **No imports/requires** - All code must be inline
+- **No external dependencies** - Pure JavaScript only
+
+### Frontend "Dumb" Pattern
+
+- **NO business logic in frontend** - All transformations in mesh
+- Frontend only displays what it receives from mesh
+- Price formatting, filter parsing, etc. handled by resolvers
+
+### Common Pitfalls & Solutions
+
+#### Mesh Update Detection
+
+**Problem**: Hash check unreliable, compared wrong files
+**Solution**: Check source files (resolvers/_.js, schema/_.graphql) not mesh.json
+
+#### Next.js 15 Router API
+
+**Problem**: `router.push(path, undefined, { scroll: false })` doesn't work
+**Solution**: Use two-parameter syntax: `router.push(path, { scroll: false })`
+
+#### Filter State Management
+
+**Problem**: Array comparisons failing in useEffect
+**Solution**: Use JSON.stringify for array comparison
+
+### Testing Checklist for Loading States
+
+- [ ] Initial page load shows skeleton
+- [ ] First filter shows inline loading (not skeleton)
+- [ ] Subsequent filters show inline loading
+- [ ] Clear all preserves scroll position
+- [ ] No layout shift from spinners
+- [ ] Smooth transitions (200-300ms)
+
 ## Next Steps
 
 Apply compound component pattern to:
+
 - Checkout pages (multi-step form)
 - Home page sections
 - Search results page

@@ -5,9 +5,8 @@ import Container from '@/components/ui/layout/Container';
 import OrderConfirmation from '@/components/ui/feedback/OrderConfirmation';
 import { mockOrderData } from '@/data/route-groups/checkout/order-confirmation';
 
-
 export default function OrderConfirmationPage() {
-  // TODO: Get order details from server/state
+  // Using mock data until order state management is implemented
   const order = mockOrderData;
 
   return (

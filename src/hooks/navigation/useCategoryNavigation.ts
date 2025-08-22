@@ -3,7 +3,6 @@
 import useSWR from 'swr';
 import GetCategoryNavigationQuery from '@/graphql/queries/GetCategoryNavigation.graphql';
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
-import { graphqlFetcherWithTracking } from '@/lib/graphql-fetcher-with-tracking';
 
 interface NavItem {
   href: string;
@@ -28,21 +27,22 @@ interface CategoryNavigationResponse {
 interface UseCategoryNavigationOptions {
   rootCategoryId?: string;
   includeInactive?: boolean;
+  enabled?: boolean; // Whether to fetch data
 }
 
 /**
  * Hook to fetch category navigation tree from Commerce API
- * 
+ *
  * @param options - Configuration options
  * @returns SWR response with category navigation data
- * 
+ *
  * @example
  * ```tsx
  * const { data, error, isLoading } = useCategoryNavigation();
- * 
+ *
  * if (isLoading) return <Skeleton />;
  * if (error) return <Error />;
- * 
+ *
  * return (
  *   <Navigation>
  *     {data.items.map(category => (
@@ -55,39 +55,30 @@ interface UseCategoryNavigationOptions {
  * ```
  */
 export function useCategoryNavigation(options: UseCategoryNavigationOptions = {}) {
-  const {
-    rootCategoryId,
-    includeInactive = false
-  } = options;
+  const { rootCategoryId, includeInactive = false, enabled = true } = options;
 
   const variables = {
     rootCategoryId,
-    includeInactive
+    includeInactive,
   };
-  
-  // Use tracking fetcher if Demo Inspector might be enabled
-  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
 
   const { data, error, mutate } = useSWR<CategoryNavigationResponse>(
-    ['Citisignal_categoryNavigation', variables],
-    () => fetcher<CategoryNavigationResponse>(
-      GetCategoryNavigationQuery,
-      variables
-    ),
+    enabled ? ['Citisignal_categoryNavigation', variables] : null,
+    () => graphqlFetcher<CategoryNavigationResponse>(GetCategoryNavigationQuery, variables),
     {
       // Categories change rarely, cache for 1 hour
       dedupingInterval: 3600000,
       revalidateOnFocus: false,
       revalidateIfStale: false,
       // Keep previous data while revalidating
-      keepPreviousData: true
+      keepPreviousData: true,
     }
   );
 
   return {
-    data: data?.Citisignal_categoryNavigation || { items: [] },
+    data: data?.Citisignal_categoryNavigation || null,
     error,
     loading: !data && !error,
-    mutate
+    mutate,
   };
 }

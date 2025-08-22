@@ -11,10 +11,6 @@ interface UseSearchBarProps {
  * @param {Object} props - Hook configuration
  * @param {Function} [props.onSearch] - Callback when search value changes
  * @returns {Object} Search state and handlers
- * @example
- * const { value, setValue, debouncedValue } = useSearchBar({
- *   onSearch: (value) => console.log(value)
- * });
  */
 export function useSearchBar({ onSearch }: UseSearchBarProps) {
   const [isOpen, setIsOpen] = useState(false);
@@ -36,7 +32,7 @@ export function useSearchBar({ onSearch }: UseSearchBarProps) {
 
     document.addEventListener('mousedown', handleClickOutside);
     document.addEventListener('keydown', handleEscapeKey);
-    
+
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
       document.removeEventListener('keydown', handleEscapeKey);
@@ -56,6 +52,6 @@ export function useSearchBar({ onSearch }: UseSearchBarProps) {
     containerRef,
     setSearchValue,
     handleSubmit,
-    toggleSearch
+    toggleSearch,
   };
-} 
+}

@@ -19,8 +19,8 @@ const mockAddresses: AddressFields[] = [
     city: 'San Francisco',
     state: 'CA',
     zipCode: '94105',
-    isDefault: true
-  }
+    isDefault: true,
+  },
 ];
 
 export default function AddressesPage() {
@@ -30,34 +30,33 @@ export default function AddressesPage() {
 
   const handleAddressSubmit = async (data: AddressFields) => {
     // TODO: Implement address update/create
-    console.log('Address update:', data);
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
+    await new Promise((resolve) => setTimeout(resolve, 1000));
+
     if (editingAddress !== null) {
-      setAddresses(prev => prev.map((addr, idx) => 
-        idx === editingAddress ? data : addr
-      ));
+      setAddresses((prev) => prev.map((addr, idx) => (idx === editingAddress ? data : addr)));
       setEditingAddress(null);
     } else {
-      setAddresses(prev => [...prev, data]);
+      setAddresses((prev) => [...prev, data]);
       setShowAddForm(false);
     }
   };
 
   const handleDelete = (index: number) => {
-    setAddresses(prev => prev.filter((_, idx) => idx !== index));
+    setAddresses((prev) => prev.filter((_, idx) => idx !== index));
   };
 
   const handleSetDefault = (index: number) => {
-    setAddresses(prev => prev.map((addr, idx) => ({
-      ...addr,
-      isDefault: idx === index
-    })));
+    setAddresses((prev) =>
+      prev.map((addr, idx) => ({
+        ...addr,
+        isDefault: idx === index,
+      }))
+    );
   };
 
   const pageData = {
     title: addressConfig.title,
-    description: addressConfig.description
+    description: addressConfig.description,
   };
 
   return (
@@ -65,7 +64,7 @@ export default function AddressesPage() {
       <AccountPage.Root>
         <AccountPage.Layout>
           <AccountPage.Navigation />
-          
+
           <AccountPage.Main>
             <AccountPage.Section>
               <AccountPage.Header />
@@ -92,7 +91,9 @@ export default function AddressesPage() {
                         {editingAddress !== null ? 'Edit Address' : 'Add New Address'}
                       </h3>
                       <AddressForm
-                        initialValues={editingAddress !== null ? addresses[editingAddress] : undefined}
+                        initialValues={
+                          editingAddress !== null ? addresses[editingAddress] : undefined
+                        }
                         onSubmit={handleAddressSubmit}
                         onCancel={() => {
                           setShowAddForm(false);
@@ -115,11 +116,12 @@ export default function AddressesPage() {
                               Default
                             </Badge>
                           )}
-                          
+
                           <div className="pr-24">
                             <p className="font-medium text-gray-900">{address.name}</p>
                             <p className="text-gray-600 mt-1">
-                              {address.street}<br />
+                              {address.street}
+                              <br />
                               {address.city}, {address.state} {address.zipCode}
                             </p>
                           </div>

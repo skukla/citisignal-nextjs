@@ -1,12 +1,12 @@
 import useSWR from 'swr';
-import { graphqlFetcher } from '@/lib/graphql-fetcher';
+import { graphqlFetcher, graphqlFetcherWithTracking } from '@/lib/graphql-fetcher';
+import GET_CATEGORY_PAGE_DATA from '@/graphql/queries/GetCategoryPageData.graphql';
 
 interface Citisignal_PageFilter {
   manufacturer?: string;
   memory?: string[];
-  colors?: string[];
-  priceMin?: number;
-  priceMax?: number;
+  color?: string[];
+  price?: string[];
   onSaleOnly?: boolean;
 }
 
@@ -15,106 +15,8 @@ interface Citisignal_SortInput {
   direction?: 'ASC' | 'DESC';
 }
 
-const GET_CATEGORY_PAGE_DATA = `
-  query GetCategoryPageData(
-    $category: String!
-    $phrase: String
-    $filter: Citisignal_PageFilter
-    $sort: Citisignal_SortInput
-    $pageSize: Int
-    $currentPage: Int
-  ) {
-    Citisignal_categoryPageData(
-      category: $category
-      phrase: $phrase
-      filter: $filter
-      sort: $sort
-      pageSize: $pageSize
-      currentPage: $currentPage
-    ) {
-      navigation {
-        headerNav {
-          href
-          label
-          category
-        }
-        footerNav {
-          href
-          label
-        }
-      }
-      products {
-        items {
-          id
-          sku
-          name
-          urlKey
-          price
-          originalPrice
-          discountPercent
-          inStock
-          image {
-            url
-            altText
-          }
-          memory
-          colors {
-            name
-            hex
-          }
-          manufacturer
-        }
-        totalCount
-        hasMoreItems
-        currentPage
-        page_info {
-          current_page
-          page_size
-          total_pages
-        }
-        facets {
-          title
-          key
-          type
-          options {
-            id
-            name
-            count
-          }
-        }
-      }
-      facets {
-        facets {
-          title
-          key
-          type
-          options {
-            id
-            name
-            count
-          }
-        }
-      }
-      breadcrumbs {
-        items {
-          name
-          urlPath
-        }
-      }
-      categoryInfo {
-        id
-        name
-        urlKey
-        description
-        metaTitle
-        metaDescription
-      }
-    }
-  }
-`;
-
 interface CategoryPageDataVariables {
-  category: string;  // Now required
+  categoryUrlKey?: string;
   phrase?: string;
   filter?: Citisignal_PageFilter;
   sort?: Citisignal_SortInput;
@@ -129,7 +31,7 @@ interface CategoryPageDataResponse {
       footerNav: Array<{ href: string; label: string }>;
     };
     products: {
-      items: any[];
+      items: Array<Record<string, unknown>>;
       totalCount: number;
       hasMoreItems: boolean;
       currentPage: number;
@@ -138,10 +40,28 @@ interface CategoryPageDataResponse {
         page_size: number;
         total_pages: number;
       };
-      facets: any[];
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
     };
     facets: {
-      facets: any[];
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
     };
     breadcrumbs: {
       items: Array<{ name: string; urlPath: string }>;
@@ -158,9 +78,9 @@ interface CategoryPageDataResponse {
 }
 
 /**
- * Hook for fetching complete category page data for SSR.
- * 
- * This hook is optimized for server-side rendering where we need all
+ * Hook for fetching complete category page data in a single query.
+ *
+ * This hook is optimized for initial page loads where we need all
  * page data in a single query. It orchestrates multiple backend services
  * through Adobe API Mesh to deliver:
  * - Navigation (Commerce Core)
@@ -168,31 +88,36 @@ interface CategoryPageDataResponse {
  * - Facets (Live Search)
  * - Breadcrumbs (Commerce Core)
  * - Category Info (Commerce Core)
- * 
+ *
  * @param variables Query variables for the category page
  * @returns SWR response with complete category page data
  */
-export function useCategoryPageData(variables: CategoryPageDataVariables) {
+export function useCategoryPageData(variables: CategoryPageDataVariables | null) {
   const key = variables ? [GET_CATEGORY_PAGE_DATA, variables] : null;
-  
+
+  // Use tracking fetcher if Demo Inspector might be enabled
+  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
+
   return useSWR<CategoryPageDataResponse>(
     key,
-    ([query, vars]) => graphqlFetcher(query, vars),
+    key ? ([query, vars]) => fetcher(query, vars) : null,
     {
       revalidateOnFocus: false,
       revalidateOnReconnect: false,
-      dedupingInterval: 60000, // Cache for 1 minute (SSR data is relatively stable)
+      dedupingInterval: 60000, // Cache for 1 minute (initial page data is relatively stable)
     }
   );
 }
 
 /**
- * Server-side data fetching function for Next.js SSR/SSG.
- * Use this in getServerSideProps or getStaticProps.
- * 
+ * Direct data fetching function for the unified category page query.
+ * Can be used for direct data fetching when needed.
+ *
  * @param variables Query variables for the category page
  * @returns Promise with category page data
  */
-export async function fetchCategoryPageData(variables: CategoryPageDataVariables): Promise<CategoryPageDataResponse> {
+export async function fetchCategoryPageData(
+  variables: CategoryPageDataVariables
+): Promise<CategoryPageDataResponse> {
   return graphqlFetcher(GET_CATEGORY_PAGE_DATA, variables);
 }

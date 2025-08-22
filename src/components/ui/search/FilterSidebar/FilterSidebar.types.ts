@@ -19,6 +19,7 @@ export interface FilterOption {
 export interface FilterSection {
   title: string;
   key: string;
+  attributeCode?: string; // Original Adobe attribute code for filtering
   options: FilterOption[];
   type: 'checkbox' | 'radio';
 }
@@ -40,6 +41,7 @@ export interface FilterSidebarProps {
   activeFilters: Record<string, string[]>;
   onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
   onClearFilters: () => void;
+  isValidating?: boolean;
 }
 
 /**
@@ -59,6 +61,7 @@ export interface FilterSidebarSectionProps {
   activeFilters: Record<string, string[]>;
   onToggleSection: (key: string) => void;
   onFilterChange: (filterKey: string, value: string, checked: boolean) => void;
+  isValidating?: boolean;
 }
 
 /**

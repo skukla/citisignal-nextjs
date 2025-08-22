@@ -11,22 +11,22 @@ import ProductPageProducts from './ProductPageProducts';
 export function ProductPageContent() {
   const { error, filteredProducts, isInitialLoading, loading } = useProductData();
   const { pageData } = useProductFilters();
-  
+
   // Determine which state to show
   const showSkeleton = isInitialLoading || (loading && filteredProducts.length === 0);
   const hasError = !!error;
-  const isEmpty = !error && filteredProducts.length === 0;
+  const isEmpty = !error && !loading && filteredProducts.length === 0;
   const hasProducts = !error && filteredProducts.length > 0;
-  
+
   // Special handling for error and empty states
   if (!showSkeleton && hasError) {
     return <ProductPageError error={error} />;
   }
-  
+
   if (!showSkeleton && isEmpty) {
     return <ProductPageEmpty />;
   }
-  
+
   // Layered transition for skeleton -> products (most common case)
   return (
     <LayeredTransition

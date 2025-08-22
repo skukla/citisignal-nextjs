@@ -3,7 +3,6 @@
 import useSWR from 'swr';
 import GetCategoryBreadcrumbsQuery from '@/graphql/queries/GetCategoryBreadcrumbs.graphql';
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
-import { graphqlFetcherWithTracking } from '@/lib/graphql-fetcher-with-tracking';
 
 export interface BreadcrumbItem {
   categoryId?: string;
@@ -26,24 +25,24 @@ interface UseCategoryBreadcrumbsOptions {
 
 /**
  * Hook to fetch category breadcrumbs from Commerce API
- * 
+ *
  * @param options - Configuration options with required categoryUrlKey
  * @returns SWR response with breadcrumb data
- * 
+ *
  * @example
  * ```tsx
- * const { data, error, isLoading } = useCategoryBreadcrumbs({ 
- *   categoryUrlKey: 'electronics' 
+ * const { data, error, isLoading } = useCategoryBreadcrumbs({
+ *   categoryUrlKey: 'electronics'
  * });
- * 
+ *
  * if (isLoading) return <Skeleton />;
  * if (error) return <Error />;
- * 
+ *
  * return (
  *   <Breadcrumbs>
  *     {data.items.map((item, index) => (
- *       <BreadcrumbItem 
- *         key={index} 
+ *       <BreadcrumbItem
+ *         key={index}
  *         href={item.urlPath}
  *         isLast={index === data.items.length - 1}
  *       >
@@ -58,25 +57,19 @@ export function useCategoryBreadcrumbs(options: UseCategoryBreadcrumbsOptions) {
   const { categoryUrlKey } = options;
 
   const variables = {
-    categoryUrlKey
+    categoryUrlKey,
   };
-  
-  // Use tracking fetcher if Demo Inspector might be enabled
-  const fetcher = typeof window !== 'undefined' ? graphqlFetcherWithTracking : graphqlFetcher;
 
   const { data, error, mutate } = useSWR<CategoryBreadcrumbsResponse>(
     categoryUrlKey ? ['Citisignal_categoryBreadcrumbs', variables] : null,
-    () => fetcher<CategoryBreadcrumbsResponse>(
-      GetCategoryBreadcrumbsQuery,
-      variables
-    ),
+    () => graphqlFetcher<CategoryBreadcrumbsResponse>(GetCategoryBreadcrumbsQuery, variables),
     {
       // Breadcrumbs change rarely, cache for 1 hour
       dedupingInterval: 3600000,
       revalidateOnFocus: false,
       revalidateIfStale: false,
       // Keep previous data while revalidating
-      keepPreviousData: true
+      keepPreviousData: true,
     }
   );
 
@@ -84,6 +77,6 @@ export function useCategoryBreadcrumbs(options: UseCategoryBreadcrumbsOptions) {
     data: data?.Citisignal_categoryBreadcrumbs || { items: [] },
     error,
     loading: !data && !error,
-    mutate
+    mutate,
   };
 }

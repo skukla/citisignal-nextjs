@@ -13,7 +13,7 @@ import { useAccountContext } from './AccountContext';
  * @example
  * <Account.Icon aria-label="User account" />
  */
-export function AccountIcon({ className, ...props }: AccountIconProps) {
+export function AccountIcon({ ...props }: AccountIconProps) {
   const { toggle, isAuthenticated, user } = useAccountContext();
 
   return (

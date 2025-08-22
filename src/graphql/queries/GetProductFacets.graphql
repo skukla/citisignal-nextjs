@@ -13,6 +13,7 @@ query GetProductFacets(
     facets {
       title
       key
+      attributeCode
       type
       options {
         id

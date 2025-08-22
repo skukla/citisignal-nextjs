@@ -4,9 +4,8 @@ import { graphqlFetcher } from '@/lib/graphql-fetcher';
 interface Citisignal_PageFilter {
   manufacturer?: string;
   memory?: string[];
-  colors?: string[];
-  priceMin?: number;
-  priceMax?: number;
+  color?: string[];
+  price?: string[];
   onSaleOnly?: boolean;
 }
 
@@ -15,8 +14,8 @@ interface Citisignal_SortInput {
   direction?: 'ASC' | 'DESC';
 }
 
-const GET_PRODUCT_PAGE_DATA = `
-  query GetProductPageData(
+const GET_CATEGORY_PAGE_DATA = `
+  query GetCategoryPageData(
     $category: String
     $phrase: String
     $filter: Citisignal_PageFilter
@@ -24,7 +23,7 @@ const GET_PRODUCT_PAGE_DATA = `
     $pageSize: Int
     $currentPage: Int
   ) {
-    Citisignal_productPageData(
+    Citisignal_categoryPageData(
       category: $category
       phrase: $phrase
       filter: $filter
@@ -103,7 +102,7 @@ const GET_PRODUCT_PAGE_DATA = `
 `;
 
 interface ProductPageDataVariables {
-  category?: string;  // Optional for product page
+  category?: string;
   phrase?: string;
   filter?: Citisignal_PageFilter;
   sort?: Citisignal_SortInput;
@@ -111,14 +110,45 @@ interface ProductPageDataVariables {
   currentPage?: number;
 }
 
-interface ProductPageDataResponse {
-  Citisignal_productPageData: {
+interface CategoryPageDataResponse {
+  Citisignal_categoryPageData: {
     navigation: {
       headerNav: Array<{ href: string; label: string; category: string }>;
       footerNav: Array<{ href: string; label: string }>;
     };
-    products: any;
-    facets: any;
+    products: {
+      items: Array<Record<string, unknown>>;
+      totalCount: number;
+      hasMoreItems: boolean;
+      currentPage: number;
+      page_info: {
+        current_page: number;
+        page_size: number;
+        total_pages: number;
+      };
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
+    };
+    facets: {
+      facets: Array<{
+        title: string;
+        key: string;
+        type: string;
+        options: Array<{
+          id: string;
+          name: string;
+          count: number;
+        }>;
+      }>;
+    };
     breadcrumbs: {
       items: Array<{ name: string; urlPath: string }>;
     };
@@ -128,28 +158,26 @@ interface ProductPageDataResponse {
 /**
  * Unified hook for fetching all product page data in a single query.
  * Demonstrates the power of Adobe API Mesh by orchestrating multiple backend services.
- * 
+ *
  * This replaces multiple separate queries with ONE unified query that gets:
  * - Navigation (from Commerce Core)
  * - Products (from Live Search + Catalog Service)
  * - Facets (from Live Search)
  * - Breadcrumbs (from Commerce Core)
- * 
+ *
  * @param variables Query variables for filtering, sorting, and pagination
  * @returns SWR response with unified product page data
  */
 export function useProductPageData(variables: ProductPageDataVariables) {
-  const key = variables ? [GET_PRODUCT_PAGE_DATA, variables] : null;
-  
-  return useSWR<ProductPageDataResponse>(
-    key,
-    ([query, vars]) => graphqlFetcher(query, vars),
-    {
-      revalidateOnFocus: false,
-      revalidateOnReconnect: false,
-      dedupingInterval: 5000,
-    }
-  );
+  // Only create key if we have actual variables to query with
+  const key =
+    variables && Object.keys(variables).length > 0 ? [GET_CATEGORY_PAGE_DATA, variables] : null;
+
+  return useSWR<CategoryPageDataResponse>(key, ([query, vars]) => graphqlFetcher(query, vars), {
+    revalidateOnFocus: false,
+    revalidateOnReconnect: false,
+    dedupingInterval: 5000,
+  });
 }
 
 /**
@@ -158,6 +186,6 @@ export function useProductPageData(variables: ProductPageDataVariables) {
  */
 export function useUnifiedNavigation() {
   return useProductPageData({
-    pageSize: 0  // Optimize - don't fetch products when we only need navigation
+    pageSize: 0, // Optimize - don't fetch products when we only need navigation
   });
 }
