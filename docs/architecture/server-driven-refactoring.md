@@ -7,6 +7,7 @@ Refactor the current client-side filtering approach to a strategic hybrid archit
 ## Current State
 
 ### Problems with Current Architecture
+
 - **Dual filtering logic** - Filters applied both client-side (useProductList) and server-side
 - **State synchronization issues** - URL state and component state can diverge
 - **Bundle size** - Unnecessary client-side filtering code
@@ -14,6 +15,7 @@ Refactor the current client-side filtering approach to a strategic hybrid archit
 - **Complexity** - Two places to maintain filtering logic
 
 ### Current Flow
+
 1. Initial load fetches data from GraphQL
 2. User applies filters via UI
 3. Filters stored in React state (useProductList hook)
@@ -23,6 +25,7 @@ Refactor the current client-side filtering approach to a strategic hybrid archit
 ## Target Architecture
 
 ### Hybrid Approach Benefits
+
 - **SEO Optimization** - Major filters in URL for indexable, shareable pages
 - **Responsive UX** - Instant feedback for UI interactions
 - **Performance Balance** - Server handles heavy operations, client handles quick refinements
@@ -31,7 +34,9 @@ Refactor the current client-side filtering approach to a strategic hybrid archit
 - **Reduced Server Load** - Minor interactions don't require API calls
 
 ### Server-Side State (URL-Driven)
+
 **Core Commerce Functions:**
+
 - Product search queries (`?search=iphone`)
 - Category filtering (`?category=phones`)
 - Price range filtering (`?priceMin=500&priceMax=1000`)
@@ -40,7 +45,9 @@ Refactor the current client-side filtering approach to a strategic hybrid archit
 - Pagination (`?page=2`)
 
 ### Client-Side State (React State)
+
 **Interactive UI Elements:**
+
 - View preferences (grid/list toggle)
 - Temporary UI states (collapsed panels, open modals)
 - Quick filters within loaded dataset
@@ -49,6 +56,7 @@ Refactor the current client-side filtering approach to a strategic hybrid archit
 - Loading and transition animations
 
 ### Target Flow
+
 1. **Major Operations** (Server-Side):
    - User searches or changes category → Update URL → Server query → Display results
    - Benefits: SEO, shareable links, browser history
@@ -62,6 +70,7 @@ Refactor the current client-side filtering approach to a strategic hybrid archit
 ### Phase 1: URL State Management (Frontend)
 
 #### 1.1 Update URL Parameter Structure
+
 ```typescript
 // Example URL structure
 /phones?search=iphone&sort=price_asc&manufacturer=apple&memory=128GB,256GB&page=2
@@ -80,24 +89,27 @@ interface ProductPageParams {
 ```
 
 #### 1.2 Refactor useProductList Hook
+
 - Simplify to handle only UI state and optimistic updates
 - Remove heavy filtering logic (moves to server)
 - Keep quick client-side refinements for loaded data
 - Add optimistic update patterns for better UX
 
 #### 1.3 Update useProductCards Hook
+
 ```typescript
 // Hybrid approach - server filters with client enhancements
 const useProductCards = ({ searchParams, clientFilters }) => {
   // Server-side filtering via URL params
   const { data, error, size, setSize } = useSWRInfinite(
     (pageIndex) => ['productCards', searchParams, pageIndex + 1],
-    (key) => fetchProductCards({
-      ...searchParams,
-      page: key[2]
-    })
+    (key) =>
+      fetchProductCards({
+        ...searchParams,
+        page: key[2],
+      })
   );
-  
+
   // Optional client-side refinements for loaded data
   const filteredData = useMemo(() => {
     if (!clientFilters || Object.keys(clientFilters).length === 0) {
@@ -106,7 +118,7 @@ const useProductCards = ({ searchParams, clientFilters }) => {
     // Apply quick client filters (e.g., hide out of stock temporarily)
     return applyClientFilters(data, clientFilters);
   }, [data, clientFilters]);
-  
+
   return { data: filteredData, error, loadMore: () => setSize(size + 1) };
 };
 ```
@@ -114,12 +126,13 @@ const useProductCards = ({ searchParams, clientFilters }) => {
 ### Phase 2: GraphQL Resolver Enhancement
 
 #### 2.1 Extend Citisignal_productCards Arguments
+
 ```graphql
 type Query {
   Citisignal_productCards(
     phrase: String
     filter: ProductFilter
-    sort: SortOption  # New: Add sorting
+    sort: SortOption # New: Add sorting
     limit: Int
     page: Int
     facets: Boolean
@@ -127,21 +140,22 @@ type Query {
 }
 
 enum SortOption {
-  RELEVANCE      # Default for search
-  PRICE_ASC      # Price low to high
-  PRICE_DESC     # Price high to low
-  NAME_ASC       # Alphabetical A-Z
-  NAME_DESC      # Alphabetical Z-A
-  NEWEST         # Recently added
+  RELEVANCE # Default for search
+  PRICE_ASC # Price low to high
+  PRICE_DESC # Price high to low
+  NAME_ASC # Alphabetical A-Z
+  NAME_DESC # Alphabetical Z-A
+  NEWEST # Recently added
 }
 ```
 
 #### 2.2 Implement Sorting in Resolver
+
 ```javascript
 // product-cards.js resolver additions
 const mapSortOption = (sort, isLiveSearch) => {
   const sortMappings = {
-    PRICE_ASC: isLiveSearch 
+    PRICE_ASC: isLiveSearch
       ? { attribute: 'price', direction: 'ASC' }
       : { name: 'price', direction: 'ASC' },
     PRICE_DESC: isLiveSearch
@@ -152,7 +166,7 @@ const mapSortOption = (sort, isLiveSearch) => {
       : { name: 'name', direction: 'ASC' },
     // ... other mappings
   };
-  
+
   return sortMappings[sort] || null;
 };
 
@@ -170,6 +184,7 @@ if (sortConfig) {
 ```
 
 #### 2.3 Maintain Simple Service Selection
+
 ```javascript
 // Keep the simple, clear logic as documented
 const shouldUseLiveSearch = (args) => {
@@ -182,18 +197,19 @@ const shouldUseLiveSearch = (args) => {
 ### Phase 3: Component Updates
 
 #### 3.1 Update FilterPanel Component
+
 ```typescript
 // Hybrid approach - major filters to URL, minor to state
 const FilterPanel = () => {
   const [tempFilters, setTempFilters] = useState({});
   const searchParams = useSearchParams();
   const router = useRouter();
-  
+
   // Major filter change (server-side)
   const handleMajorFilterChange = (filterType: string, value: any) => {
     // Show optimistic UI update
     setTempFilters({ ...tempFilters, [filterType]: value });
-    
+
     // Update URL for server query
     const params = new URLSearchParams(searchParams);
     if (value && value.length > 0) {
@@ -202,22 +218,22 @@ const FilterPanel = () => {
       params.delete(filterType);
     }
     params.delete('page'); // Reset pagination
-    
+
     router.push(`${pathname}?${params.toString()}`);
   };
-  
+
   // Minor filter change (client-side only)
   const handleMinorFilterChange = (filterType: string, value: any) => {
     setTempFilters({ ...tempFilters, [filterType]: value });
     // These don't update URL, just local state
   };
-  
+
   return (
     <>
       {/* Major filters - update URL */}
       <CategoryFilter onChange={(v) => handleMajorFilterChange('category', v)} />
       <PriceFilter onChange={(v) => handleMajorFilterChange('price', v)} />
-      
+
       {/* Minor filters - client state only */}
       <ViewToggle onChange={(v) => handleMinorFilterChange('view', v)} />
       <QuickFilter onChange={(v) => handleMinorFilterChange('quick', v)} />
@@ -227,19 +243,20 @@ const FilterPanel = () => {
 ```
 
 #### 3.2 Update SortDropdown Component
+
 ```typescript
 // Use URL params instead of local state
 const SortDropdown = () => {
   const searchParams = useSearchParams();
   const router = useRouter();
   const currentSort = searchParams.get('sort') || 'RELEVANCE';
-  
+
   const handleSortChange = (newSort: string) => {
     const params = new URLSearchParams(searchParams);
     params.set('sort', newSort);
     router.push(`${pathname}?${params.toString()}`);
   };
-  
+
   return (
     <Select value={currentSort} onValueChange={handleSortChange}>
       {/* Sort options */}
@@ -249,6 +266,7 @@ const SortDropdown = () => {
 ```
 
 #### 3.3 Update SearchBar Component
+
 ```typescript
 // Navigate with search query in URL
 const handleSearch = (query: string) => {
@@ -263,6 +281,7 @@ const handleSearch = (query: string) => {
 ### Phase 4: Testing & Validation
 
 #### 4.1 Test Cases
+
 - [ ] Direct URL access with major filters works
 - [ ] Browser back/forward navigation maintains state
 - [ ] Bookmarked filtered views load correctly
@@ -277,12 +296,14 @@ const handleSearch = (query: string) => {
 - [ ] Quick filters don't trigger server requests
 
 #### 4.2 Performance Metrics
+
 - Measure bundle size reduction
 - Compare initial load times
 - Test filtered view load times
 - Verify no unnecessary re-renders
 
 #### 4.3 SEO Validation
+
 - Ensure filtered URLs are crawlable
 - Verify meta tags update correctly
 - Test Open Graph data for shared URLs
@@ -290,11 +311,13 @@ const handleSearch = (query: string) => {
 ### Phase 5: Documentation Updates
 
 #### 5.1 Update CLAUDE.md Files
+
 - Document new URL-driven approach
 - Update development standards
 - Add examples of URL structures
 
 #### 5.2 Update Component Documentation
+
 - Document new props and behaviors
 - Add migration notes for other pages
 - Include troubleshooting section
@@ -302,12 +325,14 @@ const handleSearch = (query: string) => {
 ## Migration Checklist
 
 ### Pre-Migration
+
 - [ ] Review current filtering logic
 - [ ] Document existing URL structures
 - [ ] Identify all components using filters
 - [ ] Create rollback plan
 
 ### During Migration
+
 - [ ] Update GraphQL resolver with sorting
 - [ ] Test resolver via GraphQL playground
 - [ ] Update useProductCards hook for hybrid approach
@@ -321,6 +346,7 @@ const handleSearch = (query: string) => {
 - [ ] Ensure client filters work without server calls
 
 ### Post-Migration
+
 - [ ] Update documentation
 - [ ] Remove unused code
 - [ ] Performance testing
@@ -331,6 +357,7 @@ const handleSearch = (query: string) => {
 ## Rollback Plan
 
 If issues arise:
+
 1. Revert GraphQL resolver changes
 2. Restore useProductList hook
 3. Revert component changes
@@ -372,16 +399,15 @@ Keep the old code in a branch for 2 weeks after deployment.
 
 1. **State Synchronization** - Keeping server and client state in sync
    - Solution: Clear separation of responsibilities, optimistic updates
-   
 2. **Complexity** - Managing two types of state
    - Solution: Document clearly which filters go where, use TypeScript interfaces
-   
 3. **User Expectations** - Users may expect all filters in URL
    - Solution: Only SEO-relevant filters in URL, document the decision
 
 ### Future Enhancements
 
 After successful migration:
+
 - Implement filter presets (saved searches)
 - Add analytics tracking for filter usage patterns
 - Consider edge caching for common filter combinations
@@ -392,6 +418,7 @@ After successful migration:
 ## Decision Rationale
 
 Based on the comprehensive analysis in `hybrid-state-management.md`, this hybrid approach provides the optimal balance between:
+
 - **SEO requirements** - Critical filters in URL for search indexing
 - **User experience** - Instant feedback for UI interactions
 - **Performance** - Reduced server load for minor operations

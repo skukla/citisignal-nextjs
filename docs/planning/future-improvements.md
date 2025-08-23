@@ -7,16 +7,18 @@ These are planned enhancements to implement after the compound component refacto
 ### Hybrid Catalog/Live Search Implementation (Completed)
 
 **Implementation**: Successfully implemented intelligent service selection that uses:
+
 - **Catalog Service** for initial page loads (SEO-optimized, full product details)
 - **Live Search** when users search or request facets (AI-powered, dynamic filtering)
 
 **Key Learnings**:
+
 1. **Data Consistency**: Live Search and Catalog Service return data differently
    - Live Search uses `productView` object for complete data (images, stock, SKU)
    - Catalog Service returns data directly on the product object
    - Solution: Normalize data in resolver to provide consistent API
 
-2. **Image URL Handling**: 
+2. **Image URL Handling**:
    - Live Search returns relative paths, Catalog returns full URLs
    - Solution: Use `productView.images` which contains full URLs
 
@@ -31,6 +33,7 @@ These are planned enhancements to implement after the compound component refacto
    - No hardcoded label mappings - pass through admin-configured labels
 
 **Benefits Achieved**:
+
 - Fast initial page loads with Catalog Service
 - AI-powered search with Live Search
 - Consistent data structure regardless of service used
@@ -41,9 +44,10 @@ These are planned enhancements to implement after the compound component refacto
 **Goal**: Simplify data transformation by using custom resolver fields
 
 ### Implementation Steps
+
 1. Update GraphQL queries to include custom fields:
    - `manufacturer` - Clean manufacturer name
-   - `memory_options` - Array of memory options  
+   - `memory_options` - Array of memory options
    - `available_colors` - Structured color data
    - `is_on_sale` - Boolean sale status
 
@@ -59,6 +63,7 @@ These are planned enhancements to implement after the compound component refacto
 **Status**: Fully implemented with hybrid approach
 
 ### Completed Features:
+
 - ✅ AI-powered search via Live Search
 - ✅ Search suggestions with `Citisignal_searchSuggestions` resolver
 - ✅ Dynamic facets from Live Search (ready but awaiting data)
@@ -66,6 +71,7 @@ These are planned enhancements to implement after the compound component refacto
 - ✅ Consistent data normalization across services
 
 ### Implementation Notes:
+
 - Search automatically triggers Live Search
 - Facets requested only after user interaction
 - All data normalized through custom resolvers
@@ -74,11 +80,13 @@ These are planned enhancements to implement after the compound component refacto
 ## 3. Apply Compound Pattern to Other Pages
 
 **Pages to refactor**:
+
 - `/app/(products)/accessories/page.tsx`
 - `/app/(products)/watches/page.tsx`
 - Other pages using `ProductRoot` pattern
 
 **Process**:
+
 1. Create page-specific providers if needed
 2. Reuse ProductPage compound components
 3. Maintain feature parity while reducing code

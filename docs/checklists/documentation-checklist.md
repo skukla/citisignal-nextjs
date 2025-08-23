@@ -7,24 +7,28 @@
 When implementing new functionality or refactoring existing code, ALWAYS:
 
 ### 1. Search Existing Documentation
+
 ```bash
 # Search for references to the changed component/function
 grep -r "ComponentName" docs/ CLAUDE.md README.md
 ```
 
 ### 2. Update Affected Documentation
+
 - [ ] Update code examples if implementation changed
 - [ ] Update API references if interfaces changed
 - [ ] Update architecture decisions if approach changed
 - [ ] Update troubleshooting if new issues were discovered
 
 ### 3. Create New Documentation When Needed
+
 - [ ] New patterns → Add to code-standards.md
 - [ ] New components → Document in component-patterns.md
 - [ ] New learnings → Add to relevant docs
 - [ ] Bug fixes → Add to troubleshooting.md
 
 ### 4. Keep Documentation Current
+
 - [ ] Remove references to deleted code
 - [ ] Update version numbers if upgraded
 - [ ] Fix broken links if files moved
@@ -33,6 +37,7 @@ grep -r "ComponentName" docs/ CLAUDE.md README.md
 ## Documentation Update Triggers
 
 **ALWAYS update docs when you:**
+
 - ✅ Fix a bug (add to troubleshooting)
 - ✅ Change component behavior (update examples)
 - ✅ Refactor code structure (update architecture)
@@ -80,6 +85,7 @@ grep -r "ComponentName" docs/ CLAUDE.md README.md
 ## Self-Check Questions
 
 Before considering any task complete, ask:
+
 1. Did I search for existing documentation about this?
 2. Did I update all affected documentation?
 3. Should I create new documentation for this?

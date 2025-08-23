@@ -7,6 +7,7 @@ Run through this checklist IMMEDIATELY after making any code changes.
 ## 1. Over-Engineering Check
 
 ### Signs of Over-Engineering
+
 - [ ] **Unnecessary Abstractions** - Can this be simpler?
 - [ ] **Premature Optimization** - Are we solving problems we don't have?
 - [ ] **Too Many Layers** - Can we reduce indirection?
@@ -15,6 +16,7 @@ Run through this checklist IMMEDIATELY after making any code changes.
 - [ ] **Complex When Simple Works** - Is there a straightforward solution?
 
 ### Simplification Questions
+
 ```typescript
 // ❌ Over-engineered
 const createHandler = (options = {}) => {
@@ -33,6 +35,7 @@ const handleData = (data) => {
 ## 2. Project Organization Check
 
 ### File Placement Verification
+
 - [ ] **Component Location** - Is it in the right folder?
   - `/components/ui/` - Reusable, generic UI components
   - `/components/layout/` - Page-level compound components
@@ -43,6 +46,7 @@ const handleData = (data) => {
 - [ ] **Data/Config** - Static data in `/data/`?
 
 ### Naming Conventions
+
 - [ ] **File Names** - Match existing patterns?
   - Components: `PascalCase.tsx`
   - Hooks: `camelCase.ts` starting with `use`
@@ -52,28 +56,32 @@ const handleData = (data) => {
 - [ ] **Folder Structure** - Follows established nesting?
 
 ### Import Organization
+
 - [ ] **Import Order** - Following project convention?
+
   ```typescript
   // 1. React/Next imports
   import { useState } from 'react';
   import Image from 'next/image';
-  
+
   // 2. External libraries
   import { useQuery } from 'swr';
-  
+
   // 3. Internal absolute imports
   import { Button } from '@/components/ui/Button';
-  
+
   // 4. Relative imports
   import { LocalComponent } from './LocalComponent';
-  
+
   // 5. Types
   import type { Product } from '@/types/product';
   ```
+
 - [ ] **Path Aliases** - Using `@/*` not relative paths?
 - [ ] **Circular Dependencies** - None introduced?
 
 ### Component Organization
+
 - [ ] **Compound Components** - Properly structured?
   ```
   ProductPage/
@@ -92,6 +100,7 @@ const handleData = (data) => {
   ```
 
 ### Code Colocation
+
 - [ ] **Related Files Together** - Styles, tests, types near component?
 - [ ] **Single Responsibility** - Each file has one clear purpose?
 - [ ] **No Duplication** - Reusing existing components/utils?
@@ -99,12 +108,14 @@ const handleData = (data) => {
 ## 3. Pattern Consistency Check
 
 ### Verify Against Existing Patterns
+
 - [ ] **Component Structure** - Match existing compound component patterns?
 - [ ] **Hook Patterns** - Follow single-responsibility like `usePageLoading`?
 - [ ] **Data Flow** - Use Context consistently like other components?
 - [ ] **Naming Conventions** - Match existing naming patterns?
 
 ### Pattern Checklist
+
 ```bash
 # Check similar components for patterns
 grep -r "similar-component" src/components/
@@ -114,12 +125,14 @@ grep -r "similar-component" src/components/
 ## 4. Business Logic & Type Safety
 
 ### Business Logic Handling
+
 - [ ] **Extracted Functions** - Complex logic in named functions?
 - [ ] **No Inline Business Rules** - Conditions extracted and named?
 - [ ] **Single Source of Truth** - Constants defined once?
 - [ ] **Clear Intent** - Function names describe business purpose?
 
 ### Type Safety Verification
+
 - [ ] **All Types Defined** - No `any` types unless absolutely necessary?
 - [ ] **Consistent Interfaces** - Types match across components?
 - [ ] **Proper Imports** - Using type imports where appropriate?
@@ -127,7 +140,8 @@ grep -r "similar-component" src/components/
 
 ```typescript
 // ❌ Bad: Inline business logic, poor types
-const isEligible = user.age > 18 && user.status === 'active' && (user.credits > 100 || user.premium);
+const isEligible =
+  user.age > 18 && user.status === 'active' && (user.credits > 100 || user.premium);
 
 // ✅ Good: Extracted, typed, clear intent
 interface User {
@@ -141,7 +155,7 @@ const isUserEligibleForFeature = (user: User): boolean => {
   const isAdult = user.age > MINIMUM_AGE;
   const isActive = user.status === 'active';
   const hasCreditsOrPremium = user.credits > CREDIT_THRESHOLD || user.premium;
-  
+
   return isAdult && isActive && hasCreditsOrPremium;
 };
 ```
@@ -149,12 +163,14 @@ const isUserEligibleForFeature = (user: User): boolean => {
 ## 5. Consistency Checklist
 
 ### Style Consistency
+
 - [ ] **Tailwind Classes** - Not inline styles?
 - [ ] **Import Order** - Following project convention?
 - [ ] **Component Composition** - Using compound pattern where appropriate?
 - [ ] **Error Handling** - Consistent with project approach?
 
 ### API Consistency
+
 - [ ] **Custom Resolvers** - Using `Citisignal_*` queries?
 - [ ] **Data Normalization** - Handled in resolver, not frontend?
 - [ ] **Loading States** - Using coordinated loading pattern?
@@ -163,12 +179,14 @@ const isUserEligibleForFeature = (user: User): boolean => {
 ## 6. Performance & Maintainability
 
 ### Performance Review
+
 - [ ] **No Unnecessary Re-renders** - Proper memo/callback usage?
 - [ ] **Bundle Size** - Not importing entire libraries?
 - [ ] **Lazy Loading** - Applied where appropriate?
 - [ ] **Image Optimization** - Using proper Next.js Image component?
 
 ### Maintainability Check
+
 - [ ] **Self-Documenting Code** - Clear without extensive comments?
 - [ ] **Testable Functions** - Pure functions where possible?
 - [ ] **Error Messages** - Helpful for debugging?
@@ -177,6 +195,7 @@ const isUserEligibleForFeature = (user: User): boolean => {
 ## 7. Red Flags to Fix Immediately
 
 🚨 **Must Fix Before Considering Complete:**
+
 - Files in wrong directories
 - Mixed patterns (some Context, some prop drilling)
 - Inconsistent import order
@@ -190,7 +209,7 @@ const isUserEligibleForFeature = (user: User): boolean => {
 - Console.log statements
 - Commented out code
 - TODO comments without tickets
-- Relative imports instead of @/* aliases
+- Relative imports instead of @/\* aliases
 
 ## 8. Final Verification Steps
 
@@ -216,6 +235,7 @@ grep -r ": any" src/
 ## 9. Questions to Ask Yourself
 
 Before marking any task complete:
+
 1. Would a new developer understand this code?
 2. Is this the simplest solution that works?
 3. Does this match our existing patterns?
@@ -233,7 +253,7 @@ Before marking any task complete:
 // ✅ Removed absolute positioning complexity
 // ✅ Simplified to conditional rendering
 
-// 2. Verify pattern consistency  
+// 2. Verify pattern consistency
 // ✅ Matches other transition components
 // ✅ Uses same FadeTransition pattern
 
