@@ -1,0 +1,122 @@
+# Product Detail Query - fetches comprehensive product information
+# Follows the established Citisignal_ resolver pattern for Adobe API Mesh
+query GetProductDetail($urlKey: String!) {
+  Citisignal_productDetail(urlKey: $urlKey) {
+    # Core product information (extends BaseProduct)
+    id
+    sku
+    name
+    urlKey
+    price
+    originalPrice
+    discountPercent
+    inStock
+    stockLevel
+    manufacturer
+    
+    # Enhanced product details
+    description
+    shortDescription
+    metaTitle
+    metaDescription
+    
+    # Media gallery
+    images {
+      url
+      altText
+      type
+      position
+    }
+    
+    # Product specifications and attributes
+    attributes {
+      key
+      label
+      value
+      type
+    }
+    
+    # Configurable product options (colors, sizes, etc.)
+    configurable_options {
+      label
+      attribute_code
+      values {
+        label
+        value
+        swatch_data {
+          type
+          value
+        }
+      }
+    }
+    
+    # Product variants for different configurations
+    variants {
+      id
+      sku
+      attributes {
+        key
+        value
+      }
+      price
+      originalPrice
+      inStock
+      stockLevel
+    }
+    
+    # Review and rating information
+    reviews {
+      rating_summary
+      review_count
+    }
+    
+    # Related and cross-sell products
+    related_products {
+      id
+      sku
+      urlKey
+      name
+      price
+      originalPrice
+      discountPercent
+      inStock
+      image {
+        url
+        altText
+      }
+      manufacturer
+    }
+    
+    cross_sell_products {
+      id
+      sku
+      urlKey
+      name
+      price
+      originalPrice
+      discountPercent
+      inStock
+      image {
+        url
+        altText
+      }
+      manufacturer
+    }
+    
+    # Navigation and SEO
+    breadcrumbs {
+      items {
+        name
+        urlPath
+      }
+    }
+    
+    # Category information
+    categories {
+      id
+      name
+      urlKey
+      urlPath
+    }
+  }
+}
