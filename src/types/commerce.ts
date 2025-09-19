@@ -14,6 +14,82 @@ export interface BaseProduct {
   manufacturer?: string;
 }
 
+// Extended product type for Product Detail Pages
+export interface ProductDetail extends BaseProduct {
+  stockLevel?: number;
+  description?: string;
+  shortDescription?: string;
+  metaTitle?: string;
+  metaDescription?: string;
+
+  // Enhanced media gallery
+  images?: Array<{
+    url: string;
+    altText: string;
+    type?: string;
+    position?: number;
+  }>;
+
+  // Product attributes and specifications
+  attributes?: Array<{
+    key: string;
+    label: string;
+    value: string;
+    type?: string;
+  }>;
+
+  // Configurable options (colors, sizes, etc.)
+  configurable_options?: Array<{
+    label: string;
+    attribute_code: string;
+    values: Array<{
+      label: string;
+      value: string;
+      swatch_data?: {
+        type: string;
+        value: string;
+      };
+    }>;
+  }>;
+
+  // Product variants
+  variants?: Array<{
+    id: string;
+    sku: string;
+    attributes: Record<string, string>;
+    price: string;
+    originalPrice?: string;
+    inStock: boolean;
+    stockLevel?: number;
+  }>;
+
+  // Reviews and ratings
+  reviews?: {
+    rating_summary: number;
+    review_count: number;
+  };
+
+  // Related products
+  related_products?: BaseProduct[];
+  cross_sell_products?: BaseProduct[];
+
+  // Navigation
+  breadcrumbs?: {
+    items: Array<{
+      name: string;
+      urlPath: string;
+    }>;
+  };
+
+  // Categories
+  categories?: Array<{
+    id: string;
+    name: string;
+    urlKey: string;
+    urlPath: string;
+  }>;
+}
+
 // Facet types for filtering
 export interface FacetOption {
   label: string;
@@ -93,5 +169,5 @@ export const colorOptions = [
   { id: 'sierra-blue', name: 'Sierra Blue', hex: '#adc6dc' },
   { id: 'silver', name: 'Silver', hex: '#f1f3ee' },
   { id: 'starlight', name: 'Starlight', hex: '#e7e1dc' },
-  { id: 'white', name: 'White', hex: '#f9f9f9' }
+  { id: 'white', name: 'White', hex: '#f9f9f9' },
 ];
