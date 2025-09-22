@@ -1,8 +1,7 @@
-# Product Detail Query - fetches comprehensive product information
-# Follows the established Citisignal_ resolver pattern for Adobe API Mesh
+# Product Detail Query - simplified to match minimal schema
 query GetProductDetail($urlKey: String!) {
   Citisignal_productDetail(urlKey: $urlKey) {
-    # Core product information (extends BaseProduct)
+    # Core product information
     id
     sku
     name
@@ -13,30 +12,34 @@ query GetProductDetail($urlKey: String!) {
     inStock
     stockLevel
     manufacturer
-    
+
     # Enhanced product details
     description
     shortDescription
-    metaTitle
-    metaDescription
-    
+
     # Media gallery
     images {
       url
       altText
-      type
-      position
     }
-    
-    # Product specifications and attributes
+
+    # Product attributes and specifications
     attributes {
       key
       label
       value
       type
     }
-    
-    # Configurable product options (colors, sizes, etc.)
+
+    # Breadcrumbs for navigation
+    breadcrumbs {
+      items {
+        name
+        urlPath
+      }
+    }
+
+    # Configurable product options for variant selection
     configurable_options {
       label
       attribute_code
@@ -49,74 +52,19 @@ query GetProductDetail($urlKey: String!) {
         }
       }
     }
-    
-    # Product variants for different configurations
+
+    # Product variants (empty for now, can be enhanced later)
     variants {
       id
       sku
-      attributes {
-        key
-        value
-      }
+      attributes
       price
       originalPrice
-      inStock
-      stockLevel
-    }
-    
-    # Review and rating information
-    reviews {
-      rating_summary
-      review_count
-    }
-    
-    # Related and cross-sell products
-    related_products {
-      id
-      sku
-      urlKey
-      name
-      price
-      originalPrice
-      discountPercent
       inStock
       image {
         url
         altText
       }
-      manufacturer
-    }
-    
-    cross_sell_products {
-      id
-      sku
-      urlKey
-      name
-      price
-      originalPrice
-      discountPercent
-      inStock
-      image {
-        url
-        altText
-      }
-      manufacturer
-    }
-    
-    # Navigation and SEO
-    breadcrumbs {
-      items {
-        name
-        urlPath
-      }
-    }
-    
-    # Category information
-    categories {
-      id
-      name
-      urlKey
-      urlPath
     }
   }
 }

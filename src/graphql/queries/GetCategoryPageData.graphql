@@ -42,11 +42,12 @@ query GetCategoryPageData(
           altText
         }
         memory
+        manufacturer
+        # Color data for visual indicators (non-interactive)
         colors {
           name
           hex
         }
-        manufacturer
       }
       page_info {
         current_page
