@@ -1,4 +1,5 @@
 import { useProductDetail } from '../providers/ProductDetailContext';
+import { calculateDiscountPercentage } from '@/lib/pricing';
 import type { ProductDetailPriceProps } from '../types';
 
 /**
@@ -30,14 +31,10 @@ export function ProductDetailPrice({ className, selectedVariant }: ProductDetail
   const isOnSale = originalPrice && originalPrice !== currentPrice;
 
   // Calculate discount percentage for variant if needed
-  let discountPercent = product.discountPercent;
-  if (selectedVariant && selectedVariant.originalPrice && selectedVariant.price) {
-    const original = parseFloat(selectedVariant.originalPrice.replace(/[^0-9.]/g, ''));
-    const current = parseFloat(selectedVariant.price.replace(/[^0-9.]/g, ''));
-    if (original > current) {
-      discountPercent = Math.round(((original - current) / original) * 100);
-    }
-  }
+  const discountPercent =
+    selectedVariant && selectedVariant.originalPrice && selectedVariant.price
+      ? calculateDiscountPercentage(selectedVariant.originalPrice, selectedVariant.price)
+      : product.discountPercent;
 
   return (
     <div className={className}>

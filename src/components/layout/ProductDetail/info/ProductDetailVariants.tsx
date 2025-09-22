@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
+import { isColorAttribute, getSwatchColor, areAllOptionsSelected } from '@/utils/product-options';
 import type { ProductDetailVariantsProps } from '../types';
 
 /**
@@ -22,8 +23,9 @@ export function ProductDetailVariants({
     setSelectedOptions(newOptions);
 
     // Check if all required options are selected
-    const allSelected =
-      product?.configurable_options?.every((option) => newOptions[option.attribute_code]) || false;
+    const allSelected = product?.configurable_options
+      ? areAllOptionsSelected(newOptions, product.configurable_options)
+      : false;
 
     // Call the parent callback
     if (onSelectionChange) {
@@ -65,10 +67,8 @@ export function ProductDetailVariants({
               <div className="flex flex-wrap gap-3">
                 {option.values.map((value) => {
                   const isActiveOption = selectedValue === value.value;
-                  const isColorOption =
-                    option.attribute_code === 'cs_color' ||
-                    option.label.toLowerCase().includes('color');
-                  const swatchColor = value.swatch_data?.value || value.value;
+                  const isColorOption = isColorAttribute(option);
+                  const swatchColor = getSwatchColor(value);
 
                   if (isColorOption) {
                     // Render color swatch for color options
