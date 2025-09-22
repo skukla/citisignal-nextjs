@@ -6,7 +6,7 @@ import type { ProductDetailPriceProps } from '../types';
  * Displays product pricing with sale indicators
  * Reuses the same pricing logic as ProductCard
  */
-export function ProductDetailPrice({ className }: ProductDetailPriceProps) {
+export function ProductDetailPrice({ className, selectedVariant }: ProductDetailPriceProps) {
   const { product, loading } = useProductDetail();
 
   if (loading) {
@@ -24,26 +24,46 @@ export function ProductDetailPrice({ className }: ProductDetailPriceProps) {
     return null;
   }
 
-  const isOnSale = product.originalPrice && product.originalPrice !== product.price;
+  // Use variant price if available and complete selection, otherwise use product price
+  const currentPrice = selectedVariant?.price || product.price;
+  const originalPrice = selectedVariant?.originalPrice || product.originalPrice;
+  const isOnSale = originalPrice && originalPrice !== currentPrice;
+
+  // Calculate discount percentage for variant if needed
+  let discountPercent = product.discountPercent;
+  if (selectedVariant && selectedVariant.originalPrice && selectedVariant.price) {
+    const original = parseFloat(selectedVariant.originalPrice.replace(/[^0-9.]/g, ''));
+    const current = parseFloat(selectedVariant.price.replace(/[^0-9.]/g, ''));
+    if (original > current) {
+      discountPercent = Math.round(((original - current) / original) * 100);
+    }
+  }
 
   return (
     <div className={className}>
-      <div className="space-y-2">
-        {/* Current price */}
-        <div className="flex items-baseline gap-2">
-          <span className="text-2xl font-bold text-gray-900">{product.price}</span>
+      <div className="space-y-3">
+        {/* Current price - enhanced hierarchy */}
+        <div className="flex items-baseline gap-3">
+          <span className="text-4xl font-bold text-gray-900 tracking-tight">{currentPrice}</span>
 
           {/* Original price if on sale */}
           {isOnSale && (
-            <span className="text-lg text-gray-500 line-through">{product.originalPrice}</span>
+            <span className="text-xl text-gray-500 line-through font-medium">{originalPrice}</span>
           )}
         </div>
 
-        {/* Discount percentage */}
-        {product.discountPercent && product.discountPercent > 0 && (
-          <span className="inline-flex items-center rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-medium text-red-800">
-            Save {product.discountPercent}%
-          </span>
+        {/* Discount percentage - improved styling */}
+        {discountPercent && discountPercent > 0 && (
+          <div className="flex items-center gap-2">
+            <span className="inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-800">
+              Save {discountPercent}%
+            </span>
+            {isOnSale && (
+              <span className="text-sm text-gray-600">
+                You save {/* Calculate savings amount if needed */}
+              </span>
+            )}
+          </div>
         )}
       </div>
     </div>

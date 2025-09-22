@@ -39,24 +39,33 @@ export interface ProductDetailBreadcrumbsProps {
 
 export interface ProductDetailGalleryProps {
   className?: string;
+  selectedVariant?: ProductDetail['variants'][0] | null;
 }
 
-export type ProductDetailInfoProps = BaseProps;
+export interface ProductDetailInfoProps extends BaseProps {
+  onVariantChange?: (variant: ProductDetail['variants'][0] | null) => void;
+}
 
 export interface ProductDetailHeaderProps {
   className?: string;
+  selectedVariant?: ProductDetail['variants'][0] | null;
+  allAttributesSelected?: boolean;
 }
 
 export interface ProductDetailPriceProps {
   className?: string;
+  selectedVariant?: ProductDetail['variants'][0] | null;
 }
 
 export interface ProductDetailVariantsProps {
   className?: string;
+  onSelectionChange?: (selectedOptions: Record<string, string>, allSelected: boolean) => void;
 }
 
 export interface ProductDetailActionsProps {
   className?: string;
+  selectedOptions?: Record<string, string>;
+  allAttributesSelected?: boolean;
 }
 
 export type ProductDetailTabsProps = BaseProps;

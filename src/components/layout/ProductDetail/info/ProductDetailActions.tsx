@@ -7,10 +7,14 @@ import type { ProductDetailActionsProps } from '../types';
 
 /**
  * ProductDetailActions component
- * Add to cart and wishlist actions
+ * Add to cart and wishlist actions with attribute validation
  * Reuses existing hooks and Button component
  */
-export function ProductDetailActions({ className }: ProductDetailActionsProps) {
+export function ProductDetailActions({
+  className,
+  selectedOptions = {},
+  allAttributesSelected = true,
+}: ProductDetailActionsProps) {
   const { product, loading } = useProductDetail();
   // TODO: Uncomment when hooks are available
   // const { addToCart, toggleWishlist, isWishlisted } = useProductActions();
@@ -32,8 +36,28 @@ export function ProductDetailActions({ className }: ProductDetailActionsProps) {
 
   // Mock functions for testing
   const isWishlistedProduct = false;
-  const handleAddToCart = () => console.log('Add to cart:', product.id);
+  const handleAddToCart = () => {
+    console.log('Add to cart:', {
+      productId: product.id,
+      selectedOptions,
+    });
+  };
   const handleToggleWishlist = () => console.log('Toggle wishlist:', product.id);
+
+  // Check if product has configurable options
+  const hasConfigurableOptions =
+    product.configurable_options && product.configurable_options.length > 0;
+
+  // Determine if Add to Cart should be disabled
+  const isAddToCartDisabled =
+    !product.inStock || (hasConfigurableOptions && !allAttributesSelected);
+
+  // Determine button text
+  const getButtonText = () => {
+    if (!product.inStock) return 'Out of Stock';
+    if (hasConfigurableOptions && !allAttributesSelected) return 'Select Options';
+    return 'Add to Cart';
+  };
 
   return (
     <div className={className}>
@@ -41,12 +65,12 @@ export function ProductDetailActions({ className }: ProductDetailActionsProps) {
         {/* Add to Cart */}
         <Button
           onClick={handleAddToCart}
-          disabled={!product.inStock}
+          disabled={isAddToCartDisabled}
           variant="primary"
           size="lg"
           className="w-full"
         >
-          {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+          {getButtonText()}
         </Button>
 
         {/* Wishlist */}
