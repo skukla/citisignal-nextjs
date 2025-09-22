@@ -8,7 +8,7 @@ export type ProductType = Phone | Watch | Accessory | Plan | StreamingService | 
 export interface ProductCardContextValue {
   product: ProductType;
   isWishlisted: boolean;
-  selectedColor?: string;
+  toggleWishlist: () => void;
 }
 
 // Component props
@@ -38,8 +38,12 @@ export interface ProductCardColorsProps extends BaseComponentProps {
 export type ProductCardActionsProps = BaseComponentProps;
 
 // Type guards
-export function hasColors(product: ProductType): product is Phone | Watch | Accessory {
-  return 'colors' in product && Array.isArray(product.colors);
+export function hasConfigurableOptions(product: ProductType): boolean {
+  return (
+    'configurable_options' in product &&
+    Array.isArray(product.configurable_options) &&
+    product.configurable_options.length > 0
+  );
 }
 
 export function hasManufacturer(product: ProductType): product is Phone | Watch | Accessory {
