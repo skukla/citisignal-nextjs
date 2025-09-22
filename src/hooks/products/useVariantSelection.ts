@@ -69,13 +69,11 @@ export function useVariantSelection({
 
   const handleSelectionChange = useCallback(
     (options: Record<string, string>, allSelected: boolean) => {
-      console.log('🔄 Variant selection change:', { options, allSelected });
       setSelectedOptions(options);
       setAllAttributesSelected(allSelected);
 
       // Only find variant and switch image when we have a complete selection
       const matchingVariant = findMatchingVariant(options, true) || null;
-      console.log('🎯 Matching variant:', matchingVariant);
       if (onVariantChange) {
         onVariantChange(matchingVariant);
       }
