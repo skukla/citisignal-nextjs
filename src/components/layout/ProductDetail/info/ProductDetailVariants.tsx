@@ -76,7 +76,7 @@ export function ProductDetailVariants({
                       <button
                         key={value.value}
                         onClick={() => handleOptionSelect(option.attribute_code, value.value)}
-                        className={`w-12 h-12 rounded-full border-4 transition-all focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
+                        className={`w-12 h-12 rounded-full border-4 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
                           isActiveOption
                             ? 'border-purple-500 ring-2 ring-purple-200 scale-110'
                             : 'border-gray-200 hover:border-purple-300 hover:scale-105'
@@ -92,7 +92,7 @@ export function ProductDetailVariants({
                     <button
                       key={value.value}
                       onClick={() => handleOptionSelect(option.attribute_code, value.value)}
-                      className={`rounded-lg border-2 px-4 py-3 text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
+                      className={`rounded-lg border-2 px-4 py-3 text-sm font-medium transition-colors cursor-pointer focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 ${
                         isActiveOption
                           ? 'border-purple-500 bg-purple-500 text-white'
                           : 'border-gray-200 bg-white text-gray-700 hover:border-purple-300 hover:bg-purple-50'
