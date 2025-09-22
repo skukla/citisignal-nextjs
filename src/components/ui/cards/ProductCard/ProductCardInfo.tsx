@@ -10,15 +10,15 @@ export function ProductCardInfo({ className }: ProductCardInfoProps) {
   return (
     <div className={twMerge('p-4', className)}>
       {hasManufacturer(product) && (
-        <p className="text-sm text-gray-500">{product.manufacturer}</p>
+        <p className="text-sm text-gray-500 uppercase tracking-wide">{product.manufacturer}</p>
       )}
-      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">{name}</h3>
+      <h3 className="text-lg font-semibold text-gray-900 group-hover:text-purple-600 transition-colors mb-2">
+        {name}
+      </h3>
 
       {/* Memory */}
       {'memory' in product && product.memory && product.memory.length > 0 && (
-        <div className="text-sm text-gray-600 mb-4 truncate">
-          {product.memory.join(', ')}
-        </div>
+        <div className="text-sm text-gray-600 mb-4 truncate">{product.memory.join(', ')}</div>
       )}
     </div>
   );

@@ -1,8 +1,10 @@
+import { useState, useCallback } from 'react';
 import { useProductDetail } from './providers/ProductDetailContext';
 import { ProductDetail } from './index';
 import { ProductDetailSkeleton } from './states/ProductDetailSkeleton';
 import { ProductDetailError } from './states/ProductDetailError';
 import { ProductDetailNotFound } from './states/ProductDetailNotFound';
+import type { ProductDetail as ProductDetailType } from '@/types/commerce';
 
 interface ProductDetailContentProps {
   productSlug: string;
@@ -11,10 +13,17 @@ interface ProductDetailContentProps {
 /**
  * ProductDetailContent component
  * Smart component that handles loading, error, and success states
- * Follows the same pattern as ProductPageContent
+ * Coordinates variant selection between gallery and info components
  */
 export function ProductDetailContent({ productSlug }: ProductDetailContentProps) {
   const { product, loading, error } = useProductDetail();
+  const [selectedVariant, setSelectedVariant] = useState<ProductDetailType['variants'][0] | null>(
+    null
+  );
+
+  const handleVariantChange = useCallback((variant: ProductDetailType['variants'][0] | null) => {
+    setSelectedVariant(variant);
+  }, []);
 
   // Loading state - show skeleton
   if (loading) {
@@ -38,23 +47,14 @@ export function ProductDetailContent({ productSlug }: ProductDetailContentProps)
         <ProductDetail.Breadcrumbs />
 
         <ProductDetail.Layout>
-          <ProductDetail.Gallery />
-
-          <ProductDetail.Info>
-            <ProductDetail.Header />
-            <ProductDetail.Price />
-            <ProductDetail.Variants />
-            <ProductDetail.Actions />
-          </ProductDetail.Info>
+          <ProductDetail.Gallery selectedVariant={selectedVariant} />
+          <ProductDetail.Info onVariantChange={handleVariantChange} />
         </ProductDetail.Layout>
 
         <ProductDetail.Tabs>
           <ProductDetail.Description />
           <ProductDetail.Specifications />
-          <ProductDetail.Reviews />
         </ProductDetail.Tabs>
-
-        <ProductDetail.RelatedProducts />
       </ProductDetail.Container>
     </ProductDetail.Background>
   );

@@ -22,8 +22,8 @@ query GetProductCards(
       urlKey
       name
       manufacturer
-      price           # Formatted "$999.99"
-      originalPrice   # Only when on sale
+      price # Formatted "$999.99"
+      originalPrice # Only when on sale
       discountPercent
       inStock
       image {
@@ -31,9 +31,27 @@ query GetProductCards(
         altText
       }
       memory
-      colors {
-        name
-        hex
+      # Add variant selection data
+      configurable_options {
+        label
+        attribute_code
+        values {
+          label
+          value
+          swatch_data {
+            type
+            value
+          }
+        }
+      }
+      variants {
+        id
+        sku
+        attributes
+        image {
+          url
+          altText
+        }
       }
     }
     totalCount

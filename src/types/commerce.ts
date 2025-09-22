@@ -12,6 +12,24 @@ export interface BaseProduct {
   };
   inStock: boolean;
   manufacturer?: string;
+  configurable_options?: Array<{
+    label: string;
+    attribute_code: string;
+    values: Array<{
+      label: string;
+      value: string;
+      swatch_data?: {
+        type: string;
+        value: string;
+      };
+    }>;
+  }>;
+  variants?: Array<{
+    id: string;
+    sku: string;
+    attributes: Record<string, string>;
+    image?: { url: string; altText: string };
+  }>;
 }
 
 // Extended product type for Product Detail Pages
@@ -61,6 +79,10 @@ export interface ProductDetail extends BaseProduct {
     originalPrice?: string;
     inStock: boolean;
     stockLevel?: number;
+    image?: {
+      url: string;
+      altText?: string;
+    };
   }>;
 
   // Reviews and ratings

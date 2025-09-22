@@ -1,7 +1,7 @@
 'use client';
 
 import { ProductDetailProvider as ContextProvider } from './ProductDetailContext';
-// import { useProductDetail as useProductDetailHook } from '@/hooks/products/useProductDetail';
+import { useProductDetail as useProductDetailHook } from '@/hooks/products/useProductDetail';
 import type { ProductDetailProviderProps } from '../types';
 
 /**
@@ -10,18 +10,17 @@ import type { ProductDetailProviderProps } from '../types';
  *
  * Follows the same pattern as ProductPageProvider but focused on individual products.
  */
-export function ProductDetailProvider({ children }: ProductDetailProviderProps) {
-  // TODO: Replace with actual hook when GraphQL resolver is ready
-  // const { product, loading, error, isValidating } = useProductDetailHook({
-  //   urlKey: productSlug
-  // });
+export function ProductDetailProvider({ children, productSlug }: ProductDetailProviderProps) {
+  // Use the actual GraphQL resolver hook
+  const { product, loading, error, isValidating } = useProductDetailHook({
+    urlKey: productSlug,
+  });
 
-  // Mock data for testing the component structure
   const contextValue = {
-    product: null, // Will show not found state
-    loading: false,
-    error: undefined,
-    isValidating: false,
+    product,
+    loading,
+    error,
+    isValidating,
   };
 
   return <ContextProvider value={contextValue}>{children}</ContextProvider>;
