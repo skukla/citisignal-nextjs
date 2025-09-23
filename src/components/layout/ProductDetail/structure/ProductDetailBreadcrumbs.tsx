@@ -13,13 +13,13 @@ export function ProductDetailBreadcrumbs({ className }: ProductDetailBreadcrumbs
   const { product, loading } = useProductDetail();
   const elementRef = useRef<HTMLDivElement>(null);
 
-  // Register with Demo Inspector - breadcrumbs generated from Catalog Service data
+  // Register with Demo Inspector - breadcrumbs from Commerce GraphQL categories
   useDataSource({
     componentName: 'ProductDetailBreadcrumbs',
-    source: 'catalog', // Generated from product attributes in Catalog Service
+    source: 'commerce', // Actual category data from Commerce GraphQL
     elementRef,
     fieldMappings: {
-      breadcrumb: 'catalog',
+      breadcrumb: 'commerce',
     },
   });
 
@@ -38,9 +38,9 @@ export function ProductDetailBreadcrumbs({ className }: ProductDetailBreadcrumbs
     <div ref={elementRef} className={className}>
       <Breadcrumb
         items={breadcrumbItems}
-        dataSource="catalog"
+        dataSource="commerce"
         data-inspector-field="breadcrumb"
-        data-inspector-source="catalog"
+        data-inspector-source="commerce"
       />
     </div>
   );
