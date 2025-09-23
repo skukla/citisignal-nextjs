@@ -16,6 +16,53 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
       // Remove old overlays
       document.querySelectorAll('.demo-inspector-overlay').forEach((el) => el.remove());
 
+      // Reset all elements first to avoid double-styling
+      const allElements = document.querySelectorAll('[data-inspector-source]');
+      allElements.forEach((el) => {
+        const element = el as HTMLElement;
+        if (element.dataset.originalStyles) {
+          try {
+            const original = JSON.parse(element.dataset.originalStyles);
+            element.style.backgroundColor =
+              element.dataset.originalBackground || original.backgroundColor || '';
+            element.style.boxShadow = original.boxShadow || '';
+            element.style.position = original.position || '';
+            element.style.zIndex = original.zIndex || '';
+            element.style.borderRadius = original.borderRadius || '';
+
+            // Also reset nested input
+            const nestedInput = element.querySelector(
+              'input[type="text"], input[type="search"], input:not([type])'
+            );
+            if (
+              nestedInput &&
+              nestedInput instanceof HTMLElement &&
+              nestedInput.dataset.originalBoxShadow !== undefined
+            ) {
+              nestedInput.style.boxShadow = nestedInput.dataset.originalBoxShadow || '';
+            }
+          } catch {
+            // Reset to defaults if parsing fails
+            element.style.backgroundColor = element.dataset.originalBackground || '';
+            element.style.boxShadow = '';
+            element.style.position = '';
+            element.style.zIndex = '';
+            element.style.borderRadius = '';
+
+            const nestedInput = element.querySelector(
+              'input[type="text"], input[type="search"], input:not([type])'
+            );
+            if (
+              nestedInput &&
+              nestedInput instanceof HTMLElement &&
+              nestedInput.dataset.originalBoxShadow !== undefined
+            ) {
+              nestedInput.style.boxShadow = nestedInput.dataset.originalBoxShadow || '';
+            }
+          }
+        }
+      });
+
       if (activeSources.size === 0) return;
 
       // Apply styles directly to elements instead of creating overlays
@@ -110,7 +157,8 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
                 'input[type="text"], input[type="search"], input:not([type])'
               );
               if (nestedInput && nestedInput instanceof HTMLElement) {
-                if (!nestedInput.dataset.originalBoxShadow) {
+                // Only store original if not already stored
+                if (nestedInput.dataset.originalBoxShadow === undefined) {
                   nestedInput.dataset.originalBoxShadow = nestedInput.style.boxShadow || '';
                 }
                 nestedInput.style.boxShadow = `inset 0 0 0 1000px ${sourceInfo.color}20`;
@@ -131,7 +179,7 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
             element.style.zIndex = '10';
           }
         } else {
-          // Reset styles
+          // Reset styles (this block should not be reached due to the reset logic above, but kept for safety)
           try {
             const original = JSON.parse(element.dataset.originalStyles || '{}');
             element.style.backgroundColor =
@@ -142,7 +190,9 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
             element.style.borderRadius = original.borderRadius || '';
 
             // Also reset nested input if it was modified
-            const nestedInput = element.querySelector('input');
+            const nestedInput = element.querySelector(
+              'input[type="text"], input[type="search"], input:not([type])'
+            );
             if (
               nestedInput &&
               nestedInput instanceof HTMLElement &&
@@ -158,6 +208,19 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
             element.style.position = '';
             element.style.zIndex = '';
             element.style.borderRadius = '';
+
+            // Also reset nested input in error case
+            const nestedInput = element.querySelector(
+              'input[type="text"], input[type="search"], input:not([type])'
+            );
+            if (
+              nestedInput &&
+              nestedInput instanceof HTMLElement &&
+              nestedInput.dataset.originalBoxShadow !== undefined
+            ) {
+              nestedInput.style.boxShadow = nestedInput.dataset.originalBoxShadow || '';
+              delete nestedInput.dataset.originalBoxShadow;
+            }
           }
         }
       });
@@ -226,7 +289,9 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
           delete element.dataset.originalBackground;
 
           // Also cleanup nested input
-          const nestedInput = element.querySelector('input');
+          const nestedInput = element.querySelector(
+            'input[type="text"], input[type="search"], input:not([type])'
+          );
           if (
             nestedInput &&
             nestedInput instanceof HTMLElement &&
@@ -244,7 +309,9 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
           delete element.dataset.originalBackground;
 
           // Also cleanup nested input in error case
-          const nestedInput = element.querySelector('input');
+          const nestedInput = element.querySelector(
+            'input[type="text"], input[type="search"], input:not([type])'
+          );
           if (
             nestedInput &&
             nestedInput instanceof HTMLElement &&

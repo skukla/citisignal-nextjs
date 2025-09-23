@@ -1,6 +1,7 @@
 # Query for product cards using our custom mesh query
 # Returns canonically formatted data ready for display
-# Facets are now handled by separate Citisignal_productFacets query
+# Uses simplified product card schema without configurable options or variants
+# Colors are provided as visual indicators only (non-interactive)
 
 query GetProductCards(
   $phrase: String
@@ -31,6 +32,11 @@ query GetProductCards(
         altText
       }
       memory
+      # Color data for visual indicators (non-interactive)
+      colors {
+        name
+        hex
+      }
       # Add variant selection data
       configurable_options {
         label
