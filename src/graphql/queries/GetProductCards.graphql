@@ -2,6 +2,7 @@
 # Returns canonically formatted data ready for display
 # Uses simplified product card schema without configurable options or variants
 # Colors are provided as visual indicators only (non-interactive)
+# For variant selection, use GetProductDetail query on individual product pages
 
 query GetProductCards(
   $phrase: String
@@ -36,28 +37,6 @@ query GetProductCards(
       colors {
         name
         hex
-      }
-      # Add variant selection data
-      configurable_options {
-        label
-        attribute_code
-        values {
-          label
-          value
-          swatch_data {
-            type
-            value
-          }
-        }
-      }
-      variants {
-        id
-        sku
-        attributes
-        image {
-          url
-          altText
-        }
       }
     }
     totalCount
