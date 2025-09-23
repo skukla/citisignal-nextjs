@@ -8,6 +8,7 @@
 import { useMemo, useCallback, memo } from 'react';
 import { useExpandableSections } from '@/hooks/useExpandableSections';
 import { hasActiveFilters, getActiveFilterEntries, initializeExpandedSections } from '@/lib/filter';
+import { useActiveProductService } from '@/hooks/products/useActiveProductService';
 import type { FilterSidebarProps } from './FilterSidebar.types';
 import FilterSidebarHeader from './FilterSidebarHeader';
 import FilterSidebarSection from './FilterSidebarSection';
@@ -16,6 +17,7 @@ import FilterSidebarActiveFilters from './FilterSidebarActiveFilters';
 /**
  * FilterSidebar main component with compound architecture
  * Provides a complete filtering interface with expandable sections and active filter management
+ * Uses dynamic source attribution based on service context (catalog for browsing, search for searching)
  *
  * @param filters Array of filter sections to display
  * @param activeFilters Current filter selections
@@ -57,10 +59,13 @@ function FilterSidebar({
     [activeFilters, filters]
   );
 
+  // Hook determines which service provides the facets (dynamic source mapping)
+  const dataSource = useActiveProductService();
+
   return (
     <div
       className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg p-6"
-      data-inspector-source="search"
+      data-inspector-source={dataSource}
       data-inspector-type="filter-sidebar"
     >
       <FilterSidebarHeader hasActiveFilters={hasFiltersActive} onClearFilters={onClearFilters} />
