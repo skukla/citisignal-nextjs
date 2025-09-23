@@ -23,8 +23,8 @@ query GetProductCards(
       urlKey
       name
       manufacturer
-      price           # Formatted "$999.99"
-      originalPrice   # Only when on sale
+      price # Formatted "$999.99"
+      originalPrice # Only when on sale
       discountPercent
       inStock
       image {
