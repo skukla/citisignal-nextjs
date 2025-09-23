@@ -1,7 +1,9 @@
 // Structure
-import { ProductDetailBackground } from './structure/ProductDetailBackground';
-import { ProductDetailContainer } from './structure/ProductDetailContainer';
-import { ProductDetailLayout } from './structure/ProductDetailLayout';
+import {
+  ProductDetailBackground,
+  ProductDetailContainer,
+  ProductDetailLayout,
+} from './structure/ProductDetailStructure';
 import { ProductDetailBreadcrumbs } from './structure/ProductDetailBreadcrumbs';
 
 // Gallery
