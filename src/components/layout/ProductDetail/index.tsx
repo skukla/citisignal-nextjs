@@ -80,5 +80,10 @@ export { useProductDetail } from './providers/ProductDetailContext';
 // Export content component (smart component with loading/error states)
 export { ProductDetailContent } from './ProductDetailContent';
 
+// Export state components for external use
+export { ProductDetailSkeleton } from './states/ProductDetailSkeleton';
+export { ProductDetailError } from './states/ProductDetailError';
+export { ProductDetailNotFound } from './states/ProductDetailNotFound';
+
 // Export types
 export type * from './types';

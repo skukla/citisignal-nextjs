@@ -1,8 +1,7 @@
 'use client';
 
 import { use } from 'react';
-import { ProductDetailProvider } from '@/components/layout/ProductDetail';
-import { ProductDetailContent } from '@/components/layout/ProductDetail/ProductDetailContent';
+import { ProductDetailProvider, ProductDetailContent } from '@/components/layout/ProductDetail';
 
 interface ProductDetailPageProps {
   params: Promise<{

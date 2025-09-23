@@ -7,8 +7,8 @@ interface ProductDetailErrorProps {
 
 /**
  * ProductDetailError component
- * Error state for Product Detail Page
- * Reuses existing ErrorState component
+ * Standardized error state for Product Detail Page using ErrorState component
+ * Provides consistent error handling across the application
  */
 export function ProductDetailError({ error, onRetry }: ProductDetailErrorProps) {
   return (
