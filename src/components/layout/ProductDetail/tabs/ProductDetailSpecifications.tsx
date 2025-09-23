@@ -23,7 +23,7 @@ export function ProductDetailSpecifications({ className }: ProductDetailSpecific
     const sanitizeAttributes = async () => {
       const DOMPurify = (await import('dompurify')).default;
 
-      const sanitized = product.attributes.map((attribute) => ({
+      const sanitized = (product.attributes || []).map((attribute) => ({
         key: attribute.key,
         label: attribute.label,
         value: DOMPurify.sanitize(String(attribute.value), {

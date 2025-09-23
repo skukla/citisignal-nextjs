@@ -68,24 +68,46 @@ export async function graphqlFetcher<T = unknown>(
     // Determine source based on query name and response structure
     let source: 'commerce' | 'catalog' | 'search' = 'commerce';
 
-    // Analyze the response to determine source
+    // Enhanced source detection with PDP-specific handling
     if (json.data) {
       const data = json.data as Record<string, unknown>;
-      // Product queries typically come from catalog
-      if (data.Citisignal_productCards || data.products || queryName.includes('Product')) {
+
+      // Product Detail queries use complex orchestration
+      if (queryName === 'GetProductDetail' || data.Citisignal_productDetail) {
+        // Product detail uses multiple sources: primarily catalog, with commerce for variants/breadcrumbs
+        source = 'catalog'; // Primary source, will be overridden by component-level tagging
+      }
+      // Product cards and listings typically come from catalog
+      else if (
+        data.Citisignal_productCards ||
+        data.products ||
+        queryName.includes('ProductCards')
+      ) {
         source = 'catalog';
+      }
+      // Unified product page data (multi-service orchestration)
+      else if (data.Citisignal_productPageData || queryName === 'GetProductPageData') {
+        source = 'catalog'; // Primary source for the unified query
       }
       // Facet/filter queries come from search
       else if (
         data.Citisignal_productFacets ||
         data.facets ||
         queryName.includes('Facet') ||
-        queryName.includes('Search')
+        queryName.includes('Search') ||
+        queryName.includes('Filter')
       ) {
         source = 'search';
       }
-      // Navigation, categories, store config come from commerce
-      else if (data.categories || data.storeConfig || data.navigation) {
+      // Navigation, categories, store config, breadcrumbs come from commerce
+      else if (
+        data.categories ||
+        data.storeConfig ||
+        data.navigation ||
+        data.breadcrumbs ||
+        queryName.includes('Navigation') ||
+        queryName.includes('Breadcrumb')
+      ) {
         source = 'commerce';
       }
     }

@@ -7,7 +7,7 @@
 
 import type { ProductDetail } from '@/types/commerce';
 
-export type ConfigurableOption = ProductDetail['configurable_options'][0];
+export type ConfigurableOption = NonNullable<ProductDetail['configurable_options']>[0];
 
 /**
  * Determines if a configurable option represents a color attribute

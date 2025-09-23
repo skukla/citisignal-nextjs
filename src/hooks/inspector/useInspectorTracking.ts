@@ -5,17 +5,31 @@ import { useDemoInspector } from '@/contexts/DemoInspectorContext';
 
 type DataSource = 'commerce' | 'catalog' | 'search';
 
+interface FieldMapping {
+  [fieldName: string]: DataSource;
+}
+
 interface UseDataSourceOptions {
   componentName: string;
   source: DataSource;
-  elementRef?: React.RefObject<HTMLElement>;
+  elementRef?: React.RefObject<HTMLElement | null>;
+  dynamicSource?: () => DataSource;
+  fieldMappings?: FieldMapping;
+  dependencies?: unknown[]; // Dependencies to trigger re-evaluation
 }
 
 /**
- * Hook to register a component with the Demo Inspector
- * Tracks which data source is being used by this component
+ * Enhanced hook to register a component with the Demo Inspector
+ * Supports dynamic source detection and field-level source mappings
  */
-export function useDataSource({ componentName, source, elementRef }: UseDataSourceOptions) {
+export function useDataSource({
+  componentName,
+  source,
+  elementRef,
+  dynamicSource,
+  fieldMappings,
+  dependencies = [],
+}: UseDataSourceOptions) {
   const { enabled, trackQuery } = useDemoInspector();
   const componentId = useRef(`${componentName}-${Date.now()}`);
 
@@ -25,13 +39,25 @@ export function useDataSource({ componentName, source, elementRef }: UseDataSour
     // Mark the element with data attributes if ref is provided
     const element = elementRef?.current;
     if (element) {
-      element.setAttribute('data-inspector-source', source);
+      // Determine current source (dynamic takes precedence)
+      const currentSource = dynamicSource ? dynamicSource() : source;
+
+      // Set component-level attributes
+      element.setAttribute('data-inspector-source', currentSource);
       element.setAttribute('data-inspector-component', componentName);
       element.setAttribute('data-inspector-id', componentId.current);
-    }
 
-    // Register component mount
-    // Component registration is handled by data attributes
+      // Set field-level attributes for granular tracking
+      if (fieldMappings) {
+        Object.entries(fieldMappings).forEach(([fieldName, fieldSource]) => {
+          const fieldElements = element.querySelectorAll(`[data-inspector-field="${fieldName}"]`);
+          fieldElements.forEach((fieldElement) => {
+            fieldElement.setAttribute('data-inspector-source', fieldSource);
+            fieldElement.setAttribute('data-inspector-field-source', fieldSource);
+          });
+        });
+      }
+    }
 
     return () => {
       // Clean up on unmount
@@ -39,9 +65,15 @@ export function useDataSource({ componentName, source, elementRef }: UseDataSour
         element.removeAttribute('data-inspector-source');
         element.removeAttribute('data-inspector-component');
         element.removeAttribute('data-inspector-id');
+
+        // Clean up field-level attributes
+        const fieldElements = element.querySelectorAll('[data-inspector-field]');
+        fieldElements.forEach((fieldElement) => {
+          fieldElement.removeAttribute('data-inspector-field-source');
+        });
       }
     };
-  }, [enabled, componentName, source, elementRef]);
+  }, [enabled, componentName, source, dynamicSource, fieldMappings, elementRef, ...dependencies]);
 
   // Return a function to manually track queries if needed
   const trackComponentQuery = (queryName: string, responseTime?: number) => {

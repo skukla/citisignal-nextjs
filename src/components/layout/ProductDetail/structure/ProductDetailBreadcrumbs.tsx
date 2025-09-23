@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
+import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
 import Breadcrumb from '@/components/ui/layout/Breadcrumb';
 import type { ProductDetailBreadcrumbsProps } from '../types';
 
@@ -9,6 +11,17 @@ import type { ProductDetailBreadcrumbsProps } from '../types';
  */
 export function ProductDetailBreadcrumbs({ className }: ProductDetailBreadcrumbsProps) {
   const { product, loading } = useProductDetail();
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  // Register with Demo Inspector - breadcrumbs generated from Catalog Service data
+  useDataSource({
+    componentName: 'ProductDetailBreadcrumbs',
+    source: 'catalog', // Generated from product attributes in Catalog Service
+    elementRef,
+    fieldMappings: {
+      breadcrumb: 'catalog',
+    },
+  });
 
   // Don't render during loading or if no breadcrumbs
   if (loading || !product?.breadcrumbs?.items?.length) {
@@ -22,8 +35,13 @@ export function ProductDetailBreadcrumbs({ className }: ProductDetailBreadcrumbs
   }));
 
   return (
-    <div className={`pt-6 sm:pt-8 lg:pt-10 ${className || ''}`.trim()}>
-      <Breadcrumb items={breadcrumbItems} dataSource="commerce" />
+    <div ref={elementRef} className={className}>
+      <Breadcrumb
+        items={breadcrumbItems}
+        dataSource="catalog"
+        data-inspector-field="breadcrumb"
+        data-inspector-source="catalog"
+      />
     </div>
   );
 }

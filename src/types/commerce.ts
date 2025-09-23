@@ -33,7 +33,7 @@ export interface BaseProduct {
 }
 
 // Extended product type for Product Detail Pages
-export interface ProductDetail extends BaseProduct {
+export interface ProductDetail extends Omit<BaseProduct, 'variants'> {
   stockLevel?: number;
   description?: string;
   shortDescription?: string;

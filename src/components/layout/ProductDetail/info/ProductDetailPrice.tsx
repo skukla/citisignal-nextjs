@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
+import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
 import { calculateDiscountPercentage } from '@/lib/pricing';
 import type { ProductDetailPriceProps } from '../types';
 
@@ -9,6 +11,21 @@ import type { ProductDetailPriceProps } from '../types';
  */
 export function ProductDetailPrice({ className, selectedVariant }: ProductDetailPriceProps) {
   const { product, loading } = useProductDetail();
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  // Register with Demo Inspector - dynamic source based on variant selection
+  useDataSource({
+    componentName: 'ProductDetailPrice',
+    source: 'catalog', // Primary source
+    elementRef,
+    dynamicSource: () => (selectedVariant ? 'commerce' : 'catalog'),
+    fieldMappings: {
+      price: selectedVariant ? 'commerce' : 'catalog',
+      originalPrice: selectedVariant ? 'commerce' : 'catalog',
+      discountPercent: selectedVariant ? 'commerce' : 'catalog',
+    },
+    dependencies: [selectedVariant],
+  });
 
   if (loading) {
     return (
@@ -37,21 +54,38 @@ export function ProductDetailPrice({ className, selectedVariant }: ProductDetail
       : product.discountPercent;
 
   return (
-    <div className={className}>
+    <div ref={elementRef} className={className}>
       <div className="space-y-3">
         {/* Current price - enhanced hierarchy */}
         <div className="flex items-baseline gap-3">
-          <span className="text-4xl font-bold text-gray-900 tracking-tight">{currentPrice}</span>
+          <span
+            className="text-4xl font-bold text-gray-900 tracking-tight"
+            data-inspector-field="price"
+            data-inspector-source={selectedVariant ? 'commerce' : 'catalog'}
+            data-inspector-variant={selectedVariant ? 'true' : 'false'}
+          >
+            {currentPrice}
+          </span>
 
           {/* Original price if on sale */}
           {isOnSale && (
-            <span className="text-xl text-gray-500 line-through font-medium">{originalPrice}</span>
+            <span
+              className="text-xl text-gray-500 line-through font-medium"
+              data-inspector-field="originalPrice"
+              data-inspector-source={selectedVariant ? 'commerce' : 'catalog'}
+            >
+              {originalPrice}
+            </span>
           )}
         </div>
 
         {/* Discount percentage - improved styling */}
         {discountPercent && discountPercent > 0 && (
-          <div className="flex items-center gap-2">
+          <div
+            className="flex items-center gap-2"
+            data-inspector-field="discountPercent"
+            data-inspector-source={selectedVariant ? 'commerce' : 'catalog'}
+          >
             <span className="inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-800">
               Save {discountPercent}%
             </span>

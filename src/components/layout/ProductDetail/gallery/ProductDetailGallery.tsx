@@ -1,8 +1,9 @@
+import { useRef, useState } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
 import { useProductImage } from '@/hooks/products/useProductImage';
+import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
 import { ErrorState } from '@/components/ui/ErrorState';
 import Image from 'next/image';
-import { useState } from 'react';
 import type { ProductDetailGalleryProps } from '../types';
 
 /**
@@ -14,6 +15,19 @@ export function ProductDetailGallery({ className, selectedVariant }: ProductDeta
   const { product, loading, error } = useProductDetail();
   const displayImage = useProductImage({ product, selectedVariant });
   const [imageLoading, setImageLoading] = useState(false);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  // Register with Demo Inspector - dynamic source based on variant selection
+  useDataSource({
+    componentName: 'ProductDetailGallery',
+    source: 'catalog', // Primary source
+    elementRef,
+    dynamicSource: () => (selectedVariant ? 'commerce' : 'catalog'),
+    fieldMappings: {
+      image: selectedVariant ? 'commerce' : 'catalog',
+    },
+    dependencies: [selectedVariant],
+  });
 
   // Show skeleton during initial loading OR when switching variant images
   if (loading || imageLoading) {
@@ -42,10 +56,15 @@ export function ProductDetailGallery({ className, selectedVariant }: ProductDeta
   }
 
   return (
-    <div className={`lg:col-span-1 ${className || ''}`.trim()}>
+    <div ref={elementRef} className={`lg:col-span-1 ${className || ''}`.trim()}>
       <div className="space-y-4">
         {/* Main image */}
-        <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
+        <div
+          className="aspect-square overflow-hidden rounded-lg bg-gray-100"
+          data-inspector-field="image"
+          data-inspector-source={selectedVariant ? 'commerce' : 'catalog'}
+          data-inspector-variant={selectedVariant ? 'true' : 'false'}
+        >
           {displayImage ? (
             <Image
               src={displayImage.url}

@@ -39,22 +39,22 @@ export interface ProductDetailBreadcrumbsProps {
 
 export interface ProductDetailGalleryProps {
   className?: string;
-  selectedVariant?: ProductDetail['variants'][0] | null;
+  selectedVariant?: NonNullable<ProductDetail['variants']>[0] | null;
 }
 
 export interface ProductDetailInfoProps extends BaseProps {
-  onVariantChange?: (variant: ProductDetail['variants'][0] | null) => void;
+  onVariantChange?: (variant: NonNullable<ProductDetail['variants']>[0] | null) => void;
 }
 
 export interface ProductDetailHeaderProps {
   className?: string;
-  selectedVariant?: ProductDetail['variants'][0] | null;
+  selectedVariant?: NonNullable<ProductDetail['variants']>[0] | null;
   allAttributesSelected?: boolean;
 }
 
 export interface ProductDetailPriceProps {
   className?: string;
-  selectedVariant?: ProductDetail['variants'][0] | null;
+  selectedVariant?: NonNullable<ProductDetail['variants']>[0] | null;
 }
 
 export interface ProductDetailVariantsProps {

@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
+import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
 import Badge from '@/components/ui/foundations/Badge';
 import type { ProductDetailHeaderProps } from '../types';
 
@@ -13,6 +15,21 @@ export function ProductDetailHeader({
   allAttributesSelected,
 }: ProductDetailHeaderProps) {
   const { product, loading } = useProductDetail();
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  // Register with Demo Inspector - dynamic source based on variant selection
+  useDataSource({
+    componentName: 'ProductDetailHeader',
+    source: 'catalog', // Primary source
+    elementRef,
+    dynamicSource: () => (selectedVariant && allAttributesSelected ? 'commerce' : 'catalog'),
+    fieldMappings: {
+      manufacturer: 'catalog',
+      name: 'catalog',
+      sku: selectedVariant && allAttributesSelected ? 'commerce' : 'catalog',
+    },
+    dependencies: [selectedVariant, allAttributesSelected],
+  });
 
   if (loading) {
     return (
@@ -30,23 +47,38 @@ export function ProductDetailHeader({
   }
 
   return (
-    <div className={className}>
+    <div ref={elementRef} className={className}>
       <div className="space-y-3">
         {/* Manufacturer - slightly more prominent */}
         {product.manufacturer && (
-          <p className="text-sm font-medium text-gray-600 uppercase tracking-wide">
+          <p
+            className="text-sm font-medium text-gray-600 uppercase tracking-wide"
+            data-inspector-field="manufacturer"
+            data-inspector-source="catalog"
+          >
             {product.manufacturer}
           </p>
         )}
 
         {/* Product name - primary heading with better spacing */}
         <div className="space-y-2">
-          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl lg:text-4xl leading-tight">
+          <h1
+            className="text-3xl font-bold text-gray-900 sm:text-4xl lg:text-4xl leading-tight"
+            data-inspector-field="name"
+            data-inspector-source="catalog"
+          >
             {product.name}
           </h1>
 
           {/* SKU - positioned closer to product name for better grouping */}
-          <div className="text-sm font-normal transition-all duration-300 ease-in-out">
+          <div
+            className="text-sm font-normal transition-all duration-300 ease-in-out"
+            data-inspector-field="sku"
+            data-inspector-source={
+              selectedVariant && allAttributesSelected ? 'commerce' : 'catalog'
+            }
+            data-inspector-variant={selectedVariant && allAttributesSelected ? 'true' : 'false'}
+          >
             {selectedVariant && allAttributesSelected ? (
               <div className="text-gray-500">
                 <span className="uppercase tracking-wider text-xs">SKU:</span>{' '}
@@ -62,7 +94,11 @@ export function ProductDetailHeader({
         </div>
 
         {/* Stock status - with more separation from product info */}
-        <div className="flex items-center gap-3 pt-4">
+        <div
+          className="flex items-center gap-3 pt-4"
+          data-inspector-field="stock"
+          data-inspector-source={selectedVariant && allAttributesSelected ? 'commerce' : 'catalog'}
+        >
           {product.inStock ? (
             <Badge variant="success" size="md">
               In Stock

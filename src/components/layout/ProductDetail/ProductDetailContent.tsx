@@ -17,13 +17,16 @@ interface ProductDetailContentProps {
  */
 export function ProductDetailContent({ productSlug }: ProductDetailContentProps) {
   const { product, loading, error } = useProductDetail();
-  const [selectedVariant, setSelectedVariant] = useState<ProductDetailType['variants'][0] | null>(
-    null
-  );
+  const [selectedVariant, setSelectedVariant] = useState<
+    NonNullable<ProductDetailType['variants']>[0] | null
+  >(null);
 
-  const handleVariantChange = useCallback((variant: ProductDetailType['variants'][0] | null) => {
-    setSelectedVariant(variant);
-  }, []);
+  const handleVariantChange = useCallback(
+    (variant: NonNullable<ProductDetailType['variants']>[0] | null) => {
+      setSelectedVariant(variant);
+    },
+    []
+  );
 
   // Loading state - show skeleton
   if (loading) {
@@ -44,7 +47,9 @@ export function ProductDetailContent({ productSlug }: ProductDetailContentProps)
   return (
     <ProductDetail.Background color="white">
       <ProductDetail.Container>
-        <ProductDetail.Breadcrumbs />
+        <div className="pt-6 sm:pt-8 lg:pt-10 mb-6">
+          <ProductDetail.Breadcrumbs />
+        </div>
 
         <ProductDetail.Layout>
           <ProductDetail.Gallery selectedVariant={selectedVariant} />

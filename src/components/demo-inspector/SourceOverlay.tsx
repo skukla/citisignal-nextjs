@@ -9,6 +9,49 @@ interface SourceOverlayProps {
   activeSources: Set<DataSource>;
 }
 
+/**
+ * Utility functions for handling color swatch elements
+ * Centralizes the logic to avoid duplication across the component
+ */
+const ColorSwatchHandler = {
+  /**
+   * Check if an element is a color swatch
+   */
+  isColorSwatch: (element: HTMLElement): boolean =>
+    element.getAttribute('data-inspector-field') === 'color-swatch',
+
+  /**
+   * Get the original color from the data attribute
+   */
+  getOriginalColor: (element: HTMLElement): string | null =>
+    element.getAttribute('data-inspector-value'),
+
+  /**
+   * Apply demo inspector overlay to a color swatch while preserving its color
+   */
+  applyOverlay: (element: HTMLElement, borderColor: string): void => {
+    const color = ColorSwatchHandler.getOriginalColor(element);
+    element.style.boxShadow = `0 0 0 3px ${borderColor}`;
+    element.style.position = 'relative';
+    element.style.zIndex = '10';
+
+    // Restore the original color
+    if (color?.startsWith('#')) {
+      element.style.backgroundColor = color;
+    }
+  },
+
+  /**
+   * Restore a color swatch to its original color
+   */
+  restore: (element: HTMLElement): void => {
+    const color = ColorSwatchHandler.getOriginalColor(element);
+    if (color?.startsWith('#')) {
+      element.style.backgroundColor = color;
+    }
+  },
+};
+
 export function SourceOverlay({ activeSources }: SourceOverlayProps) {
   // Apply visual effects to pre-tagged elements based on active sources
   useEffect(() => {
@@ -18,17 +61,32 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
 
       // Reset all elements first to avoid double-styling
       const allElements = document.querySelectorAll('[data-inspector-source]');
+
       allElements.forEach((el) => {
         const element = el as HTMLElement;
         if (element.dataset.originalStyles) {
           try {
             const original = JSON.parse(element.dataset.originalStyles);
-            element.style.backgroundColor =
-              element.dataset.originalBackground || original.backgroundColor || '';
+
+            // Don't reset backgroundColor for color swatches to preserve their colors
+            if (ColorSwatchHandler.isColorSwatch(element)) {
+              ColorSwatchHandler.restore(element);
+            } else {
+              element.style.backgroundColor =
+                element.dataset.originalBackground || original.backgroundColor || '';
+            }
+
             element.style.boxShadow = original.boxShadow || '';
             element.style.position = original.position || '';
             element.style.zIndex = original.zIndex || '';
             element.style.borderRadius = original.borderRadius || '';
+
+            // After reset, ensure any nested color swatches retain their colors
+            const resetSwatches = element.querySelectorAll('[data-inspector-field="color-swatch"]');
+            resetSwatches.forEach((swatchEl) => {
+              const swatch = swatchEl as HTMLElement;
+              ColorSwatchHandler.restore(swatch);
+            });
 
             // Also reset nested input
             const nestedInput = element.querySelector(
@@ -43,11 +101,24 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
             }
           } catch {
             // Reset to defaults if parsing fails
-            element.style.backgroundColor = element.dataset.originalBackground || '';
+            if (ColorSwatchHandler.isColorSwatch(element)) {
+              ColorSwatchHandler.restore(element);
+            } else {
+              element.style.backgroundColor = element.dataset.originalBackground || '';
+            }
             element.style.boxShadow = '';
             element.style.position = '';
             element.style.zIndex = '';
             element.style.borderRadius = '';
+
+            // After reset, ensure any nested color swatches retain their colors
+            const errorResetSwatches = element.querySelectorAll(
+              '[data-inspector-field="color-swatch"]'
+            );
+            errorResetSwatches.forEach((swatchEl) => {
+              const swatch = swatchEl as HTMLElement;
+              ColorSwatchHandler.restore(swatch);
+            });
 
             const nestedInput = element.querySelector(
               'input[type="text"], input[type="search"], input:not([type])'
@@ -71,6 +142,7 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
       // Filter out nested elements with the same source to avoid double borders
       const filteredElements = Array.from(elements).filter((el) => {
         const source = el.getAttribute('data-inspector-source');
+
         // Check if this element has a parent with the same source
         let parent = el.parentElement;
         while (parent) {
@@ -89,8 +161,11 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
 
         // Store original styles
         if (!element.dataset.originalStyles) {
+          // Check if this is a color swatch - preserve their background colors
           element.dataset.originalStyles = JSON.stringify({
-            backgroundColor: element.style.backgroundColor || '',
+            backgroundColor: ColorSwatchHandler.isColorSwatch(element)
+              ? ''
+              : element.style.backgroundColor || '',
             boxShadow: element.style.boxShadow || '',
             position: element.style.position || '',
             zIndex: element.style.zIndex || '',
@@ -101,6 +176,14 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
         if (activeSources.has(source)) {
           const sourceInfo = DATA_SOURCES.find((s) => s.id === source);
           if (sourceInfo) {
+            // Before applying overlay, preserve any nested color swatch colors
+            const preOverlaySwatches = element.querySelectorAll(
+              '[data-inspector-field="color-swatch"]'
+            );
+            preOverlaySwatches.forEach((swatchEl) => {
+              const swatch = swatchEl as HTMLElement;
+              ColorSwatchHandler.restore(swatch);
+            });
             // Get the computed border radius of the element
             const computedStyle = window.getComputedStyle(element);
             let borderRadius = computedStyle.borderRadius || '0px';
@@ -177,6 +260,15 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
               element.style.position = 'relative';
             }
             element.style.zIndex = '10';
+
+            // After applying overlay, ensure any nested color swatches retain their colors
+            const postOverlaySwatches = element.querySelectorAll(
+              '[data-inspector-field="color-swatch"]'
+            );
+            postOverlaySwatches.forEach((swatchEl) => {
+              const swatch = swatchEl as HTMLElement;
+              ColorSwatchHandler.restore(swatch);
+            });
           }
         } else {
           // Reset styles (this block should not be reached due to the reset logic above, but kept for safety)
@@ -229,6 +321,11 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
     // Apply highlights initially
     applyHighlights();
 
+    // Re-run after a short delay to catch newly rendered elements
+    const timeoutId = setTimeout(() => {
+      applyHighlights();
+    }, 100);
+
     // Set up MutationObserver to watch for both attribute changes and new elements
     const observer = new MutationObserver((mutations) => {
       let shouldReapply = false;
@@ -272,6 +369,7 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
 
     // Cleanup
     return () => {
+      clearTimeout(timeoutId);
       observer.disconnect();
       // Reset all element styles
       const allElements = document.querySelectorAll('[data-inspector-source]');
@@ -279,12 +377,26 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
         const element = el as HTMLElement;
         try {
           const original = JSON.parse(element.dataset.originalStyles || '{}');
-          element.style.backgroundColor =
-            element.dataset.originalBackground || original.backgroundColor || '';
+
+          if (ColorSwatchHandler.isColorSwatch(element)) {
+            ColorSwatchHandler.restore(element);
+          } else {
+            element.style.backgroundColor =
+              element.dataset.originalBackground || original.backgroundColor || '';
+          }
+
           element.style.boxShadow = original.boxShadow || '';
           element.style.position = original.position || '';
           element.style.zIndex = original.zIndex || '';
           element.style.borderRadius = original.borderRadius || '';
+
+          // After cleanup, ensure any nested color swatches retain their colors
+          const cleanupSwatches = element.querySelectorAll('[data-inspector-field="color-swatch"]');
+          cleanupSwatches.forEach((swatchEl) => {
+            const swatch = swatchEl as HTMLElement;
+            ColorSwatchHandler.restore(swatch);
+          });
+
           delete element.dataset.originalStyles;
           delete element.dataset.originalBackground;
 
@@ -301,11 +413,26 @@ export function SourceOverlay({ activeSources }: SourceOverlayProps) {
             delete nestedInput.dataset.originalBoxShadow;
           }
         } catch {
-          element.style.backgroundColor = element.dataset.originalBackground || '';
+          if (ColorSwatchHandler.isColorSwatch(element)) {
+            ColorSwatchHandler.restore(element);
+          } else {
+            element.style.backgroundColor = element.dataset.originalBackground || '';
+          }
+
           element.style.boxShadow = '';
           element.style.position = '';
           element.style.zIndex = '';
           element.style.borderRadius = '';
+
+          // After cleanup error fallback, ensure any nested color swatches retain their colors
+          const errorCleanupSwatches = element.querySelectorAll(
+            '[data-inspector-field="color-swatch"]'
+          );
+          errorCleanupSwatches.forEach((swatchEl) => {
+            const swatch = swatchEl as HTMLElement;
+            ColorSwatchHandler.restore(swatch);
+          });
+
           delete element.dataset.originalBackground;
 
           // Also cleanup nested input in error case

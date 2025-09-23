@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
+import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
 import { isColorAttribute, getSwatchColor, areAllOptionsSelected } from '@/utils/product-options';
 import type { ProductDetailVariantsProps } from '../types';
 
@@ -14,6 +15,19 @@ export function ProductDetailVariants({
 }: ProductDetailVariantsProps) {
   const { product, loading } = useProductDetail();
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  // Register with Demo Inspector - orchestrated from multiple sources
+  useDataSource({
+    componentName: 'ProductDetailVariants',
+    source: 'catalog', // Primary source: option structure from Catalog Service
+    elementRef,
+    fieldMappings: {
+      'configurable-option': 'catalog', // Option structure from Catalog Service
+      'option-value': 'catalog', // Option values from Catalog Service
+      'color-swatch': 'catalog', // Color values from Catalog Service
+    },
+  });
 
   const handleOptionSelect = (attributeCode: string, value: string) => {
     const newOptions = {
@@ -55,13 +69,18 @@ export function ProductDetailVariants({
   }
 
   return (
-    <div className={className}>
+    <div ref={elementRef} className={className}>
       <div className="space-y-6">
         {product.configurable_options.map((option) => {
           const selectedValue = selectedOptions[option.attribute_code];
 
           return (
-            <div key={option.attribute_code}>
+            <div
+              key={option.attribute_code}
+              data-inspector-field="configurable-option"
+              data-inspector-source="catalog"
+              data-inspector-attribute={option.attribute_code}
+            >
               <h3 className="text-base font-semibold text-gray-900 mb-3">{option.label}</h3>
 
               <div className="flex flex-wrap gap-3">
@@ -83,6 +102,9 @@ export function ProductDetailVariants({
                         }`}
                         style={{ backgroundColor: swatchColor }}
                         title={value.label}
+                        data-inspector-field="color-swatch"
+                        data-inspector-source="catalog"
+                        data-inspector-value={value.value}
                       />
                     );
                   }
@@ -97,6 +119,9 @@ export function ProductDetailVariants({
                           ? 'border-purple-500 bg-purple-500 text-white'
                           : 'border-gray-200 bg-white text-gray-700 hover:border-purple-300 hover:bg-purple-50'
                       }`}
+                      data-inspector-field="option-value"
+                      data-inspector-source="catalog"
+                      data-inspector-value={value.value}
                     >
                       {value.label}
                     </button>

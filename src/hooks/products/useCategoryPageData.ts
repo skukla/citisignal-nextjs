@@ -108,16 +108,3 @@ export function useCategoryPageData(variables: CategoryPageDataVariables | null)
     }
   );
 }
-
-/**
- * Direct data fetching function for the unified category page query.
- * Can be used for direct data fetching when needed.
- *
- * @param variables Query variables for the category page
- * @returns Promise with category page data
- */
-export async function fetchCategoryPageData(
-  variables: CategoryPageDataVariables
-): Promise<CategoryPageDataResponse> {
-  return graphqlFetcher(GET_CATEGORY_PAGE_DATA, variables);
-}

@@ -18,7 +18,7 @@ export function TechnicalDemoLayout({
   description,
   apiEndpoint,
   queryName,
-  children
+  children,
 }: TechnicalDemoLayoutProps) {
   return (
     <div className="min-h-screen bg-gray-50">
@@ -26,33 +26,18 @@ export function TechnicalDemoLayout({
       <div className="bg-gray-900 text-white">
         <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-6 text-sm">
-              <Link href="/demo/unified-query" className="hover:text-blue-400">
-                Unified Query
-              </Link>
-              <Link href="/demo/ssr-category" className="hover:text-blue-400">
-                SSR Implementation
-              </Link>
-              <Link href="/demo/ssr-comparison" className="hover:text-blue-400">
-                Architecture Comparison
-              </Link>
-              <Link href="/demo/api-sources" className="hover:text-blue-400">
-                API Sources
-              </Link>
-            </div>
-            <div className="text-xs text-gray-400">
-              Adobe API Mesh Technical Demos
-            </div>
+            <div className="flex items-center space-x-6 text-sm"></div>
+            <div className="text-xs text-gray-400">Adobe API Mesh Technical Demos</div>
           </div>
         </div>
       </div>
-      
+
       {/* Page Header */}
       <div className="bg-white border-b">
         <div className="container mx-auto px-4 py-6">
           <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
           <p className="text-gray-600 mt-1">{description}</p>
-          
+
           {/* Technical Info */}
           {(apiEndpoint || queryName) && (
             <div className="mt-4 flex items-center space-x-6 text-sm">
@@ -76,11 +61,9 @@ export function TechnicalDemoLayout({
           )}
         </div>
       </div>
-      
+
       {/* Main Content */}
-      <div className="container mx-auto px-4 py-6">
-        {children}
-      </div>
+      <div className="container mx-auto px-4 py-6">{children}</div>
     </div>
   );
 }
@@ -100,11 +83,15 @@ export function MetricCard({ label, value, unit, trend }: MetricCardProps) {
         <span className="text-2xl font-semibold text-gray-900">{value}</span>
         {unit && <span className="ml-1 text-sm text-gray-500">{unit}</span>}
         {trend && (
-          <span className={`ml-2 text-sm ${
-            trend === 'up' ? 'text-green-600' : 
-            trend === 'down' ? 'text-red-600' : 
-            'text-gray-500'
-          }`}>
+          <span
+            className={`ml-2 text-sm ${
+              trend === 'up'
+                ? 'text-green-600'
+                : trend === 'down'
+                  ? 'text-red-600'
+                  : 'text-gray-500'
+            }`}
+          >
             {trend === 'up' ? '↑' : trend === 'down' ? '↓' : '—'}
           </span>
         )}

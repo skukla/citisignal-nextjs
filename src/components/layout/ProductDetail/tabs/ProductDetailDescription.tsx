@@ -22,7 +22,7 @@ export function ProductDetailDescription({ className }: ProductDetailDescription
       const DOMPurify = (await import('dompurify')).default;
 
       // First, clean and filter out unwanted content patterns
-      let cleanedContent = product.description;
+      let cleanedContent = product.description || '';
 
       // Remove shipping date patterns like "Expected to ship between..."
       cleanedContent = cleanedContent.replace(
