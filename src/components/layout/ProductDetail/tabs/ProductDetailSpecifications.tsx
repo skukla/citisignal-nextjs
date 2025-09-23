@@ -1,5 +1,6 @@
 import { useProductDetail } from '../providers/ProductDetailContext';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
 import type { ProductDetailSpecificationsProps } from '../types';
 
 /**
@@ -12,6 +13,18 @@ export function ProductDetailSpecifications({ className }: ProductDetailSpecific
   const [sanitizedAttributes, setSanitizedAttributes] = useState<
     Array<{ key: string; label: string; value: string }>
   >([]);
+  const elementRef = useRef<HTMLDivElement>(null);
+
+  // Register with Demo Inspector - attributes come from Catalog Service
+  useDataSource({
+    componentName: 'ProductDetailSpecifications',
+    source: 'catalog',
+    elementRef,
+    fieldMappings: {
+      attributes: 'catalog',
+      specifications: 'catalog',
+    },
+  });
 
   // Sanitize attribute values that might contain HTML
   useEffect(() => {
@@ -62,15 +75,22 @@ export function ProductDetailSpecifications({ className }: ProductDetailSpecific
   }
 
   return (
-    <div className={className}>
+    <div ref={elementRef} className={className}>
       <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">
         Specifications
       </h2>
-      <div className="grid gap-4">
+      <div
+        className="grid gap-4"
+        data-inspector-field="specifications"
+        data-inspector-source="catalog"
+      >
         {sanitizedAttributes.map((attribute) => (
           <div
             key={attribute.key}
             className="flex justify-between items-start border-b border-gray-100 pb-3"
+            data-inspector-field="attributes"
+            data-inspector-source="catalog"
+            data-inspector-attribute={attribute.key}
           >
             <span className="text-base font-semibold text-gray-700 flex-shrink-0 mr-4">
               {attribute.label}

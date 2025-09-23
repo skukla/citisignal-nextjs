@@ -1,4 +1,6 @@
+import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
+import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
 // import { useProductActions } from '@/hooks/useProductActions';
 import Button from '@/components/ui/foundations/Button';
 import { HeartIcon } from '@heroicons/react/24/outline';
@@ -16,8 +18,23 @@ export function ProductDetailActions({
   allAttributesSelected = true,
 }: ProductDetailActionsProps) {
   const { product, loading } = useProductDetail();
+  const elementRef = useRef<HTMLDivElement>(null);
   // TODO: Uncomment when hooks are available
   // const { addToCart, toggleWishlist, isWishlisted } = useProductActions();
+
+  // Register with Demo Inspector - actions based on stock/variant selection
+  useDataSource({
+    componentName: 'ProductDetailActions',
+    source: 'catalog', // Primary source for stock status
+    elementRef,
+    dynamicSource: () => (allAttributesSelected ? 'commerce' : 'catalog'),
+    fieldMappings: {
+      'add-to-cart': allAttributesSelected ? 'commerce' : 'catalog',
+      'stock-status': allAttributesSelected ? 'commerce' : 'catalog',
+      wishlist: 'catalog', // Wishlist action is always catalog-based
+    },
+    dependencies: [allAttributesSelected],
+  });
 
   if (loading) {
     return (
@@ -60,7 +77,7 @@ export function ProductDetailActions({
   };
 
   return (
-    <div className={className}>
+    <div ref={elementRef} className={className}>
       <div className="space-y-3">
         {/* Add to Cart */}
         <Button
@@ -69,12 +86,22 @@ export function ProductDetailActions({
           variant="primary"
           size="lg"
           className="w-full"
+          data-inspector-field="add-to-cart"
+          data-inspector-source={allAttributesSelected ? 'commerce' : 'catalog'}
+          data-inspector-variant-selected={allAttributesSelected ? 'true' : 'false'}
         >
           {getButtonText()}
         </Button>
 
         {/* Wishlist */}
-        <Button onClick={handleToggleWishlist} variant="secondary" size="md" className="w-full">
+        <Button
+          onClick={handleToggleWishlist}
+          variant="secondary"
+          size="md"
+          className="w-full"
+          data-inspector-field="wishlist"
+          data-inspector-source="catalog"
+        >
           {isWishlistedProduct ? (
             <>
               <HeartIconSolid className="h-5 w-5 text-red-500" />
