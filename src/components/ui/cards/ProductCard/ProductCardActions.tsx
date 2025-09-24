@@ -3,7 +3,7 @@
 import { twMerge } from 'tailwind-merge';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/foundations/Button';
-import { useCart } from '@/components/ui/layout/Cart';
+import { useCart } from '@/components/ui/layout/Cart/UnifiedCartProvider';
 import { useProductCard } from './ProductCardContext';
 import { hasConfigurableOptions } from './ProductCard.types';
 import type { BaseComponentProps } from '@/types/ui';
@@ -29,6 +29,8 @@ export function ProductCardActions({ className }: BaseComponentProps) {
         name: product.name,
         price: numericPrice,
         imageUrl: product.image?.url,
+        // Simple products don't have options, so variantId is just the product id
+        variantId: product.id,
       });
     }
   };

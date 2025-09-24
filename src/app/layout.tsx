@@ -5,7 +5,7 @@ import { usePathname } from 'next/navigation';
 import { StandardHeader } from '@/components/layout/Header/StandardHeader';
 import { StandardFooter } from '@/components/layout/Footer/StandardFooter';
 import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
-import CartRootProvider from '@/components/ui/layout/Cart/CartRootProvider';
+import { UnifiedCartProvider } from '@/components/ui/layout/Cart/UnifiedCartProvider';
 import Root from '@/components/layout/Root';
 import { DemoInspectorProvider } from '@/contexts/DemoInspectorContext';
 import { NavigationProvider } from '@/contexts/NavigationContext';
@@ -34,13 +34,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <NavigationProvider>
             <AuthProvider>
               <AccountProvider>
-                <CartRootProvider>
+                <UnifiedCartProvider>
                   <Root>
                     {!isCheckoutPage && <StandardHeader />}
                     <main>{children}</main>
                     <StandardFooter />
                   </Root>
-                </CartRootProvider>
+                </UnifiedCartProvider>
               </AccountProvider>
             </AuthProvider>
           </NavigationProvider>

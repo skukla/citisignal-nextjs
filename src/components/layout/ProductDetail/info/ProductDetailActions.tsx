@@ -1,11 +1,13 @@
 import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
 import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
-// import { useProductActions } from '@/hooks/useProductActions';
+import { useCart } from '@/components/ui/layout/Cart/UnifiedCartProvider';
+import { generateVariantId, formatCartItemName } from '@/components/ui/layout/Cart/Cart.types';
 import Button from '@/components/ui/foundations/Button';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
 import type { ProductDetailActionsProps } from '../types';
+import type { CartItemOption } from '@/components/ui/layout/Cart/Cart.types';
 
 /**
  * ProductDetailActions component
@@ -18,9 +20,8 @@ export function ProductDetailActions({
   allAttributesSelected = true,
 }: ProductDetailActionsProps) {
   const { product, loading } = useProductDetail();
+  const { addItem } = useCart();
   const elementRef = useRef<HTMLDivElement>(null);
-  // TODO: Uncomment when hooks are available
-  // const { addToCart, toggleWishlist, isWishlisted } = useProductActions();
 
   // Register with Demo Inspector - actions based on stock/variant selection
   useDataSource({
@@ -51,14 +52,44 @@ export function ProductDetailActions({
     return null;
   }
 
-  // Mock functions for testing
-  const isWishlistedProduct = false;
+  // Convert selectedOptions to CartItemOption format
+  const cartItemOptions: CartItemOption[] = Object.entries(selectedOptions).map(
+    ([attributeCode, value]) => {
+      // Find the option details from product's configurable_options
+      const configurableOption = product.configurable_options?.find(
+        (opt) => opt.attribute_code === attributeCode
+      );
+      const optionValue = configurableOption?.values.find((val) => val.value === value);
+
+      return {
+        attributeCode,
+        label: configurableOption?.label || attributeCode,
+        value: value as string,
+        valueLabel: optionValue?.label || (value as string),
+      };
+    }
+  );
+
+  // Actual cart functionality
   const handleAddToCart = () => {
-    console.log('Add to cart:', {
-      productId: product.id,
-      selectedOptions,
+    if (!product || isAddToCartDisabled) return;
+
+    const numericPrice = parseFloat(product.price.replace('$', ''));
+    const variantId = generateVariantId(product.id, cartItemOptions);
+    const displayName = formatCartItemName(product.name, cartItemOptions);
+
+    addItem({
+      id: product.id,
+      name: displayName,
+      price: numericPrice,
+      imageUrl: product.image?.url,
+      selectedOptions: cartItemOptions.length > 0 ? cartItemOptions : undefined,
+      variantId,
     });
   };
+
+  // Mock wishlist for now
+  const isWishlistedProduct = false;
   const handleToggleWishlist = () => console.log('Toggle wishlist:', product.id);
 
   // Check if product has configurable options

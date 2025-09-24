@@ -3,19 +3,19 @@
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
 import { useRouter } from 'next/navigation';
-import { useCartContext } from './CartContext';
+import { useCart } from './UnifiedCartProvider';
 import type { CartFooterProps } from './Cart.types';
 
 export function CartFooter({
   showShippingNote = true,
   checkoutLabel = 'Checkout',
-  className
+  className,
 }: CartFooterProps) {
   const router = useRouter();
-  const { subtotal, onClose } = useCartContext();
+  const { subtotal, closeCart } = useCart();
 
   const handleCheckout = () => {
-    onClose();
+    closeCart();
     router.push('/checkout');
   };
 
@@ -26,16 +26,10 @@ export function CartFooter({
         <p>${subtotal}</p>
       </div>
       {showShippingNote && (
-        <p className="mt-0.5 text-sm text-gray-500">
-          Shipping and taxes calculated at checkout.
-        </p>
+        <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
       )}
       <div className="mt-6">
-        <Button
-          onClick={handleCheckout}
-          fullWidth
-          size="lg"
-        >
+        <Button onClick={handleCheckout} fullWidth size="lg">
           {checkoutLabel}
         </Button>
       </div>

@@ -4,7 +4,7 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
 import { CartRoot, CartHeader, CartBody, CartFooter } from './';
-import { useCart } from './useCart';
+import { useCart } from './UnifiedCartProvider';
 import type { BaseComponentProps } from '@/types/ui';
 
 interface CartIconProps extends BaseComponentProps {
@@ -19,8 +19,7 @@ interface CartIconProps extends BaseComponentProps {
  * <Cart.Icon aria-label="Shopping cart" />
  */
 export function CartIcon({ className, ...props }: CartIconProps) {
-  const { items, isOpen, toggleCart, closeCart } = useCart();
-  const itemCount = items.reduce((total, item) => total + item.quantity, 0);
+  const { items, isOpen, itemCount, toggleCart, closeCart } = useCart();
 
   return (
     <>
@@ -36,9 +35,7 @@ export function CartIcon({ className, ...props }: CartIconProps) {
           {...props}
         />
         {itemCount > 0 && (
-          <span 
-            className="absolute -top-1 -right-1 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center bg-purple-600"
-          >
+          <span className="absolute -top-1 -right-1 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center bg-purple-600">
             {itemCount}
           </span>
         )}
