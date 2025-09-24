@@ -6,7 +6,6 @@ import { StandardHeader } from '@/components/layout/Header/StandardHeader';
 import { StandardFooter } from '@/components/layout/Footer/StandardFooter';
 import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
 import { CartProvider } from '@/components/ui/layout/Cart/CartProvider';
-import { ToastProvider } from '@/hooks/useToast';
 import Root from '@/components/layout/Root';
 import { DemoInspectorProvider } from '@/contexts/DemoInspectorContext';
 import { NavigationProvider } from '@/contexts/NavigationContext';
@@ -35,15 +34,13 @@ export default function RootLayout({ children }: RootLayoutProps) {
           <NavigationProvider>
             <AuthProvider>
               <AccountProvider>
-                <ToastProvider>
-                  <CartProvider>
-                    <Root>
-                      {!isCheckoutPage && <StandardHeader />}
-                      <main>{children}</main>
-                      <StandardFooter />
-                    </Root>
-                  </CartProvider>
-                </ToastProvider>
+                <CartProvider>
+                  <Root>
+                    {!isCheckoutPage && <StandardHeader />}
+                    <main>{children}</main>
+                    <StandardFooter />
+                  </Root>
+                </CartProvider>
               </AccountProvider>
             </AuthProvider>
           </NavigationProvider>
