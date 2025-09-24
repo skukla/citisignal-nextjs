@@ -1,21 +1,22 @@
 'use client';
 
 import Grid from './Grid';
-import ProductCard, { 
-  ProductCardImage, 
-  ProductCardBadges, 
-  ProductCardInfo, 
+import ProductCard, {
+  ProductCardImage,
+  ProductCardBadges,
+  ProductCardInfo,
   ProductCardPrice,
   ProductCardColors,
-  ProductCardActions 
+  ProductCardActions,
 } from '@/components/ui/cards/ProductCard';
 import EmptyState from '@/components/ui/feedback/EmptyState';
 import type { ProductType } from '@/components/ui/cards/ProductCard/ProductCard.types';
+import type { BaseProduct } from '@/types/commerce';
 import type { GridGap, ResponsiveValue } from '@/types/grid';
 import type { HeroIcon } from '@/types/hero-icons';
 
 interface ProductGridProps {
-  products: ProductType[];
+  products: (ProductType | BaseProduct)[];
   columns?: ResponsiveValue<number>;
   gap?: GridGap;
   className?: string;
@@ -49,7 +50,7 @@ interface ProductGridProps {
  *     onAction: clearFilters
  *   }}
  * />
- * 
+ *
  * // Custom product card structure
  * <ProductGrid products={products}>
  *   <ProductCardImage />
@@ -63,14 +64,14 @@ export default function ProductGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 3
+    lg: 3,
   },
   gap = 'md',
   className,
   children,
   priorityImageCount = 4,
   dataSource = 'catalog',
-  emptyState
+  emptyState,
 }: ProductGridProps) {
   if (products.length === 0) {
     return (
@@ -85,9 +86,9 @@ export default function ProductGrid({
   }
 
   return (
-    <Grid 
-      columns={columns} 
-      gap={gap} 
+    <Grid
+      columns={columns}
+      gap={gap}
       className={className}
       data-inspector-source={dataSource}
       data-inspector-type="product-grid"
@@ -96,10 +97,10 @@ export default function ProductGrid({
       {products.map((product, index) => {
         // Load first N images with priority for better LCP
         const shouldPrioritize = index < priorityImageCount;
-        
+
         return (
-          <ProductCard.Root 
-            key={product.sku || product.id || `product-${index}`} 
+          <ProductCard.Root
+            key={product.sku || product.id || `product-${index}`}
             product={product}
             dataSource={dataSource}
           >
