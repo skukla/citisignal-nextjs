@@ -21,6 +21,8 @@ export async function POST(request: NextRequest) {
       'Magento-Store-Code': process.env.ADOBE_COMMERCE_STORE_CODE || '', // Used by Commerce Services
       'Magento-Store-View-Code': process.env.ADOBE_COMMERCE_STORE_VIEW_CODE || '', // Used by Commerce Services
       'Magento-Customer-Group': process.env.ADOBE_COMMERCE_CUSTOMER_GROUP || '',
+      // Forward cart ID for cart queries
+      'x-cart-id': request.headers.get('x-cart-id') || '',
     };
 
     // Forward the request to the mesh endpoint with required headers

@@ -24,6 +24,7 @@ export async function graphqlFetcher<T = unknown>(
   variables?: Record<string, unknown>,
   options?: {
     skipTracking?: boolean; // Skip tracking for this query
+    headers?: Record<string, string>; // Custom headers
   }
 ): Promise<T> {
   // Convert DocumentNode to string if needed
@@ -39,6 +40,7 @@ export async function graphqlFetcher<T = unknown>(
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
+      ...options?.headers, // Merge custom headers
     },
     body: JSON.stringify({
       query: queryString,
