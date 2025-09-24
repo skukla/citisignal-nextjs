@@ -24,11 +24,22 @@ query GetProductCards(
       urlKey
       name
       manufacturer
-      price # Formatted "$999.99"
-      originalPrice # Only when on sale
+      price # Display string: "$1,199.99"
+      priceValue # Raw number: 1199.99
+      originalPrice # Display string: "$1,399.99"
+      originalPriceValue # Raw number: 1399.99
       discountPercent
       inStock
+      # Semantic image fields (abstracted from Adobe Commerce roles)
       image {
+        url
+        altText
+      }
+      thumbnail {
+        url
+        altText
+      }
+      gallery {
         url
         altText
       }

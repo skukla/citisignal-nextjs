@@ -3,13 +3,24 @@ export interface BaseProduct {
   sku: string;
   name: string;
   urlKey: string;
-  price: string;
-  originalPrice?: string;
+  price: string; // Display string: "$1,199.99"
+  priceValue: number; // Raw number: 1199.99
+  originalPrice?: string; // Display string: "$1,399.99"
+  originalPriceValue?: number; // Raw number: 1399.99
   discountPercent?: number;
+  // Semantic image fields (abstracted from Adobe Commerce roles)
   image?: {
     url: string;
-    label: string;
+    altText: string;
   };
+  thumbnail?: {
+    url: string;
+    altText: string;
+  };
+  gallery?: Array<{
+    url: string;
+    altText: string;
+  }>;
   inStock: boolean;
   manufacturer?: string;
   configurable_options?: Array<{
@@ -75,8 +86,10 @@ export interface ProductDetail extends Omit<BaseProduct, 'variants'> {
     id: string;
     sku: string;
     attributes: Record<string, string>;
-    price: string;
-    originalPrice?: string;
+    price: string; // Display string
+    priceValue: number; // Raw number
+    originalPrice?: string; // Display string
+    originalPriceValue?: number; // Raw number
     inStock: boolean;
     stockLevel?: number;
     image?: {

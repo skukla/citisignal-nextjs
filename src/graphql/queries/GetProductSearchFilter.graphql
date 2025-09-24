@@ -29,7 +29,16 @@ query GetProductSearchFilter(
         originalPrice
         discountPercent
         inStock
+        # Semantic image fields (abstracted from Adobe Commerce roles)
         image {
+          url
+          altText
+        }
+        thumbnail {
+          url
+          altText
+        }
+        gallery {
           url
           altText
         }
@@ -48,7 +57,7 @@ query GetProductSearchFilter(
         total_pages
       }
     }
-    
+
     # Available facets/filters
     facets {
       facets {
@@ -64,7 +73,7 @@ query GetProductSearchFilter(
       }
       totalCount
     }
-    
+
     # Overall total
     totalCount
   }
