@@ -33,10 +33,6 @@ export function ProductCardActions({ className }: BaseComponentProps) {
     }
   };
 
-  const handleViewDetails = () => {
-    router.push(`/${product.urlKey}`);
-  };
-
   // Button text based on product type and stock
   const getPrimaryButtonText = () => {
     if (isOutOfStock) return 'Out of Stock';
@@ -56,17 +52,6 @@ export function ProductCardActions({ className }: BaseComponentProps) {
       >
         {getPrimaryButtonText()}
       </Button>
-
-      {/* Only show View Details for simple products */}
-      {!isConfigurable && (
-        <Button
-          onClick={handleViewDetails}
-          variant="outline"
-          className="w-full py-2 border border-gray-300 text-gray-700 hover:bg-gray-50"
-        >
-          View Details
-        </Button>
-      )}
     </div>
   );
 }
