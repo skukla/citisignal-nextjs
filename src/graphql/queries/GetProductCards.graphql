@@ -38,6 +38,21 @@ query GetProductCards(
         name
         hex
       }
+      # Configurable options for variant selection on cards
+      configurable_options {
+        label
+        attribute_code
+        values {
+          label
+          value
+          swatch_data {
+            type
+            value
+          }
+        }
+      }
+      # Indicates if variant selection is required
+      isConfigurable
     }
     totalCount
     hasMoreItems
