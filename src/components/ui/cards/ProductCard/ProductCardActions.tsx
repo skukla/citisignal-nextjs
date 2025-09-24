@@ -62,14 +62,14 @@ export function ProductCardActions({
       >
         {buttonState.text}
       </Button>
-      <Link href={`/products/${product.urlKey}`}>
-        <Button
-          variant="outline"
-          className="w-full py-2 border border-gray-300 text-gray-700 hover:bg-gray-50"
-        >
-          View Details
-        </Button>
-      </Link>
+      <Button
+        as={Link}
+        href={`/products/${product.urlKey}`}
+        variant="outline"
+        className="w-full py-2 border border-gray-300 text-gray-700 hover:bg-gray-50"
+      >
+        View Details
+      </Button>
     </div>
   );
 }
