@@ -8,16 +8,17 @@ export function ProductCardPrice({ className, showSavings }: ProductCardPricePro
 
   return (
     <div className={twMerge('px-4 pb-4', className)}>
+      {/* Price row - natural height */}
       <div className="flex items-center gap-2">
         <p className="text-2xl font-bold text-gray-900">{price}</p>
-        {originalPrice && (
-          <p className="text-lg text-gray-500 line-through">{originalPrice}</p>
-        )}
+        {originalPrice && <p className="text-lg text-gray-500 line-through">{originalPrice}</p>}
       </div>
+
+      {/* Savings row - only shown when present */}
       {showSavings && discountPercent && (
-        <p className="mt-1 text-sm font-medium text-green-600">
-          Save {discountPercent}%
-        </p>
+        <div className="mt-1">
+          <p className="text-sm font-medium text-green-600">Save {discountPercent}%</p>
+        </div>
       )}
     </div>
   );

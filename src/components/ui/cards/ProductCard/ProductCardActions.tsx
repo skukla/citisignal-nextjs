@@ -41,7 +41,7 @@ export function ProductCardActions({ className }: BaseComponentProps) {
   };
 
   return (
-    <div className={twMerge('space-y-2 px-4 pb-4', className)}>
+    <div className={twMerge('mt-auto space-y-2 px-4 pb-4', className)}>
       <Button
         onClick={handlePrimaryAction}
         disabled={isOutOfStock}

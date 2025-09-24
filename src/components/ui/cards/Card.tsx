@@ -6,20 +6,20 @@ import type { CardComponentProps } from '@/types/card';
 
 /**
  * A flexible card component that serves as a container for content.
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
  * <Card>Content</Card>
- * 
+ *
  * // Interactive card
  * <Card interactive>Hoverable content</Card>
- * 
+ *
  * // As a button
  * <Card as="button" interactive onClick={handleClick}>
  *   Clickable card
  * </Card>
- * 
+ *
  * // With sections
  * <Card>
  *   <div className="p-6 border-b">Header</div>
@@ -41,21 +41,19 @@ export default function Card<T extends ElementType = 'div'>({
   const classes = twMerge(
     // Base styles - matching existing card patterns
     'bg-white border border-gray-200 rounded-xl relative',
-    
+
+    // Flexbox layout for consistent height and bottom-aligned actions
+    'flex flex-col h-full',
+
     // Shadow states
-    interactive
-      ? 'shadow-sm hover:shadow-lg transition-shadow duration-300'
-      : 'shadow-sm',
-    
+    interactive ? 'shadow-sm hover:shadow-lg transition-shadow duration-300' : 'shadow-sm',
+
     // Allow custom classes to override defaults
     className
   );
 
   return (
-    <Component 
-      className={classes}
-      {...props}
-    >
+    <Component className={classes} {...props}>
       {children}
     </Component>
   );
