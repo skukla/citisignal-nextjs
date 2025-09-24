@@ -15,8 +15,8 @@ interface ProductDetailPageProps {
  * Displays individual product information using compound components.
  * Follows the same architectural patterns as ProductPage for consistency.
  *
- * URL Pattern: /products/[slug]
- * Example: /products/iphone-15-pro-256gb
+ * URL Pattern: /[slug]
+ * Example: /samsung-galaxy-s22
  */
 export default function ProductDetailPage({ params }: ProductDetailPageProps) {
   const { slug } = use(params);

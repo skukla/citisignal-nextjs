@@ -6,7 +6,7 @@ import { ProductCardProvider } from './ProductCardContext';
 /**
  * Root component for ProductCard compound component.
  * Provides context and card layout for all ProductCard sub-components.
- * 
+ *
  * @example
  * ```tsx
  * <ProductCard.Root product={productData}>
@@ -18,12 +18,17 @@ import { ProductCardProvider } from './ProductCardContext';
  * </ProductCard.Root>
  * ```
  */
-export function ProductCardRoot({ product, className, children, dataSource = 'catalog' }: ProductCardRootProps) {
+export function ProductCardRoot({
+  product,
+  className,
+  children,
+  dataSource = 'catalog',
+}: ProductCardRootProps) {
   return (
     <ProductCardProvider product={product}>
       <Card
         as={Link}
-        href={`/products/${product.urlKey}`}
+        href={`/${product.urlKey}`}
         interactive
         className={className}
         data-inspector-source={dataSource}
@@ -35,4 +40,3 @@ export function ProductCardRoot({ product, className, children, dataSource = 'ca
     </ProductCardProvider>
   );
 }
-
