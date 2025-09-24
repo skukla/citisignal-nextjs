@@ -179,13 +179,3 @@ export function useProductPageData(variables: ProductPageDataVariables) {
     dedupingInterval: 5000,
   });
 }
-
-/**
- * Alternative hook that demonstrates using the unified query for just navigation.
- * Shows how the same unified endpoint can be used for partial data needs.
- */
-export function useUnifiedNavigation() {
-  return useProductPageData({
-    pageSize: 0, // Optimize - don't fetch products when we only need navigation
-  });
-}
