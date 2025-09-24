@@ -5,23 +5,6 @@ import type { BaseComponentProps } from '@/types/ui';
 
 export type ProductType = Phone | Watch | Accessory | Plan | StreamingService | GiftCard;
 
-// Enhanced product type with configurable options (from API)
-export interface EnhancedProductType extends ProductType {
-  configurable_options?: Array<{
-    label: string;
-    attribute_code: string;
-    values: Array<{
-      label: string;
-      value: string;
-      swatch_data?: {
-        type: string;
-        value: string;
-      };
-    }>;
-  }>;
-  isConfigurable?: boolean;
-}
-
 export interface ProductCardContextValue {
   product: ProductType;
   isWishlisted: boolean;

@@ -5,9 +5,7 @@ export { ProductCardBadges } from './ProductCardBadges';
 export { ProductCardInfo } from './ProductCardInfo';
 export { ProductCardPrice } from './ProductCardPrice';
 export { ProductCardColors } from './ProductCardColors';
-export { ProductCardVariants } from './ProductCardVariants';
 export { ProductCardActions } from './ProductCardActions';
-export { ProductCardEnhanced } from './ProductCardEnhanced';
 
 // Compound component namespace
 import { ProductCardRoot } from './ProductCardRoot';
@@ -16,9 +14,7 @@ import { ProductCardBadges } from './ProductCardBadges';
 import { ProductCardInfo } from './ProductCardInfo';
 import { ProductCardPrice } from './ProductCardPrice';
 import { ProductCardColors } from './ProductCardColors';
-import { ProductCardVariants } from './ProductCardVariants';
 import { ProductCardActions } from './ProductCardActions';
-import { ProductCardEnhanced } from './ProductCardEnhanced';
 import type { ProductCardComponent } from './ProductCard.types';
 
 /**
@@ -35,19 +31,14 @@ import type { ProductCardComponent } from './ProductCard.types';
  *   <ProductCard.Actions />
  * </ProductCard.Root>
  */
-const ProductCard: ProductCardComponent & {
-  Variants: typeof ProductCardVariants;
-  Enhanced: typeof ProductCardEnhanced;
-} = {
+const ProductCard: ProductCardComponent = {
   Root: ProductCardRoot,
   Image: ProductCardImage,
   Badges: ProductCardBadges,
   Info: ProductCardInfo,
   Price: ProductCardPrice,
   Colors: ProductCardColors,
-  Actions: ProductCardActions,
-  Variants: ProductCardVariants,
-  Enhanced: ProductCardEnhanced,
+  Actions: ProductCardActions
 };
 
 export default ProductCard;
