@@ -47,7 +47,7 @@ export function ProductDetailContent({ productSlug }: ProductDetailContentProps)
   return (
     <ProductDetail.Background color="white">
       <ProductDetail.Container>
-        <div className="pt-6 sm:pt-8 lg:pt-10 mb-6">
+        <div className="mb-6">
           <ProductDetail.Breadcrumbs />
         </div>
 

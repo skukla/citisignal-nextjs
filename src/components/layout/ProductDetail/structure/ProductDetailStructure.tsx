@@ -34,7 +34,7 @@ export function ProductDetailBackground({
  */
 export function ProductDetailContainer({ children, className }: ProductDetailContainerProps) {
   const combinedClasses =
-    `mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-16 sm:pb-20 lg:pb-24 ${className || ''}`.trim();
+    `mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8 pb-16 sm:pb-20 lg:pb-24 ${className || ''}`.trim();
 
   return <div className={combinedClasses}>{children}</div>;
 }
