@@ -14,9 +14,10 @@ export function CartBody({
   emptyStateDescription = 'Add some items to get started',
   className,
 }: CartBodyProps) {
-  const { items } = useCart();
+  const { items, isLoading } = useCart();
 
-  if (items.length === 0) {
+  // Don't show empty state while loading (prevents flash during optimistic updates)
+  if (items.length === 0 && !isLoading) {
     return (
       <EmptyState
         icon={emptyStateIcon as ComponentType}

@@ -38,15 +38,15 @@ export function useCartWithStorage() {
 
   // Computed values
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
-  const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
+  const subtotal = items.reduce((total, item) => total + item.priceValue * item.quantity, 0);
 
   // Helper to manage loading state
   const withLoadingState = useCallback(async (operation: () => void | Promise<void>) => {
     setIsLoading(true);
     try {
       await operation();
-      // Small delay to show loading feedback
-      await new Promise((resolve) => setTimeout(resolve, 300));
+      // Simulate realistic API delay for Adobe Commerce integration
+      await new Promise((resolve) => setTimeout(resolve, 1500));
     } finally {
       setIsLoading(false);
     }

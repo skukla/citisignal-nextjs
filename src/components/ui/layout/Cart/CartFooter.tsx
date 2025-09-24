@@ -12,7 +12,7 @@ export function CartFooter({
   className,
 }: CartFooterProps) {
   const router = useRouter();
-  const { subtotal, isLoading, closeCart } = useCart();
+  const { subtotal, isLoading, itemCount, closeCart } = useCart();
 
   const handleCheckout = () => {
     closeCart();
@@ -22,22 +22,19 @@ export function CartFooter({
   return (
     <div className={twMerge('border-t border-gray-200 px-6 py-6', className)}>
       <div className="flex justify-between text-base font-medium text-gray-900">
-        <div className="flex items-center gap-2">
-          <p>Subtotal</p>
-          {isLoading && (
-            <div className="animate-spin rounded-full h-4 w-4 border border-purple-600 border-t-transparent" />
-          )}
-        </div>
-        <p>${subtotal}</p>
+        <p>Subtotal</p>
+        <p>${subtotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
       </div>
       {showShippingNote && (
         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
       )}
-      <div className="mt-6">
-        <Button onClick={handleCheckout} fullWidth size="lg">
-          {checkoutLabel}
-        </Button>
-      </div>
+      {itemCount > 0 && (
+        <div className="mt-6">
+          <Button onClick={handleCheckout} fullWidth size="lg">
+            {checkoutLabel}
+          </Button>
+        </div>
+      )}
     </div>
   );
 }
