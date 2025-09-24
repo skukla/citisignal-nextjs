@@ -2,7 +2,13 @@ import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
 import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
 import { useCart } from '@/components/ui/layout/Cart/CartProvider';
-import { generateVariantId, formatCartItemName } from '@/components/ui/layout/Cart/Cart.types';
+import {
+  generateVariantId,
+  formatCartItemName,
+  getVariantCartImage,
+  getVariantPrice,
+  getVariantPriceValue,
+} from '@/components/ui/layout/Cart/Cart.types';
 import Button from '@/components/ui/foundations/Button';
 import { HeartIcon } from '@heroicons/react/24/outline';
 import { HeartIcon as HeartIconSolid } from '@heroicons/react/24/solid';
@@ -74,15 +80,20 @@ export function ProductDetailActions({
   const handleAddToCart = () => {
     if (!product || isAddToCartDisabled) return;
 
-    const numericPrice = parseFloat(product.price.replace('$', ''));
     const variantId = generateVariantId(product.id, cartItemOptions);
     const displayName = formatCartItemName(product.name, cartItemOptions);
+
+    // Get both formatted display price and raw numeric price
+    const variantDisplayPrice = getVariantPrice(product, cartItemOptions);
+    const variantNumericPrice = getVariantPriceValue(product, cartItemOptions);
 
     addItem({
       id: product.id,
       name: displayName,
-      price: numericPrice,
-      imageUrl: product.image?.url,
+      price: variantDisplayPrice, // Formatted: "$1,199.99"
+      priceValue: variantNumericPrice, // Raw: 1199.99
+      // Use variant-specific thumbnail, fall back to product thumbnail
+      imageUrl: getVariantCartImage(product, cartItemOptions),
       selectedOptions: cartItemOptions.length > 0 ? cartItemOptions : undefined,
       variantId,
     });

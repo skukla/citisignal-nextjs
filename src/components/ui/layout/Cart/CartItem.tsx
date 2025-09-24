@@ -47,7 +47,7 @@ export function CartItem({ item, className }: CartItemProps) {
         </div>
         <div className="flex flex-1 items-end justify-between text-sm">
           <CartQuantity item={item} />
-          <p className="text-gray-500">${item.price}</p>
+          <p className="text-gray-500">{item.price}</p>
         </div>
       </div>
     </div>
