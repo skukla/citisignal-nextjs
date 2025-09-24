@@ -19,7 +19,7 @@ interface CartIconProps extends BaseComponentProps {
  * <Cart.Icon aria-label="Shopping cart" />
  */
 export function CartIcon({ className, ...props }: CartIconProps) {
-  const { items, isOpen, itemCount, toggleCart, closeCart } = useCart();
+  const { items, isOpen, itemCount, isLoading, toggleCart, closeCart } = useCart();
 
   return (
     <>
@@ -36,7 +36,11 @@ export function CartIcon({ className, ...props }: CartIconProps) {
         />
         {itemCount > 0 && (
           <span className="absolute -top-1 -right-1 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center bg-purple-600">
-            {itemCount}
+            {isLoading ? (
+              <div className="animate-spin rounded-full h-3 w-3 border border-white border-t-transparent" />
+            ) : (
+              itemCount
+            )}
           </span>
         )}
       </div>

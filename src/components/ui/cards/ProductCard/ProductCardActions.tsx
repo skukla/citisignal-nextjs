@@ -32,9 +32,6 @@ export function ProductCardActions({ className }: BaseComponentProps) {
         // Simple products don't have options, so variantId is just the product id
         variantId: product.id,
       });
-
-      // Show success toast
-      showToast('success', 'Added to cart', `${product.name} was added to your cart`);
     }
   };
 

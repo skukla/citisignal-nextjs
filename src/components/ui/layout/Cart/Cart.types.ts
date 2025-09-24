@@ -29,6 +29,7 @@ export interface CartContextValue {
   isOpen: boolean;
   itemCount: number;
   subtotal: number;
+  isLoading: boolean;
 
   // Cart actions
   addItem: (item: Omit<CartItem, 'quantity'>) => void;

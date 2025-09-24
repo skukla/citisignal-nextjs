@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
 import Image from 'next/image';
@@ -11,21 +10,9 @@ import type { CartItemProps } from './Cart.types';
 
 export function CartItem({ item, className }: CartItemProps) {
   const { removeItem } = useCart();
-  const [isRemoving, setIsRemoving] = useState(false);
 
-  const handleRemove = async () => {
-    if (isRemoving) return;
-
-    setIsRemoving(true);
-
-    try {
-      // Small delay to show feedback
-      await new Promise((resolve) => setTimeout(resolve, 200));
-      removeItem(item.variantId || item.id);
-    } catch (error) {
-      console.error('Failed to remove item:', error);
-      setIsRemoving(false);
-    }
+  const handleRemove = () => {
+    removeItem(item.variantId || item.id);
   };
 
   return (
@@ -53,18 +40,10 @@ export function CartItem({ item, className }: CartItemProps) {
             variant="ghost"
             size="sm"
             onClick={handleRemove}
-            disabled={isRemoving}
-            leftIcon={isRemoving ? undefined : XMarkIcon}
-            className={twMerge(
-              'text-gray-400 hover:text-gray-500 disabled:opacity-50',
-              isRemoving && 'pointer-events-none'
-            )}
+            leftIcon={XMarkIcon}
+            className="text-gray-400 hover:text-gray-500"
             aria-label="Remove item"
-          >
-            {isRemoving && (
-              <div className="animate-spin rounded-full h-4 w-4 border border-gray-400 border-t-transparent" />
-            )}
-          </Button>
+          />
         </div>
         <div className="flex flex-1 items-end justify-between text-sm">
           <CartQuantity item={item} />

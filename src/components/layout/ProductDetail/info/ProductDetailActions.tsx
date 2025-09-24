@@ -86,14 +86,6 @@ export function ProductDetailActions({
       selectedOptions: cartItemOptions.length > 0 ? cartItemOptions : undefined,
       variantId,
     });
-
-    // Show success toast with appropriate message
-    const hasOptions = cartItemOptions.length > 0;
-    const toastMessage = hasOptions
-      ? `${product.name} with selected options was added to your cart`
-      : `${product.name} was added to your cart`;
-
-    showToast('success', 'Added to cart', toastMessage);
   };
 
   // Mock wishlist for now

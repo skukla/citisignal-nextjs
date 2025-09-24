@@ -10,6 +10,7 @@ const CART_STORAGE_KEY = 'citisignal-cart';
 export function useCartWithStorage() {
   const [items, setItems] = useState<CartItem[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   // Load cart from localStorage on mount
   useEffect(() => {
@@ -39,63 +40,99 @@ export function useCartWithStorage() {
   const itemCount = items.reduce((total, item) => total + item.quantity, 0);
   const subtotal = items.reduce((total, item) => total + item.price * item.quantity, 0);
 
-  // Add item to cart
-  const addItem = useCallback((newItem: Omit<CartItem, 'quantity'>) => {
-    const variantId = newItem.variantId || generateVariantId(newItem.id, newItem.selectedOptions);
-
-    setItems((prev) => {
-      const existingItem = prev.find(
-        (item) => (item.variantId || generateVariantId(item.id, item.selectedOptions)) === variantId
-      );
-
-      if (existingItem) {
-        // Update quantity if item already exists
-        return prev.map((item) =>
-          (item.variantId || generateVariantId(item.id, item.selectedOptions)) === variantId
-            ? { ...item, quantity: item.quantity + 1 }
-            : item
-        );
-      }
-
-      // Add new item with quantity 1 and ensure variantId is set
-      return [
-        ...prev,
-        {
-          ...newItem,
-          quantity: 1,
-          variantId: variantId,
-        },
-      ];
-    });
-
-    // Auto-open cart when item is added (common UX pattern)
-    setIsOpen(true);
-  }, []);
-
-  // Update quantity for a specific variant
-  const updateQuantity = useCallback((variantId: string, quantity: number) => {
-    if (quantity <= 0) {
-      removeItem(variantId);
-      return;
+  // Helper to manage loading state
+  const withLoadingState = useCallback(async (operation: () => void | Promise<void>) => {
+    setIsLoading(true);
+    try {
+      await operation();
+      // Small delay to show loading feedback
+      await new Promise((resolve) => setTimeout(resolve, 300));
+    } finally {
+      setIsLoading(false);
     }
-
-    setItems((prev) =>
-      prev.map((item) =>
-        (item.variantId || generateVariantId(item.id, item.selectedOptions)) === variantId
-          ? { ...item, quantity }
-          : item
-      )
-    );
   }, []);
 
-  // Remove item from cart
-  const removeItem = useCallback((variantId: string) => {
-    setItems((prev) =>
-      prev.filter(
-        (item) => (item.variantId || generateVariantId(item.id, item.selectedOptions)) !== variantId
-      )
-    );
-  }, []);
+  // Add item to cart with loading state
+  const addItem = useCallback(
+    (newItem: Omit<CartItem, 'quantity'>) => {
+      withLoadingState(() => {
+        const variantId =
+          newItem.variantId || generateVariantId(newItem.id, newItem.selectedOptions);
+
+        setItems((prev) => {
+          const existingItem = prev.find(
+            (item) =>
+              (item.variantId || generateVariantId(item.id, item.selectedOptions)) === variantId
+          );
+
+          if (existingItem) {
+            // Update quantity if item already exists
+            return prev.map((item) =>
+              (item.variantId || generateVariantId(item.id, item.selectedOptions)) === variantId
+                ? { ...item, quantity: item.quantity + 1 }
+                : item
+            );
+          }
+
+          // Add new item with quantity 1 and ensure variantId is set
+          return [
+            ...prev,
+            {
+              ...newItem,
+              quantity: 1,
+              variantId: variantId,
+            },
+          ];
+        });
+
+        // Auto-open cart when item is added (common UX pattern)
+        setIsOpen(true);
+      });
+    },
+    [withLoadingState]
+  );
+
+  // Update quantity for a specific variant with loading state
+  const updateQuantity = useCallback(
+    (variantId: string, quantity: number) => {
+      withLoadingState(() => {
+        if (quantity <= 0) {
+          // Remove item if quantity is 0 or less
+          setItems((prev) =>
+            prev.filter(
+              (item) =>
+                (item.variantId || generateVariantId(item.id, item.selectedOptions)) !== variantId
+            )
+          );
+          return;
+        }
+
+        setItems((prev) =>
+          prev.map((item) =>
+            (item.variantId || generateVariantId(item.id, item.selectedOptions)) === variantId
+              ? { ...item, quantity }
+              : item
+          )
+        );
+      });
+    },
+    [withLoadingState]
+  );
+
+  // Remove item from cart with loading state
+  const removeItem = useCallback(
+    (variantId: string) => {
+      withLoadingState(() => {
+        setItems((prev) =>
+          prev.filter(
+            (item) =>
+              (item.variantId || generateVariantId(item.id, item.selectedOptions)) !== variantId
+          )
+        );
+      });
+    },
+    [withLoadingState]
+  );
 
   // Clear entire cart
   const clearCart = useCallback(() => {
@@ -137,6 +174,7 @@ export function useCartWithStorage() {
     isOpen,
     itemCount,
     subtotal,
+    isLoading,
 
     // Actions
     addItem,

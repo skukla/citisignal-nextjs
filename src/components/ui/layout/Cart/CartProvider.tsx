@@ -36,6 +36,7 @@ export function CartProvider({ children }: CartProviderProps) {
     isOpen: cartState.isOpen,
     itemCount: cartState.itemCount,
     subtotal: cartState.subtotal,
+    isLoading: cartState.isLoading,
 
     // Cart actions
     addItem: cartState.addItem,

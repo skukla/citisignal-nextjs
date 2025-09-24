@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/ui/foundations/Button';
 import { useCart } from './CartProvider';
@@ -12,26 +11,14 @@ interface CartQuantityProps {
 
 export function CartQuantity({ item }: CartQuantityProps) {
   const { updateQuantity, removeItem } = useCart();
-  const [isUpdating, setIsUpdating] = useState(false);
 
-  const handleQuantityChange = async (newQuantity: number) => {
-    if (newQuantity === item.quantity || isUpdating) return;
+  const handleQuantityChange = (newQuantity: number) => {
+    if (newQuantity === item.quantity) return;
 
-    setIsUpdating(true);
-
-    try {
-      if (newQuantity <= 0) {
-        removeItem(item.variantId || item.id);
-      } else {
-        updateQuantity(item.variantId || item.id, newQuantity);
-      }
-
-      // Small delay to show feedback
-      await new Promise((resolve) => setTimeout(resolve, 300));
-    } catch (error) {
-      console.error('Failed to update quantity:', error);
-    } finally {
-      setIsUpdating(false);
+    if (newQuantity <= 0) {
+      removeItem(item.variantId || item.id);
+    } else {
+      updateQuantity(item.variantId || item.id, newQuantity);
     }
   };
 
@@ -47,8 +34,7 @@ export function CartQuantity({ item }: CartQuantityProps) {
         variant="ghost"
         size="sm"
         onClick={handleDecrement}
-        disabled={isUpdating}
-        className="h-8 w-8 p-0 rounded-md border border-gray-300 hover:bg-gray-50 disabled:opacity-50"
+        className="h-8 w-8 p-0 rounded-md border border-gray-300 hover:bg-gray-50"
         aria-label="Decrease quantity"
       >
         <MinusIcon className="h-4 w-4" />
@@ -56,11 +42,7 @@ export function CartQuantity({ item }: CartQuantityProps) {
 
       {/* Quantity display */}
       <div className="flex items-center justify-center min-w-[2.5rem] h-8 px-2 text-sm font-medium border-t border-b border-gray-300 bg-gray-50">
-        {isUpdating ? (
-          <div className="animate-spin rounded-full h-3 w-3 border border-purple-600 border-t-transparent" />
-        ) : (
-          item.quantity
-        )}
+        {item.quantity}
       </div>
 
       {/* Increase button */}
@@ -68,7 +50,7 @@ export function CartQuantity({ item }: CartQuantityProps) {
         variant="ghost"
         size="sm"
         onClick={handleIncrement}
-        disabled={isUpdating || item.quantity >= 10}
+        disabled={item.quantity >= 10}
         className="h-8 w-8 p-0 rounded-md border border-gray-300 hover:bg-gray-50 disabled:opacity-50"
         aria-label="Increase quantity"
       >
