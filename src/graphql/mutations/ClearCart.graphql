@@ -1,0 +1,35 @@
+# Clear Cart Mutation - empties the cart
+mutation ClearCart {
+  Citisignal_clearCart {
+    success
+    errors
+    cart {
+      id
+      itemCount
+      totalValue
+      totalDisplay
+      isEmpty
+      items {
+        id
+        productId
+        sku
+        name
+        quantity
+        priceValue
+        priceDisplay
+        totalValue
+        totalDisplay
+        image {
+          url
+          altText
+        }
+        selectedOptions {
+          label
+          value
+          attributeCode
+        }
+        variantDisplay
+      }
+    }
+  }
+}

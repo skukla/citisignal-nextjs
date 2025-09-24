@@ -5,14 +5,15 @@ import { twMerge } from 'tailwind-merge';
 import Image from 'next/image';
 import Button from '@/components/ui/foundations/Button';
 import { CartQuantity } from './CartQuantity';
-import { useCartContext } from './CartContext';
+import { useCart } from './CartProvider';
 import type { CartItemProps } from './Cart.types';
 
-export function CartItem({
-  item,
-  className
-}: CartItemProps) {
-  const { removeItem } = useCartContext();
+export function CartItem({ item, className }: CartItemProps) {
+  const { removeItem } = useCart();
+
+  const handleRemove = () => {
+    removeItem(item.id); // Use Adobe Commerce cart item ID, not variantId
+  };
 
   return (
     <div className={twMerge('flex py-6 px-6', className)}>
@@ -38,7 +39,7 @@ export function CartItem({
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => removeItem(item.id)}
+            onClick={handleRemove}
             leftIcon={XMarkIcon}
             className="text-gray-400 hover:text-gray-500"
             aria-label="Remove item"
@@ -46,7 +47,7 @@ export function CartItem({
         </div>
         <div className="flex flex-1 items-end justify-between text-sm">
           <CartQuantity item={item} />
-          <p className="text-gray-500">${item.price}</p>
+          <p className="text-gray-500">{item.price}</p>
         </div>
       </div>
     </div>

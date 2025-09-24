@@ -37,7 +37,16 @@ query GetProductPageData(
         originalPrice
         discountPercent
         inStock
+        # Semantic image fields (abstracted from Adobe Commerce roles)
         image {
+          url
+          altText
+        }
+        thumbnail {
+          url
+          altText
+        }
+        gallery {
           url
           altText
         }

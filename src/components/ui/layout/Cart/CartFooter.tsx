@@ -3,39 +3,38 @@
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
 import { useRouter } from 'next/navigation';
-import { useCartContext } from './CartContext';
+import { useCart } from './CartProvider';
 import type { CartFooterProps } from './Cart.types';
 
 export function CartFooter({
   showShippingNote = true,
   checkoutLabel = 'Checkout',
-  className
+  className,
 }: CartFooterProps) {
   const router = useRouter();
-  const { subtotal, onClose } = useCartContext();
+  const { subtotal, isLoading, itemCount, closeCart } = useCart();
 
   const handleCheckout = () => {
-    onClose();
+    closeCart();
     router.push('/checkout');
   };
+
+  // Don't render footer for empty cart
+  if (itemCount === 0) {
+    return null;
+  }
 
   return (
     <div className={twMerge('border-t border-gray-200 px-6 py-6', className)}>
       <div className="flex justify-between text-base font-medium text-gray-900">
         <p>Subtotal</p>
-        <p>${subtotal}</p>
+        <p>${subtotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',')}</p>
       </div>
       {showShippingNote && (
-        <p className="mt-0.5 text-sm text-gray-500">
-          Shipping and taxes calculated at checkout.
-        </p>
+        <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
       )}
       <div className="mt-6">
-        <Button
-          onClick={handleCheckout}
-          fullWidth
-          size="lg"
-        >
+        <Button onClick={handleCheckout} fullWidth size="lg">
           {checkoutLabel}
         </Button>
       </div>

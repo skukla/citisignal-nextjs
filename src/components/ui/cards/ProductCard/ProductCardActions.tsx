@@ -3,7 +3,7 @@
 import { twMerge } from 'tailwind-merge';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/foundations/Button';
-import { useCart } from '@/components/ui/layout/Cart';
+import { useCart } from '@/components/ui/layout/Cart/CartProvider';
 import { useProductCard } from './ProductCardContext';
 import { hasConfigurableOptions } from './ProductCard.types';
 import type { BaseComponentProps } from '@/types/ui';
@@ -23,12 +23,18 @@ export function ProductCardActions({ className }: BaseComponentProps) {
       router.push(`/${product.urlKey}`);
     } else {
       // Direct add to cart for simple products
-      const numericPrice = parseFloat(product.price.replace('$', ''));
+      // Use both formatted display price and raw numeric price
+      const displayPrice = product.price || '$0.00';
+      const numericPrice = product.priceValue ?? parseFloat(product.price.replace(/[\$,]/g, ''));
       addItem({
         id: product.id,
         name: product.name,
-        price: numericPrice,
-        imageUrl: product.image?.url,
+        price: displayPrice, // Formatted: "$1,199.99"
+        priceValue: numericPrice, // Raw: 1199.99
+        // Use thumbnail for cart (optimized for small display)
+        imageUrl: product.thumbnail?.url || product.image?.url,
+        // Simple products don't have options, so variantId is just the product id
+        variantId: product.id,
       });
     }
   };

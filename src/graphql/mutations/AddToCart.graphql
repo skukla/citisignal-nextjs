@@ -1,0 +1,35 @@
+# Add To Cart Mutation - adds product to cart with options
+mutation AddToCart($input: Citisignal_AddToCartInput!) {
+  Citisignal_addToCart(input: $input) {
+    success
+    errors
+    cart {
+      id
+      itemCount
+      totalValue
+      totalDisplay
+      isEmpty
+      items {
+        id
+        productId
+        sku
+        name
+        quantity
+        priceValue
+        priceDisplay
+        totalValue
+        totalDisplay
+        image {
+          url
+          altText
+        }
+        selectedOptions {
+          label
+          value
+          attributeCode
+        }
+        variantDisplay
+      }
+    }
+  }
+}

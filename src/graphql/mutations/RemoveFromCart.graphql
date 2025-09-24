@@ -1,0 +1,35 @@
+# Remove From Cart Mutation - removes item from cart
+mutation RemoveFromCart($cartItemId: String!) {
+  Citisignal_removeFromCart(cartItemId: $cartItemId) {
+    success
+    errors
+    cart {
+      id
+      itemCount
+      totalValue
+      totalDisplay
+      isEmpty
+      items {
+        id
+        productId
+        sku
+        name
+        quantity
+        priceValue
+        priceDisplay
+        totalValue
+        totalDisplay
+        image {
+          url
+          altText
+        }
+        selectedOptions {
+          label
+          value
+          attributeCode
+        }
+        variantDisplay
+      }
+    }
+  }
+}

@@ -1,0 +1,31 @@
+# Cart Query - retrieves current cart state
+query GetCart {
+  Citisignal_cart {
+    id
+    itemCount
+    totalValue
+    totalDisplay
+    isEmpty
+    items {
+      id
+      productId
+      sku
+      name
+      quantity
+      priceValue
+      priceDisplay
+      totalValue
+      totalDisplay
+      image {
+        url
+        altText
+      }
+      selectedOptions {
+        label
+        value
+        attributeCode
+      }
+      variantDisplay
+    }
+  }
+}
