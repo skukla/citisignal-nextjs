@@ -1,0 +1,35 @@
+# Update Cart Item Mutation - updates quantity of cart item
+mutation UpdateCartItem($input: Citisignal_UpdateCartItemInput!) {
+  Citisignal_updateCartItem(input: $input) {
+    success
+    errors
+    cart {
+      id
+      itemCount
+      totalValue
+      totalDisplay
+      isEmpty
+      items {
+        id
+        productId
+        sku
+        name
+        quantity
+        priceValue
+        priceDisplay
+        totalValue
+        totalDisplay
+        image {
+          url
+          altText
+        }
+        selectedOptions {
+          label
+          value
+          attributeCode
+        }
+        variantDisplay
+      }
+    }
+  }
+}
