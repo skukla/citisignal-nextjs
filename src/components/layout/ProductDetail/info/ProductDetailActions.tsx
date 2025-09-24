@@ -72,7 +72,7 @@ export function ProductDetailActions({
   // Determine button text
   const getButtonText = () => {
     if (!product.inStock) return 'Out of Stock';
-    if (hasConfigurableOptions && !allAttributesSelected) return 'Select Options';
+    if (hasConfigurableOptions && !allAttributesSelected) return 'Select Options to Enable';
     return 'Add to Cart';
   };
 
