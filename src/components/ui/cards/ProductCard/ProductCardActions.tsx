@@ -40,7 +40,7 @@ export function ProductCardActions({ className }: BaseComponentProps) {
   // Button text based on product type and stock
   const getPrimaryButtonText = () => {
     if (isOutOfStock) return 'Out of Stock';
-    if (isConfigurable) return 'Choose Options';
+    if (isConfigurable) return 'Configure';
     return 'Add to Cart';
   };
 
