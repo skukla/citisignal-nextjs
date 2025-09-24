@@ -4,7 +4,7 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
 import EmptyState from '@/components/ui/feedback/EmptyState';
 import { CartItem } from './CartItem';
-import { useCart } from './UnifiedCartProvider';
+import { useCart } from './CartProvider';
 import type { CartBodyProps } from './Cart.types';
 import type { ComponentType } from 'react';
 

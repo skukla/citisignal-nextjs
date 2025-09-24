@@ -3,7 +3,7 @@
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
 import { useRouter } from 'next/navigation';
-import { useCart } from './UnifiedCartProvider';
+import { useCart } from './CartProvider';
 import type { CartFooterProps } from './Cart.types';
 
 export function CartFooter({

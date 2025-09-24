@@ -4,7 +4,7 @@ import { ShoppingCartIcon } from '@heroicons/react/24/outline';
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
 import { CartRoot, CartHeader, CartBody, CartFooter } from './';
-import { useCart } from './UnifiedCartProvider';
+import { useCart } from './CartProvider';
 import type { BaseComponentProps } from '@/types/ui';
 
 interface CartIconProps extends BaseComponentProps {

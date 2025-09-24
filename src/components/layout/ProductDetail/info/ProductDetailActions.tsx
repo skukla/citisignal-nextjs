@@ -1,7 +1,8 @@
 import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
 import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
-import { useCart } from '@/components/ui/layout/Cart/UnifiedCartProvider';
+import { useCart } from '@/components/ui/layout/Cart/CartProvider';
+import { useToast } from '@/hooks/useToast';
 import { generateVariantId, formatCartItemName } from '@/components/ui/layout/Cart/Cart.types';
 import Button from '@/components/ui/foundations/Button';
 import { HeartIcon } from '@heroicons/react/24/outline';
@@ -21,6 +22,7 @@ export function ProductDetailActions({
 }: ProductDetailActionsProps) {
   const { product, loading } = useProductDetail();
   const { addItem } = useCart();
+  const { showToast } = useToast();
   const elementRef = useRef<HTMLDivElement>(null);
 
   // Register with Demo Inspector - actions based on stock/variant selection
@@ -86,6 +88,14 @@ export function ProductDetailActions({
       selectedOptions: cartItemOptions.length > 0 ? cartItemOptions : undefined,
       variantId,
     });
+
+    // Show success toast with appropriate message
+    const hasOptions = cartItemOptions.length > 0;
+    const toastMessage = hasOptions
+      ? `${product.name} with selected options was added to your cart`
+      : `${product.name} was added to your cart`;
+
+    showToast('success', 'Added to cart', toastMessage);
   };
 
   // Mock wishlist for now
