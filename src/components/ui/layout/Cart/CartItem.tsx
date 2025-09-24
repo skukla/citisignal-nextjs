@@ -7,12 +7,10 @@ import Image from 'next/image';
 import Button from '@/components/ui/foundations/Button';
 import { CartQuantity } from './CartQuantity';
 import { useCart } from './CartProvider';
-import { useToast } from '@/hooks/useToast';
 import type { CartItemProps } from './Cart.types';
 
 export function CartItem({ item, className }: CartItemProps) {
   const { removeItem } = useCart();
-  const { showToast } = useToast();
   const [isRemoving, setIsRemoving] = useState(false);
 
   const handleRemove = async () => {
@@ -24,10 +22,8 @@ export function CartItem({ item, className }: CartItemProps) {
       // Small delay to show feedback
       await new Promise((resolve) => setTimeout(resolve, 200));
       removeItem(item.variantId || item.id);
-      showToast('success', 'Item removed', `${item.name} was removed from your cart`);
     } catch (error) {
       console.error('Failed to remove item:', error);
-      showToast('error', 'Remove failed', 'Unable to remove item from cart');
       setIsRemoving(false);
     }
   };

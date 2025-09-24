@@ -4,7 +4,6 @@ import { useState } from 'react';
 import { MinusIcon, PlusIcon } from '@heroicons/react/24/outline';
 import Button from '@/components/ui/foundations/Button';
 import { useCart } from './CartProvider';
-import { useToast } from '@/hooks/useToast';
 import type { CartItem } from './Cart.types';
 
 interface CartQuantityProps {
@@ -13,7 +12,6 @@ interface CartQuantityProps {
 
 export function CartQuantity({ item }: CartQuantityProps) {
   const { updateQuantity, removeItem } = useCart();
-  const { showToast } = useToast();
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleQuantityChange = async (newQuantity: number) => {
@@ -24,23 +22,14 @@ export function CartQuantity({ item }: CartQuantityProps) {
     try {
       if (newQuantity <= 0) {
         removeItem(item.variantId || item.id);
-        showToast('success', 'Item removed', `${item.name} was removed from your cart`);
       } else {
-        const oldQuantity = item.quantity;
         updateQuantity(item.variantId || item.id, newQuantity);
-
-        if (newQuantity > oldQuantity) {
-          showToast('success', 'Quantity updated', `Increased to ${newQuantity}`);
-        } else {
-          showToast('success', 'Quantity updated', `Decreased to ${newQuantity}`);
-        }
       }
 
       // Small delay to show feedback
       await new Promise((resolve) => setTimeout(resolve, 300));
     } catch (error) {
       console.error('Failed to update quantity:', error);
-      showToast('error', 'Update failed', 'Unable to update item quantity');
     } finally {
       setIsUpdating(false);
     }

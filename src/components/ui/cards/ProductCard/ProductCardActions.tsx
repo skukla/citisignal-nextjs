@@ -4,7 +4,6 @@ import { twMerge } from 'tailwind-merge';
 import { useRouter } from 'next/navigation';
 import Button from '@/components/ui/foundations/Button';
 import { useCart } from '@/components/ui/layout/Cart/CartProvider';
-import { useToast } from '@/hooks/useToast';
 import { useProductCard } from './ProductCardContext';
 import { hasConfigurableOptions } from './ProductCard.types';
 import type { BaseComponentProps } from '@/types/ui';
@@ -12,7 +11,6 @@ import type { BaseComponentProps } from '@/types/ui';
 export function ProductCardActions({ className }: BaseComponentProps) {
   const { product } = useProductCard();
   const { addItem } = useCart();
-  const { showToast } = useToast();
   const router = useRouter();
   const isOutOfStock = !product?.inStock;
   const isConfigurable = hasConfigurableOptions(product);

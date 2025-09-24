@@ -2,7 +2,6 @@ import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
 import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
 import { useCart } from '@/components/ui/layout/Cart/CartProvider';
-import { useToast } from '@/hooks/useToast';
 import { generateVariantId, formatCartItemName } from '@/components/ui/layout/Cart/Cart.types';
 import Button from '@/components/ui/foundations/Button';
 import { HeartIcon } from '@heroicons/react/24/outline';
@@ -22,7 +21,6 @@ export function ProductDetailActions({
 }: ProductDetailActionsProps) {
   const { product, loading } = useProductDetail();
   const { addItem } = useCart();
-  const { showToast } = useToast();
   const elementRef = useRef<HTMLDivElement>(null);
 
   // Register with Demo Inspector - actions based on stock/variant selection
