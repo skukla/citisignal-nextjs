@@ -31,7 +31,7 @@ export function CartBody({
     <div className={twMerge('flex-1 overflow-y-auto py-6', className)}>
       <div className="divide-y divide-gray-200">
         {items.map((item) => (
-          <CartItem key={item.variantId || item.id} item={item} />
+          <CartItem key={item.id} item={item} />
         ))}
       </div>
     </div>

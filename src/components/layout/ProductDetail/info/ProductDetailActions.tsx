@@ -76,6 +76,21 @@ export function ProductDetailActions({
     }
   );
 
+  // Helper function to find the matching variant for selected options
+  const findMatchingVariant = () => {
+    if (!product?.variants || cartItemOptions.length === 0) {
+      return null;
+    }
+
+    return product.variants.find((variant) => {
+      if (!variant.attributes) return false;
+      // Check if all selected options match this variant's attributes
+      return cartItemOptions.every(
+        (option) => variant.attributes?.[option.attributeCode] === option.value
+      );
+    });
+  };
+
   // Actual cart functionality
   const handleAddToCart = () => {
     if (!product || isAddToCartDisabled) return;
@@ -87,8 +102,12 @@ export function ProductDetailActions({
     const variantDisplayPrice = getVariantPrice(product, cartItemOptions);
     const variantNumericPrice = getVariantPriceValue(product, cartItemOptions);
 
+    // For configurable products, we need the variant's SKU for Adobe Commerce
+    const matchingVariant = findMatchingVariant();
+    const productSku = matchingVariant?.sku || product.sku;
+
     addItem({
-      id: product.id,
+      id: productSku, // Use variant SKU for Adobe Commerce compatibility
       name: displayName,
       price: variantDisplayPrice, // Formatted: "$1,199.99"
       priceValue: variantNumericPrice, // Raw: 1199.99

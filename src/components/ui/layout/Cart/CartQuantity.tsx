@@ -16,9 +16,9 @@ export function CartQuantity({ item }: CartQuantityProps) {
     if (newQuantity === item.quantity) return;
 
     if (newQuantity <= 0) {
-      removeItem(item.variantId || item.id);
+      removeItem(item.id); // Use Adobe Commerce cart item ID, not variantId
     } else {
-      updateQuantity(item.variantId || item.id, newQuantity);
+      updateQuantity(item.id, newQuantity); // Use Adobe Commerce cart item ID, not variantId
     }
   };
 

@@ -1,7 +1,7 @@
 'use client';
 
 import { createContext, useContext, ReactNode } from 'react';
-import { useCartWithStorage } from '@/hooks/useCartWithStorage';
+import { useAdobeCommerceCart } from '@/hooks/cart/useAdobeCommerceCart';
 import type { CartContextValue } from './Cart.types';
 
 // Create the cart context
@@ -12,10 +12,11 @@ interface CartProviderProps {
 }
 
 /**
- * Cart context provider that manages global cart state with localStorage persistence.
+ * Cart context provider that manages global cart state with Adobe Commerce API.
  *
  * Features:
- * - Automatic localStorage persistence
+ * - Adobe Commerce GraphQL API integration
+ * - Cart persistence across sessions
  * - Support for configurable products with options
  * - Consistent API across all components
  * - Auto-open cart on item addition
@@ -28,7 +29,7 @@ interface CartProviderProps {
  * </CartProvider>
  */
 export function CartProvider({ children }: CartProviderProps) {
-  const cartState = useCartWithStorage();
+  const cartState = useAdobeCommerceCart();
 
   const value: CartContextValue = {
     // Cart state

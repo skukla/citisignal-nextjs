@@ -19,6 +19,11 @@ export function CartFooter({
     router.push('/checkout');
   };
 
+  // Don't render footer for empty cart
+  if (itemCount === 0) {
+    return null;
+  }
+
   return (
     <div className={twMerge('border-t border-gray-200 px-6 py-6', className)}>
       <div className="flex justify-between text-base font-medium text-gray-900">
@@ -28,13 +33,11 @@ export function CartFooter({
       {showShippingNote && (
         <p className="mt-0.5 text-sm text-gray-500">Shipping and taxes calculated at checkout.</p>
       )}
-      {itemCount > 0 && (
-        <div className="mt-6">
-          <Button onClick={handleCheckout} fullWidth size="lg">
-            {checkoutLabel}
-          </Button>
-        </div>
-      )}
+      <div className="mt-6">
+        <Button onClick={handleCheckout} fullWidth size="lg">
+          {checkoutLabel}
+        </Button>
+      </div>
     </div>
   );
 }

@@ -12,7 +12,7 @@ export function CartItem({ item, className }: CartItemProps) {
   const { removeItem } = useCart();
 
   const handleRemove = () => {
-    removeItem(item.variantId || item.id);
+    removeItem(item.id); // Use Adobe Commerce cart item ID, not variantId
   };
 
   return (
