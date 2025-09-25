@@ -283,15 +283,11 @@ export function useAdobeCommerceCart() {
   const clearCart = useCallback(async () => {
     return withLoadingState(async () => {
       try {
-        console.log('Starting clear cart operation, cartId:', cartId);
-
         const result = await graphqlFetcher<{ Citisignal_clearCart: CartOperationResult }>(
           CLEAR_CART,
           {},
           createCartRequestOptions(cartId)
         );
-
-        console.log('Clear cart result:', result);
 
         if (result.Citisignal_clearCart.success) {
           // Clear the SWR cache first
@@ -305,10 +301,7 @@ export function useAdobeCommerceCart() {
 
           // Explicitly clear loading state since useEffect won't trigger with null adobeCart
           setIsLoading(false);
-
-          console.log('Cart cleared successfully');
         } else {
-          console.error('Clear cart failed:', result.Citisignal_clearCart.errors);
           throw new Error(result.Citisignal_clearCart.errors?.[0] || 'Failed to clear cart');
         }
       } catch (error) {
