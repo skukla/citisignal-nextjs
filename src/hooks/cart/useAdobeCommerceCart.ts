@@ -303,6 +303,9 @@ export function useAdobeCommerceCart() {
           // Then clear local cart ID
           setCartId(null);
 
+          // Explicitly clear loading state since useEffect won't trigger with null adobeCart
+          setIsLoading(false);
+
           console.log('Cart cleared successfully');
         } else {
           console.error('Clear cart failed:', result.Citisignal_clearCart.errors);
