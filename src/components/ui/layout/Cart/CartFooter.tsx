@@ -1,11 +1,9 @@
 'use client';
 
-import { useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import Button from '@/components/ui/foundations/Button';
 import { useRouter } from 'next/navigation';
 import { useCart } from './CartProvider';
-import ConfirmationDialog from '@/components/ui/feedback/ConfirmationDialog';
 import type { CartFooterProps } from './Cart.types';
 
 export function CartFooter({
@@ -15,25 +13,18 @@ export function CartFooter({
 }: CartFooterProps) {
   const router = useRouter();
   const { subtotal, isLoading, itemCount, closeCart, clearCart } = useCart();
-  const [showClearConfirm, setShowClearConfirm] = useState(false);
 
   const handleCheckout = () => {
     closeCart();
     router.push('/checkout');
   };
 
-  const handleClearCart = () => {
-    setShowClearConfirm(true);
-  };
-
-  const handleConfirmClear = async () => {
+  const handleClearCart = async () => {
     try {
       await clearCart();
-      setShowClearConfirm(false);
     } catch (error) {
       console.error('Failed to clear cart:', error);
-      // Keep dialog open and show error in the loading state
-      // Could also add toast notification here if available
+      // Could add toast notification here if available
     }
   };
 
@@ -66,19 +57,6 @@ export function CartFooter({
           {isLoading ? 'Clearing...' : 'Clear Cart'}
         </Button>
       </div>
-
-      {/* Confirmation Dialog */}
-      <ConfirmationDialog
-        isOpen={showClearConfirm}
-        onClose={() => setShowClearConfirm(false)}
-        onConfirm={handleConfirmClear}
-        title="Clear Cart"
-        message="Are you sure you want to remove all items from your cart? This action cannot be undone."
-        confirmText="Clear Cart"
-        cancelText="Keep Items"
-        isDestructive
-        isLoading={isLoading}
-      />
     </div>
   );
 }
