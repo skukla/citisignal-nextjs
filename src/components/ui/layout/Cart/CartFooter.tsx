@@ -21,10 +21,14 @@ export function CartFooter({
 
   const handleClearCart = async () => {
     try {
+      console.log('Clear cart button clicked');
       await clearCart();
+      console.log('Clear cart completed successfully');
     } catch (error) {
       console.error('Failed to clear cart:', error);
-      // Could add toast notification here if available
+      // Reset loading state if something goes wrong
+      // The loading state should be managed by the useAdobeCommerceCart hook
+      alert('Failed to clear cart. Please try again.');
     }
   };
 

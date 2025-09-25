@@ -283,20 +283,29 @@ export function useAdobeCommerceCart() {
   const clearCart = useCallback(async () => {
     return withLoadingState(async () => {
       try {
+        console.log('Starting clear cart operation, cartId:', cartId);
+
         const result = await graphqlFetcher<{ Citisignal_clearCart: CartOperationResult }>(
           CLEAR_CART,
           {},
           createCartRequestOptions(cartId)
         );
+
+        console.log('Clear cart result:', result);
+
         if (result.Citisignal_clearCart.success) {
-          setCartId(null); // Clear local cart ID
-          // Force cache refresh - clear cart case
-          const newCartData = { Citisignal_cart: result.Citisignal_clearCart.cart };
+          // Clear the SWR cache first
           const cacheKey = cartId ? ['cart', cartId] : null;
           if (cacheKey) {
-            await swrMutate(cacheKey, newCartData, { revalidate: true });
+            await swrMutate(cacheKey, undefined, { revalidate: false });
           }
+
+          // Then clear local cart ID
+          setCartId(null);
+
+          console.log('Cart cleared successfully');
         } else {
+          console.error('Clear cart failed:', result.Citisignal_clearCart.errors);
           throw new Error(result.Citisignal_clearCart.errors?.[0] || 'Failed to clear cart');
         }
       } catch (error) {
