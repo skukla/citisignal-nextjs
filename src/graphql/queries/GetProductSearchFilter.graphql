@@ -47,6 +47,19 @@ query GetProductSearchFilter(
           name
           hex
         }
+        # Configurable options for smart button logic
+        configurable_options {
+          label
+          attribute_code
+          values {
+            label
+            value
+            swatch_data {
+              type
+              value
+            }
+          }
+        }
       }
       totalCount
       hasMoreItems
