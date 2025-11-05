@@ -1,4 +1,4 @@
-# citisignal-nextjs v1.0.0-beta.1
+# citisignal-nextjs v1.0.0-beta.2
 
 **⚠️ Beta Release - Work in Progress**
 
@@ -123,7 +123,14 @@ npm run dev
 
 ## 🎯 Recent Updates
 
-### Cart System (Latest)
+### v1.0.0-beta.2 (Latest)
+
+- Fixed TypeScript type errors across components
+- Refactored cart context implementation for better organization
+- Improved type safety in product and navigation hooks
+- Standardized cart provider patterns
+
+### Cart System
 
 - Complete cart functionality with Adobe Commerce integration
 - Optimistic updates with loading states
@@ -191,7 +198,7 @@ Future releases will complete:
 
 ---
 
-**Version**: v1.0.0-beta.1  
+**Version**: v1.0.0-beta.2  
 **Release Date**: January 2025  
 **Node Version**: 20.11.0+  
 **Status**: Beta (functional for demos, not production-ready)  
