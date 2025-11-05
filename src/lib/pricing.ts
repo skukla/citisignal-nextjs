@@ -42,3 +42,19 @@ export function calculateDiscountPercentage(
   if (!original || !sale || sale >= original) return 0;
   return Math.round(((original - sale) / original) * 100);
 }
+
+/**
+ * Check if a price is a sale price (has an original price higher than current price)
+ * @param originalPrice Original price (formatted string or number, optional)
+ * @param currentPrice Current price (formatted string or number)
+ * @returns True if current price is lower than original price
+ */
+export function isSalePrice(
+  originalPrice?: string | number | null,
+  currentPrice?: string | number | null
+): boolean {
+  if (!originalPrice || !currentPrice) return false;
+  const original = typeof originalPrice === 'string' ? parsePrice(originalPrice) : originalPrice;
+  const current = typeof currentPrice === 'string' ? parsePrice(currentPrice) : currentPrice;
+  return original > current;
+}

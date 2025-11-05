@@ -102,7 +102,7 @@ export const plansPageData = {
       isNew: false,
       isSale: false,
     },
-  ] as Plan[],
+  ] as unknown as Plan[],
 
   /**
    * Filter configuration for plans page

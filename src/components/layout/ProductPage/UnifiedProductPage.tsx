@@ -57,17 +57,17 @@ export function UnifiedProductPage({ category }: { category?: string }) {
 
   // Extract data from unified response
   const pageData = useMemo(() => {
-    if (!data?.Citisignal_productPageData) {
+    if (!data?.Citisignal_categoryPageData) {
       return null;
     }
 
-    const { navigation, products, facets, breadcrumbs } = data.Citisignal_productPageData;
+    const { navigation, products, facets, breadcrumbs } = data.Citisignal_categoryPageData;
 
     return {
       navigation,
       products: products?.items || [],
       pageInfo: products?.page_info || { current_page: 1, page_size: 12, total_pages: 0 },
-      facets: facets?.aggregations || [],
+      facets: facets?.facets || [],
       breadcrumbs: breadcrumbs?.items || [],
     };
   }, [data]);
@@ -115,16 +115,12 @@ export function UnifiedProductPage({ category }: { category?: string }) {
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         {/* Facets from unified query */}
         <div className="lg:col-span-1">
-          <ProductPageFilters facets={pageData.facets} onFilterChange={() => mutate()} />
+          <ProductPageFilters />
         </div>
 
         {/* Products from unified query */}
         <div className="lg:col-span-3">
-          <ProductPageContent
-            products={pageData.products}
-            pageInfo={pageData.pageInfo}
-            totalCount={pageData.products.length}
-          />
+          <ProductPageContent />
         </div>
       </div>
     </ProductPageLayout>

@@ -8,11 +8,7 @@ import type { PlanCardFeaturesProps } from './PlanCard.types';
  * PlanCardFeatures component for displaying plan details, features, and streaming services.
  * Shows core plan allowances, additional details, and included features.
  */
-export default function PlanCardFeatures({
-  plan,
-  features,
-  className
-}: PlanCardFeaturesProps) {
+export default function PlanCardFeatures({ plan, features, className }: PlanCardFeaturesProps) {
   return (
     <div className={twMerge('p-6 flex-grow flex flex-col', className)}>
       {/* Core Features Grid */}
@@ -39,11 +35,11 @@ export default function PlanCardFeatures({
         </div>
         <div className="flex justify-between">
           <span className="text-gray-600">Network Priority</span>
-          <span className="text-gray-900">{formatNetworkPriority(plan.network_priority)}</span>
+          <span className="text-gray-900">{formatNetworkPriority(plan.networkPriority)}</span>
         </div>
         <div className="flex justify-between">
           <span className="text-gray-600">Contract Required</span>
-          <span className="text-gray-900">{plan.contract_required ? 'Yes' : 'No'}</span>
+          <span className="text-gray-900">{plan.contractRequired ? 'Yes' : 'No'}</span>
         </div>
       </div>
 
@@ -53,15 +49,15 @@ export default function PlanCardFeatures({
         <ul className="space-y-1.5">
           {features.map((feature, index) => (
             <li key={index} className="flex items-start text-sm text-gray-600">
-              <svg 
+              <svg
                 className="w-3.5 h-3.5 text-green-500 mr-1.5 flex-shrink-0 mt-0.5"
-                fill="currentColor" 
+                fill="currentColor"
                 viewBox="0 0 20 20"
               >
-                <path 
-                  fillRule="evenodd" 
-                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" 
-                  clipRule="evenodd" 
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
                 />
               </svg>
               <span className="leading-5">{feature}</span>

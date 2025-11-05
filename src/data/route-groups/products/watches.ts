@@ -76,7 +76,7 @@ export const watchesPageData = {
       isNew: false,
       isSale: true,
     },
-  ] as Watch[],
+  ] as unknown as Watch[],
 
   /**
    * Filter configuration for watches page

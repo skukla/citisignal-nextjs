@@ -68,7 +68,7 @@ export function ProductDetailGallery({ className, selectedVariant }: ProductDeta
           {displayImage ? (
             <Image
               src={displayImage.url}
-              alt={displayImage.altText}
+              alt={displayImage.altText || product.name}
               width={600}
               height={600}
               className="h-full w-full object-cover object-center"

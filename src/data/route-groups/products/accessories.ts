@@ -67,7 +67,7 @@ export const accessoriesPageData = {
       isNew: false,
       isSale: true,
     },
-  ] as Accessory[],
+  ] as unknown as Accessory[],
 
   /**
    * Filter configuration for accessories page

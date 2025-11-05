@@ -87,14 +87,54 @@ export function useProductCards(options: UseProductCardsOptions | null = {}): Pr
   );
 
   // Combine all pages into single array
-  const allItems = data?.flatMap((page) => page?.Citisignal_productCards?.items || []) || [];
+  const allItems =
+    data?.flatMap((page) => {
+      if (page && typeof page === 'object' && page !== null && 'Citisignal_productCards' in page) {
+        return (
+          (page as { Citisignal_productCards?: { items?: BaseProduct[] } }).Citisignal_productCards
+            ?.items || []
+        );
+      }
+      return [];
+    }) || [];
   const latestPage = data?.[data.length - 1];
-  const hasMoreItems = latestPage?.Citisignal_productCards?.hasMoreItems || false;
-  const totalCount = latestPage?.Citisignal_productCards?.totalCount || 0;
-  const productFacets = latestPage?.Citisignal_productCards?.facets;
+  const hasMoreItems =
+    latestPage &&
+    typeof latestPage === 'object' &&
+    latestPage !== null &&
+    'Citisignal_productCards' in latestPage
+      ? (latestPage as { Citisignal_productCards?: { hasMoreItems?: boolean } })
+          .Citisignal_productCards?.hasMoreItems || false
+      : false;
+  const totalCount =
+    latestPage &&
+    typeof latestPage === 'object' &&
+    latestPage !== null &&
+    'Citisignal_productCards' in latestPage
+      ? (latestPage as { Citisignal_productCards?: { totalCount?: number } })
+          .Citisignal_productCards?.totalCount || 0
+      : 0;
+  const productFacets =
+    latestPage &&
+    typeof latestPage === 'object' &&
+    latestPage !== null &&
+    'Citisignal_productCards' in latestPage
+      ? (
+          latestPage as {
+            Citisignal_productCards?: {
+              facets?: Array<{
+                title: string;
+                key: string;
+                type: string;
+                options: Array<{ id: string; name: string; count: number }>;
+              }>;
+            };
+          }
+        ).Citisignal_productCards?.facets
+      : undefined;
 
   return {
-    items: allItems,
+    items: allItems as BaseProduct[],
     loading: isLoading,
     error,
     hasMoreItems,

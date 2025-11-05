@@ -1,7 +1,7 @@
 'use client';
 
 import { ReactNode } from 'react';
-import TwoColumnLayout from '@/components/layout/TwoColumnLayout';
+import { twMerge } from 'tailwind-merge';
 
 interface AccountPageLayoutProps {
   children: ReactNode;
@@ -9,9 +9,5 @@ interface AccountPageLayoutProps {
 }
 
 export function AccountPageLayout({ children, className }: AccountPageLayoutProps) {
-  return (
-    <TwoColumnLayout className={className}>
-      {children}
-    </TwoColumnLayout>
-  );
+  return <div className={twMerge('flex flex-col lg:flex-row gap-8', className)}>{children}</div>;
 }

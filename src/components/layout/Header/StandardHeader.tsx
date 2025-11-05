@@ -13,6 +13,7 @@ import Account from '@/components/ui/layout/Account';
 import Button from '@/components/ui/foundations/Button';
 import { headerConfig } from '@/data/config/header';
 import { useCategoryNavigation } from '@/hooks/navigation';
+import type { NavigationData } from '@/contexts/NavigationContext';
 import { useNavigation } from '@/contexts/NavigationContext';
 
 /**
@@ -36,7 +37,16 @@ export function StandardHeader() {
   // Update context when we fetch new data
   useEffect(() => {
     if (categoryNav && shouldFetch) {
-      setNavigation(categoryNav, 'standalone');
+      // Convert CategoryNavigationResult to NavigationData format
+      const navData: NavigationData = {
+        headerNav: categoryNav.headerNav.map((item) => ({
+          href: item.href,
+          label: item.label,
+          category: item.category || '',
+        })),
+        footerNav: categoryNav.footerNav,
+      };
+      setNavigation(navData, 'standalone');
     }
   }, [categoryNav, shouldFetch, setNavigation]);
 

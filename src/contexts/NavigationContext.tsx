@@ -37,7 +37,7 @@ interface NavigationContextValue {
   breadcrumbs: BreadcrumbData | null;
 
   // Setters for updating data
-  setNavigation: (data: NavigationData | null) => void;
+  setNavigation: (data: NavigationData | null, dataSource?: 'unified' | 'standalone') => void;
   setBreadcrumbs: (data: BreadcrumbData | null) => void;
 
   // Loading state

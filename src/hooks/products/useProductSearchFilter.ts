@@ -119,11 +119,41 @@ export function useProductSearchFilter(
 
   // Combine all product pages into single array
   const allItems =
-    data?.flatMap((page) => page?.Citisignal_productSearchFilter?.products?.items || []) || [];
+    data?.flatMap((page) => {
+      if (
+        page &&
+        typeof page === 'object' &&
+        page !== null &&
+        'Citisignal_productSearchFilter' in page
+      ) {
+        const filterData = (
+          page as { Citisignal_productSearchFilter?: { products?: { items?: BaseProduct[] } } }
+        ).Citisignal_productSearchFilter;
+        return filterData?.products?.items || [];
+      }
+      return [];
+    }) || [];
 
   // Get latest page data for metadata
   const latestPage = data?.[data.length - 1];
-  const searchFilterData = latestPage?.Citisignal_productSearchFilter;
+  const searchFilterData =
+    latestPage &&
+    typeof latestPage === 'object' &&
+    latestPage !== null &&
+    'Citisignal_productSearchFilter' in latestPage
+      ? ((latestPage as { Citisignal_productSearchFilter?: unknown })
+          .Citisignal_productSearchFilter as {
+          products?: { hasMoreItems?: boolean; totalCount?: number };
+          facets?: {
+            facets?: Array<{
+              title: string;
+              key: string;
+              type: string;
+              options: Array<{ id: string; name: string; count: number }>;
+            }>;
+          };
+        })
+      : undefined;
 
   // Extract products metadata
   const hasMoreItems = searchFilterData?.products?.hasMoreItems || false;
@@ -134,7 +164,7 @@ export function useProductSearchFilter(
 
   return {
     // Product data
-    items: allItems,
+    items: allItems as BaseProduct[],
     loading: isLoading,
     error,
     hasMoreItems,
@@ -142,7 +172,12 @@ export function useProductSearchFilter(
     totalCount,
 
     // Facet data
-    facets,
+    facets: facets as Array<{
+      title: string;
+      key: string;
+      type: string;
+      options: Array<{ id: string; name: string; count: number }>;
+    }>,
 
     // Validation state
     isValidating,

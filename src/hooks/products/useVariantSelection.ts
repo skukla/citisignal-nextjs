@@ -1,19 +1,7 @@
 import { useState, useCallback } from 'react';
 import type { ProductDetail } from '@/types/commerce';
 
-type ProductVariant = {
-  id: string;
-  sku: string;
-  attributes: Record<string, string>;
-  price: string;
-  originalPrice?: string;
-  inStock: boolean;
-  stockLevel?: number;
-  image?: {
-    url: string;
-    altText?: string;
-  };
-};
+type ProductVariant = NonNullable<ProductDetail['variants']>[0];
 
 interface UseVariantSelectionProps {
   product: ProductDetail | null;

@@ -139,14 +139,14 @@ export default function AddressesPage() {
                             <IconButton
                               icon={PencilIcon}
                               onClick={() => setEditingAddress(index)}
-                              size="sm"
-                              variant="secondary"
+                              aria-label="Edit address"
+                              variant="default"
                             />
                             <IconButton
                               icon={TrashIcon}
                               onClick={() => handleDelete(index)}
-                              size="sm"
-                              variant="secondary"
+                              aria-label="Delete address"
+                              variant="danger"
                             />
                           </div>
                         </div>

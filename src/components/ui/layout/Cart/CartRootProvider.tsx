@@ -1,16 +1,12 @@
 'use client';
 
 import { type ReactNode } from 'react';
-import { CartProvider } from './CartContext';
+import { CartProvider } from './CartProvider';
 
 interface CartRootProviderProps {
   children: ReactNode;
 }
 
 export default function CartRootProvider({ children }: CartRootProviderProps) {
-  return (
-    <CartProvider isOpen={false} onClose={() => {}}>
-      {children}
-    </CartProvider>
-  );
+  return <CartProvider>{children}</CartProvider>;
 }

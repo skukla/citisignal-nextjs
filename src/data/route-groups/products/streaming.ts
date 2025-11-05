@@ -79,7 +79,7 @@ export const streamingPageData = {
       isNew: true,
       isSale: true,
     },
-  ] as StreamingService[],
+  ] as unknown as StreamingService[],
 
   /**
    * Filter configuration for streaming page

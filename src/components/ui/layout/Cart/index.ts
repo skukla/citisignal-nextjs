@@ -5,6 +5,6 @@ export { CartItem } from './CartItem';
 export { CartFooter } from './CartFooter';
 export { CartQuantity } from './CartQuantity';
 export { CartIcon } from './CartIcon';
-export { useCart } from './useCart';
-export { useCartContext } from './CartContext';
+export { useCart } from './CartProvider';
+export { useCartContext } from '@/hooks/useCartContext';
 export type * from './Cart.types';

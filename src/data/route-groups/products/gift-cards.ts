@@ -71,7 +71,7 @@ export const giftCardsPageData = {
       isNew: true,
       isSale: false,
     },
-  ] as GiftCard[],
+  ] as unknown as GiftCard[],
 
   /**
    * Filter configuration for gift cards page

@@ -12,8 +12,8 @@ export function ProductCardImage({
   height = 300,
   priority,
 }: ProductCardImageProps) {
-  const { product, currentVariant } = useProductCard();
-  const displayImage = useProductImage({ product, selectedVariant: currentVariant });
+  const { product } = useProductCard();
+  const displayImage = useProductImage({ product, selectedVariant: null });
 
   if (!displayImage) {
     return (

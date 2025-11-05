@@ -60,11 +60,19 @@ export function useProductFacets(
   );
 
   // With keepPreviousData, data will contain previous results while loading new ones
-  const facetsData = data?.Citisignal_productFacets?.facets;
+  const facetsData =
+    data && typeof data === 'object' && data !== null && 'Citisignal_productFacets' in data
+      ? (data as { Citisignal_productFacets?: { facets?: Facet[] } }).Citisignal_productFacets
+          ?.facets
+      : undefined;
 
   return {
     facets: facetsData || [],
-    totalCount: data?.Citisignal_productFacets?.totalCount || 0,
+    totalCount:
+      data && typeof data === 'object' && data !== null && 'Citisignal_productFacets' in data
+        ? (data as { Citisignal_productFacets?: { totalCount?: number } }).Citisignal_productFacets
+            ?.totalCount || 0
+        : 0,
     loading: isLoading, // True when loading, regardless of previous data
     error,
     isValidating, // True when fetching, even with existing data

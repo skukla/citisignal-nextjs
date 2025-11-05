@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useCallback, useMemo } from 'react';
-import { useCart } from '../../Cart/useCart';
+import { useCartContext } from '@/hooks/useCartContext';
 import { useCheckoutValidation } from './useCheckoutValidation';
 import { useOrderProcessing } from './useOrderProcessing';
 import type {
@@ -28,14 +28,14 @@ interface UseCheckoutOptions {
  * @returns {Object} Checkout state and handlers
  */
 export function useCheckout({ onComplete }: UseCheckoutOptions = {}): CheckoutContextValue {
-  const { items, getSubtotal } = useCart();
+  const { items, subtotal: cartSubtotal } = useCartContext();
   const [currentStep, setCurrentStep] = useState<CheckoutStepId>('shipping');
   const steps = checkoutData.steps;
   const [shippingDetails, setShippingDetails] = useState<ShippingDetails | null>(null);
   const [paymentDetails, setPaymentDetails] = useState<PaymentDetails | null>(null);
   const [touchedFields, setTouchedFields] = useState<TouchedFields>({});
 
-  const subtotal = useMemo(() => getSubtotal(), [getSubtotal]);
+  const subtotal = useMemo(() => cartSubtotal, [cartSubtotal]);
   const tax = useMemo(() => subtotal * checkoutData.rates.tax, [subtotal]);
   const shipping = checkoutData.rates.shipping;
   const total = useMemo(() => subtotal + tax + shipping, [subtotal, tax, shipping]);

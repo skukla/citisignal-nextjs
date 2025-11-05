@@ -29,26 +29,33 @@ interface UseSearchSuggestionsOptions {
  */
 export function useSearchSuggestions({
   phrase,
-  enabled = true
+  enabled = true,
 }: UseSearchSuggestionsOptions): SearchSuggestionsResult {
-  
   // Only fetch if phrase is at least 2 characters and enabled
   const shouldFetch = enabled && phrase && phrase.length >= 2;
-  
+
   const { data, error, isLoading } = useSWR(
     shouldFetch ? ['searchSuggestions', phrase] : null,
     () => graphqlFetcher(GET_SEARCH_SUGGESTIONS, { phrase }),
     {
       revalidateOnFocus: false,
       dedupingInterval: 500, // Dedupe requests within 500ms
-      keepPreviousData: true // Keep showing previous suggestions while loading new ones
+      keepPreviousData: true, // Keep showing previous suggestions while loading new ones
     }
   );
 
   return {
-    suggestions: data?.Citisignal_searchSuggestions?.suggestions || [],
+    suggestions:
+      data && typeof data === 'object' && data !== null && 'Citisignal_searchSuggestions' in data
+        ? (data as { Citisignal_searchSuggestions?: { suggestions?: ProductSuggestion[] } })
+            .Citisignal_searchSuggestions?.suggestions || []
+        : [],
     loading: isLoading,
     error,
-    totalCount: data?.Citisignal_searchSuggestions?.totalCount || 0
+    totalCount:
+      data && typeof data === 'object' && data !== null && 'Citisignal_searchSuggestions' in data
+        ? (data as { Citisignal_searchSuggestions?: { totalCount?: number } })
+            .Citisignal_searchSuggestions?.totalCount || 0
+        : 0,
   };
 }

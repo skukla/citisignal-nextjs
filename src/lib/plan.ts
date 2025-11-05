@@ -16,10 +16,10 @@ export function isPlanPopular(planType: string): boolean {
 /**
  * Determine if a plan is new
  * @param plan The plan object
- * @returns True if the plan is new
+ * @returns True if the plan is new (always false as Plan type doesn't have isNew property)
  */
-export function isPlanNew(plan: Plan): boolean {
-  return Boolean(plan.isNew);
+export function isPlanNew(_plan: Plan): boolean {
+  return false; // Plan type doesn't have isNew property
 }
 
 /**
@@ -32,8 +32,8 @@ export function formatPlanFeatures(plan: Plan): string[] {
     `${plan.data} Data`,
     `${plan.hotspot} Mobile Hotspot`,
     ...plan.streaming,
-    plan.contract_required ? 'Contract Required' : 'No Contract Required',
-    `${plan.network_priority.charAt(0).toUpperCase() + plan.network_priority.slice(1)} Network Priority`
+    plan.contractRequired ? 'Contract Required' : 'No Contract Required',
+    `${plan.networkPriority.charAt(0).toUpperCase() + plan.networkPriority.slice(1)} Network Priority`,
   ];
 }
 

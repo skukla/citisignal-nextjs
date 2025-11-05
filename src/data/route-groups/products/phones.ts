@@ -148,7 +148,7 @@ export const phonesPageData = {
       isNew: true,
       isSale: false,
     },
-  ] as Phone[],
+  ] as unknown as Phone[],
 
   /**
    * Filter configuration for phones page
@@ -305,5 +305,5 @@ export const phonesPageData = {
       name: 'Premium Phone Case',
       price: '$34.99',
     },
-  ] as Accessory[],
+  ] as unknown as Accessory[],
 };

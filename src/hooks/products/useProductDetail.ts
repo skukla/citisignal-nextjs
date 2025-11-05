@@ -46,7 +46,10 @@ export function useProductDetail(options: UseProductDetailOptions): ProductDetai
   );
 
   // Extract product from GraphQL response
-  const product = data?.Citisignal_productDetail || null;
+  const product =
+    data && typeof data === 'object' && data !== null && 'Citisignal_productDetail' in data
+      ? (data as { Citisignal_productDetail?: ProductDetail }).Citisignal_productDetail || null
+      : null;
 
   return {
     product,

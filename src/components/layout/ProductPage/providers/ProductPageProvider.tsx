@@ -1,6 +1,6 @@
 'use client';
 
-import { ReactNode, useRef, useEffect, useState } from 'react';
+import { ReactNode, useRef, useEffect, useState, useMemo } from 'react';
 import { ProductDataContext } from './ProductDataContext';
 import { ProductFilterContext } from './ProductFilterContext';
 import { ProductUIContext } from './ProductUIContext';
@@ -153,8 +153,6 @@ export function ProductPageProvider({
           phrase: urlState.search,
           filter: {
             categoryUrlKey: category,
-            // Use dynamic facets if available
-            facets: urlState.facets,
             // Legacy fields for backwards compatibility
             manufacturer: urlState.manufacturer,
             memory: urlState.memory,
@@ -174,8 +172,6 @@ export function ProductPageProvider({
           phrase: urlState.search,
           filter: {
             categoryUrlKey: category,
-            // Use dynamic facets if available
-            facets: urlState.facets,
             // Legacy fields for backwards compatibility
             manufacturer: urlState.manufacturer,
             memory: urlState.memory,
@@ -196,8 +192,6 @@ export function ProductPageProvider({
           phrase: urlState.search,
           filter: {
             categoryUrlKey: category,
-            // Use dynamic facets if available
-            facets: urlState.facets,
             // Legacy fields for backwards compatibility
             manufacturer: urlState.manufacturer,
             memory: urlState.memory,
@@ -297,12 +291,30 @@ export function ProductPageProvider({
   });
 
   // Step 5: Single source of truth for page loading state
+  // Convert activeFilters to the expected type for usePageLoading
+  const activeFiltersForLoading = useMemo(() => {
+    const converted: Record<string, boolean | string[] | undefined> = {};
+    Object.entries(urlState.activeFilters ?? {}).forEach(([key, value]) => {
+      if (value === undefined || value === null) {
+        converted[key] = undefined;
+      } else if (Array.isArray(value)) {
+        converted[key] = value;
+      } else if (typeof value === 'boolean') {
+        converted[key] = value;
+      } else {
+        // Convert string/number to string array
+        converted[key] = [String(value)];
+      }
+    });
+    return converted;
+  }, [urlState.activeFilters]);
+
   const pageLoadingState = usePageLoading({
     productsLoading: finalProductData.loading,
     facetsLoading: finalFacetsData.loading,
     searchQuery: urlState.search,
     sortBy: urlState.formattedSort,
-    activeFilters: urlState.activeFilters,
+    activeFilters: activeFiltersForLoading,
   });
 
   // Now just provide the data to children

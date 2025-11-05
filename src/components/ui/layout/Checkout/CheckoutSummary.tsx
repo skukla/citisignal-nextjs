@@ -13,7 +13,7 @@ export function CheckoutSummary({ className }: CheckoutSummaryProps) {
   return (
     <Card className={twMerge('p-6', className)}>
       <h2 className="text-lg font-medium text-gray-900 mb-4">Order Summary</h2>
-      
+
       <div className="flow-root">
         <ul role="list" className="-my-6 divide-y divide-gray-200">
           {items.map((item) => (
@@ -34,7 +34,7 @@ export function CheckoutSummary({ className }: CheckoutSummaryProps) {
                 <div>
                   <div className="flex justify-between text-base font-medium text-gray-900">
                     <h3>{item.name}</h3>
-                    <p className="ml-4">{formatPrice(item.price)}</p>
+                    <p className="ml-4">{item.price}</p>
                   </div>
                 </div>
                 <div className="flex flex-1 items-end justify-between text-sm">

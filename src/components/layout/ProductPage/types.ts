@@ -3,6 +3,7 @@
  */
 
 import type { BreadcrumbItem } from '@/types/layout';
+import type { FilterSection } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 
 export interface PageData {
   breadcrumbs: BreadcrumbItem[];
@@ -15,16 +16,7 @@ export interface PageData {
     placeholder: string;
     itemLabel: string;
   };
-  filters: Array<{
-    id: string;
-    label: string;
-    type: string;
-    options?: Array<{
-      value: string;
-      label: string;
-      count?: number;
-    }>;
-  }>; // Filter configuration
+  filters: FilterSection[]; // Filter configuration - accepts FilterSection format
   emptyState: {
     icon: React.ComponentType<{ className?: string }>;
     title: string;

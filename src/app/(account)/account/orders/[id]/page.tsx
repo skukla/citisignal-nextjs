@@ -12,18 +12,15 @@ interface OrderDetailsPageProps {
 
 export default function OrderDetailsPage({ params }: OrderDetailsPageProps) {
   const { id } = use(params);
-  
+
   const pageData = {
     title: 'Order Details',
     description: `Order #${id}`,
     actions: (
-      <Link
-        href="/account/orders"
-        className="text-sm text-purple-600 hover:text-purple-700"
-      >
+      <Link href="/account/orders" className="text-sm text-purple-600 hover:text-purple-700">
         Back to Orders
       </Link>
-    )
+    ),
   };
 
   return (
@@ -31,12 +28,12 @@ export default function OrderDetailsPage({ params }: OrderDetailsPageProps) {
       <AccountPage.Root>
         <AccountPage.Layout>
           <AccountPage.Navigation />
-          
+
           <AccountPage.Main>
             <AccountPage.Section>
               <AccountPage.Header />
               <AccountPage.Content className="p-6">
-                {/* Order Details will go here */}
+                <div>{/* Order Details will go here */}</div>
               </AccountPage.Content>
             </AccountPage.Section>
           </AccountPage.Main>

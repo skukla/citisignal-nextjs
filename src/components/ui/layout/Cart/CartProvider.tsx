@@ -46,7 +46,7 @@ export function CartProvider({ children }: CartProviderProps) {
     clearCart: cartState.clearCart,
 
     // Cart UI actions
-    openCart: cartState.openCart,
+    openCart: () => cartState.setIsOpen(true),
     closeCart: cartState.closeCart,
     toggleCart: cartState.toggleCart,
   };

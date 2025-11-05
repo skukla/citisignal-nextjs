@@ -33,17 +33,12 @@ export function useSearchLogic(): UseSearchLogicReturn {
     setIsLoading(true);
     const timer = setTimeout(() => {
       const searchResults = phonesPageData.products
-        .filter(phone => 
-          phone.name.toLowerCase().includes(query.toLowerCase()) ||
-          (phone.description?.toLowerCase().includes(query.toLowerCase()) ?? false)
-        )
-        .map(phone => ({
+        .filter((phone) => phone.name.toLowerCase().includes(query.toLowerCase()))
+        .map((phone) => ({
           id: phone.id,
           title: phone.name,
-          description: phone.description 
-            ? `${phone.description} - Starting at $${phone.price}`
-            : `Starting at $${phone.price}`,
-          url: `/phones/${phone.urlKey}`
+          description: `Starting at ${phone.price}`,
+          url: `/phones/${phone.urlKey}`,
         }));
 
       setIsLoading(false);
@@ -58,6 +53,6 @@ export function useSearchLogic(): UseSearchLogicReturn {
     results,
     isLoading,
     setQuery,
-    selectResult
+    selectResult,
   };
-} 
+}

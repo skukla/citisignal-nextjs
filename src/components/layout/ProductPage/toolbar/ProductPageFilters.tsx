@@ -38,6 +38,21 @@ export function ProductPageFilters() {
     return undefined;
   }, [facets]);
 
+  // Convert activeFilters to Record<string, string[]> format expected by FilterSidebar
+  // Always call useMemo at the top level (React Hook rules)
+  const normalizedActiveFilters = useMemo(() => {
+    const normalized: Record<string, string[]> = {};
+    Object.entries(activeFilters).forEach(([key, value]) => {
+      if (value === undefined || value === null) return;
+      if (Array.isArray(value)) {
+        normalized[key] = value.map(String);
+      } else {
+        normalized[key] = [String(value)];
+      }
+    });
+    return normalized;
+  }, [activeFilters]);
+
   // Determine if we have facets to show
   const hasFacets = facets && facets.length > 0;
   const hasPreviousFacets = previousFacetsRef.current && previousFacetsRef.current.length > 0;
@@ -65,7 +80,7 @@ export function ProductPageFilters() {
       content={
         <FilterSidebarResponsive
           filters={facetsToDisplay || []}
-          activeFilters={activeFilters}
+          activeFilters={normalizedActiveFilters}
           onFilterChange={setFilter}
           onClearFilters={clearFilters}
           showMobileFilters={showMobileFilters}

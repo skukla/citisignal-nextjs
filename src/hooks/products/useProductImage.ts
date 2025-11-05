@@ -7,7 +7,7 @@ interface ProductImageProps {
     images?: Array<{ url: string; altText: string; type?: string; position?: number }>;
   } | null;
   selectedVariant?: {
-    image?: { url: string; altText: string };
+    image?: { url: string; altText?: string };
     sku?: string;
   } | null;
 }
@@ -27,7 +27,9 @@ export function useProductImage({ product, selectedVariant }: ProductImageProps)
       return {
         url: selectedVariant.image.url,
         altText:
-          selectedVariant.image.altText || `${product.name} - ${selectedVariant.sku || 'variant'}`,
+          selectedVariant.image.altText ||
+          `${product.name} - ${selectedVariant.sku || 'variant'}` ||
+          product.name,
       };
     }
 

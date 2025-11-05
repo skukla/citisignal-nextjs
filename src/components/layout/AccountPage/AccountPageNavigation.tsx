@@ -13,7 +13,7 @@ export function AccountPageNavigation() {
         {navigation.map((item) => {
           const Icon = item.icon;
           const active = isActive(item.href);
-          
+
           return (
             <Link
               key={item.id}
@@ -26,15 +26,15 @@ export function AccountPageNavigation() {
               )}
               aria-current={active ? 'page' : undefined}
             >
-              <Icon
-                className={twMerge(
-                  'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
-                  active
-                    ? 'text-purple-700'
-                    : 'text-gray-400 group-hover:text-purple-700'
-                )}
-                aria-hidden="true"
-              />
+              {Icon && (
+                <Icon
+                  className={twMerge(
+                    'flex-shrink-0 -ml-1 mr-3 h-6 w-6',
+                    active ? 'text-purple-700' : 'text-gray-400 group-hover:text-purple-700'
+                  )}
+                  aria-hidden="true"
+                />
+              )}
               <span className="truncate">{item.label}</span>
             </Link>
           );

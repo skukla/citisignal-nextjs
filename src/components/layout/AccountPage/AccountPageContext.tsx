@@ -1,8 +1,8 @@
 'use client';
 
 import { createContext, useContext, ReactNode } from 'react';
-import type { User } from '@/types/user';
-import type { NavigationItem } from '@/components/ui/layout/Account/Account.types';
+import type { UserProfile } from '@/components/ui/layout/Account/Account.types';
+import type { AccountMenuItem } from '@/components/ui/layout/Account/Account.types';
 
 export interface AccountPageData {
   title: string;
@@ -12,14 +12,14 @@ export interface AccountPageData {
 
 export interface AccountPageContextValue {
   // User data
-  user: User | null;
+  user: UserProfile | null;
   isLoading: boolean;
-  
+
   // Navigation
-  navigation: NavigationItem[];
+  navigation: AccountMenuItem[];
   currentPath: string;
   isActive: (href: string) => boolean;
-  
+
   // Page configuration
   pageData: AccountPageData;
 }
