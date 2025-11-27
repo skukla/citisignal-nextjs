@@ -36,6 +36,7 @@ interface UseProductCardsOptions {
   phrase?: string;
   filter?: {
     categoryUrlKey?: string;
+    facets?: Record<string, string | string[]>; // Dynamic facets
     manufacturer?: string;
     memory?: string[];
     color?: string[];

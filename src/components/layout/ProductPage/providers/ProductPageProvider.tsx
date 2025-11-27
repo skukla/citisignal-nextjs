@@ -48,6 +48,9 @@ export function ProductPageProvider({
     phrase: urlState.search,
     filter: {
       categoryUrlKey: category,
+      // Dynamic facets
+      facets: urlState.facets,
+      // Legacy fields for backwards compatibility
       manufacturer: urlState.manufacturer,
       memory: urlState.memory,
       color: urlState.color,
@@ -62,6 +65,9 @@ export function ProductPageProvider({
     phrase: urlState.search,
     filter: {
       categoryUrlKey: category,
+      // Dynamic facets
+      facets: urlState.facets,
+      // Legacy fields for backwards compatibility
       manufacturer: urlState.manufacturer,
       memory: urlState.memory,
       color: urlState.color,
