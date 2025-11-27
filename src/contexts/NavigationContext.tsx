@@ -1,15 +1,6 @@
 'use client';
 
-import {
-  createContext,
-  useContext,
-  useState,
-  useCallback,
-  useEffect,
-  ReactNode,
-  useRef,
-} from 'react';
-import { useDemoInspector } from './DemoInspectorContext';
+import { createContext, useContext, useState, useCallback, useEffect, ReactNode } from 'react';
 
 // Navigation data structure matching our API
 export interface NavigationData {
@@ -68,57 +59,11 @@ interface NavigationProviderProps {
 }
 
 export function NavigationProvider({ children, initialNavigation }: NavigationProviderProps) {
-  const { singleQueryMode } = useDemoInspector();
-  const hasStartedUnifiedQuery = useRef(false);
-  const [isHydrated, setIsHydrated] = useState(false);
-
   const [navigation, setNavigationState] = useState<NavigationData | null>(null);
   const [breadcrumbs, setBreadcrumbsState] = useState<BreadcrumbData | null>(null);
   const [lastUpdated, setLastUpdated] = useState<number | null>(null);
   const [source, setSource] = useState<'unified' | 'standalone' | 'cache' | null>(null);
-
-  // During initial hydration, block queries to prevent race conditions
-  // We'll determine the actual state after hydration completes
-  const [isLoadingFromUnified, setIsLoadingFromUnifiedState] = useState(true);
-
-  // Mark as hydrated after mount
-  useEffect(() => {
-    setIsHydrated(true);
-  }, []);
-
-  // Track if unified query actually started - if not, release the lock after a timeout
-  useEffect(() => {
-    // Wait for hydration to complete before making decisions
-    if (!isHydrated) return;
-
-    if (singleQueryMode) {
-      // Reset the flag when mode changes
-      hasStartedUnifiedQuery.current = false;
-      setIsLoadingFromUnifiedState(true);
-
-      // Give the page 100ms to start a unified query
-      const timeout = setTimeout(() => {
-        if (!hasStartedUnifiedQuery.current) {
-          // No unified query started, allow standalone queries
-          setIsLoadingFromUnifiedState(false);
-        }
-      }, 100);
-
-      return () => clearTimeout(timeout);
-    } else {
-      // Not in single query mode, allow standalone queries
-      hasStartedUnifiedQuery.current = false;
-      setIsLoadingFromUnifiedState(false);
-    }
-  }, [singleQueryMode, isHydrated]);
-
-  // Enhanced setter that tracks if unified query actually started
-  const setIsLoadingFromUnified = useCallback((loading: boolean) => {
-    if (loading) {
-      hasStartedUnifiedQuery.current = true;
-    }
-    setIsLoadingFromUnifiedState(loading);
-  }, []);
+  const [isLoadingFromUnified, setIsLoadingFromUnified] = useState(false);
 
   // Load from cache on mount (client-side only)
   useEffect(() => {
@@ -208,10 +153,7 @@ export function NavigationProvider({ children, initialNavigation }: NavigationPr
     setBreadcrumbsState(null);
     setLastUpdated(null);
     setSource(null);
-
-    // Reset loading state to allow fresh fetches
-    setIsLoadingFromUnifiedState(false);
-    hasStartedUnifiedQuery.current = false;
+    setIsLoadingFromUnified(false);
   }, []);
 
   return (

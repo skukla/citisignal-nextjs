@@ -4,25 +4,18 @@ import Breadcrumb from '@/components/ui/layout/Breadcrumb';
 import { useProductFilters } from '../providers/ProductFilterContext';
 import { useCategoryBreadcrumbs } from '@/hooks/navigation';
 import { useNavigation } from '@/contexts/NavigationContext';
-import { useDemoInspector } from '@/contexts/DemoInspectorContext';
 import { formatCategoryName } from '@/utils/url-state';
 import { useMemo } from 'react';
 
 export function ProductPageBreadcrumbs() {
   const { category } = useProductFilters();
-  const { breadcrumbs: contextBreadcrumbs, isLoadingFromUnified } = useNavigation();
-  const { singleQueryMode } = useDemoInspector();
+  const { breadcrumbs: contextBreadcrumbs } = useNavigation();
 
-  // Check if we have breadcrumbs from NavigationContext (set by unified query)
+  // Check if we have breadcrumbs from NavigationContext
   const hasContextBreadcrumbs = (contextBreadcrumbs?.items?.length ?? 0) > 0;
 
-  // Only fetch dynamic breadcrumbs if:
-  // 1. Not loading from unified query
-  // 2. Not in single query mode (which will provide breadcrumbs via context)
-  // 3. Don't already have breadcrumbs from context
-  // 4. Have a category to fetch for
-  const shouldFetchBreadcrumbs =
-    !isLoadingFromUnified && !singleQueryMode && !hasContextBreadcrumbs && category;
+  // Only fetch dynamic breadcrumbs if we don't already have breadcrumbs from context and have a category
+  const shouldFetchBreadcrumbs = !hasContextBreadcrumbs && category;
   const { data: dynamicBreadcrumbs } = useCategoryBreadcrumbs({
     categoryUrlKey: shouldFetchBreadcrumbs ? category : '',
   });

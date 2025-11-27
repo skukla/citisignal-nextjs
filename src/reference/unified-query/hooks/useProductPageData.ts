@@ -1,3 +1,10 @@
+/**
+ * REFERENCE IMPLEMENTATION
+ *
+ * Not actively used - reference example only.
+ * See hooks/products/useProductCards.ts for active pattern.
+ */
+
 import useSWR from 'swr';
 import { graphqlFetcher } from '@/lib/graphql-fetcher';
 

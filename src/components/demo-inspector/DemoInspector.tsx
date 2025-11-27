@@ -10,7 +10,6 @@ import { InspectorToggleButton } from './InspectorToggleButton';
 import { DataSourceButton } from './DataSourceButton';
 import { QueryTracker } from './QueryTracker';
 import { SourceToggle } from './SourceToggle';
-import { SingleQueryToggle } from './SingleQueryToggle';
 import { CacheToggle } from './CacheToggle';
 
 export default function DemoInspector() {
@@ -87,7 +86,6 @@ export default function DemoInspector() {
 
             {/* Query Settings */}
             <div className="mt-4 pt-4 border-t border-gray-100 space-y-3">
-              <SingleQueryToggle />
               <CacheToggle />
             </div>
 

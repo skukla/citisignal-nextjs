@@ -1,12 +1,19 @@
+/**
+ * REFERENCE IMPLEMENTATION
+ *
+ * Not actively used - reference example only.
+ * See components/layout/ProductPage/ for active pattern.
+ */
+
 'use client';
 
 import { useMemo } from 'react';
-import { useProductPageData } from '@/hooks/products/useProductPageData';
-import { ProductPageLayout } from './structure/ProductPageLayout';
-import { ProductPageHeader } from './structure/ProductPageHeader';
-import { ProductPageBreadcrumbs } from './structure/ProductPageBreadcrumbs';
-import { ProductPageFilters } from './toolbar/ProductPageFilters';
-import { ProductPageContent } from './products/ProductPageContent';
+import { useProductPageData } from '@/reference/unified-query/hooks/useProductPageData';
+import { ProductPageLayout } from '@/components/layout/ProductPage/structure/ProductPageLayout';
+import { ProductPageHeader } from '@/components/layout/ProductPage/structure/ProductPageHeader';
+import { ProductPageBreadcrumbs } from '@/components/layout/ProductPage/structure/ProductPageBreadcrumbs';
+import { ProductPageFilters } from '@/components/layout/ProductPage/toolbar/ProductPageFilters';
+import { ProductPageContent } from '@/components/layout/ProductPage/products/ProductPageContent';
 import { LoadingState } from '@/components/ui/LoadingState';
 import { ErrorState } from '@/components/ui/ErrorState';
 import { useSearchParams } from 'next/navigation';

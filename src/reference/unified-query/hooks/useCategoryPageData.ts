@@ -1,6 +1,13 @@
+/**
+ * REFERENCE IMPLEMENTATION
+ *
+ * Not actively used - reference example only.
+ * See hooks/products/useProductCards.ts for active pattern.
+ */
+
 import useSWR from 'swr';
 import { graphqlFetcher, graphqlFetcherWithTracking } from '@/lib/graphql-fetcher';
-import GET_CATEGORY_PAGE_DATA from '@/graphql/queries/GetCategoryPageData.graphql';
+import GET_CATEGORY_PAGE_DATA from '@/reference/unified-query/graphql/GetCategoryPageData.graphql';
 
 interface Citisignal_PageFilter {
   manufacturer?: string;

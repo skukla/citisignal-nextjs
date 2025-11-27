@@ -28,7 +28,6 @@ interface DemoInspectorContextValue {
   activeSources: Set<DataSource>;
   trackedQueries: TrackedQuery[];
   inspectorPosition: 'left' | 'right';
-  singleQueryMode: boolean;
 
   // Actions
   toggleInspector: () => void;
@@ -40,7 +39,6 @@ interface DemoInspectorContextValue {
   trackQuery: (query: TrackedQuery) => void;
   clearQueries: () => void;
   setInspectorPosition: (position: 'left' | 'right') => void;
-  setSingleQueryMode: (enabled: boolean) => void;
 }
 
 const DemoInspectorContext = createContext<DemoInspectorContextValue | undefined>(undefined);
@@ -80,7 +78,6 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
   const [activeSources, setActiveSources] = useState<Set<DataSource>>(new Set());
   const [trackedQueries, setTrackedQueries] = useState<TrackedQuery[]>([]);
   const [inspectorPosition, setInspectorPosition] = useState<'left' | 'right'>('right');
-  const [singleQueryMode, setSingleQueryMode] = useState(true); // Default to single query mode (production-like)
 
   // Load saved preferences after hydration
   useEffect(() => {
@@ -91,10 +88,6 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
           const prefs = JSON.parse(saved);
           setEnabled(prefs.enabled || false);
           setInspectorPosition(prefs.position || 'right');
-          // Only override default if explicitly saved
-          if (prefs.singleQueryMode !== undefined) {
-            setSingleQueryMode(prefs.singleQueryMode);
-          }
           if (prefs.panelCollapsed !== undefined) {
             setPanelCollapsed(prefs.panelCollapsed);
           }
@@ -114,12 +107,11 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
         JSON.stringify({
           enabled,
           position: inspectorPosition,
-          singleQueryMode,
           panelCollapsed,
         })
       );
     }
-  }, [enabled, inspectorPosition, singleQueryMode, panelCollapsed]);
+  }, [enabled, inspectorPosition, panelCollapsed]);
 
   // Keyboard shortcuts
   useEffect(() => {
@@ -200,7 +192,6 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
     activeSources,
     trackedQueries,
     inspectorPosition,
-    singleQueryMode,
     toggleInspector,
     togglePanelCollapse,
     setEnabled,
@@ -210,7 +201,6 @@ export function DemoInspectorProvider({ children }: DemoInspectorProviderProps) 
     trackQuery,
     clearQueries,
     setInspectorPosition,
-    setSingleQueryMode,
   };
 
   return <DemoInspectorContext.Provider value={value}>{children}</DemoInspectorContext.Provider>;
