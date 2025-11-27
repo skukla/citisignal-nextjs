@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
-import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
+import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
 import { useCart } from '@/components/ui/layout/Cart/CartProvider';
 import {
   generateVariantId,

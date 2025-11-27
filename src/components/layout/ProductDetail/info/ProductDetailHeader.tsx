@@ -1,6 +1,6 @@
 import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
-import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
+import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
 import Badge from '@/components/ui/foundations/Badge';
 import type { ProductDetailHeaderProps } from '../types';
 

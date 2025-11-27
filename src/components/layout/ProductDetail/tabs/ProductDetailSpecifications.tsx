@@ -1,6 +1,6 @@
 import { useProductDetail } from '../providers/ProductDetailContext';
 import { useEffect, useState, useRef } from 'react';
-import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
+import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
 import type { ProductDetailSpecificationsProps } from '../types';
 
 /**

@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
 import { useProductImage } from '@/hooks/products/useProductImage';
-import { useDataSource } from '@/hooks/inspector/useInspectorTracking';
+import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
 import { ErrorState } from '@/components/ui/ErrorState';
 import Image from 'next/image';
 import type { ProductDetailGalleryProps } from '../types';

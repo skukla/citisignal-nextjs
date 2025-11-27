@@ -7,9 +7,8 @@ import { StandardFooter } from '@/components/layout/Footer/StandardFooter';
 import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
 import { CartProvider } from '@/components/ui/layout/Cart/CartProvider';
 import Root from '@/components/layout/Root';
-import { DemoInspectorProvider } from '@/contexts/DemoInspectorContext';
+import { DemoInspectorProvider, DemoInspector } from '@/demo-inspector';
 import { NavigationProvider } from '@/contexts/NavigationContext';
-import DemoInspector from '@/components/demo-inspector/DemoInspector';
 import './globals.css';
 
 interface RootLayoutProps {
