@@ -19,6 +19,8 @@
       }
     ],
     "paths": {
+      "@/demo-inspector": ["./src/demo-inspector-stub"],
+      "@/demo-inspector/*": ["./src/demo-inspector-stub/*"],
       "@/*": ["./src/*"]
     }
   },
