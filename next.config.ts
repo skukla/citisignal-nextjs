@@ -1,19 +1,4 @@
 import type { NextConfig } from 'next';
-import path from 'path';
-import fs from 'fs';
-
-// ============================================================================
-// Demo Inspector Detection
-// ============================================================================
-// Check if demo-inspector submodule is initialized
-// If not, webpack will alias @/demo-inspector to the stub module
-const demoInspectorPath = path.join(__dirname, 'src/demo-inspector/index.ts');
-const demoInspectorStubPath = path.join(__dirname, 'src/demo-inspector-stub');
-const hasDemoInspector = fs.existsSync(demoInspectorPath);
-
-if (!hasDemoInspector) {
-  console.log('📦 Demo Inspector not installed - using stub module');
-}
 
 // ============================================================================
 // Environment Configuration
@@ -60,17 +45,6 @@ const nextConfig: NextConfig = {
       exclude: /node_modules/,
       loader: '@graphql-tools/webpack-loader',
     });
-
-    // TypeScript resolves @/demo-inspector to stub by default (for type checking)
-    // Webpack overrides to real module when submodule is installed
-    if (hasDemoInspector) {
-      const demoInspectorRealPath = path.join(__dirname, 'src/demo-inspector');
-      config.resolve.alias = {
-        ...config.resolve.alias,
-        '@/demo-inspector': demoInspectorRealPath,
-      };
-    }
-    // When submodule not installed, TypeScript's path mapping to stub is used
 
     return config;
   },

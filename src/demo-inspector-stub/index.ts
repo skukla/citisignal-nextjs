@@ -1,12 +1,14 @@
 'use client';
 
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /**
  * Demo Inspector Stub Module
  *
  * This module provides no-op implementations of the demo-inspector API
  * for when the demo-inspector submodule is not installed.
  *
- * Webpack aliases @/demo-inspector to this stub when the real module is absent.
+ * The resolve-demo-inspector.js script configures tsconfig.json to point
+ * @/demo-inspector to this stub when the real module is absent.
  */
 
 import React, { ReactNode, RefObject } from 'react';

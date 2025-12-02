@@ -11,7 +11,10 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky"
+    "prepare": "husky",
+    "postinstall": "node scripts/resolve-demo-inspector.js",
+    "predev": "node scripts/resolve-demo-inspector.js",
+    "prebuild": "node scripts/resolve-demo-inspector.js"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",
