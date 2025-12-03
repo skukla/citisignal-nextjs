@@ -1,3 +1,3 @@
 [submodule "src/demo-inspector"]
 	path = src/demo-inspector
-	url = git@github.com:skukla/demo-inspector.git
+	url = https://github.com/skukla/demo-inspector.git
