@@ -42,6 +42,9 @@ yarn-error.log*
 next-env.d.ts
 tsconfig.json
 
+# demo inspector (copied from submodule by resolve script)
+/public/demo-inspector/
+
 # workspace
 citisignal-nextjs.code-workspace
 

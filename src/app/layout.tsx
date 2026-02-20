@@ -2,12 +2,12 @@
 
 import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
+import Script from 'next/script';
 import { StandardHeader } from '@/components/layout/Header/StandardHeader';
 import { StandardFooter } from '@/components/layout/Footer/StandardFooter';
 import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
 import { CartProvider } from '@/components/ui/layout/Cart/CartProvider';
 import Root from '@/components/layout/Root';
-import { DemoInspectorProvider, DemoInspector } from '@/demo-inspector';
 import { NavigationProvider } from '@/contexts/NavigationContext';
 import './globals.css';
 
@@ -29,22 +29,22 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className="h-full bg-white antialiased" suppressHydrationWarning>
-        <DemoInspectorProvider>
-          <NavigationProvider>
-            <AuthProvider>
-              <AccountProvider>
-                <CartProvider>
-                  <Root>
-                    {!isCheckoutPage && <StandardHeader />}
-                    <main>{children}</main>
-                    <StandardFooter />
-                  </Root>
-                </CartProvider>
-              </AccountProvider>
-            </AuthProvider>
-          </NavigationProvider>
-          <DemoInspector />
-        </DemoInspectorProvider>
+        <NavigationProvider>
+          <AuthProvider>
+            <AccountProvider>
+              <CartProvider>
+                <Root>
+                  {!isCheckoutPage && <StandardHeader />}
+                  <main>{children}</main>
+                  <StandardFooter />
+                </Root>
+              </CartProvider>
+            </AccountProvider>
+          </AuthProvider>
+        </NavigationProvider>
+        {/* @ts-expect-error -- custom element not in JSX.IntrinsicElements */}
+        <demo-inspector modes="mesh"></demo-inspector>
+        <Script src="/demo-inspector/demo-inspector.js" strategy="lazyOnload" />
       </body>
     </html>
   );
