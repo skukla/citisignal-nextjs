@@ -14,6 +14,7 @@
     "prepare": "husky"
   },
   "dependencies": {
+    "@demo-inspector/sdk": "github:skukla/demo-inspector-sdk",
     "@headlessui/react": "^2.2.4",
     "@heroicons/react": "^2.2.0",
     "@types/dompurify": "^3.0.5",

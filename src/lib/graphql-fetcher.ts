@@ -7,6 +7,7 @@
  */
 
 import { DocumentNode, print } from 'graphql';
+import { detectSource, trackQuery, trackData } from '@demo-inspector/sdk';
 
 interface GraphQLError {
   message: string;
@@ -21,51 +22,6 @@ interface GraphQLResponse<T> {
 export interface TrackingOptions {
   skipTracking?: boolean;
   source?: 'commerce' | 'catalog' | 'search';
-}
-
-type DataSource = 'commerce' | 'catalog' | 'search';
-
-/**
- * Detect the data source based on query name and response shape.
- * Uses Citisignal_ prefixed field names from the API Mesh schema.
- */
-function detectSource(queryName: string, data: unknown): DataSource {
-  let source: DataSource = 'commerce';
-
-  if (data && typeof data === 'object') {
-    const dataObj = data as Record<string, unknown>;
-
-    if (queryName === 'GetProductDetail' || dataObj.Citisignal_productDetail) {
-      source = 'catalog';
-    } else if (
-      dataObj.Citisignal_productCards ||
-      dataObj.products ||
-      queryName.includes('ProductCards')
-    ) {
-      source = 'catalog';
-    } else if (dataObj.Citisignal_productPageData || queryName === 'GetProductPageData') {
-      source = 'catalog';
-    } else if (
-      dataObj.Citisignal_productFacets ||
-      dataObj.facets ||
-      queryName.includes('Facet') ||
-      queryName.includes('Search') ||
-      queryName.includes('Filter')
-    ) {
-      source = 'search';
-    } else if (
-      dataObj.categories ||
-      dataObj.storeConfig ||
-      dataObj.navigation ||
-      dataObj.breadcrumbs ||
-      queryName.includes('Navigation') ||
-      queryName.includes('Breadcrumb')
-    ) {
-      source = 'commerce';
-    }
-  }
-
-  return source;
 }
 
 /**
@@ -127,41 +83,20 @@ export async function graphqlFetcher<T = unknown>(
 
   const startTime = performance.now();
   const result = await baseFetcher<T>(query, variables, options);
-  const endTime = performance.now();
+  const responseTime = Math.round(performance.now() - startTime);
 
   if (typeof window !== 'undefined' && !options?.skipTracking) {
     const source = options?.source || detectSource(queryName, result);
+    const timestamp = Date.now();
 
-    const demoInspectorStore = (
-      window as Window & {
-        __demoInspectorStoreData?: (data: unknown) => void;
-      }
-    ).__demoInspectorStoreData;
-
-    if (demoInspectorStore) {
-      demoInspectorStore({
-        queryName,
-        source,
-        data: result,
-        timestamp: Date.now(),
-      });
-    }
-
-    const demoInspectorTrack = (
-      window as Window & {
-        __demoInspectorTrackQuery?: (query: unknown) => void;
-      }
-    ).__demoInspectorTrackQuery;
-
-    if (demoInspectorTrack) {
-      demoInspectorTrack({
-        id: `${queryName}-${Date.now()}`,
-        name: queryName,
-        source,
-        timestamp: Date.now(),
-        responseTime: Math.round(endTime - startTime),
-      });
-    }
+    trackQuery({
+      id: `${queryName}-${timestamp}`,
+      name: queryName,
+      source,
+      responseTime,
+      timestamp,
+    });
+    trackData({ queryName, source, data: result, timestamp });
   }
 
   return result;
