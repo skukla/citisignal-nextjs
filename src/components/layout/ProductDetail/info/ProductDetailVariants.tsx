@@ -1,6 +1,5 @@
-import { useRef, useState } from 'react';
+import { useState } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
-import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
 import { isColorAttribute, getSwatchColor, areAllOptionsSelected } from '@/utils/product-options';
 import type { ProductDetailVariantsProps } from '../types';
 
@@ -15,19 +14,6 @@ export function ProductDetailVariants({
 }: ProductDetailVariantsProps) {
   const { product, loading } = useProductDetail();
   const [selectedOptions, setSelectedOptions] = useState<Record<string, string>>({});
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  // Register with Demo Inspector - orchestrated from multiple sources
-  useDataSource({
-    componentName: 'ProductDetailVariants',
-    source: 'catalog', // Primary source: option structure from Catalog Service
-    elementRef,
-    fieldMappings: {
-      'configurable-option': 'catalog', // Option structure from Catalog Service
-      'option-value': 'catalog', // Option values from Catalog Service
-      'color-swatch': 'catalog', // Color values from Catalog Service
-    },
-  });
 
   const handleOptionSelect = (attributeCode: string, value: string) => {
     const newOptions = {
@@ -69,7 +55,7 @@ export function ProductDetailVariants({
   }
 
   return (
-    <div ref={elementRef} className={className}>
+    <div className={className}>
       <div className="space-y-6">
         {product.configurable_options.map((option) => {
           const selectedValue = selectedOptions[option.attribute_code];

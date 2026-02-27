@@ -219,8 +219,7 @@ return {
 2. **Pass null, not {}** to prevent unwanted queries
 3. **Normalize string filters** for case-insensitive matching
 4. **Test with cURL first** to isolate frontend vs backend issues
-5. **Use Demo Inspector** to monitor query execution
-6. **Implement all filter types** consistently across resolvers
+5. **Implement all filter types** consistently across resolvers
 
 ## Files Modified
 
@@ -238,13 +237,6 @@ return {
 - `src/hooks/products/useCategoryPageData.ts` - Already handled null correctly
 
 ## Monitoring and Debugging
-
-### Demo Inspector Usage
-
-- Toggle single query mode with `Cmd+Shift+D`
-- Monitor query execution in real-time
-- Check query times (now formatted as seconds when >1000ms)
-- Verify which queries run on filter changes
 
 ### Common Patterns to Watch
 

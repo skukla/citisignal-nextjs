@@ -1,6 +1,6 @@
 {
   "name": "nextjs-citisignal",
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0-beta.5",
   "private": true,
   "scripts": {
     "dev": "next dev",
@@ -11,10 +11,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "typecheck": "tsc --noEmit",
-    "prepare": "husky",
-    "postinstall": "node scripts/resolve-demo-inspector.js",
-    "predev": "node scripts/resolve-demo-inspector.js",
-    "prebuild": "node scripts/resolve-demo-inspector.js"
+    "prepare": "husky"
   },
   "dependencies": {
     "@headlessui/react": "^2.2.4",

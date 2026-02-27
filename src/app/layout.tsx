@@ -2,7 +2,6 @@
 
 import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
-import Script from 'next/script';
 import { StandardHeader } from '@/components/layout/Header/StandardHeader';
 import { StandardFooter } from '@/components/layout/Footer/StandardFooter';
 import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
@@ -42,9 +41,6 @@ export default function RootLayout({ children }: RootLayoutProps) {
             </AccountProvider>
           </AuthProvider>
         </NavigationProvider>
-        {/* @ts-expect-error -- custom element not in JSX.IntrinsicElements */}
-        <demo-inspector modes="mesh"></demo-inspector>
-        <Script src="/demo-inspector/demo-inspector.js" strategy="lazyOnload" />
       </body>
     </html>
   );

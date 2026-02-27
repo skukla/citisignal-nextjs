@@ -1,6 +1,5 @@
 import { useProductDetail } from '../providers/ProductDetailContext';
-import { useEffect, useState, useRef } from 'react';
-import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
+import { useEffect, useState } from 'react';
 import type { ProductDetailSpecificationsProps } from '../types';
 
 /**
@@ -13,18 +12,6 @@ export function ProductDetailSpecifications({ className }: ProductDetailSpecific
   const [sanitizedAttributes, setSanitizedAttributes] = useState<
     Array<{ key: string; label: string; value: string }>
   >([]);
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  // Register with Demo Inspector - attributes come from Catalog Service
-  useDataSource({
-    componentName: 'ProductDetailSpecifications',
-    source: 'catalog',
-    elementRef,
-    fieldMappings: {
-      attributes: 'catalog',
-      specifications: 'catalog',
-    },
-  });
 
   // Sanitize attribute values that might contain HTML
   useEffect(() => {
@@ -75,7 +62,7 @@ export function ProductDetailSpecifications({ className }: ProductDetailSpecific
   }
 
   return (
-    <div ref={elementRef} className={className}>
+    <div className={className}>
       <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">
         Specifications
       </h2>

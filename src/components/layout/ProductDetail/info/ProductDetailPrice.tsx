@@ -1,6 +1,4 @@
-import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
-import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
 import { calculateDiscountPercentage } from '@/lib/pricing';
 import type { ProductDetailPriceProps } from '../types';
 
@@ -11,21 +9,6 @@ import type { ProductDetailPriceProps } from '../types';
  */
 export function ProductDetailPrice({ className, selectedVariant }: ProductDetailPriceProps) {
   const { product, loading } = useProductDetail();
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  // Register with Demo Inspector - dynamic source based on variant selection
-  useDataSource({
-    componentName: 'ProductDetailPrice',
-    source: 'catalog', // Primary source
-    elementRef,
-    dynamicSource: () => (selectedVariant ? 'commerce' : 'catalog'),
-    fieldMappings: {
-      price: selectedVariant ? 'commerce' : 'catalog',
-      originalPrice: selectedVariant ? 'commerce' : 'catalog',
-      discountPercent: selectedVariant ? 'commerce' : 'catalog',
-    },
-    dependencies: [selectedVariant],
-  });
 
   if (loading) {
     return (
@@ -54,7 +37,7 @@ export function ProductDetailPrice({ className, selectedVariant }: ProductDetail
       : product.discountPercent;
 
   return (
-    <div ref={elementRef} className={className}>
+    <div className={className}>
       <div className="space-y-3">
         {/* Current price - enhanced hierarchy */}
         <div className="flex items-baseline gap-3">

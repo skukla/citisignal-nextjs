@@ -1,6 +1,4 @@
-import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
-import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
 import Badge from '@/components/ui/foundations/Badge';
 import type { ProductDetailHeaderProps } from '../types';
 
@@ -15,21 +13,6 @@ export function ProductDetailHeader({
   allAttributesSelected,
 }: ProductDetailHeaderProps) {
   const { product, loading } = useProductDetail();
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  // Register with Demo Inspector - dynamic source based on variant selection
-  useDataSource({
-    componentName: 'ProductDetailHeader',
-    source: 'catalog', // Primary source
-    elementRef,
-    dynamicSource: () => (selectedVariant && allAttributesSelected ? 'commerce' : 'catalog'),
-    fieldMappings: {
-      manufacturer: 'catalog',
-      name: 'catalog',
-      sku: selectedVariant && allAttributesSelected ? 'commerce' : 'catalog',
-    },
-    dependencies: [selectedVariant, allAttributesSelected],
-  });
 
   if (loading) {
     return (
@@ -47,7 +30,7 @@ export function ProductDetailHeader({
   }
 
   return (
-    <div ref={elementRef} className={className}>
+    <div className={className}>
       <div className="space-y-3">
         {/* Manufacturer - slightly more prominent */}
         {product.manufacturer && (

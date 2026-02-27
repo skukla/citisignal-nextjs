@@ -173,29 +173,6 @@ const executeUnifiedQuery = async (context, args) => {
 - **Facets**: Contextual based on current filters
 - **Navigation**: Always from Commerce Core
 
-## Demo Inspector Integration
-
-### Toggle Behavior
-
-```typescript
-const { singleQueryMode } = useDemoInspector();
-
-// Query strategy decision
-const shouldUseUnifiedQuery =
-  singleQueryMode && // Toggle is ON
-  !userHasInteracted && // No user interaction yet
-  !isSearching; // Not in search mode
-```
-
-### Observable Metrics
-
-When Demo Inspector is enabled:
-
-- Query count display
-- Network request tracking
-- Performance timing
-- Cache hit rates
-
 ## SSR Migration Path
 
 ### Current Client-Side Implementation
@@ -264,7 +241,6 @@ useEffect(() => {
 #### Queries Not Switching Modes
 
 - Check `userHasInteracted` state
-- Verify Demo Inspector toggle
 - Ensure page refresh after mode change
 
 #### Unnecessary Query Execution
@@ -303,4 +279,3 @@ if (process.env.NODE_ENV === 'development') {
 - [Performance and Loading Guide](../guides/performance-and-loading.md)
 - [API Integration](../guides/api-integration.md)
 - [SSR Implementation](../guides/ssr-implementation.md)
-- [Demo Inspector](../patterns/demo-inspector.md)

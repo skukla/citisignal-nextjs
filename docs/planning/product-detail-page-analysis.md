@@ -218,7 +218,6 @@ Implement adaptive loading pattern from existing ProductPage:
 - **Cart Context**: `useCartContext()` for add to cart functionality
 - **Wishlist Hook**: `useWishlist()` for wishlist operations
 - **Navigation**: Breadcrumb integration with NavigationContext
-- **Demo Inspector**: Product data tracking and visualization
 - **URL State**: Query parameters for variant selection
 
 ### Adobe API Mesh

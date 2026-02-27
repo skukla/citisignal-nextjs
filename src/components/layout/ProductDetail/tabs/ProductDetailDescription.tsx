@@ -1,6 +1,5 @@
 import { useProductDetail } from '../providers/ProductDetailContext';
-import { useEffect, useState, useRef } from 'react';
-import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
+import { useEffect, useState } from 'react';
 import type { ProductDetailDescriptionProps } from '../types';
 
 /**
@@ -11,17 +10,6 @@ import type { ProductDetailDescriptionProps } from '../types';
 export function ProductDetailDescription({ className }: ProductDetailDescriptionProps) {
   const { product } = useProductDetail();
   const [sanitizedDescription, setSanitizedDescription] = useState<string>('');
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  // Register with Demo Inspector - description comes from Catalog Service
-  useDataSource({
-    componentName: 'ProductDetailDescription',
-    source: 'catalog',
-    elementRef,
-    fieldMappings: {
-      description: 'catalog',
-    },
-  });
 
   useEffect(() => {
     if (!product?.description) {
@@ -97,7 +85,7 @@ export function ProductDetailDescription({ className }: ProductDetailDescription
   }
 
   return (
-    <div ref={elementRef} className={className}>
+    <div className={className}>
       <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">
         Description
       </h2>

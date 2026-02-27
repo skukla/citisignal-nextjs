@@ -67,24 +67,15 @@ src/
 
 - Node.js 18+
 - npm or yarn
-- Git (for submodules)
 
 ### Installation
 
-1. **Clone the repository with submodules**
+1. **Clone the repository**
 
    ```bash
-   git clone --recurse-submodules <repository-url>
+   git clone <repository-url>
    cd nextjs-citisignal
    ```
-
-   > **Note:** The `--recurse-submodules` flag ensures the Demo Inspector is cloned automatically.
-   >
-   > If you already cloned without submodules, initialize them:
-   >
-   > ```bash
-   > git submodule update --init --recursive
-   > ```
 
 2. **Install dependencies**
 
@@ -225,70 +216,6 @@ src/
 3. Commit changes (`git commit -m 'Add amazing feature'`)
 4. Push to branch (`git push origin feature/amazing-feature`)
 5. Open Pull Request
-
-## 🔍 Demo Inspector
-
-This project includes the **Demo Inspector** - a development tool for visualizing GraphQL queries and data sources in real-time.
-
-### What is the Demo Inspector?
-
-The Demo Inspector is integrated as a **Git submodule** located at `src/demo-inspector/`. It provides:
-
-- ✅ Real-time GraphQL query tracking
-- ✅ Visual data source attribution (Commerce Core, Catalog Service, Live Search)
-- ✅ Performance metrics for each query
-- ✅ Interactive controls to toggle data source visibility
-- ✅ Cache control for testing
-
-### Using the Demo Inspector
-
-**Toggle the inspector:**
-
-- Press `Cmd/Ctrl + Shift + D` to show/hide
-- Click the floating toggle button in the bottom-right corner
-
-**View query details:**
-
-- See which queries executed
-- Check response times
-- Identify which Adobe service provided the data
-
-### Working with the Submodule
-
-The Demo Inspector is maintained in its own repository and integrated via Git submodule.
-
-**Update to latest version:**
-
-```bash
-git submodule update --remote src/demo-inspector
-git add src/demo-inspector
-git commit -m "chore: update demo-inspector to latest"
-```
-
-**Make changes to Demo Inspector:**
-
-```bash
-cd src/demo-inspector
-# Make your changes
-git add .
-git commit -m "feat: your changes"
-git push origin main
-
-# Update parent repo to use new version
-cd ../..
-git add src/demo-inspector
-git commit -m "chore: update demo-inspector submodule"
-```
-
-**Running without Demo Inspector** (optional):
-
-```bash
-# Clone without submodules
-git clone <repository-url>
-# Don't run: git submodule update --init
-```
-
-📖 **Full Documentation:** See [docs/DEMO_INSPECTOR.md](./docs/DEMO_INSPECTOR.md)
 
 ## 📚 Reference Implementations
 

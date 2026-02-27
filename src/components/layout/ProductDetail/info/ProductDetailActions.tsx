@@ -1,6 +1,4 @@
-import { useRef } from 'react';
 import { useProductDetail } from '../providers/ProductDetailContext';
-import { useDataSource } from '@/demo-inspector/hooks/useInspectorTracking';
 import { useCart } from '@/components/ui/layout/Cart/CartProvider';
 import {
   generateVariantId,
@@ -27,21 +25,6 @@ export function ProductDetailActions({
 }: ProductDetailActionsProps) {
   const { product, loading } = useProductDetail();
   const { addItem } = useCart();
-  const elementRef = useRef<HTMLDivElement>(null);
-
-  // Register with Demo Inspector - actions based on stock/variant selection
-  useDataSource({
-    componentName: 'ProductDetailActions',
-    source: 'catalog', // Primary source for stock status
-    elementRef,
-    dynamicSource: () => (allAttributesSelected ? 'commerce' : 'catalog'),
-    fieldMappings: {
-      'add-to-cart': allAttributesSelected ? 'commerce' : 'catalog',
-      'stock-status': allAttributesSelected ? 'commerce' : 'catalog',
-      wishlist: 'catalog', // Wishlist action is always catalog-based
-    },
-    dependencies: [allAttributesSelected],
-  });
 
   if (loading) {
     return (
@@ -137,7 +120,7 @@ export function ProductDetailActions({
   };
 
   return (
-    <div ref={elementRef} className={className}>
+    <div className={className}>
       <div className="space-y-3">
         {/* Add to Cart */}
         <Button

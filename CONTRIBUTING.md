@@ -8,7 +8,6 @@ Thank you for your interest in contributing to CitiSignal! This guide will help 
 - [Development Setup](#development-setup)
 - [Project Structure](#project-structure)
 - [Development Workflow](#development-workflow)
-- [Git Submodules](#git-submodules)
 - [Code Style](#code-style)
 - [Commit Guidelines](#commit-guidelines)
 - [Pull Request Process](#pull-request-process)
@@ -22,16 +21,16 @@ Thank you for your interest in contributing to CitiSignal! This guide will help 
 ### Prerequisites
 
 - **Node.js** 18+ and npm
-- **Git** (familiarity with submodules helpful)
+- **Git**
 - **Code Editor** (VS Code recommended)
 - **Adobe Commerce Mesh** access (for backend testing)
 
 ### First-Time Setup
 
-1. **Clone with submodules:**
+1. **Clone the repository:**
 
    ```bash
-   git clone --recurse-submodules https://github.com/skukla/citisignal-nextjs.git
+   git clone https://github.com/skukla/citisignal-nextjs.git
    cd citisignal-nextjs
    ```
 
@@ -54,11 +53,6 @@ Thank you for your interest in contributing to CitiSignal! This guide will help 
    npm run dev
    ```
 
-5. **Verify Demo Inspector loaded:**
-   ```bash
-   ls -la src/demo-inspector/
-   ```
-
 ---
 
 ## Development Setup
@@ -70,9 +64,6 @@ Create `.env.local` with:
 ```bash
 # Adobe Commerce Mesh API endpoint
 NEXT_PUBLIC_MESH_ENDPOINT=https://your-mesh-endpoint.adobe.io/graphql
-
-# Demo Inspector (optional)
-NEXT_PUBLIC_DEMO_MODE=true
 
 # Other configuration...
 ```
@@ -117,7 +108,6 @@ citisignal-nextjs/
 │   ├── lib/                      # Utilities and helpers
 │   ├── graphql/                  # GraphQL queries and fragments
 │   ├── types/                    # TypeScript type definitions
-│   ├── demo-inspector/           # 🔗 Git submodule - Demo Inspector
 │   └── reference/                # 📚 Read-only reference implementations
 │       └── unified-query/        # Unified query pattern (educational only)
 ├── docs/                         # Documentation
@@ -125,7 +115,6 @@ citisignal-nextjs/
 └── tests/                        # Test files
 
 Legend:
-🔗 = Git submodule (separate repository)
 📚 = Reference only (not actively maintained)
 ```
 
@@ -134,7 +123,6 @@ Legend:
 - **`src/app/`** - Next.js pages using App Router
 - **`src/components/`** - All React components
 - **`src/hooks/`** - Custom hooks (use these for active patterns)
-- **`src/demo-inspector/`** - Submodule (see [Git Submodules](#git-submodules))
 - **`src/reference/`** - Educational examples only, not for active use
 
 ---
@@ -187,47 +175,6 @@ refactor/unified-query-reference
 docs/update-api-reference
 chore/update-dependencies
 ```
-
----
-
-## Git Submodules
-
-The Demo Inspector lives in `src/demo-inspector/` as a Git submodule.
-
-### Working with Submodules
-
-**When pulling changes:**
-
-```bash
-git pull origin main
-git submodule update --init --recursive
-```
-
-**To update Demo Inspector to latest:**
-
-```bash
-git submodule update --remote src/demo-inspector
-git add src/demo-inspector
-git commit -m "chore: update demo-inspector to latest"
-```
-
-**To modify Demo Inspector:**
-
-```bash
-cd src/demo-inspector
-git checkout -b feature/my-inspector-change
-# Make changes...
-git add .
-git commit -m "feat: my change"
-git push origin feature/my-inspector-change
-
-# Back to parent repo
-cd ../..
-git add src/demo-inspector
-git commit -m "chore: update demo-inspector submodule"
-```
-
-📖 **Full Guide:** See [docs/DEMO_INSPECTOR.md](./docs/DEMO_INSPECTOR.md) and [docs/GIT_SUBMODULES_QUICK_REFERENCE.md](./docs/GIT_SUBMODULES_QUICK_REFERENCE.md)
 
 ---
 
@@ -349,11 +296,9 @@ feat: add product wishlist functionality
 
 fix: correct price display on product cards
 
-docs: update Demo Inspector integration guide
-
 refactor: move unified query to reference directory
 
-chore: update demo-inspector submodule to v1.0.0-beta.2
+chore: update dependencies
 ```
 
 ### Commit Message Guidelines
@@ -420,7 +365,6 @@ Brief description of changes.
 - [ ] Tested locally
 - [ ] Build passes
 - [ ] No console errors
-- [ ] Demo Inspector works (if applicable)
 
 ## Screenshots (if applicable)
 
@@ -459,7 +403,6 @@ When making changes, verify:
 
 - [ ] Page loads without errors
 - [ ] GraphQL queries execute successfully
-- [ ] Demo Inspector tracks queries (if enabled)
 - [ ] Responsive design works (mobile, tablet, desktop)
 - [ ] No TypeScript errors (`npm run build`)
 - [ ] No console errors or warnings
@@ -474,7 +417,7 @@ Ensure your changes work with the backend:
 echo $NEXT_PUBLIC_MESH_ENDPOINT
 
 # Test GraphQL queries in browser
-# Navigate to: http://localhost:3000 and check Demo Inspector
+# Navigate to: http://localhost:3000 and verify GraphQL queries
 ```
 
 ---
@@ -589,8 +532,6 @@ See [commerce-mesh documentation](../commerce-mesh/docs/) for backend reference 
 ### Resources
 
 - **Documentation:** See `docs/` directory
-- **Demo Inspector:** [docs/DEMO_INSPECTOR.md](./docs/DEMO_INSPECTOR.md)
-- **Git Submodules:** [docs/GIT_SUBMODULES_QUICK_REFERENCE.md](./docs/GIT_SUBMODULES_QUICK_REFERENCE.md)
 - **Commerce Mesh:** [../commerce-mesh/README.md](../commerce-mesh/README.md)
 
 ### Questions?
