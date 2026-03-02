@@ -56,7 +56,7 @@ export function ProductPageSearch() {
   }, [localValue, handleClearSearch]);
 
   return (
-    <div className="flex-1" data-inspector-source="search" data-inspector-type="search-bar">
+    <div className="flex-1">
       <div className="relative">
         <Input
           type="text"

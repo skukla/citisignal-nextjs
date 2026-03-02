@@ -45,12 +45,7 @@ export function ProductDetailGallery({ className, selectedVariant }: ProductDeta
     <div className={`lg:col-span-1 ${className || ''}`.trim()}>
       <div className="space-y-4">
         {/* Main image */}
-        <div
-          className="aspect-square overflow-hidden rounded-lg bg-gray-100"
-          data-inspector-field="image"
-          data-inspector-source={selectedVariant ? 'commerce' : 'catalog'}
-          data-inspector-variant={selectedVariant ? 'true' : 'false'}
-        >
+        <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">
           {displayImage ? (
             <Image
               src={displayImage.url}

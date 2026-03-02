@@ -66,18 +66,11 @@ export function ProductDetailSpecifications({ className }: ProductDetailSpecific
       <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">
         Specifications
       </h2>
-      <div
-        className="grid gap-4"
-        data-inspector-field="specifications"
-        data-inspector-source="catalog"
-      >
+      <div className="grid gap-4">
         {sanitizedAttributes.map((attribute) => (
           <div
             key={attribute.key}
             className="flex justify-between items-start border-b border-gray-100 pb-3"
-            data-inspector-field="attributes"
-            data-inspector-source="catalog"
-            data-inspector-attribute={attribute.key}
           >
             <span className="text-base font-semibold text-gray-700 flex-shrink-0 mr-4">
               {attribute.label}

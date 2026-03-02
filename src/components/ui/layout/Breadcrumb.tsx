@@ -4,20 +4,12 @@ import type { BreadcrumbItem } from '@/types/layout';
 
 interface BreadcrumbProps {
   items: BreadcrumbItem[];
-  dataSource?: 'commerce' | 'static';
   showHomeIcon?: boolean;
 }
 
-export default function Breadcrumb({ items, dataSource, showHomeIcon = true }: BreadcrumbProps) {
+export default function Breadcrumb({ items, showHomeIcon = true }: BreadcrumbProps) {
   return (
-    <nav
-      className="flex mb-6"
-      aria-label="Breadcrumb"
-      {...(dataSource === 'commerce' && {
-        'data-inspector-source': 'commerce',
-        'data-inspector-type': 'breadcrumbs',
-      })}
-    >
+    <nav className="flex mb-6" aria-label="Breadcrumb">
       <ol className="flex items-center space-x-2">
         {/* Home Link - only show if explicitly requested */}
         {showHomeIcon && (

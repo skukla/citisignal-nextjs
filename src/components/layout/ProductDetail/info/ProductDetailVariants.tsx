@@ -61,12 +61,7 @@ export function ProductDetailVariants({
           const selectedValue = selectedOptions[option.attribute_code];
 
           return (
-            <div
-              key={option.attribute_code}
-              data-inspector-field="configurable-option"
-              data-inspector-source="catalog"
-              data-inspector-attribute={option.attribute_code}
-            >
+            <div key={option.attribute_code}>
               <h3 className="text-base font-semibold text-gray-900 mb-3">{option.label}</h3>
 
               <div className="flex flex-wrap gap-3">
@@ -88,9 +83,6 @@ export function ProductDetailVariants({
                         }`}
                         style={{ backgroundColor: swatchColor }}
                         title={value.label}
-                        data-inspector-field="color-swatch"
-                        data-inspector-source="catalog"
-                        data-inspector-value={value.value}
                       />
                     );
                   }
@@ -105,9 +97,6 @@ export function ProductDetailVariants({
                           ? 'border-purple-500 bg-purple-500 text-white'
                           : 'border-gray-200 bg-white text-gray-700 hover:border-purple-300 hover:bg-purple-50'
                       }`}
-                      data-inspector-field="option-value"
-                      data-inspector-source="catalog"
-                      data-inspector-value={value.value}
                     >
                       {value.label}
                     </button>

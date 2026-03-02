@@ -56,9 +56,5 @@ export function ProductPageBreadcrumbs() {
     return [];
   }, [category, dynamicBreadcrumbs, hasContextBreadcrumbs, contextBreadcrumbs]);
 
-  // Breadcrumbs come from Commerce API when we have a category
-  const dataSource =
-    hasContextBreadcrumbs || dynamicBreadcrumbs?.items?.length > 0 ? 'commerce' : 'static';
-
-  return <Breadcrumb items={breadcrumbItems} dataSource={dataSource} />;
+  return <Breadcrumb items={breadcrumbItems} />;
 }

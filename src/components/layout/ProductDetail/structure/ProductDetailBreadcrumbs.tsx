@@ -23,12 +23,7 @@ export function ProductDetailBreadcrumbs({ className }: ProductDetailBreadcrumbs
 
   return (
     <div className={className}>
-      <Breadcrumb
-        items={breadcrumbItems}
-        dataSource="commerce"
-        data-inspector-field="breadcrumb"
-        data-inspector-source="commerce"
-      />
+      <Breadcrumb items={breadcrumbItems} />
     </div>
   );
 }

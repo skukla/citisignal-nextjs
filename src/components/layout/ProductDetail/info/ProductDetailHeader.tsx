@@ -34,34 +34,19 @@ export function ProductDetailHeader({
       <div className="space-y-3">
         {/* Manufacturer - slightly more prominent */}
         {product.manufacturer && (
-          <p
-            className="text-sm font-medium text-gray-600 uppercase tracking-wide"
-            data-inspector-field="manufacturer"
-            data-inspector-source="catalog"
-          >
+          <p className="text-sm font-medium text-gray-600 uppercase tracking-wide">
             {product.manufacturer}
           </p>
         )}
 
         {/* Product name - primary heading with better spacing */}
         <div className="space-y-2">
-          <h1
-            className="text-3xl font-bold text-gray-900 sm:text-4xl lg:text-4xl leading-tight"
-            data-inspector-field="name"
-            data-inspector-source="catalog"
-          >
+          <h1 className="text-3xl font-bold text-gray-900 sm:text-4xl lg:text-4xl leading-tight">
             {product.name}
           </h1>
 
           {/* SKU - positioned closer to product name for better grouping */}
-          <div
-            className="text-sm font-normal transition-all duration-300 ease-in-out"
-            data-inspector-field="sku"
-            data-inspector-source={
-              selectedVariant && allAttributesSelected ? 'commerce' : 'catalog'
-            }
-            data-inspector-variant={selectedVariant && allAttributesSelected ? 'true' : 'false'}
-          >
+          <div className="text-sm font-normal transition-all duration-300 ease-in-out">
             {selectedVariant && allAttributesSelected ? (
               <div className="text-gray-500">
                 <span className="uppercase tracking-wider text-xs">SKU:</span>{' '}
@@ -77,11 +62,7 @@ export function ProductDetailHeader({
         </div>
 
         {/* Stock status - with more separation from product info */}
-        <div
-          className="flex items-center gap-3 pt-4"
-          data-inspector-field="stock"
-          data-inspector-source={selectedVariant && allAttributesSelected ? 'commerce' : 'catalog'}
-        >
+        <div className="flex items-center gap-3 pt-4">
           {product.inStock ? (
             <Badge variant="success" size="md">
               In Stock

@@ -56,9 +56,9 @@ export function StandardFooter() {
           <FooterLogo description={footerContent.logo.description} />
           <FooterSocialLinks links={socialLinks} />
         </div>
-        <FooterLinkGroup title="Shop" links={shopLinks} dataSource="commerce" />
-        <FooterLinkGroup title="Support" links={supportLinks} dataSource="static" />
-        <FooterLinkGroup title="Company" links={companyLinks} dataSource="static" />
+        <FooterLinkGroup title="Shop" links={shopLinks} />
+        <FooterLinkGroup title="Support" links={supportLinks} />
+        <FooterLinkGroup title="Company" links={companyLinks} />
       </div>
       <FooterBottom
         copyright={footerContent.bottom.copyright}

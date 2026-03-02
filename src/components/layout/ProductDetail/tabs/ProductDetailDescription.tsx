@@ -91,8 +91,6 @@ export function ProductDetailDescription({ className }: ProductDetailDescription
       </h2>
       <div
         className="prose prose-lg max-w-none text-gray-700 leading-relaxed space-y-4"
-        data-inspector-field="description"
-        data-inspector-source="catalog"
         dangerouslySetInnerHTML={{ __html: sanitizedDescription }}
       />
     </div>

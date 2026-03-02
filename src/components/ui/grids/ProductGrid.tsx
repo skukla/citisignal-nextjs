@@ -22,7 +22,6 @@ interface ProductGridProps {
   className?: string;
   children?: React.ReactNode; // For custom ProductCard children
   priorityImageCount?: number; // Number of images to load with priority (default: 4)
-  dataSource?: 'catalog' | 'search'; // Which service is providing the products
   emptyState?: {
     icon?: HeroIcon;
     title?: string;
@@ -70,7 +69,6 @@ export default function ProductGrid({
   className,
   children,
   priorityImageCount = 4,
-  dataSource = 'catalog',
   emptyState,
 }: ProductGridProps) {
   if (products.length === 0) {
@@ -86,24 +84,12 @@ export default function ProductGrid({
   }
 
   return (
-    <Grid
-      columns={columns}
-      gap={gap}
-      className={className}
-      data-inspector-source={dataSource}
-      data-inspector-type="product-grid"
-      data-inspector-count={products.length}
-    >
+    <Grid columns={columns} gap={gap} className={className}>
       {products.map((product, index) => {
-        // Load first N images with priority for better LCP
         const shouldPrioritize = index < priorityImageCount;
 
         return (
-          <ProductCard.Root
-            key={product.sku || product.id || `product-${index}`}
-            product={product}
-            dataSource={dataSource}
-          >
+          <ProductCard.Root key={product.sku || product.id || `product-${index}`} product={product}>
             {children || (
               <>
                 <ProductCardImage priority={shouldPrioritize} />

@@ -14,23 +14,14 @@ import { NavigationLink } from './NavigationLink';
  */
 export const NavigationDesktop: FC<NavigationDesktopProps> = ({ items, className }) => {
   return (
-    <nav 
+    <nav
       className={twMerge('flex items-center', className)}
       role="navigation"
       aria-label="Desktop navigation"
-      data-inspector-source="commerce"
-      data-inspector-type="navigation-desktop"
     >
-      <div 
-        role="menubar" 
-        className="flex items-center w-full justify-between"
-      >
+      <div role="menubar" className="flex items-center w-full justify-between">
         {items.map((item: NavItem) => (
-          <NavigationLink 
-            key={item.href} 
-            href={item.href}
-            className="whitespace-nowrap px-3"
-          >
+          <NavigationLink key={item.href} href={item.href} className="whitespace-nowrap px-3">
             {item.label}
           </NavigationLink>
         ))}

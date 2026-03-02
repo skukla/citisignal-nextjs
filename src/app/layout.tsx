@@ -2,6 +2,7 @@
 
 import { ReactNode } from 'react';
 import { usePathname } from 'next/navigation';
+import Script from 'next/script';
 import { StandardHeader } from '@/components/layout/Header/StandardHeader';
 import { StandardFooter } from '@/components/layout/Footer/StandardFooter';
 import { AuthProvider, AccountProvider } from '@/components/ui/layout/Account';
@@ -28,6 +29,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         />
       </head>
       <body className="h-full bg-white antialiased" suppressHydrationWarning>
+        <Script src="/demo-inspector-init.js" strategy="lazyOnload" />
         <NavigationProvider>
           <AuthProvider>
             <AccountProvider>

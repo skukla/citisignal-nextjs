@@ -41,34 +41,17 @@ export function ProductDetailPrice({ className, selectedVariant }: ProductDetail
       <div className="space-y-3">
         {/* Current price - enhanced hierarchy */}
         <div className="flex items-baseline gap-3">
-          <span
-            className="text-4xl font-bold text-gray-900 tracking-tight"
-            data-inspector-field="price"
-            data-inspector-source={selectedVariant ? 'commerce' : 'catalog'}
-            data-inspector-variant={selectedVariant ? 'true' : 'false'}
-          >
-            {currentPrice}
-          </span>
+          <span className="text-4xl font-bold text-gray-900 tracking-tight">{currentPrice}</span>
 
           {/* Original price if on sale */}
           {isOnSale && (
-            <span
-              className="text-xl text-gray-500 line-through font-medium"
-              data-inspector-field="originalPrice"
-              data-inspector-source={selectedVariant ? 'commerce' : 'catalog'}
-            >
-              {originalPrice}
-            </span>
+            <span className="text-xl text-gray-500 line-through font-medium">{originalPrice}</span>
           )}
         </div>
 
         {/* Discount percentage - improved styling */}
         {discountPercent && discountPercent > 0 && (
-          <div
-            className="flex items-center gap-2"
-            data-inspector-field="discountPercent"
-            data-inspector-source={selectedVariant ? 'commerce' : 'catalog'}
-          >
+          <div className="flex items-center gap-2">
             <span className="inline-flex items-center rounded-full bg-red-100 px-3 py-1 text-sm font-semibold text-red-800">
               Save {discountPercent}%
             </span>

@@ -129,22 +129,12 @@ export function ProductDetailActions({
           variant="primary"
           size="lg"
           className="w-full"
-          data-inspector-field="add-to-cart"
-          data-inspector-source={allAttributesSelected ? 'commerce' : 'catalog'}
-          data-inspector-variant-selected={allAttributesSelected ? 'true' : 'false'}
         >
           {getButtonText()}
         </Button>
 
         {/* Wishlist */}
-        <Button
-          onClick={handleToggleWishlist}
-          variant="secondary"
-          size="md"
-          className="w-full"
-          data-inspector-field="wishlist"
-          data-inspector-source="catalog"
-        >
+        <Button onClick={handleToggleWishlist} variant="secondary" size="md" className="w-full">
           {isWishlistedProduct ? (
             <>
               <HeartIconSolid className="h-5 w-5 text-red-500" />

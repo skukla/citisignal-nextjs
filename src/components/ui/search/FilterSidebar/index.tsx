@@ -8,7 +8,6 @@
 import { useMemo, useCallback, memo } from 'react';
 import { useExpandableSections } from '@/hooks/useExpandableSections';
 import { hasActiveFilters, getActiveFilterEntries, initializeExpandedSections } from '@/lib/filter';
-import { useActiveProductService } from '@/hooks/products/useActiveProductService';
 import type { FilterSidebarProps } from './FilterSidebar.types';
 import FilterSidebarHeader from './FilterSidebarHeader';
 import FilterSidebarSection from './FilterSidebarSection';
@@ -59,15 +58,8 @@ function FilterSidebar({
     [activeFilters, filters]
   );
 
-  // Hook determines which service provides the facets (dynamic source mapping)
-  const dataSource = useActiveProductService();
-
   return (
-    <div
-      className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg p-6"
-      data-inspector-source={dataSource}
-      data-inspector-type="filter-sidebar"
-    >
+    <div className="w-full lg:w-64 bg-white border border-gray-200 rounded-lg p-6">
       <FilterSidebarHeader hasActiveFilters={hasFiltersActive} onClearFilters={onClearFilters} />
 
       <div className="space-y-6">
