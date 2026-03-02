@@ -1,18 +1,22 @@
 /**
  * Demo Inspector — Runtime Tagging (Next.js)
  *
- * Applies data-inspector-source attributes so the Demo Inspector Chrome
- * extension can visualize API Mesh data sources (catalog / search / commerce).
+ * Applies data-inspector-source attributes using the vendored Demo Inspector
+ * SDK so the Chrome extension can visualize API Mesh data sources.
  *
  * Uses CSS selectors and MutationObserver to tag elements after React renders.
- * Intercepts fetch() for GraphQL query tracking.
+ * GraphQL tracking uses the SDK's detectSource/trackQuery/trackData functions.
  *
  * This script is inert unless the Chrome extension is installed — the
  * data attributes have no effect on rendering or functionality.
  */
 
-(function () {
+(async function () {
   'use strict';
+
+  // Dynamic import — the Script tag loads this as a regular script, not a module
+  const { tagMeshSources } = await import('./demo-inspector-sdk/mesh.js');
+  const { detectSource, trackQuery, trackData } = await import('./demo-inspector-sdk/tracking.js');
 
   // -------------------------------------------------------------------------
   // Tagging Rules (CSS selector → data source)
@@ -39,52 +43,23 @@
   ];
 
   // -------------------------------------------------------------------------
-  // GraphQL source detection
-  // -------------------------------------------------------------------------
-
-  var QUERY_SOURCE_MAP = {
-    GetProducts: 'catalog',
-    GetProductBySku: 'catalog',
-    GetProductByUrlKey: 'catalog',
-    ProductSearch: 'search',
-    GetSearchSuggestions: 'search',
-    GetCategories: 'commerce',
-    GetCategoryNavigation: 'commerce',
-    GetCart: 'commerce',
-    AddToCart: 'commerce',
-    GetCustomer: 'commerce',
-  };
-
-  function detectQuerySource(queryName) {
-    if (QUERY_SOURCE_MAP[queryName]) return QUERY_SOURCE_MAP[queryName];
-    if (/search/i.test(queryName)) return 'search';
-    if (/cart|order|checkout|customer/i.test(queryName)) return 'commerce';
-    return 'catalog';
-  }
-
-  // -------------------------------------------------------------------------
-  // DOM Tagging
+  // DOM Tagging — delegates to SDK's tagMeshSources()
   // -------------------------------------------------------------------------
 
   function tagElements() {
     for (var i = 0; i < RULES.length; i++) {
       var rule = RULES[i];
-      var elements = document.querySelectorAll(rule.selector);
-      for (var j = 0; j < elements.length; j++) {
-        if (!elements[j].hasAttribute('data-inspector-source')) {
-          elements[j].setAttribute('data-inspector-source', rule.source);
-        }
-      }
+      tagMeshSources(rule.selector, rule.source);
     }
   }
 
   // -------------------------------------------------------------------------
-  // Fetch Interception (GraphQL tracking)
+  // Fetch Interception — uses SDK's detectSource/trackQuery/trackData
   // -------------------------------------------------------------------------
 
   var originalFetch = window.fetch;
 
-  window.fetch = function (input, init) {
+  window.fetch = async function (input, init) {
     var url = typeof input === 'string' ? input : (input && input.url) || '';
     var isGraphQL = url.indexOf('/api/graphql') !== -1 || url.indexOf('/graphql') !== -1;
 
@@ -102,40 +77,22 @@
     var queryString = body.query || '';
     var nameMatch = queryString.match(/(?:query|mutation)\s+(\w+)/);
     var queryName = nameMatch ? nameMatch[1] : 'Anonymous';
-    var source = detectQuerySource(queryName);
     var startTime = performance.now();
 
-    return originalFetch.apply(this, arguments).then(function (response) {
-      var responseTime = Math.round(performance.now() - startTime);
-      var timestamp = Date.now();
+    var response = await originalFetch.apply(this, arguments);
+    var responseTime = Math.round(performance.now() - startTime);
 
-      if (typeof window.__demoInspectorTrackQuery === 'function') {
-        window.__demoInspectorTrackQuery({
-          id: queryName + '-' + timestamp,
-          name: queryName,
-          source: source,
-          responseTime: responseTime,
-          timestamp: timestamp,
-        });
-      }
+    var clonedResponse = response.clone();
+    clonedResponse
+      .json()
+      .then(function (data) {
+        var source = detectSource(queryName, data);
+        trackQuery({ name: queryName, source: source, responseTime: responseTime });
+        trackData({ queryName: queryName, source: source, data: data });
+      })
+      .catch(function () {});
 
-      if (typeof window.__demoInspectorStoreData === 'function') {
-        var clonedResponse = response.clone();
-        clonedResponse
-          .json()
-          .then(function (data) {
-            window.__demoInspectorStoreData({
-              queryName: queryName,
-              source: source,
-              data: data,
-              timestamp: timestamp,
-            });
-          })
-          .catch(function () {});
-      }
-
-      return response;
-    });
+    return response;
   };
 
   // -------------------------------------------------------------------------
