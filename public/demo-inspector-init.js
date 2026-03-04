@@ -28,18 +28,18 @@
     { selector: 'nav[aria-label="Breadcrumb"]', source: 'commerce' },
 
     // Product Detail
-    { selector: '[class*="ProductDetailGallery"]', source: 'catalog' },
-    { selector: '[class*="ProductDetailHeader"]', source: 'catalog' },
-    { selector: '[class*="ProductDetailPrice"]', source: 'catalog' },
-    { selector: '[class*="ProductDetailDescription"]', source: 'catalog' },
-    { selector: '[class*="ProductDetailSpecifications"]', source: 'catalog' },
-    { selector: '[class*="ProductDetailVariants"]', source: 'catalog' },
-    { selector: '[class*="ProductDetailActions"] button', source: 'commerce' },
+    { selector: '[data-inspector-component="ProductDetailGallery"]', source: 'catalog' },
+    { selector: '[data-inspector-component="ProductDetailHeader"]', source: 'catalog' },
+    { selector: '[data-inspector-component="ProductDetailPrice"]', source: 'catalog' },
+    { selector: '[data-inspector-component="ProductDetailDescription"]', source: 'catalog' },
+    { selector: '[data-inspector-component="ProductDetailSpecifications"]', source: 'catalog' },
+    { selector: '[data-inspector-component="ProductDetailVariants"]', source: 'catalog' },
+    { selector: '[data-inspector-component="ProductDetailActions"] button', source: 'commerce' },
 
     // Product Listing / Search
-    { selector: '[class*="FilterSidebar"]', source: 'search' },
-    { selector: '[class*="ProductGrid"]', source: 'catalog' },
-    { selector: '[class*="ProductCard"]', source: 'catalog' },
+    { selector: '[data-inspector-component="FilterSidebar"]', source: 'search' },
+    { selector: '[data-inspector-component="ProductGrid"]', source: 'catalog' },
+    { selector: '[data-inspector-component="ProductCard"]', source: 'catalog' },
   ];
 
   // -------------------------------------------------------------------------
@@ -85,10 +85,11 @@
     var clonedResponse = response.clone();
     clonedResponse
       .json()
-      .then(function (data) {
-        var source = detectSource(queryName, data);
+      .then(function (json) {
+        var innerData = json && json.data ? json.data : json;
+        var source = detectSource(queryName, innerData);
         trackQuery({ name: queryName, source: source, responseTime: responseTime });
-        trackData({ queryName: queryName, source: source, data: data });
+        trackData({ queryName: queryName, source: source, data: innerData });
       })
       .catch(function () {});
 

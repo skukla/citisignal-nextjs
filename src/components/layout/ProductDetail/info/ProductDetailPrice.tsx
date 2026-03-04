@@ -37,7 +37,7 @@ export function ProductDetailPrice({ className, selectedVariant }: ProductDetail
       : product.discountPercent;
 
   return (
-    <div className={className}>
+    <div data-inspector-component="ProductDetailPrice" className={className}>
       <div className="space-y-3">
         {/* Current price - enhanced hierarchy */}
         <div className="flex items-baseline gap-3">

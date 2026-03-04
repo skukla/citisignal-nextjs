@@ -120,7 +120,7 @@ export function ProductDetailActions({
   };
 
   return (
-    <div className={className}>
+    <div data-inspector-component="ProductDetailActions" className={className}>
       <div className="space-y-3">
         {/* Add to Cart */}
         <Button

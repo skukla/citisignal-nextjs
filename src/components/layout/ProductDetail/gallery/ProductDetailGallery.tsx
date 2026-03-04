@@ -42,7 +42,10 @@ export function ProductDetailGallery({ className, selectedVariant }: ProductDeta
   }
 
   return (
-    <div className={`lg:col-span-1 ${className || ''}`.trim()}>
+    <div
+      data-inspector-component="ProductDetailGallery"
+      className={`lg:col-span-1 ${className || ''}`.trim()}
+    >
       <div className="space-y-4">
         {/* Main image */}
         <div className="aspect-square overflow-hidden rounded-lg bg-gray-100">

@@ -85,7 +85,7 @@ export function ProductDetailDescription({ className }: ProductDetailDescription
   }
 
   return (
-    <div className={className}>
+    <div data-inspector-component="ProductDetailDescription" className={className}>
       <h2 className="text-2xl font-bold text-gray-900 mb-6 border-b border-gray-200 pb-3">
         Description
       </h2>

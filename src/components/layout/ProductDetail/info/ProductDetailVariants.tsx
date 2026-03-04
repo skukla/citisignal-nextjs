@@ -55,7 +55,7 @@ export function ProductDetailVariants({
   }
 
   return (
-    <div className={className}>
+    <div data-inspector-component="ProductDetailVariants" className={className}>
       <div className="space-y-6">
         {product.configurable_options.map((option) => {
           const selectedValue = selectedOptions[option.attribute_code];

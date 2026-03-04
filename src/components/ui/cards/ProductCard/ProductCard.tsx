@@ -28,21 +28,21 @@ interface ProductCardProps {
  * @example
  * // Simple usage (renders everything)
  * <ProductCard product={product} />
- * 
+ *
  * // Customize what shows
- * <ProductCard 
- *   product={product} 
+ * <ProductCard
+ *   product={product}
  *   showColors={false}
  *   showActions={false}
  * />
- * 
+ *
  * // Custom content (advanced)
  * <ProductCard product={product}>
  *   <CustomContent />
  * </ProductCard>
  */
-export function ProductCard({ 
-  product, 
+export function ProductCard({
+  product,
   className,
   children,
   showImage = true,
@@ -50,11 +50,12 @@ export function ProductCard({
   showInfo = true,
   showColors = true,
   showPrice = true,
-  showActions = true
+  showActions = true,
 }: ProductCardProps) {
   return (
     <ProductCardProvider product={product}>
       <div
+        data-inspector-component="ProductCard"
         className={twMerge(
           'group relative overflow-hidden rounded-lg bg-white shadow-sm transition-all duration-300',
           'hover:shadow-md hover:-translate-y-1',

@@ -21,7 +21,13 @@ import { ProductCardProvider } from './ProductCardContext';
 export function ProductCardRoot({ product, className, children }: ProductCardRootProps) {
   return (
     <ProductCardProvider product={product}>
-      <Card as={Link} href={`/${product.urlKey}`} interactive className={className}>
+      <Card
+        as={Link}
+        href={`/${product.urlKey}`}
+        interactive
+        className={className}
+        data-inspector-component="ProductCard"
+      >
         {children}
       </Card>
     </ProductCardProvider>

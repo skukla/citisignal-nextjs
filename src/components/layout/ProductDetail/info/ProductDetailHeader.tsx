@@ -30,7 +30,7 @@ export function ProductDetailHeader({
   }
 
   return (
-    <div className={className}>
+    <div data-inspector-component="ProductDetailHeader" className={className}>
       <div className="space-y-3">
         {/* Manufacturer - slightly more prominent */}
         {product.manufacturer && (

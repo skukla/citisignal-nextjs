@@ -69,7 +69,7 @@ export default function FilterSidebarResponsive({
       )}
 
       {/* Desktop: Clean persistent sidebar experience */}
-      <div className="hidden lg:block flex-shrink-0">
+      <div data-inspector-component="FilterSidebar" className="hidden lg:block flex-shrink-0">
         <FilterSidebar
           filters={filters}
           activeFilters={activeFilters}
