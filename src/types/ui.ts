@@ -28,7 +28,7 @@ export type CompoundComponent<
   RootProps extends BaseComponentProps = BaseComponentProps,
   TriggerProps extends BasePanelProps = BasePanelProps,
   PanelProps extends BasePanelProps = BasePanelProps,
-  ExtraComponents extends Record<string, React.FC<BaseComponentProps>> = Record<string, never>
+  ExtraComponents extends Record<string, React.FC<BaseComponentProps>> = Record<string, never>,
 > = {
   Root: React.FC<RootProps>;
   Trigger: React.FC<TriggerProps>;
@@ -74,5 +74,3 @@ export interface IconWrapperProps extends BaseComponentProps {
   size?: IconSize;
   'aria-hidden'?: boolean;
 }
-
- 

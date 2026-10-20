@@ -9,14 +9,8 @@ import type { CheckoutShippingProps, ShippingDetails, ValidationResult } from '.
 import { useState } from 'react';
 
 export default function CheckoutShipping({ className }: CheckoutShippingProps) {
-  const { 
-    shippingDetails, 
-    updateShipping, 
-    setStep, 
-    isStepComplete,
-    validateStep,
-    touchedFields
-  } = useCheckoutContext();
+  const { shippingDetails, updateShipping, setStep, isStepComplete, validateStep, touchedFields } =
+    useCheckoutContext();
 
   const validation = validateStep('shipping') as ValidationResult<ShippingDetails>;
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -153,10 +147,7 @@ export default function CheckoutShipping({ className }: CheckoutShippingProps) {
         </div>
 
         <div className="flex justify-end">
-          <Button 
-            type="submit"
-            disabled={!isStepComplete('shipping')}
-          >
+          <Button type="submit" disabled={!isStepComplete('shipping')}>
             Continue to Payment
           </Button>
         </div>

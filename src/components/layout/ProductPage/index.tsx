@@ -31,30 +31,30 @@ export const ProductPage = {
   Layout: ProductPageLayout,
   Sidebar: ProductPageSidebar,
   Main: ProductPageMain,
-  
+
   // Header
   Breadcrumbs: ProductPageBreadcrumbs,
   Header: ProductPageHeader,
-  
+
   // Toolbar
   Toolbar: ProductPageToolbar,
   Search: ProductPageSearch,
   Sort: ProductPageSort,
   ResultCount: ProductPageResultCount,
   MobileFilterButton: ProductPageMobileFilterButton,
-  
+
   // Filters
   Filters: ProductPageFilters,
-  
+
   // Content (Option 3 - Smart Component)
   Content: ProductPageContent,
-  
+
   // Actions
   LoadMore: ProductPageLoadMore,
-  
+
   // Sections
   ContentSections: ProductPageContentSections,
-  Newsletter: ProductPageNewsletter
+  Newsletter: ProductPageNewsletter,
 };
 
 // Export provider and hooks

@@ -1,0 +1,35 @@
+# Runs only checks that need no credentials, and nothing that deploys or publishes.
+# `next build` is left out: next.config.ts needs a real Commerce endpoint at build time.
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+        env:
+          # `next lint` loads next.config.ts, which refuses to load without this.
+          # A placeholder, not a credential: nothing is fetched from it.
+          ADOBE_COMMERCE_URL: https://example.invalid
+
+      - name: Typecheck
+        run: npm run typecheck
+
+      - name: Format check
+        run: npm run format:check

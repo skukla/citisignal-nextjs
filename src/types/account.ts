@@ -8,7 +8,7 @@ export interface FormField {
   label: string;
   type: 'text' | 'email' | 'tel' | 'password' | 'select';
   required: boolean;
-  options?: { value: string; label: string; }[];
+  options?: { value: string; label: string }[];
 }
 
 export interface SectionConfig {

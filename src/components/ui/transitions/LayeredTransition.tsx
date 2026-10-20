@@ -25,7 +25,7 @@ export function LayeredTransition({
   duration = 300,
   className = '',
   skeletonClassName = '',
-  contentClassName = ''
+  contentClassName = '',
 }: LayeredTransitionProps) {
   // When content is shown, render it in normal flow (not absolute)
   // This ensures proper height calculation for the container
@@ -38,13 +38,11 @@ export function LayeredTransition({
       </div>
     );
   }
-  
+
   // Show skeleton when content is not ready
   return (
     <div className={className}>
-      <div className={skeletonClassName}>
-        {skeleton}
-      </div>
+      <div className={skeletonClassName}>{skeleton}</div>
     </div>
   );
 }

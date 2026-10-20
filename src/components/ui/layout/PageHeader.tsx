@@ -6,9 +6,9 @@ import type { PageHeaderProps } from '@/types/header';
 /**
  * PageHeader component for consistent page headers across the application.
  * Provides a standardized layout for page title, description, and optional actions.
- * 
+ *
  * Does NOT wrap in Content - compose with Content when needed.
- * 
+ *
  * @example
  * ```tsx
  * // Inside a Content wrapper (composable pattern)
@@ -19,7 +19,7 @@ import type { PageHeaderProps } from '@/types/header';
  *     icon={ShoppingBagIcon}
  *   />
  * </Content>
- * 
+ *
  * // With actions
  * <PageHeader
  *   title="Team Members"
@@ -49,17 +49,9 @@ export default function PageHeader({
             <Icon className="w-8 h-8 text-purple-600" aria-hidden="true" />
             <h1 className="text-3xl font-bold text-gray-900">{title}</h1>
           </div>
-          {actions && (
-            <div className="flex items-center gap-3">
-              {actions}
-            </div>
-          )}
+          {actions && <div className="flex items-center gap-3">{actions}</div>}
         </div>
-        {description && (
-          <p className="text-lg text-gray-600 max-w-3xl">
-            {description}
-          </p>
-        )}
+        {description && <p className="text-lg text-gray-600 max-w-3xl">{description}</p>}
       </div>
     </header>
   );

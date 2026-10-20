@@ -2,10 +2,7 @@
 
 import { createContext, useContext, ReactNode } from 'react';
 import { useCheckout } from './hooks/useCheckout';
-import type { 
-  CheckoutContextValue,
-  OrderDetails
-} from './types';
+import type { CheckoutContextValue, OrderDetails } from './types';
 
 const CheckoutContext = createContext<CheckoutContextValue | null>(null);
 
@@ -17,11 +14,7 @@ interface CheckoutProviderProps {
 export function CheckoutProvider({ children, onComplete }: CheckoutProviderProps) {
   const checkout = useCheckout({ onComplete });
 
-  return (
-    <CheckoutContext.Provider value={checkout}>
-      {children}
-    </CheckoutContext.Provider>
-  );
+  return <CheckoutContext.Provider value={checkout}>{children}</CheckoutContext.Provider>;
 }
 
 export function useCheckoutContext() {

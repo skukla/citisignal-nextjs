@@ -18,8 +18,8 @@ export const paymentConfig = {
     emptyState: {
       icon: CreditCardIcon,
       title: 'No payment methods',
-      description: 'Add your first payment method'
-    }
+      description: 'Add your first payment method',
+    },
   },
   form: {
     fields: [
@@ -27,32 +27,32 @@ export const paymentConfig = {
         id: 'number',
         label: 'Card Number',
         type: 'text',
-        required: true
+        required: true,
       },
       {
         id: 'name',
         label: 'Name on Card',
         type: 'text',
-        required: true
+        required: true,
       },
       {
         id: 'expiryMonth',
         label: 'Expiry Month (MM)',
         type: 'text',
-        required: true
+        required: true,
       },
       {
         id: 'expiryYear',
         label: 'Expiry Year (YYYY)',
         type: 'text',
-        required: true
+        required: true,
       },
       {
         id: 'cvc',
         label: 'CVC',
         type: 'text',
-        required: true
-      }
-    ]
-  }
+        required: true,
+      },
+    ],
+  },
 };

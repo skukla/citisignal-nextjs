@@ -1,4 +1,7 @@
-import type { DashboardSectionId, DashboardSection } from '@/components/ui/layout/Account/Account.types';
+import type {
+  DashboardSectionId,
+  DashboardSection,
+} from '@/components/ui/layout/Account/Account.types';
 
 export const dashboardConfig = {
   title: 'Account Dashboard',
@@ -6,27 +9,27 @@ export const dashboardConfig = {
   sections: {
     profile: {
       title: 'Profile',
-      description: 'Manage your personal information and preferences.'
+      description: 'Manage your personal information and preferences.',
     },
     orders: {
       title: 'Orders',
-      description: 'Track your orders and view order history.'
+      description: 'Track your orders and view order history.',
     },
     addresses: {
       title: 'Addresses',
-      description: 'Manage your shipping and billing addresses.'
+      description: 'Manage your shipping and billing addresses.',
     },
     payment: {
       title: 'Payment Methods',
-      description: 'Manage your saved payment methods securely.'
+      description: 'Manage your saved payment methods securely.',
     },
     wishlists: {
       title: 'Wishlists',
-      description: 'Keep track of items you want to purchase later.'
+      description: 'Keep track of items you want to purchase later.',
     },
     rewards: {
       title: 'Rewards',
-      description: 'Redeem gift cards and manage your rewards.'
-    }
-  } satisfies Record<DashboardSectionId, DashboardSection>
+      description: 'Redeem gift cards and manage your rewards.',
+    },
+  } satisfies Record<DashboardSectionId, DashboardSection>,
 };

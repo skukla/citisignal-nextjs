@@ -33,9 +33,7 @@ export function SearchRoot({ children, className }: SearchRootProps) {
 
   return (
     <SearchContext.Provider value={searchState}>
-      <div className={className}>
-        {children}
-      </div>
+      <div className={className}>{children}</div>
     </SearchContext.Provider>
   );
 }

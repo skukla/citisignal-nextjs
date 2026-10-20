@@ -8,9 +8,5 @@ interface ProductPageMainProps {
 
 export function ProductPageMain({ children }: ProductPageMainProps) {
   // TwoColumnLayout handles the responsive layout, we just wrap in semantic div
-  return (
-    <div className="min-w-0 w-full">
-      {children}
-    </div>
-  );
+  return <div className="min-w-0 w-full">{children}</div>;
 }

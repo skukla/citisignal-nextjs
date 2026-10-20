@@ -16,7 +16,7 @@ interface ProcessStepProps {
 /**
  * A single step component for displaying process information.
  * Features an icon, step number, title, description, and optional details.
- * 
+ *
  * @example
  * ```tsx
  * <ProcessStep
@@ -36,12 +36,9 @@ function ProcessStep({
   description,
   details = [],
   showConnector = false,
-  className
+  className,
 }: ProcessStepProps) {
-  const containerClasses = twMerge(
-    'relative',
-    className
-  );
+  const containerClasses = twMerge('relative', className);
 
   return (
     <div className={containerClasses}>
@@ -49,29 +46,26 @@ function ProcessStep({
       {showConnector && (
         <div className="hidden lg:block absolute top-16 left-full w-full h-0.5 bg-gradient-to-r from-purple-400 to-purple-200 transform translate-x-4 -translate-y-1/2" />
       )}
-      
+
       {/* Step Card */}
       <div className="text-center">
         {/* Icon Circle */}
-        <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4" style={{ backgroundColor: '#8821f4' }}>
+        <div
+          className="mx-auto w-16 h-16 rounded-full flex items-center justify-center mb-4"
+          style={{ backgroundColor: '#8821f4' }}
+        >
           <Icon className="w-8 h-8 text-white" />
         </div>
-        
+
         {/* Step Number */}
-        <div className="text-sm font-bold text-purple-600 mb-2">
-          STEP {stepNumber}
-        </div>
-        
+        <div className="text-sm font-bold text-purple-600 mb-2">STEP {stepNumber}</div>
+
         {/* Title */}
-        <h3 className="text-xl font-bold text-gray-900 mb-3">
-          {title}
-        </h3>
-        
+        <h3 className="text-xl font-bold text-gray-900 mb-3">{title}</h3>
+
         {/* Description */}
-        <p className="text-gray-600 mb-4">
-          {description}
-        </p>
-        
+        <p className="text-gray-600 mb-4">{description}</p>
+
         {/* Details */}
         {details.length > 0 && (
           <ul className="text-sm text-gray-500 space-y-1">
@@ -88,4 +82,4 @@ function ProcessStep({
   );
 }
 
-export default memo(ProcessStep); 
+export default memo(ProcessStep);

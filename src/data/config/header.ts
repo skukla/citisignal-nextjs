@@ -1,28 +1,28 @@
 export const headerConfig = {
   topBar: {
-    announcement: "Free shipping on orders over $99",
-    supportPhone: "1-800-CITI-SIG",
+    announcement: 'Free shipping on orders over $99',
+    supportPhone: '1-800-CITI-SIG',
     authLinks: [
       { href: '/signin', label: 'Sign In' },
-      { href: '/signup', label: 'Create Account' }
-    ]
+      { href: '/signup', label: 'Create Account' },
+    ],
   },
   logo: {
-    src: "/logo.svg",
-    alt: "CitiSignal",
+    src: '/logo.svg',
+    alt: 'CitiSignal',
     width: 180,
-    height: 80  // Maintains 2.24:1 aspect ratio (742.27:331.79)
+    height: 80, // Maintains 2.24:1 aspect ratio (742.27:331.79)
   },
   responsive: {
     desktopBreakpoint: 'lg', // Standardized from min-[1148px]
-    mobileBreakpoint: 'max-lg'
+    mobileBreakpoint: 'max-lg',
   },
   layout: {
     maxWidth: 'max-w-7xl',
     padding: 'px-4 sm:px-6 lg:px-8',
     spacing: 'gap-8',
-    verticalPadding: 'py-4'
-  }
+    verticalPadding: 'py-4',
+  },
 } as const;
 
 export type HeaderConfig = typeof headerConfig;

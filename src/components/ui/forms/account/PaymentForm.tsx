@@ -21,7 +21,7 @@ export default function PaymentForm({ onSubmit, onCancel }: PaymentFormProps) {
     getFieldError,
     isSubmitting,
     touchedFields,
-    dirtyFields
+    dirtyFields,
   } = useForm<CardFormFields>({
     initialValues: {
       number: '',
@@ -29,19 +29,18 @@ export default function PaymentForm({ onSubmit, onCancel }: PaymentFormProps) {
       expiryMonth: '',
       expiryYear: '',
       cvc: '',
-      billingAddressId: ''
+      billingAddressId: '',
     },
     validationRules: paymentValidation,
-    onSubmit
+    onSubmit,
   });
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
       {paymentConfig.form.fields.map((field) => {
         const fieldName = field.id as keyof CardFormFields;
-        const error = touchedFields[fieldName] && dirtyFields[fieldName] 
-          ? getFieldError(fieldName) 
-          : undefined;
+        const error =
+          touchedFields[fieldName] && dirtyFields[fieldName] ? getFieldError(fieldName) : undefined;
 
         return (
           <Input
@@ -59,19 +58,11 @@ export default function PaymentForm({ onSubmit, onCancel }: PaymentFormProps) {
       })}
       <div className="flex justify-end space-x-4">
         {onCancel && (
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={onCancel}
-          >
+          <Button type="button" variant="secondary" onClick={onCancel}>
             Cancel
           </Button>
         )}
-        <Button
-          type="submit"
-          variant="primary"
-          disabled={isSubmitting}
-        >
+        <Button type="submit" variant="primary" disabled={isSubmitting}>
           {isSubmitting ? 'Saving...' : 'Save Card'}
         </Button>
       </div>

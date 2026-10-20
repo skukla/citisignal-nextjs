@@ -38,19 +38,19 @@ export default function SolutionGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 4
+    lg: 4,
   },
   gap = 'lg',
   className,
-  emptyState
+  emptyState,
 }: SolutionGridProps) {
   // Handle empty state
   if (solutions.length === 0) {
     return (
       <EmptyState
         icon={PuzzlePieceIcon}
-        title={emptyState?.title || "No solutions found"}
-        description={emptyState?.description || "There are no solutions to display at the moment."}
+        title={emptyState?.title || 'No solutions found'}
+        description={emptyState?.description || 'There are no solutions to display at the moment.'}
         actionLabel={emptyState?.actionLabel}
         onAction={emptyState?.onAction}
       />
@@ -71,4 +71,4 @@ export default function SolutionGrid({
       ))}
     </Grid>
   );
-} 
+}

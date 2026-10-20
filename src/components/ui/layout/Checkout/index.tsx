@@ -14,7 +14,7 @@ const Checkout: CheckoutComponent = {
   Summary: CheckoutSummary,
   Shipping: CheckoutShipping,
   Payment: CheckoutPayment,
-  Review: CheckoutReview
+  Review: CheckoutReview,
 };
 
 export default Checkout;

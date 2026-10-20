@@ -11,32 +11,32 @@ export interface AccountMenuItem {
 
 // Account navigation menu items
 export const accountMenuItems: readonly AccountMenuItem[] = [
-  { 
-    id: 'profile', 
-    label: 'Profile', 
+  {
+    id: 'profile',
+    label: 'Profile',
     href: '/account/profile',
     description: 'Manage your personal information and preferences',
-    requiresAuth: true
+    requiresAuth: true,
   },
-  { 
-    id: 'orders', 
-    label: 'Orders', 
+  {
+    id: 'orders',
+    label: 'Orders',
     href: '/account/orders',
     description: 'View your order history and track shipments',
-    requiresAuth: true
+    requiresAuth: true,
   },
-  { 
-    id: 'wishlist', 
-    label: 'Wishlist', 
+  {
+    id: 'wishlist',
+    label: 'Wishlist',
     href: '/account/wishlist',
     description: 'Save items for later purchase',
-    requiresAuth: true
-  }
+    requiresAuth: true,
+  },
 ] as const;
 
 // Authentication-related configuration
 export const authConfig = {
   loginRedirect: '/account/dashboard',
   logoutRedirect: '/',
-  protectedRoutes: ['/account', '/checkout']
+  protectedRoutes: ['/account', '/checkout'],
 } as const;

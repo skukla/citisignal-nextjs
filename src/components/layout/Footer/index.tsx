@@ -23,7 +23,7 @@ import { FooterBottom } from './FooterBottom';
  * // Simple usage (recommended):
  * import Footer from '@/components/layout/Footer';
  * <Footer />
- * 
+ *
  * // Custom usage:
  * import { Footer } from '@/components/layout/Footer';
  * <Footer.Root>
@@ -44,5 +44,5 @@ export const Footer: FooterComponent = {
   Logo: FooterLogo,
   SocialLinks: FooterSocialLinks,
   LinkGroup: FooterLinkGroup,
-  Bottom: FooterBottom
+  Bottom: FooterBottom,
 };

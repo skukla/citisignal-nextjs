@@ -21,13 +21,13 @@ export default function InteractiveCard({
   variant = 'default',
   hoverEffect = 'lift',
   className,
-  disabled = false
+  disabled = false,
 }: InteractiveCardProps) {
   const hoverEffects = {
     lift: 'hover:shadow-lg hover:-translate-y-1',
     glow: 'hover:shadow-xl hover:shadow-citisignal-primary/20',
     scale: 'hover:scale-105',
-    none: ''
+    none: '',
   };
 
   const interactiveClasses = twMerge(
@@ -40,23 +40,24 @@ export default function InteractiveCard({
   const cardProps = {
     className: twMerge(interactiveClasses, className),
     variant,
-    ...(as === 'button' && { 
+    ...(as === 'button' && {
       type: 'button' as const,
       disabled,
-      onClick: disabled ? undefined : onClick 
+      onClick: disabled ? undefined : onClick,
     }),
     ...(as === 'a' && href && { href }),
-    ...(as === 'div' && onClick && { 
-      onClick: disabled ? undefined : onClick,
-      onKeyDown: (e: React.KeyboardEvent) => {
-        if (!disabled && (e.key === 'Enter' || e.key === ' ')) {
-          e.preventDefault();
-          onClick?.();
-        }
-      },
-      tabIndex: disabled ? -1 : 0,
-      role: 'button'
-    })
+    ...(as === 'div' &&
+      onClick && {
+        onClick: disabled ? undefined : onClick,
+        onKeyDown: (e: React.KeyboardEvent) => {
+          if (!disabled && (e.key === 'Enter' || e.key === ' ')) {
+            e.preventDefault();
+            onClick?.();
+          }
+        },
+        tabIndex: disabled ? -1 : 0,
+        role: 'button',
+      }),
   };
 
   return (

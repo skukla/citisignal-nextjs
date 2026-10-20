@@ -20,7 +20,7 @@ interface ProcessStepsProps {
 /**
  * A container component for displaying a sequence of process steps.
  * Renders steps in a responsive grid with optional connector lines.
- * 
+ *
  * @example
  * ```tsx
  * const steps = [
@@ -31,14 +31,14 @@ interface ProcessStepsProps {
  *     details: ['Latest models', 'Trade-in available']
  *   }
  * ];
- * 
+ *
  * <ProcessSteps steps={steps} showConnectors={true} />
  * ```
  */
 export default function ProcessSteps({
   steps,
   showConnectors = true,
-  className
+  className,
 }: ProcessStepsProps) {
   const containerClasses = twMerge(
     'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16',
@@ -60,4 +60,4 @@ export default function ProcessSteps({
       ))}
     </div>
   );
-} 
+}

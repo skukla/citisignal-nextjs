@@ -55,6 +55,6 @@ export function useFieldValidation<T extends Record<string, unknown>>(
   return {
     validateField,
     validateForm,
-    getFieldError
+    getFieldError,
   };
 }

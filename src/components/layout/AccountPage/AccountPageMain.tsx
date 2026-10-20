@@ -8,9 +8,5 @@ interface AccountPageMainProps {
 }
 
 export function AccountPageMain({ children, className }: AccountPageMainProps) {
-  return (
-    <div className={className || "flex-1 min-w-0"}>
-      {children}
-    </div>
-  );
+  return <div className={className || 'flex-1 min-w-0'}>{children}</div>;
 }

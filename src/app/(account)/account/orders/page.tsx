@@ -6,10 +6,10 @@ import EmptyState from '@/components/ui/feedback/EmptyState';
 
 export default function OrdersPage() {
   const hasOrders = false; // This will come from a hook later
-  
+
   const pageData = {
     title: orderConfig.list.title,
-    description: orderConfig.list.description
+    description: orderConfig.list.description,
   };
 
   return (
@@ -17,7 +17,7 @@ export default function OrdersPage() {
       <AccountPage.Root>
         <AccountPage.Layout>
           <AccountPage.Navigation />
-          
+
           <AccountPage.Main>
             <AccountPage.Section>
               <AccountPage.Header />

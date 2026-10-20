@@ -20,10 +20,10 @@ interface StarRatingProps {
  *
  * @example
  * ```tsx
- * <StarRating 
- *   rating={94} 
+ * <StarRating
+ *   rating={94}
  *   reviewCount={1250}
- *   showReviewCount 
+ *   showReviewCount
  *   size="md"
  * />
  * ```
@@ -34,7 +34,7 @@ function StarRating({
   reviewCount,
   showReviewCount = false,
   size = 'md',
-  className
+  className,
 }: StarRatingProps) {
   const filledStars = getFilledStars(rating, maxRating);
   const displayRating = formatRatingDisplay(rating, maxRating);
@@ -57,14 +57,16 @@ function StarRating({
           />
         ))}
       </div>
-      
+
       {showReviewCount && (
-        <span className={twMerge(
-          'text-gray-600 ml-2',
-          size === 'sm' && 'text-xs',
-          size === 'md' && 'text-sm',
-          size === 'lg' && 'text-base'
-        )}>
+        <span
+          className={twMerge(
+            'text-gray-600 ml-2',
+            size === 'sm' && 'text-xs',
+            size === 'md' && 'text-sm',
+            size === 'lg' && 'text-base'
+          )}
+        >
           {displayRating} ({reviewText})
         </span>
       )}

@@ -12,32 +12,15 @@ export default function BuyingGuidePreview({
   title,
   description,
   href,
-  className
+  className,
 }: BuyingGuidePreviewProps) {
   return (
-    <div className={twMerge(
-      'flex gap-6 items-start group cursor-pointer',
-      className
-    )}>
-      <IconContainer
-        icon={Icon}
-        size="lg"
-        variant="primary"
-      />
+    <div className={twMerge('flex gap-6 items-start group cursor-pointer', className)}>
+      <IconContainer icon={Icon} size="lg" variant="primary" />
 
       <div className="flex-1">
-        <PreviewContent
-          title={title}
-          description={description}
-          titleSize="md"
-          className="mb-3"
-        >
-          <Button
-            href={href}
-            variant="link"
-            size="sm"
-            rightIcon={ArrowRightIcon}
-          >
+        <PreviewContent title={title} description={description} titleSize="md" className="mb-3">
+          <Button href={href} variant="link" size="sm" rightIcon={ArrowRightIcon}>
             Read More
           </Button>
         </PreviewContent>

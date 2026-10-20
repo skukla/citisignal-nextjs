@@ -8,11 +8,14 @@ import type { FilterSidebarActiveFiltersProps } from './FilterSidebar.types';
 
 function FilterSidebarActiveFilters({
   activeFilterEntries,
-  onFilterChange
+  onFilterChange,
 }: FilterSidebarActiveFiltersProps) {
-  const handleRemoveFilter = useCallback((filterKey: string, optionId: string) => {
-    onFilterChange(filterKey, optionId, false);
-  }, [onFilterChange]);
+  const handleRemoveFilter = useCallback(
+    (filterKey: string, optionId: string) => {
+      onFilterChange(filterKey, optionId, false);
+    },
+    [onFilterChange]
+  );
   if (activeFilterEntries.length === 0) {
     return null;
   }

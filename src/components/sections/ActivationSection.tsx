@@ -8,32 +8,28 @@ import CallToAction from '@/components/ui/feedback/CallToAction';
 import { activationContent } from '@/data/sections/activation';
 import type { ActivationSectionProps } from '@/types/section';
 
-function ActivationSection({
-  content = activationContent,
-  className
-}: ActivationSectionProps) {
-
+function ActivationSection({ content = activationContent, className }: ActivationSectionProps) {
   return (
     <ContentSection background="bg-white" className={className}>
-        <SectionHeader
-          title={content.header.title}
-          description={content.header.description}
-          centered
-        />
+      <SectionHeader
+        title={content.header.title}
+        description={content.header.description}
+        centered
+      />
 
-        <ProcessSteps steps={content.steps} />
+      <ProcessSteps steps={content.steps} />
 
-        <CallToAction
-          title={content.callToAction.title}
-          description={content.callToAction.description}
-          features={content.callToAction.features}
-          buttonText={content.callToAction.buttonText}
-          buttonHref={content.callToAction.buttonHref}
-          supportText={content.callToAction.supportText}
-          supportPhone={content.callToAction.supportPhone}
-        />
+      <CallToAction
+        title={content.callToAction.title}
+        description={content.callToAction.description}
+        features={content.callToAction.features}
+        buttonText={content.callToAction.buttonText}
+        buttonHref={content.callToAction.buttonHref}
+        supportText={content.callToAction.supportText}
+        supportPhone={content.callToAction.supportPhone}
+      />
     </ContentSection>
   );
 }
 
-export default memo(ActivationSection); 
+export default memo(ActivationSection);

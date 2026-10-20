@@ -28,7 +28,7 @@ export default function PlanBadge({
   variant,
   originalPrice,
   salePrice,
-  className
+  className,
 }: PlanBadgeProps) {
   // Inline content logic - direct conditionals following established pattern
   let content = '';

@@ -24,17 +24,13 @@ export default function TipGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 3
+    lg: 3,
   },
   gap = 'lg',
-  className
+  className,
 }: TipGridProps) {
   return (
-    <Grid
-      columns={columns}
-      gap={gap}
-      className={className}
-    >
+    <Grid columns={columns} gap={gap} className={className}>
       {tips.map((tip, index) => (
         <TipPreview
           key={index}

@@ -8,27 +8,21 @@ import SectionHeader from '@/components/ui/layout/SectionHeader';
 import { useAuthForm } from '@/hooks/forms/useAuthForm';
 
 export default function AuthForm() {
-  const {
-    mode,
-    isTransitioning,
-    isLoading,
-    error,
-    loginEmailRef,
-    signupEmailRef,
-    handleSubmit
-  } = useAuthForm();
+  const { mode, isTransitioning, isLoading, error, loginEmailRef, signupEmailRef, handleSubmit } =
+    useAuthForm();
 
   return (
     <div className="w-full max-w-sm mx-auto">
       <SectionHeader
         title="Welcome to CitiSignal"
-        description={mode === 'login' 
-          ? 'Sign in to your account to continue'
-          : 'Create a new account to get started'
+        description={
+          mode === 'login'
+            ? 'Sign in to your account to continue'
+            : 'Create a new account to get started'
         }
       />
       <div className="relative w-full overflow-hidden mt-6">
-        <div 
+        <div
           className={twMerge(
             'flex w-[200%] -ml-0',
             isTransitioning && 'transition-transform duration-500 ease-in-out',
@@ -53,15 +47,8 @@ export default function AuthForm() {
                 required
                 autoComplete="current-password"
               />
-              {error && (
-                <div className="text-red-600 text-sm">{error}</div>
-              )}
-              <Button
-                type="submit"
-                variant="primary"
-                className="w-full"
-                disabled={isLoading}
-              >
+              {error && <div className="text-red-600 text-sm">{error}</div>}
+              <Button type="submit" variant="primary" className="w-full" disabled={isLoading}>
                 {isLoading ? 'Signing in...' : 'Sign In'}
               </Button>
               <div className="relative py-3">
@@ -111,15 +98,8 @@ export default function AuthForm() {
                 required
                 autoComplete="new-password"
               />
-              {error && (
-                <div className="text-red-600 text-sm">{error}</div>
-              )}
-              <Button
-                type="submit"
-                variant="primary"
-                className="w-full"
-                disabled={isLoading}
-              >
+              {error && <div className="text-red-600 text-sm">{error}</div>}
+              <Button type="submit" variant="primary" className="w-full" disabled={isLoading}>
                 {isLoading ? 'Creating Account...' : 'Create Account'}
               </Button>
               <div className="relative py-3">

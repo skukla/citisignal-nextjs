@@ -55,18 +55,21 @@ export async function GET() {
   try {
     const result = await graphqlFetcher(UNIFIED_QUERY, {
       category: 'phones',
-      pageSize: 5
+      pageSize: 5,
     });
-    
+
     return NextResponse.json({
       success: true,
       data: result,
-      message: 'Unified query executed successfully'
+      message: 'Unified query executed successfully',
     });
   } catch (error) {
-    return NextResponse.json({
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        success: false,
+        error: error instanceof Error ? error.message : 'Unknown error',
+      },
+      { status: 500 }
+    );
   }
 }

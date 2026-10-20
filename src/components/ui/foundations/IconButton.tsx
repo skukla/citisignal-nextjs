@@ -14,7 +14,7 @@ export default function IconButton({
   onClick,
   'aria-label': ariaLabel,
   variant = 'default',
-  className
+  className,
 }: IconButtonProps) {
   return (
     <button
@@ -23,8 +23,8 @@ export default function IconButton({
       aria-label={ariaLabel}
       className={twMerge(
         'p-2 rounded-full transition-colors',
-        variant === 'default' 
-          ? 'text-gray-400 hover:text-gray-500 hover:bg-gray-100' 
+        variant === 'default'
+          ? 'text-gray-400 hover:text-gray-500 hover:bg-gray-100'
           : 'text-gray-400 hover:text-red-500 hover:bg-red-50',
         className
       )}

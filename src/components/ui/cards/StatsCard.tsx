@@ -6,7 +6,7 @@ import type { StatsCardProps } from '@/types/stats';
 
 /**
  * A card component for displaying statistical information with an icon header.
- * 
+ *
  * @example
  * ```tsx
  * <StatsCard icon={SignalIcon} title="Coverage Stats" variant="purple">
@@ -19,7 +19,7 @@ export default function StatsCard({
   title,
   variant = 'purple',
   className,
-  children
+  children,
 }: StatsCardProps) {
   const iconBgClasses = twMerge(
     'w-10 h-10 rounded-lg flex items-center justify-center mr-4',
@@ -28,7 +28,7 @@ export default function StatsCard({
     variant === 'green' && 'bg-green-100',
     variant === 'default' && 'bg-gray-100'
   );
-  
+
   const iconColorClasses = twMerge(
     'w-6 h-6',
     variant === 'purple' && 'text-purple-600',
@@ -43,13 +43,9 @@ export default function StatsCard({
         <div className={iconBgClasses}>
           <Icon className={iconColorClasses} />
         </div>
-        <h3 className="text-xl font-semibold text-gray-900">
-          {title}
-        </h3>
+        <h3 className="text-xl font-semibold text-gray-900">{title}</h3>
       </div>
-      <div className="px-6 pb-6">
-        {children}
-      </div>
+      <div className="px-6 pb-6">{children}</div>
     </Card>
   );
-} 
+}

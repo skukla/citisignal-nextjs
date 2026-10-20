@@ -14,9 +14,7 @@ export default function Providers({ children }: { children: ReactNode }) {
         <CartRootProvider>
           <Root>
             <ConditionalHeader />
-            <main>
-              {children}
-            </main>
+            <main>{children}</main>
             <StandardFooter />
           </Root>
         </CartRootProvider>

@@ -3,7 +3,7 @@ import type { ShippingDetails, PaymentDetails } from '../types';
 export const validationData = {
   requiredFields: {
     shipping: ['firstName', 'lastName', 'address1', 'city', 'state', 'zipCode', 'phone'] as const,
-    payment: ['cardNumber', 'expiryDate', 'cvv', 'nameOnCard'] as const
+    payment: ['cardNumber', 'expiryDate', 'cvv', 'nameOnCard'] as const,
   },
 
   patterns: {
@@ -11,7 +11,7 @@ export const validationData = {
     zipCode: /^\d{5}(-\d{4})?$/,
     cardNumber: /^\d{16}$/,
     expiryDate: /^(0[1-9]|1[0-2])\/([0-9]{2})$/,
-    cvv: /^\d{3,4}$/
+    cvv: /^\d{3,4}$/,
   },
 
   messages: {
@@ -22,6 +22,6 @@ export const validationData = {
     expiryDate: 'Please enter a valid expiry date (MM/YY)',
     cvv: 'Please enter a valid CVV (3-4 digits)',
     missingInfo: 'Cannot place order: missing required information',
-    orderFailed: 'Failed to place order'
-  }
+    orderFailed: 'Failed to place order',
+  },
 };

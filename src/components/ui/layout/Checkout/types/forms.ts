@@ -11,7 +11,7 @@ export interface ShippingDetails {
 
 export type TouchedFields = {
   [key: string]: boolean;
-}
+};
 
 export interface PaymentDetails {
   cardNumber: string;

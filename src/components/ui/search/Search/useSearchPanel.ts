@@ -5,4 +5,4 @@ import type { UsePanelReturn } from '@/hooks/usePanel';
 
 export function useSearchPanel(): UsePanelReturn {
   return usePanel();
-} 
+}

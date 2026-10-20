@@ -14,7 +14,7 @@ export interface WhyCitiSignalSectionProps {
 
 function WhyCitiSignalSection({
   content = whyCitiSignalContent,
-  className
+  className,
 }: WhyCitiSignalSectionProps) {
   return (
     <ContentSection background="bg-gray-50" className={className}>
@@ -24,14 +24,10 @@ function WhyCitiSignalSection({
         centered
         className="mb-12"
       />
-      
-      <IconBenefitGrid 
-        benefits={content.benefits}
-        columns={{ sm: 1, md: 2, lg: 4 }}
-        gap="lg"
-      />
+
+      <IconBenefitGrid benefits={content.benefits} columns={{ sm: 1, md: 2, lg: 4 }} gap="lg" />
     </ContentSection>
   );
 }
 
-export default memo(WhyCitiSignalSection); 
+export default memo(WhyCitiSignalSection);

@@ -19,6 +19,6 @@ export function useAccount(): AccountContextValue {
     isOpen,
     toggle,
     close,
-    panelRef
+    panelRef,
   };
 }

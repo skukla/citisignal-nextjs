@@ -14,9 +14,9 @@ export interface SearchAndSortProps {
 /**
  * Combined search and sort functionality.
  * Wraps SearchSortBar with SORT_OPTIONS and proper spacing.
- * 
+ *
  * @example
- * <SearchAndSort 
+ * <SearchAndSort
  *   searchQuery={searchQuery}
  *   onSearchChange={setSearchQuery}
  *   sortBy={sortBy}
@@ -24,12 +24,12 @@ export interface SearchAndSortProps {
  *   searchPlaceholder="Search plans..."
  * />
  */
-export default function SearchAndSort({ 
+export default function SearchAndSort({
   searchQuery,
   onSearchChange,
   sortBy,
   onSortChange,
-  searchPlaceholder = 'Search...'
+  searchPlaceholder = 'Search...',
 }: SearchAndSortProps) {
   return (
     <SearchSortBar

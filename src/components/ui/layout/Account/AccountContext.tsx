@@ -12,14 +12,14 @@ export function AccountProvider({ children }: AccountProviderProps) {
   const { isAuthenticated, user } = useAuthContext();
 
   return (
-    <AccountContext.Provider 
-      value={{ 
-        isOpen, 
-        toggle, 
-        close, 
+    <AccountContext.Provider
+      value={{
+        isOpen,
+        toggle,
+        close,
         panelRef,
         isAuthenticated,
-        user
+        user,
       }}
     >
       {children}

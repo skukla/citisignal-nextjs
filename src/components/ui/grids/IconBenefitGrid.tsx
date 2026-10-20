@@ -38,10 +38,10 @@ export default function IconBenefitGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 4
+    lg: 4,
   },
   gap = 'lg',
-  className
+  className,
 }: IconBenefitGridProps) {
   return (
     <Grid columns={columns} gap={gap} className={className}>

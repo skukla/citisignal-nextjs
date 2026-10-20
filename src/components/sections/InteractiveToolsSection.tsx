@@ -15,10 +15,8 @@ export interface InteractiveToolsSectionProps {
 
 function InteractiveToolsSection({
   content = interactiveToolsContent,
-  className
+  className,
 }: InteractiveToolsSectionProps) {
-
-
   return (
     <ContentSection background="bg-white" className={className}>
       <SectionHeader
@@ -42,4 +40,4 @@ function InteractiveToolsSection({
   );
 }
 
-export default memo(InteractiveToolsSection); 
+export default memo(InteractiveToolsSection);

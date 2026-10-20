@@ -19,8 +19,8 @@ const mockPaymentMethods: CardFormFields[] = [
     expiryYear: '2024',
     cvc: '',
     billingAddressId: '1',
-    isDefault: true
-  }
+    isDefault: true,
+  },
 ];
 
 export default function PaymentPage() {
@@ -36,11 +36,13 @@ export default function PaymentPage() {
       <Button
         variant="outline"
         leftIcon={PlusIcon}
-        onClick={() => {/* TODO: Implement add payment method */}}
+        onClick={() => {
+          /* TODO: Implement add payment method */
+        }}
       >
         {paymentConfig.list.addButton}
       </Button>
-    )
+    ),
   };
 
   return (
@@ -48,60 +50,66 @@ export default function PaymentPage() {
       <AccountPage.Root>
         <AccountPage.Layout>
           <AccountPage.Navigation />
-          
+
           <AccountPage.Main>
             <AccountPage.Section>
               <AccountPage.Header />
               <AccountPage.Content className="p-6">
                 <div className="space-y-6">
-          {paymentMethods.length > 0 ? (
-            <div className="grid gap-4">
-              {paymentMethods.map((method, index) => (
-                <div 
-                  key={index}
-                  className="bg-white p-4 rounded-lg shadow-sm border border-gray-200"
-                >
-                  <div className="flex justify-between items-start">
-                    <div className="flex items-start space-x-3">
-                      <CreditCardIcon className="h-6 w-6 text-gray-400" />
-                      <div>
-                        <h3 className="font-medium text-gray-900">{method.number}</h3>
-                        <p className="text-sm text-gray-500">
-                          Expires {method.expiryMonth}/{method.expiryYear}
-                        </p>
-                        {method.isDefault && (
-                          <Badge variant="purple" className="mt-2">
-                            Default Payment Method
-                          </Badge>
-                        )}
-                      </div>
+                  {paymentMethods.length > 0 ? (
+                    <div className="grid gap-4">
+                      {paymentMethods.map((method, index) => (
+                        <div
+                          key={index}
+                          className="bg-white p-4 rounded-lg shadow-sm border border-gray-200"
+                        >
+                          <div className="flex justify-between items-start">
+                            <div className="flex items-start space-x-3">
+                              <CreditCardIcon className="h-6 w-6 text-gray-400" />
+                              <div>
+                                <h3 className="font-medium text-gray-900">{method.number}</h3>
+                                <p className="text-sm text-gray-500">
+                                  Expires {method.expiryMonth}/{method.expiryYear}
+                                </p>
+                                {method.isDefault && (
+                                  <Badge variant="purple" className="mt-2">
+                                    Default Payment Method
+                                  </Badge>
+                                )}
+                              </div>
+                            </div>
+                            <div className="flex space-x-2">
+                              <IconButton
+                                icon={PencilIcon}
+                                onClick={() => {
+                                  /* TODO: Implement edit payment method */
+                                }}
+                                aria-label="Edit payment method"
+                              />
+                              <IconButton
+                                icon={TrashIcon}
+                                onClick={() => {
+                                  /* TODO: Implement delete payment method */
+                                }}
+                                aria-label="Delete payment method"
+                                variant="danger"
+                              />
+                            </div>
+                          </div>
+                        </div>
+                      ))}
                     </div>
-                    <div className="flex space-x-2">
-                      <IconButton
-                        icon={PencilIcon}
-                        onClick={() => {/* TODO: Implement edit payment method */}}
-                        aria-label="Edit payment method"
-                      />
-                      <IconButton
-                        icon={TrashIcon}
-                        onClick={() => {/* TODO: Implement delete payment method */}}
-                        aria-label="Delete payment method"
-                        variant="danger"
-                      />
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <EmptyState
-              icon={CreditCardIcon}
-              title={paymentConfig.list.emptyState.title}
-              description={paymentConfig.list.emptyState.description}
-              actionLabel={paymentConfig.list.addButton}
-              onAction={() => {/* TODO: Implement add payment method */}}
-            />
-          )}
+                  ) : (
+                    <EmptyState
+                      icon={CreditCardIcon}
+                      title={paymentConfig.list.emptyState.title}
+                      description={paymentConfig.list.emptyState.description}
+                      actionLabel={paymentConfig.list.addButton}
+                      onAction={() => {
+                        /* TODO: Implement add payment method */
+                      }}
+                    />
+                  )}
                 </div>
               </AccountPage.Content>
             </AccountPage.Section>

@@ -11,24 +11,14 @@ import type { PlanCardActionsProps } from './PlanCard.types';
 export default function PlanCardActions({
   onSelectPlan,
   onLearnMore,
-  className
+  className,
 }: PlanCardActionsProps) {
   return (
     <div className={twMerge('space-y-2 mt-8 px-6 pb-6', className)}>
-      <Button
-        fullWidth
-        variant="primary"
-        className="py-2.5"
-        onClick={onSelectPlan}
-      >
+      <Button fullWidth variant="primary" className="py-2.5" onClick={onSelectPlan}>
         Select Plan
       </Button>
-      <Button
-        fullWidth
-        variant="outline"
-        className="py-2"
-        onClick={onLearnMore}
-      >
+      <Button fullWidth variant="outline" className="py-2" onClick={onLearnMore}>
         Learn More
       </Button>
     </div>

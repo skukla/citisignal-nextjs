@@ -18,14 +18,14 @@ export function useOrderDisplay(order: OrderDetails) {
     return new Date(date).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
-      day: 'numeric'
+      day: 'numeric',
     });
   }, []);
 
   const formatPrice = useCallback((price: number) => {
     return new Intl.NumberFormat('en-US', {
       style: 'currency',
-      currency: 'USD'
+      currency: 'USD',
     }).format(price);
   }, []);
 
@@ -37,7 +37,7 @@ export function useOrderDisplay(order: OrderDetails) {
     return [
       shipping.name,
       shipping.address,
-      `${shipping.city}, ${shipping.state} ${shipping.zip}`
+      `${shipping.city}, ${shipping.state} ${shipping.zip}`,
     ].filter(Boolean);
   }, []);
 
@@ -48,6 +48,6 @@ export function useOrderDisplay(order: OrderDetails) {
     getFormattedAddress,
     formattedDate: formatDate(order.date),
     formattedTotal: formatPrice(order.total),
-    formattedAddress: getFormattedAddress(order.shipping)
+    formattedAddress: getFormattedAddress(order.shipping),
   };
 }

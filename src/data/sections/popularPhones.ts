@@ -17,12 +17,13 @@ export interface PopularPhonesContent {
 
 export const popularPhonesContent: PopularPhonesContent = {
   header: {
-    title: "Popular Phones",
-    description: "Discover the latest smartphones with exclusive CitiSignal deals. Get the phone you want with flexible payment options."
+    title: 'Popular Phones',
+    description:
+      'Discover the latest smartphones with exclusive CitiSignal deals. Get the phone you want with flexible payment options.',
   },
   phoneCount: 4,
   viewAllLink: {
-    href: "/phones",
-    text: "View All Phones"
-  }
+    href: '/phones',
+    text: 'View All Phones',
+  },
 };

@@ -13,22 +13,17 @@ interface PrivacyNoticeProps {
 
 /**
  * A privacy notice component with text and link.
- * 
+ *
  * @example
  * ```tsx
- * <PrivacyNotice 
+ * <PrivacyNotice
  *   text="We respect your privacy. Unsubscribe at any time."
  *   linkText="Privacy Policy"
  *   linkHref="/privacy"
  * />
  * ```
  */
-function PrivacyNotice({
-  text,
-  linkText,
-  linkHref,
-  className
-}: PrivacyNoticeProps) {
+function PrivacyNotice({ text, linkText, linkHref, className }: PrivacyNoticeProps) {
   return (
     <p className={twMerge('text-sm text-purple-200', className)}>
       {text}{' '}
@@ -39,4 +34,4 @@ function PrivacyNotice({
   );
 }
 
-export default memo(PrivacyNotice); 
+export default memo(PrivacyNotice);

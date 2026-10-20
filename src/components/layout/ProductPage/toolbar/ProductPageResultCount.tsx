@@ -9,7 +9,7 @@ export function ProductPageResultCount() {
   const { filteredProducts, isInitialLoading } = useProductData();
   const { pageData } = useProductFilters();
   const itemLabel = pageData.search.itemLabel || 'items';
-  
+
   return (
     <div className="mb-6">
       <LayeredTransition
@@ -17,9 +17,9 @@ export function ProductPageResultCount() {
           <div className="h-5 bg-gradient-to-r from-gray-200 via-gray-100 to-gray-200 rounded w-32 bg-[length:200%_100%] animate-shimmer"></div>
         }
         content={
-          <ResultsCount 
-            showing={filteredProducts.length} 
-            total={filteredProducts.length} 
+          <ResultsCount
+            showing={filteredProducts.length}
+            total={filteredProducts.length}
             itemLabel={itemLabel}
           />
         }

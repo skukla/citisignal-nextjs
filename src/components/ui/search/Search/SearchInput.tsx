@@ -12,7 +12,11 @@ import { useSearchContext } from './SearchRoot';
  * @example
  * <Search.Input placeholder="Search products..." />
  */
-export function SearchInput({ className, placeholder = "Search phones, plans, accessories...", ...props }: SearchInputProps) {
+export function SearchInput({
+  className,
+  placeholder = 'Search phones, plans, accessories...',
+  ...props
+}: SearchInputProps) {
   const { query, setQuery } = useSearchContext();
 
   return (

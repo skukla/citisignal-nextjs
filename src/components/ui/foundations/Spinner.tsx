@@ -10,13 +10,13 @@ import type { SpinnerProps } from '@/types/ui';
  * @example
  * <Spinner size="md" aria-label="Loading content" />
  */
-export default function Spinner({ 
-  size = 'md', 
+export default function Spinner({
+  size = 'md',
   className,
-  'aria-label': ariaLabel = 'Loading' 
+  'aria-label': ariaLabel = 'Loading',
 }: SpinnerProps) {
   return (
-    <div 
+    <div
       className={twMerge(
         'border-2 border-purple-400 border-t-transparent rounded-full animate-spin',
         // Size variants - direct conditionals following Button pattern
@@ -30,4 +30,4 @@ export default function Spinner({
       role="progressbar"
     />
   );
-} 
+}

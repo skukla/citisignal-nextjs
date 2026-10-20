@@ -23,7 +23,7 @@ export default function SearchSortBar({
   sortBy,
   onSortChange,
   sortOptions,
-  searchPlaceholder = 'Search...'
+  searchPlaceholder = 'Search...',
 }: SearchSortBarProps) {
   return (
     <div className="flex flex-col lg:flex-row gap-4 mb-8">

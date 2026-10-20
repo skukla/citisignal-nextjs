@@ -9,11 +9,7 @@ interface ContainerProps extends BaseComponentProps {
 
 export default function Container({ children, className, noPadding = false }: ContainerProps) {
   return (
-    <div className={twMerge(
-      'max-w-7xl mx-auto',
-      !noPadding && 'px-4 sm:px-6 lg:px-8',
-      className
-    )}>
+    <div className={twMerge('max-w-7xl mx-auto', !noPadding && 'px-4 sm:px-6 lg:px-8', className)}>
       {children}
     </div>
   );

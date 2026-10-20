@@ -7,9 +7,5 @@ interface ProductsLayoutProps {
 }
 
 export default function ProductsLayout({ children }: ProductsLayoutProps) {
-  return (
-    <div className="products-layout">
-      {children}
-    </div>
-  );
+  return <div className="products-layout">{children}</div>;
 }

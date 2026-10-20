@@ -15,14 +15,12 @@ export function FooterBottom({
   phone,
   availability,
   borderColor = 'border-gray-800',
-  className
+  className,
 }: FooterBottomProps) {
   return (
     <div className={twMerge('border-t mt-8 pt-8', borderColor, className)}>
       <div className="flex flex-col md:flex-row justify-between items-center">
-        <p className="text-gray-400 text-sm">
-          {copyright}
-        </p>
+        <p className="text-gray-400 text-sm">{copyright}</p>
         {(phone || availability) && (
           <div className="flex items-center space-x-4 mt-4 md:mt-0">
             {phone && (
@@ -31,12 +29,10 @@ export function FooterBottom({
                 {availability && <span className="text-gray-400 text-sm">|</span>}
               </>
             )}
-            {availability && (
-              <span className="text-gray-400 text-sm">{availability}</span>
-            )}
+            {availability && <span className="text-gray-400 text-sm">{availability}</span>}
           </div>
         )}
       </div>
     </div>
   );
-} 
+}

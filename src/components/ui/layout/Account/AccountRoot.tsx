@@ -30,9 +30,7 @@ export function AccountRoot({ children, className }: AccountRootProps) {
 
   return (
     <AccountContext.Provider value={accountState}>
-      <div className={className}>
-        {children}
-      </div>
+      <div className={className}>{children}</div>
     </AccountContext.Provider>
   );
 }

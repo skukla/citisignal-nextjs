@@ -15,18 +15,15 @@ import type { HeroSectionProps } from '@/types/section';
 /**
  * HeroSection component for the main landing page hero area.
  * Features promotional content, CTAs, and product showcase.
- * 
+ *
  * @example
  * ```tsx
  * <HeroSection className="min-h-screen" />
  * ```
  */
-function HeroSection({
-  content = heroContent,
-  className
-}: HeroSectionProps) {
+function HeroSection({ content = heroContent, className }: HeroSectionProps) {
   return (
-    <ContentSection 
+    <ContentSection
       className={twMerge('text-white', className)}
       style={{ background: 'linear-gradient(135deg, #8821f4 0%, #6a1b9a 50%, #4a148c 100%)' }}
     >
@@ -49,9 +46,7 @@ function HeroSection({
             <span className="text-5xl md:text-6xl lg:text-7xl">{content.headline.amount}</span>
           </h1>
 
-          <p className="text-xl text-purple-100 mb-8 max-w-md">
-            {content.description}
-          </p>
+          <p className="text-xl text-purple-100 mb-8 max-w-md">{content.description}</p>
 
           <div className="flex flex-col sm:flex-row gap-4 mb-8">
             <Link
@@ -75,10 +70,8 @@ function HeroSection({
           </div>
 
           {/* Features */}
-          <div className="text-sm text-purple-100 mb-4">
-            {content.disclaimer}
-          </div>
-          
+          <div className="text-sm text-purple-100 mb-4">{content.disclaimer}</div>
+
           <FeatureList features={[content.feature]} />
         </div>
 
@@ -106,4 +99,4 @@ function HeroSection({
   );
 }
 
-export default memo(HeroSection); 
+export default memo(HeroSection);

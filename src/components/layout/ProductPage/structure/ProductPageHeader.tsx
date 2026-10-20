@@ -7,13 +7,7 @@ import { useProductFilters } from '../providers/ProductFilterContext';
 export function ProductPageHeader() {
   const { pageData } = useProductFilters();
   const { title, description, icon = ShoppingBagIcon } = pageData.pageHeader;
-  
+
   // Use PageHeader which is now always composable (no auto-wrapping)
-  return (
-    <PageHeader
-      title={title}
-      description={description}
-      icon={icon}
-    />
-  );
+  return <PageHeader title={title} description={description} icon={icon} />;
 }

@@ -12,7 +12,7 @@ export function useProductPage() {
   const data = useProductData();
   const filters = useProductFilters();
   const ui = useProductUI();
-  
+
   // Combine all contexts to match the old interface
   return {
     // From ProductDataContext
@@ -24,7 +24,7 @@ export function useProductPage() {
     facets: data.facets,
     loadMore: data.loadMore,
     filteredProducts: data.filteredProducts,
-    
+
     // From ProductFilterContext
     searchQuery: filters.searchQuery,
     sortBy: filters.sortBy,
@@ -36,12 +36,12 @@ export function useProductPage() {
     setFilter: filters.setFilter,
     clearFilters: filters.clearFilters,
     pageData: filters.pageData,
-    
+
     // From ProductUIContext
     viewMode: ui.viewMode,
     setViewMode: ui.setViewMode,
     isTransitioning: ui.isTransitioning,
     showMobileFilters: ui.showMobileFilters,
-    setShowMobileFilters: ui.setShowMobileFilters
+    setShowMobileFilters: ui.setShowMobileFilters,
   };
 }

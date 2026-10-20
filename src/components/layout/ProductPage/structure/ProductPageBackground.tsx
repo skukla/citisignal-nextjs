@@ -9,10 +9,10 @@ interface ProductPageBackgroundProps {
   className?: string;
 }
 
-export function ProductPageBackground({ 
-  children, 
+export function ProductPageBackground({
+  children,
   color = 'gray',
-  className 
+  className,
 }: ProductPageBackgroundProps) {
   return (
     <Page background={color} className={className}>

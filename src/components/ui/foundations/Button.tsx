@@ -8,18 +8,18 @@ import Spinner from '@/components/ui/foundations/Spinner';
 
 /**
  * Button component that handles both button and link variants.
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
  * <Button>Click Me</Button>
- * 
+ *
  * // As a link
  * <Button href="/path">Go Home</Button>
- * 
+ *
  * // With loading state
  * <Button loading>Processing...</Button>
- * 
+ *
  * // Custom styling
  * <Button className="bg-red-500 hover:bg-red-600">
  *   Delete
@@ -43,9 +43,10 @@ function Button({
   // Base classes that rarely change
   const baseClasses = twMerge(
     'inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors cursor-pointer',
-    variant !== 'link' && 'focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2'
+    variant !== 'link' &&
+      'focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2'
   );
-  
+
   // Dynamic classes based on variant/size/state
   const classes = twMerge(
     baseClasses,
@@ -83,7 +84,7 @@ function Button({
 
   if (href) {
     return (
-      <Link 
+      <Link
         href={href}
         className={classes}
         aria-disabled={disabled || loading}

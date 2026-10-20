@@ -35,10 +35,10 @@ export default function BenefitGrid({
   columns = {
     sm: 1,
     md: 3,
-    lg: 3
+    lg: 3,
   },
   gap = 'sm',
-  className
+  className,
 }: BenefitGridProps) {
   return (
     <Grid columns={columns} gap={gap} className={className}>
@@ -52,4 +52,4 @@ export default function BenefitGrid({
       ))}
     </Grid>
   );
-} 
+}

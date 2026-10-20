@@ -1,12 +1,12 @@
 'use client';
 
 import { useCallback } from 'react';
-import type { 
-  CheckoutStepId, 
-  ShippingDetails, 
+import type {
+  CheckoutStepId,
+  ShippingDetails,
   PaymentDetails,
   ValidationResult,
-  ValidationErrors
+  ValidationErrors,
 } from '../types';
 import { validationData } from '../data/validation';
 
@@ -16,20 +16,25 @@ export function useCheckoutValidation(
 ) {
   const validateShipping = useCallback((): ValidationResult<ShippingDetails> => {
     const errors: ValidationErrors<ShippingDetails> = {};
-    
+
     if (!shippingDetails) {
       return { isValid: false, errors };
     }
 
     // Required field validation
-    validationData.requiredFields.shipping.forEach(field => {
+    validationData.requiredFields.shipping.forEach((field) => {
       if (!shippingDetails[field]) {
-        errors[field as keyof ShippingDetails] = { message: validationData.messages.required(field as keyof ShippingDetails) };
+        errors[field as keyof ShippingDetails] = {
+          message: validationData.messages.required(field as keyof ShippingDetails),
+        };
       }
     });
 
     // Phone number validation
-    if (shippingDetails.phone && !validationData.patterns.phone.test(shippingDetails.phone.replace(/\D/g, ''))) {
+    if (
+      shippingDetails.phone &&
+      !validationData.patterns.phone.test(shippingDetails.phone.replace(/\D/g, ''))
+    ) {
       errors.phone = { message: validationData.messages.phone };
     }
 
@@ -40,21 +45,23 @@ export function useCheckoutValidation(
 
     return {
       isValid: Object.keys(errors).length === 0,
-      errors
+      errors,
     };
   }, [shippingDetails]);
 
   const validatePayment = useCallback((): ValidationResult<PaymentDetails> => {
     const errors: ValidationErrors<PaymentDetails> = {};
-    
+
     if (!paymentDetails) {
       return { isValid: false, errors };
     }
 
     // Required field validation
-    validationData.requiredFields.payment.forEach(field => {
+    validationData.requiredFields.payment.forEach((field) => {
       if (!paymentDetails[field]) {
-        errors[field as keyof PaymentDetails] = { message: validationData.messages.required(field as keyof PaymentDetails) };
+        errors[field as keyof PaymentDetails] = {
+          message: validationData.messages.required(field as keyof PaymentDetails),
+        };
       }
     });
 
@@ -67,7 +74,10 @@ export function useCheckoutValidation(
     }
 
     // Expiry date validation
-    if (paymentDetails.expiryDate && !validationData.patterns.expiryDate.test(paymentDetails.expiryDate)) {
+    if (
+      paymentDetails.expiryDate &&
+      !validationData.patterns.expiryDate.test(paymentDetails.expiryDate)
+    ) {
       errors.expiryDate = { message: validationData.messages.expiryDate };
     }
 
@@ -78,29 +88,38 @@ export function useCheckoutValidation(
 
     return {
       isValid: Object.keys(errors).length === 0,
-      errors
+      errors,
     };
   }, [paymentDetails]);
 
-  const validateStep = useCallback((stepId: CheckoutStepId): ValidationResult<ShippingDetails | PaymentDetails> => {
-    switch (stepId) {
-      case 'shipping': return validateShipping();
-      case 'payment': return validatePayment();
-      case 'review': {
-        const shippingResult = validateShipping();
-        const paymentResult = validatePayment();
-        return {
-          isValid: shippingResult.isValid && paymentResult.isValid,
-          errors: { ...shippingResult.errors, ...paymentResult.errors }
-        };
+  const validateStep = useCallback(
+    (stepId: CheckoutStepId): ValidationResult<ShippingDetails | PaymentDetails> => {
+      switch (stepId) {
+        case 'shipping':
+          return validateShipping();
+        case 'payment':
+          return validatePayment();
+        case 'review': {
+          const shippingResult = validateShipping();
+          const paymentResult = validatePayment();
+          return {
+            isValid: shippingResult.isValid && paymentResult.isValid,
+            errors: { ...shippingResult.errors, ...paymentResult.errors },
+          };
+        }
+        default:
+          return { isValid: false, errors: {} };
       }
-      default: return { isValid: false, errors: {} };
-    }
-  }, [validateShipping, validatePayment]);
+    },
+    [validateShipping, validatePayment]
+  );
 
-  const isStepComplete = useCallback((stepId: CheckoutStepId): boolean => {
-    return validateStep(stepId).isValid;
-  }, [validateStep]);
+  const isStepComplete = useCallback(
+    (stepId: CheckoutStepId): boolean => {
+      return validateStep(stepId).isValid;
+    },
+    [validateStep]
+  );
 
   return { isStepComplete, validateStep };
 }

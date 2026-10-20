@@ -35,10 +35,14 @@ export default function CheckoutReview({ className }: CheckoutReviewProps) {
           <div>
             <h3 className="text-base font-medium text-gray-900">Shipping Information</h3>
             <div className="mt-2 text-sm text-gray-500">
-              <p>{shippingDetails.firstName} {shippingDetails.lastName}</p>
+              <p>
+                {shippingDetails.firstName} {shippingDetails.lastName}
+              </p>
               <p>{shippingDetails.address1}</p>
               {shippingDetails.address2 && <p>{shippingDetails.address2}</p>}
-              <p>{shippingDetails.city}, {shippingDetails.state} {shippingDetails.zipCode}</p>
+              <p>
+                {shippingDetails.city}, {shippingDetails.state} {shippingDetails.zipCode}
+              </p>
               <p>{shippingDetails.phone}</p>
             </div>
           </div>
@@ -55,13 +59,10 @@ export default function CheckoutReview({ className }: CheckoutReviewProps) {
       </div>
 
       <div className="flex justify-between">
-        <Button
-          variant="outline"
-          onClick={() => navigateToStep('payment')}
-        >
+        <Button variant="outline" onClick={() => navigateToStep('payment')}>
           Back to Payment
         </Button>
-        <Button 
+        <Button
           onClick={handleSubmit}
           loading={isSubmitting}
           disabled={isSubmitting || !canSubmit()}

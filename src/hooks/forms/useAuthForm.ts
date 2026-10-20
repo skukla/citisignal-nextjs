@@ -26,7 +26,7 @@ export function useAuthForm() {
     isSubmitting,
     error,
     handleSubmit: submitForm,
-    resetError
+    resetError,
   } = useFormSubmission<AuthFormValues>({
     onSubmit: async (values) => {
       if (mode === 'signup') {
@@ -37,7 +37,7 @@ export function useAuthForm() {
       } else {
         await login(values.email, values.password);
       }
-    }
+    },
   });
 
   // Update mode when URL changes (after initial render)
@@ -72,11 +72,11 @@ export function useAuthForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    
+
     await submitForm({
       email: formData.get('email') as string,
       password: formData.get('password') as string,
-      confirmPassword: mode === 'signup' ? formData.get('confirmPassword') as string : undefined
+      confirmPassword: mode === 'signup' ? (formData.get('confirmPassword') as string) : undefined,
     });
   };
 
@@ -88,6 +88,6 @@ export function useAuthForm() {
     error,
     loginEmailRef,
     signupEmailRef,
-    handleSubmit
+    handleSubmit,
   };
 }
