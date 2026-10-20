@@ -9,11 +9,11 @@ interface FadeTransitionProps {
   className?: string;
 }
 
-export function FadeTransition({ 
-  children, 
-  show, 
+export function FadeTransition({
+  children,
+  show,
   duration = 300,
-  className = '' 
+  className = '',
 }: FadeTransitionProps) {
   const [shouldRender, setShouldRender] = useState(show);
   const [isVisible, setIsVisible] = useState(show);
@@ -34,9 +34,14 @@ export function FadeTransition({
   if (!shouldRender) return null;
 
   // Use Tailwind classes for consistency
-  const durationClass = duration <= 200 ? 'duration-200' : 
-                        duration <= 300 ? 'duration-300' : 
-                        duration <= 500 ? 'duration-500' : 'duration-700';
+  const durationClass =
+    duration <= 200
+      ? 'duration-200'
+      : duration <= 300
+        ? 'duration-300'
+        : duration <= 500
+          ? 'duration-500'
+          : 'duration-700';
 
   return (
     <div

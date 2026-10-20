@@ -10,6 +10,6 @@ export function useAccountNavigation() {
 
   return {
     navigation: accountNavigation,
-    isActive
+    isActive,
   };
 }

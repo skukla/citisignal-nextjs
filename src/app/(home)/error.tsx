@@ -17,9 +17,7 @@ export default function HomeError({
   return (
     <div className="flex items-center justify-center min-h-screen">
       <div className="text-center max-w-md px-4">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
-          Something went wrong!
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Something went wrong!</h2>
         <p className="text-gray-600 mb-6">
           We&apos;re having trouble loading the page. Please try again.
         </p>
@@ -27,10 +25,7 @@ export default function HomeError({
           <Button onClick={reset} variant="primary">
             Try again
           </Button>
-          <Button 
-            onClick={() => window.location.href = '/'} 
-            variant="outline"
-          >
+          <Button onClick={() => (window.location.href = '/')} variant="outline">
             Go to home
           </Button>
         </div>

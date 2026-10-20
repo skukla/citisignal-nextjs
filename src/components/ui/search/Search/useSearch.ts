@@ -36,6 +36,6 @@ export function useSearch(): UseSearchReturn {
     close,
     setQuery,
     selectResult: handleSelectResult,
-    panelRef
+    panelRef,
   };
-} 
+}

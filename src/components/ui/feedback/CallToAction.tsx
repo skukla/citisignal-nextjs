@@ -9,7 +9,7 @@ import type { CallToActionProps } from '@/types/section';
 
 /**
  * CallToAction section component for conversion points and feature promotions.
- * 
+ *
  * @example
  * ```tsx
  * <CallToAction
@@ -37,34 +37,21 @@ function CallToAction({
   supportText,
   supportPhone,
   gradient = 'from-purple-50 to-purple-100',
-  className
+  className,
 }: CallToActionProps) {
   return (
     <Section
-      className={twMerge(
-        'bg-gradient-to-r rounded-2xl py-12 px-8 md:px-12',
-        gradient,
-        className
-      )}
+      className={twMerge('bg-gradient-to-r rounded-2xl py-12 px-8 md:px-12', gradient, className)}
     >
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <div className="space-y-8">
           <div className="space-y-4">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
-              {title}
-            </h2>
-            <p className="text-lg text-gray-600">
-              {description}
-            </p>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900">{title}</h2>
+            <p className="text-lg text-gray-600">{description}</p>
           </div>
-          {features && (
-            <IconFeatureList 
-              features={features}
-              className="space-y-4"
-            />
-          )}
+          {features && <IconFeatureList features={features} className="space-y-4" />}
         </div>
-        
+
         <div className="flex flex-col items-center lg:items-start space-y-6">
           <Link
             href={buttonHref}
@@ -74,14 +61,12 @@ function CallToAction({
           >
             {buttonText}
           </Link>
-          
+
           {(supportText || supportPhone) && (
             <p className="text-sm text-gray-600">
               {supportText}
               {supportPhone && (
-                <span className="font-medium text-gray-900 ml-1">
-                  {supportPhone}
-                </span>
+                <span className="font-medium text-gray-900 ml-1">{supportPhone}</span>
               )}
             </p>
           )}

@@ -20,31 +20,15 @@ export default function TipPreview({
   description,
   href,
   categoryColor = 'purple',
-  className
+  className,
 }: TipPreviewProps) {
   return (
-    <div className={twMerge(
-      'group cursor-pointer',
-      className
-    )}>
-      <div className={twMerge(
-        'text-sm font-medium mb-2',
-        `text-${categoryColor}-600`
-      )}>
+    <div className={twMerge('group cursor-pointer', className)}>
+      <div className={twMerge('text-sm font-medium mb-2', `text-${categoryColor}-600`)}>
         {category}
       </div>
-      <PreviewContent
-        title={title}
-        description={description}
-        titleSize="md"
-        className="mb-3"
-      >
-        <Button
-          href={href}
-          variant="link"
-          size="sm"
-          rightIcon={ArrowRightIcon}
-        >
+      <PreviewContent title={title} description={description} titleSize="md" className="mb-3">
+        <Button href={href} variant="link" size="sm" rightIcon={ArrowRightIcon}>
           Read More
         </Button>
       </PreviewContent>

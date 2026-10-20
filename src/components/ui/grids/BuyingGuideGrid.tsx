@@ -24,17 +24,13 @@ export default function BuyingGuideGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 2
+    lg: 2,
   },
   gap = 'lg',
-  className
+  className,
 }: BuyingGuideGridProps) {
   return (
-    <Grid
-      columns={columns}
-      gap={gap}
-      className={className}
-    >
+    <Grid columns={columns} gap={gap} className={className}>
       {guides.map((guide, index) => (
         <BuyingGuidePreview
           key={index}

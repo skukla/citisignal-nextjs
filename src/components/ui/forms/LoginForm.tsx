@@ -21,13 +21,7 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      <Input
-        label="Email"
-        type="email"
-        name="email"
-        required
-        autoComplete="email"
-      />
+      <Input label="Email" type="email" name="email" required autoComplete="email" />
       <Input
         label="Password"
         type="password"
@@ -35,15 +29,8 @@ export default function LoginForm() {
         required
         autoComplete="current-password"
       />
-      {error && (
-        <div className="text-red-600 text-sm">{error}</div>
-      )}
-      <Button
-        type="submit"
-        variant="primary"
-        className="w-full"
-        disabled={isLoading}
-      >
+      {error && <div className="text-red-600 text-sm">{error}</div>}
+      <Button type="submit" variant="primary" className="w-full" disabled={isLoading}>
         {isLoading ? 'Signing in...' : 'Sign In'}
       </Button>
     </form>

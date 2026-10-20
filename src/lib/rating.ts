@@ -11,7 +11,7 @@
 export function convertRatingToStars(rating: number, maxRating: number = 100): number {
   if (rating < 0 || maxRating <= 0) return 0;
   if (rating > maxRating) return 5;
-  
+
   return (rating / maxRating) * 5;
 }
 
@@ -33,7 +33,11 @@ export function getFilledStars(rating: number, maxRating: number = 100): number 
  * @param decimals Number of decimal places (default: 1)
  * @returns Formatted rating string (e.g., "4.7")
  */
-export function formatRatingDisplay(rating: number, maxRating: number = 100, decimals: number = 1): string {
+export function formatRatingDisplay(
+  rating: number,
+  maxRating: number = 100,
+  decimals: number = 1
+): string {
   const starRating = convertRatingToStars(rating, maxRating);
   return starRating.toFixed(decimals);
 }
@@ -46,6 +50,6 @@ export function formatRatingDisplay(rating: number, maxRating: number = 100, dec
 export function formatReviewCount(count: number): string {
   if (count === 0) return 'No reviews';
   if (count === 1) return '1 review';
-  
+
   return `${count.toLocaleString()} reviews`;
 }

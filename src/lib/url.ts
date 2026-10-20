@@ -4,10 +4,10 @@
 
 /**
  * Checks if a URL is external (starts with http:// or https://)
- * 
+ *
  * @param url - The URL to check
  * @returns true if the URL is external, false otherwise
- * 
+ *
  * @example
  * ```ts
  * isExternalUrl('https://example.com') // true
@@ -22,7 +22,7 @@ export function isExternalUrl(url: string): boolean {
 
 /**
  * Checks if a URL is internal (relative path or same domain)
- * 
+ *
  * @param url - The URL to check
  * @returns true if the URL is internal, false otherwise
  */
@@ -32,10 +32,10 @@ export function isInternalUrl(url: string): boolean {
 
 /**
  * Validates if a string is a valid URL format
- * 
+ *
  * @param url - The URL string to validate
  * @returns true if the URL format is valid, false otherwise
- * 
+ *
  * @example
  * ```ts
  * isValidUrl('https://example.com')    // true
@@ -65,7 +65,7 @@ export function isValidUrl(url: string): boolean {
 
 /**
  * Sanitizes a URL by trimming whitespace and ensuring proper format
- * 
+ *
  * @param url - The URL to sanitize
  * @returns the sanitized URL
  */
@@ -79,10 +79,10 @@ export function sanitizeUrl(url: string): string {
 
 /**
  * Gets the domain from a URL
- * 
+ *
  * @param url - The URL to extract domain from
  * @returns the domain or empty string if invalid
- * 
+ *
  * @example
  * ```ts
  * getDomain('https://example.com/path') // 'example.com'
@@ -104,15 +104,15 @@ export function getDomain(url: string): string {
 /**
  * Ensures image URLs use HTTPS protocol for secure delivery
  * Converts HTTP URLs to HTTPS for Adobe Commerce media files
- * 
+ *
  * @param url - The image URL to convert
  * @returns the URL with HTTPS protocol
- * 
+ *
  * @example
  * ```ts
  * ensureHttpsImageUrl('http://citisignal-com774.adobedemo.com/media/catalog/product/image.jpg')
  * // Returns: 'https://citisignal-com774.adobedemo.com/media/catalog/product/image.jpg'
- * 
+ *
  * ensureHttpsImageUrl('https://example.com/image.jpg') // 'https://example.com/image.jpg'
  * ensureHttpsImageUrl('/local/image.jpg')              // '/local/image.jpg'
  * ```

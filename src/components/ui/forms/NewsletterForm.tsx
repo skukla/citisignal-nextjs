@@ -24,17 +24,14 @@ interface NewsletterFormProps {
  * />
  * ```
  */
-function NewsletterForm({
-  onSubmit,
-  className
-}: NewsletterFormProps) {
+function NewsletterForm({ onSubmit, className }: NewsletterFormProps) {
   const [email, setEmail] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    
+
     try {
       await onSubmit(email);
       setEmail('');
@@ -70,4 +67,4 @@ function NewsletterForm({
   );
 }
 
-export default memo(NewsletterForm); 
+export default memo(NewsletterForm);

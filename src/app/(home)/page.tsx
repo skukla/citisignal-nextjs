@@ -1,4 +1,3 @@
-
 import HeroSection from '@/components/sections/HeroSection';
 import PopularPhonesSection from '@/components/sections/PopularPhonesSection';
 import ActivationSection from '@/components/sections/ActivationSection';

@@ -7,9 +7,5 @@ interface ProductPageToolbarProps {
 }
 
 export function ProductPageToolbar({ children }: ProductPageToolbarProps) {
-  return (
-    <div className="flex flex-col lg:flex-row gap-4 mb-6">
-      {children}
-    </div>
-  );
+  return <div className="flex flex-col lg:flex-row gap-4 mb-6">{children}</div>;
 }

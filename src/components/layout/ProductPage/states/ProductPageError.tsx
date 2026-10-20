@@ -13,7 +13,9 @@ export default function ProductPageError({ error }: ProductPageErrorProps) {
       <EmptyState
         icon={ExclamationTriangleIcon}
         title="Unable to load products"
-        description={error.message || 'There was an error loading the products. Please try again later.'}
+        description={
+          error.message || 'There was an error loading the products. Please try again later.'
+        }
         actionLabel="Retry"
         onAction={() => window.location.reload()}
       />

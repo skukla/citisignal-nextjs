@@ -6,16 +6,16 @@ import { SortOption } from '@/lib/constants';
 interface Product {
   id: string;
   name: string;
-  price: string | number;  // Accept both string (from API) and number
+  price: string | number; // Accept both string (from API) and number
   manufacturer?: string;
   memory?: string[];
-  available_colors?: { name: string; hex: string; }[];
+  available_colors?: { name: string; hex: string }[];
   features?: string[];
   isNew?: boolean;
   review_count?: number;
   sku?: string;
   original_price?: string | number;
-  images?: { url: string; }[];
+  images?: { url: string }[];
   category?: string;
   stock_status?: string;
 }
@@ -53,9 +53,9 @@ export interface UseProductListReturn<T> {
  *   filteredAndSortedProducts
  * } = useProductList({ products });
  */
-export function useProductList<T extends Product>({ 
+export function useProductList<T extends Product>({
   products,
-  initialSort = 'popular'
+  initialSort = 'popular',
 }: UseProductListProps<T>): UseProductListReturn<T> {
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<SortOption>(initialSort);
@@ -67,12 +67,12 @@ export function useProductList<T extends Product>({
   };
 
   const handleFilterChange = (filterKey: string, value: string, checked: boolean) => {
-    setActiveFilters(prev => {
+    setActiveFilters((prev) => {
       const newFilters = { ...prev };
       if (checked) {
         newFilters[filterKey] = [...(newFilters[filterKey] || []), value];
       } else {
-        newFilters[filterKey] = (newFilters[filterKey] || []).filter(v => v !== value);
+        newFilters[filterKey] = (newFilters[filterKey] || []).filter((v) => v !== value);
         if (newFilters[filterKey].length === 0) {
           delete newFilters[filterKey];
         }
@@ -88,25 +88,31 @@ export function useProductList<T extends Product>({
 
   const filteredAndSortedProducts = useMemo(() => {
     // First filter by search
-    let filtered = products.filter(product => {
-      if (searchQuery && product.name && !product.name.toLowerCase().includes(searchQuery.toLowerCase())) {
+    let filtered = products.filter((product) => {
+      if (
+        searchQuery &&
+        product.name &&
+        !product.name.toLowerCase().includes(searchQuery.toLowerCase())
+      ) {
         return false;
       }
       return true;
     });
 
     // Then filter by active filters
-    filtered = filtered.filter(product => {
+    filtered = filtered.filter((product) => {
       return Object.entries(activeFilters).every(([key, values]) => {
         switch (key) {
           case 'manufacturer':
             return values.includes(product.manufacturer || '');
           case 'memory':
-            return values.some(value => product.memory?.includes(value));
+            return values.some((value) => product.memory?.includes(value));
           case 'colors':
-            return values.some(value => product.available_colors?.some(color => color.name === value));
+            return values.some((value) =>
+              product.available_colors?.some((color) => color.name === value)
+            );
           case 'features':
-            return values.some(value => product.features?.includes(value));
+            return values.some((value) => product.features?.includes(value));
           default:
             return true;
         }
@@ -125,9 +131,9 @@ export function useProductList<T extends Product>({
           const bPriceHigh = typeof b.price === 'string' ? parseFloat(b.price) : b.price;
           return bPriceHigh - aPriceHigh;
         case 'newest':
-          return ((b.isNew ? 1 : 0) - (a.isNew ? 1 : 0));
+          return (b.isNew ? 1 : 0) - (a.isNew ? 1 : 0);
         default: // popular
-          return ((b.review_count || 0) - (a.review_count || 0));
+          return (b.review_count || 0) - (a.review_count || 0);
       }
     });
   }, [products, searchQuery, sortBy, activeFilters]);
@@ -144,4 +150,4 @@ export function useProductList<T extends Product>({
     handleClearFilters,
     filteredAndSortedProducts,
   };
-} 
+}

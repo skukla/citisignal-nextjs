@@ -43,20 +43,22 @@ function AccessoryGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 2
+    lg: 2,
   },
   gap = 'md',
   className,
   onAccessoryClick,
-  emptyState
+  emptyState,
 }: AccessoryGridProps) {
   // Handle empty state
   if (accessories.length === 0) {
     return (
       <EmptyState
         icon={CubeIcon}
-        title={emptyState?.title || "No accessories found"}
-        description={emptyState?.description || "There are no accessories to display at the moment."}
+        title={emptyState?.title || 'No accessories found'}
+        description={
+          emptyState?.description || 'There are no accessories to display at the moment.'
+        }
         actionLabel={emptyState?.actionLabel}
         onAction={emptyState?.onAction}
       />

@@ -34,39 +34,40 @@ export interface NewsletterContent {
 
 export const newsletterContent: NewsletterContent = {
   header: {
-    title: "Stay Connected with CitiSignal",
-    description: "Get exclusive deals, new device launches, and special offers delivered straight to your inbox."
+    title: 'Stay Connected with CitiSignal',
+    description:
+      'Get exclusive deals, new device launches, and special offers delivered straight to your inbox.',
   },
   benefits: [
     {
-      emoji: "📱",
-      title: "Exclusive Deals",
-      description: "First access to limited-time offers and discounts"
+      emoji: '📱',
+      title: 'Exclusive Deals',
+      description: 'First access to limited-time offers and discounts',
     },
     {
-      emoji: "🚀",
-      title: "New Releases",
-      description: "Be the first to know about new device launches"
+      emoji: '🚀',
+      title: 'New Releases',
+      description: 'Be the first to know about new device launches',
     },
     {
-      emoji: "💡",
-      title: "Tips & Updates",
-      description: "Network updates and helpful tech tips"
-    }
+      emoji: '💡',
+      title: 'Tips & Updates',
+      description: 'Network updates and helpful tech tips',
+    },
   ],
   form: {
-    placeholder: "Enter your email address",
-    buttonText: "Subscribe Now",
-    privacyText: "We respect your privacy. Unsubscribe at any time."
+    placeholder: 'Enter your email address',
+    buttonText: 'Subscribe Now',
+    privacyText: 'We respect your privacy. Unsubscribe at any time.',
   },
   successState: {
-    title: "Thanks for subscribing!",
+    title: 'Thanks for subscribing!',
     description: "You'll receive the latest deals and updates in your inbox.",
-    buttonText: "Subscribe another email"
+    buttonText: 'Subscribe another email',
   },
   privacyNotice: {
-    text: "We respect your privacy. Unsubscribe at any time.",
-    linkText: "Privacy Policy",
-    linkHref: "/privacy"
-  }
+    text: 'We respect your privacy. Unsubscribe at any time.',
+    linkText: 'Privacy Policy',
+    linkHref: '/privacy',
+  },
 };

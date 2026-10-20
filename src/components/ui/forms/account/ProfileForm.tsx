@@ -20,16 +20,16 @@ export default function ProfileForm({ onSubmit }: ProfileFormProps) {
     getFieldError,
     isSubmitting,
     touchedFields,
-    dirtyFields
+    dirtyFields,
   } = useForm<ProfileFormFields>({
     initialValues: {
       firstName: '',
       lastName: '',
       email: '',
-      phone: ''
+      phone: '',
     },
     validationRules: profileValidation,
-    onSubmit
+    onSubmit,
   });
 
   return (
@@ -37,9 +37,8 @@ export default function ProfileForm({ onSubmit }: ProfileFormProps) {
       {profileConfig.personalInfo.form.fields.map((field) => {
         const fieldName = field.id as keyof ProfileFormFields;
         // Only show error if field has been touched AND modified
-        const error = touchedFields[fieldName] && dirtyFields[fieldName] 
-          ? getFieldError(fieldName) 
-          : undefined;
+        const error =
+          touchedFields[fieldName] && dirtyFields[fieldName] ? getFieldError(fieldName) : undefined;
 
         return (
           <div key={field.id} className="space-y-1">

@@ -1,6 +1,6 @@
 // Re-export from centralized account config
-export { 
+export {
   accountMenuItems as authenticatedMenuItems,
   authConfig,
-  type AccountMenuItem
+  type AccountMenuItem,
 } from '@/data/config/account';

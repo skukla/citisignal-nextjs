@@ -1,9 +1,4 @@
-export type OrderStatus = 
-  | 'pending'
-  | 'processing'
-  | 'shipped'
-  | 'delivered'
-  | 'cancelled';
+export type OrderStatus = 'pending' | 'processing' | 'shipped' | 'delivered' | 'cancelled';
 
 export interface OrderItem {
   id: string;
@@ -30,8 +25,8 @@ export const orderConfig = {
     description: 'View and track your orders',
     emptyState: {
       title: 'No orders yet',
-      description: 'When you make a purchase, it will appear here'
-    }
+      description: 'When you make a purchase, it will appear here',
+    },
   },
   details: {
     title: 'Order Details',
@@ -41,7 +36,7 @@ export const orderConfig = {
       processing: { label: 'Processing', color: 'blue' },
       shipped: { label: 'Shipped', color: 'purple' },
       delivered: { label: 'Delivered', color: 'green' },
-      cancelled: { label: 'Cancelled', color: 'red' }
-    }
-  }
+      cancelled: { label: 'Cancelled', color: 'red' },
+    },
+  },
 } as const;

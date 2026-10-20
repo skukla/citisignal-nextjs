@@ -41,8 +41,8 @@ export const Logo: FC<LogoProps> = ({
   width = 180,
   height = 80,
   className,
-  href = "/",
-  linkClassName
+  href = '/',
+  linkClassName,
 }) => {
   const image = (
     <Image
@@ -52,9 +52,9 @@ export const Logo: FC<LogoProps> = ({
       height={height}
       className={className}
       priority
-      style={{ 
+      style={{
         width: `${width}px`,
-        height: `${height}px`
+        height: `${height}px`,
       }}
     />
   );
@@ -63,7 +63,9 @@ export const Logo: FC<LogoProps> = ({
     <Link href={href} className={twMerge('flex items-center', linkClassName)}>
       {image}
     </Link>
-  ) : image;
+  ) : (
+    image
+  );
 };
 
-export default Logo; 
+export default Logo;

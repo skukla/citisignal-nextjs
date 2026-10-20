@@ -14,45 +14,42 @@ export default function PhonesPage() {
     search: phonesPageData.search,
     filters: phonesPageData.filters,
     emptyState: phonesPageData.emptyState,
-    loadingSkeletonCount: 12
+    loadingSkeletonCount: 12,
   };
 
   return (
-    <ProductPageProvider 
-      category="phones"
-      pageData={pageData}
-    >
+    <ProductPageProvider category="phones" pageData={pageData}>
       <ProductPage.Background color="gray">
         <ProductPage.Container>
           <ProductPage.Breadcrumbs />
           <ProductPage.Header />
-          
+
           <ProductPage.Toolbar>
             <ProductPage.Search />
             <ProductPage.Sort />
             <ProductPage.MobileFilterButton />
           </ProductPage.Toolbar>
-          
+
           <ProductPage.ResultCount />
-          
+
           <ProductPage.Layout>
             <ProductPage.Sidebar>
               <ProductPage.Filters />
             </ProductPage.Sidebar>
-            
+
             <ProductPage.Main>
               <ProductPage.Content />
               <ProductPage.LoadMore />
             </ProductPage.Main>
           </ProductPage.Layout>
-          
+
           <ProductPage.ContentSections>
             <PhonesTechReviews />
             <PhonesBuyingGuides />
             <PhonesTips />
           </ProductPage.ContentSections>
         </ProductPage.Container>
-        
+
         <ProductPage.Newsletter />
       </ProductPage.Background>
     </ProductPageProvider>

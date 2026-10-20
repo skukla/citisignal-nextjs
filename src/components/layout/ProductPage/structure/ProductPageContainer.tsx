@@ -8,13 +8,6 @@ interface ProductPageContainerProps {
   className?: string;
 }
 
-export function ProductPageContainer({ 
-  children,
-  className 
-}: ProductPageContainerProps) {
-  return (
-    <Content className={className}>
-      {children}
-    </Content>
-  );
+export function ProductPageContainer({ children, className }: ProductPageContainerProps) {
+  return <Content className={className}>{children}</Content>;
 }

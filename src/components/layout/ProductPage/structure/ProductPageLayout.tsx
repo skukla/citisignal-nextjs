@@ -8,16 +8,9 @@ interface ProductPageLayoutProps {
   className?: string;
 }
 
-export function ProductPageLayout({ 
-  children, 
-  className 
-}: ProductPageLayoutProps) {
+export function ProductPageLayout({ children, className }: ProductPageLayoutProps) {
   // TwoColumnLayout expects exactly 2 children as an array
   const childrenArray = Array.isArray(children) ? children : [children];
-  
-  return (
-    <TwoColumnLayout className={className}>
-      {childrenArray}
-    </TwoColumnLayout>
-  );
+
+  return <TwoColumnLayout className={className}>{childrenArray}</TwoColumnLayout>;
 }

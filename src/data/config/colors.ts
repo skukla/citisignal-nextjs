@@ -25,15 +25,15 @@ export const colorOptions: readonly ColorOption[] = [
   { id: 'sierra-blue', name: 'Sierra Blue', hex: '#adc6dc' },
   { id: 'silver', name: 'Silver', hex: '#f1f3ee' },
   { id: 'starlight', name: 'Starlight', hex: '#e7e1dc' },
-  { id: 'white', name: 'White', hex: '#f9f9f9' }
+  { id: 'white', name: 'White', hex: '#f9f9f9' },
 ] as const;
 
 // Helper function to get color by ID
 export const getColorById = (id: string): ColorOption | undefined => {
-  return colorOptions.find(color => color.id === id);
+  return colorOptions.find((color) => color.id === id);
 };
 
 // Helper function to get colors by IDs
 export const getColorsByIds = (ids: string[]): ColorOption[] => {
-  return ids.map(id => getColorById(id)).filter(Boolean) as ColorOption[];
+  return ids.map((id) => getColorById(id)).filter(Boolean) as ColorOption[];
 };

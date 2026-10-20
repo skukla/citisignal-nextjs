@@ -22,7 +22,7 @@ export const profileConfig = {
     emptyState: {
       title: 'No profile information',
       description: 'Add your personal details to help us serve you better.',
-      action: 'Add Profile Information'
+      action: 'Add Profile Information',
     },
     form: {
       fields: [
@@ -30,28 +30,28 @@ export const profileConfig = {
           id: 'firstName',
           label: 'First Name',
           type: 'text',
-          required: true
+          required: true,
         },
         {
           id: 'lastName',
           label: 'Last Name',
           type: 'text',
-          required: true
+          required: true,
         },
         {
           id: 'email',
           label: 'Email',
           type: 'email',
-          required: true
+          required: true,
         },
         {
           id: 'phone',
           label: 'Phone Number',
           type: 'tel',
-          required: false
-        }
-      ]
-    }
+          required: false,
+        },
+      ],
+    },
   },
   addresses: {
     title: 'Address Management',
@@ -59,7 +59,7 @@ export const profileConfig = {
     emptyState: {
       title: 'No addresses saved',
       description: 'Add an address to make checkout faster.',
-      action: 'Add New Address'
-    }
-  }
+      action: 'Add New Address',
+    },
+  },
 };

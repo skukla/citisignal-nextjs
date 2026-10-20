@@ -1,4 +1,9 @@
-import type { BaseComponentProps, BasePanelProps, BasePanelContextValue, CompoundComponent } from '@/types/ui';
+import type {
+  BaseComponentProps,
+  BasePanelProps,
+  BasePanelContextValue,
+  CompoundComponent,
+} from '@/types/ui';
 
 // Search result type
 export interface SearchResult {

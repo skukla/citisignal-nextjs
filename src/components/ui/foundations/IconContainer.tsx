@@ -18,14 +18,14 @@ export default function IconContainer({
   size = 'md',
   variant = 'default',
   bgColor,
-  className
+  className,
 }: IconContainerProps) {
   // Container size classes
   const containerSizeClasses = {
     sm: 'w-12 h-12',
     md: 'w-14 h-14',
     lg: 'w-16 h-16',
-    xl: 'w-20 h-20'
+    xl: 'w-20 h-20',
   };
 
   // Icon size classes
@@ -33,7 +33,7 @@ export default function IconContainer({
     sm: 'w-6 h-6',
     md: 'w-7 h-7',
     lg: 'w-8 h-8',
-    xl: 'w-10 h-10'
+    xl: 'w-10 h-10',
   };
 
   // Background color variants
@@ -42,7 +42,7 @@ export default function IconContainer({
     primary: 'bg-purple-50',
     secondary: 'bg-blue-50',
     accent: 'bg-yellow-50',
-    custom: bgColor || 'bg-purple-50'
+    custom: bgColor || 'bg-purple-50',
   };
 
   // Icon color variants
@@ -51,22 +51,21 @@ export default function IconContainer({
     primary: 'text-purple-600',
     secondary: 'text-blue-600',
     accent: 'text-yellow-600',
-    custom: ''
+    custom: '',
   };
 
   return (
-    <div className={twMerge(
-      'rounded-lg flex items-center justify-center transition-colors',
-      containerSizeClasses[size],
-      variantBgClasses[variant],
-      'group-hover:bg-purple-100',
-      className
-    )}>
+    <div
+      className={twMerge(
+        'rounded-lg flex items-center justify-center transition-colors',
+        containerSizeClasses[size],
+        variantBgClasses[variant],
+        'group-hover:bg-purple-100',
+        className
+      )}
+    >
       {Icon ? (
-        <Icon className={twMerge(
-          iconSizeClasses[size],
-          variantIconClasses[variant]
-        )} />
+        <Icon className={twMerge(iconSizeClasses[size], variantIconClasses[variant])} />
       ) : (
         children
       )}

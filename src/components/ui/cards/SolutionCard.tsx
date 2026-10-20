@@ -16,10 +16,10 @@ interface SolutionCardProps {
 
 /**
  * A card component for displaying solution information with features list.
- * 
+ *
  * @example
  * ```tsx
- * <SolutionCard 
+ * <SolutionCard
  *   icon={PhoneIcon}
  *   title="Mobile Plans"
  *   description="Flexible plans for every need"
@@ -34,10 +34,10 @@ export default function SolutionCard({
   description,
   features,
   href,
-  className
+  className,
 }: SolutionCardProps) {
   return (
-    <Card 
+    <Card
       as={Link}
       href={href}
       interactive
@@ -51,24 +51,22 @@ export default function SolutionCard({
         {title}
       </h3>
 
-      <p className="text-gray-600 mb-4">
-        {description}
-      </p>
+      <p className="text-gray-600 mb-4">{description}</p>
 
       <ul className="space-y-2">
         {features.map((feature, index) => (
           <li key={index} className="flex items-center text-sm">
-            <svg 
-              className="w-4 h-4 mr-2 text-green-500" 
-              fill="none" 
-              stroke="currentColor" 
+            <svg
+              className="w-4 h-4 mr-2 text-green-500"
+              fill="none"
+              stroke="currentColor"
               viewBox="0 0 24 24"
             >
-              <path 
-                strokeLinecap="round" 
-                strokeLinejoin="round" 
-                strokeWidth="2" 
-                d="M5 13l4 4L19 7" 
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M5 13l4 4L19 7"
               />
             </svg>
             <span className="text-gray-600">{feature}</span>
@@ -77,4 +75,4 @@ export default function SolutionCard({
       </ul>
     </Card>
   );
-} 
+}

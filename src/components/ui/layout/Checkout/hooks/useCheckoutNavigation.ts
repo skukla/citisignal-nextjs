@@ -13,13 +13,16 @@ import type { CheckoutStepId } from '../types';
 export function useCheckoutNavigation() {
   const { setStep, isStepComplete, canProceedToStep, currentStep } = useCheckoutContext();
 
-  const navigateToStep = useCallback((stepId: CheckoutStepId) => {
-    if (canProceedToStep(stepId)) {
-      setStep(stepId);
-      return true;
-    }
-    return false;
-  }, [canProceedToStep, setStep]);
+  const navigateToStep = useCallback(
+    (stepId: CheckoutStepId) => {
+      if (canProceedToStep(stepId)) {
+        setStep(stepId);
+        return true;
+      }
+      return false;
+    },
+    [canProceedToStep, setStep]
+  );
 
   const navigateBack = useCallback(() => {
     const steps: CheckoutStepId[] = ['shipping', 'payment', 'review'];
@@ -47,6 +50,6 @@ export function useCheckoutNavigation() {
     navigateNext,
     currentStep,
     isStepComplete,
-    canProceedToStep
+    canProceedToStep,
   };
 }

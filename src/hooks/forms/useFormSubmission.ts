@@ -12,44 +12,47 @@ interface FormSubmissionState {
   isSubmitted: boolean;
 }
 
-export function useFormSubmission<T>({ 
-  onSubmit, 
-  onSuccess, 
-  onError 
+export function useFormSubmission<T>({
+  onSubmit,
+  onSuccess,
+  onError,
 }: UseFormSubmissionOptions<T>) {
   const [state, setState] = useState<FormSubmissionState>({
     isSubmitting: false,
     error: '',
-    isSubmitted: false
+    isSubmitted: false,
   });
 
-  const handleSubmit = useCallback(async (values: T) => {
-    setState(prev => ({ ...prev, isSubmitting: true, error: '' }));
+  const handleSubmit = useCallback(
+    async (values: T) => {
+      setState((prev) => ({ ...prev, isSubmitting: true, error: '' }));
 
-    try {
-      await onSubmit(values);
-      setState(prev => ({ ...prev, isSubmitting: false, isSubmitted: true }));
-      onSuccess?.();
-    } catch (error) {
-      const errorMessage = error instanceof Error ? error.message : 'An error occurred';
-      setState(prev => ({ 
-        ...prev, 
-        isSubmitting: false, 
-        error: errorMessage 
-      }));
-      onError?.(error instanceof Error ? error : new Error(errorMessage));
-    }
-  }, [onSubmit, onSuccess, onError]);
+      try {
+        await onSubmit(values);
+        setState((prev) => ({ ...prev, isSubmitting: false, isSubmitted: true }));
+        onSuccess?.();
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'An error occurred';
+        setState((prev) => ({
+          ...prev,
+          isSubmitting: false,
+          error: errorMessage,
+        }));
+        onError?.(error instanceof Error ? error : new Error(errorMessage));
+      }
+    },
+    [onSubmit, onSuccess, onError]
+  );
 
   const resetError = useCallback(() => {
-    setState(prev => ({ ...prev, error: '' }));
+    setState((prev) => ({ ...prev, error: '' }));
   }, []);
 
   const resetState = useCallback(() => {
     setState({
       isSubmitting: false,
       error: '',
-      isSubmitted: false
+      isSubmitted: false,
     });
   }, []);
 
@@ -59,6 +62,6 @@ export function useFormSubmission<T>({
     isSubmitted: state.isSubmitted,
     handleSubmit,
     resetError,
-    resetState
+    resetState,
   };
 }

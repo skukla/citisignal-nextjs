@@ -12,7 +12,7 @@ export function AccountMenu({ className }: AccountMenuProps) {
 
   return (
     <nav className={twMerge('py-2', className)}>
-      {authenticatedMenuItems.map(item => (
+      {authenticatedMenuItems.map((item) => (
         <Link
           key={item.id}
           href={item.href}

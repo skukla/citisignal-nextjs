@@ -15,7 +15,7 @@ interface SuccessMessageProps {
 /**
  * A success message component for displaying positive feedback with an action.
  * Features a check icon, title, description, and action button.
- * 
+ *
  * @example
  * ```tsx
  * <SuccessMessage
@@ -31,23 +31,16 @@ export default function SuccessMessage({
   description,
   buttonText,
   onButtonClick,
-  className
+  className,
 }: SuccessMessageProps) {
   return (
     <div className={twMerge('text-center', className)}>
       <CheckCircleIcon className="w-16 h-16 mx-auto mb-6 text-green-600" />
-      <h2 className="text-3xl font-bold mb-4 text-gray-900">
-        {title}
-      </h2>
-      <p className="text-xl mb-8 text-gray-600">
-        {description}
-      </p>
-      <Button
-        onClick={onButtonClick}
-        size="lg"
-      >
+      <h2 className="text-3xl font-bold mb-4 text-gray-900">{title}</h2>
+      <p className="text-xl mb-8 text-gray-600">{description}</p>
+      <Button onClick={onButtonClick} size="lg">
         {buttonText}
       </Button>
     </div>
   );
-} 
+}

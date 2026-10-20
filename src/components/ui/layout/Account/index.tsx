@@ -28,7 +28,7 @@ const Account: AccountComponent = {
   Icon: AccountIcon,
   Panel: AccountPanel,
   Menu: AccountMenu,
-  Profile: AccountProfile
+  Profile: AccountProfile,
 };
 
 export default Account;

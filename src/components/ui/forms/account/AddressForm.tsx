@@ -13,11 +13,7 @@ interface AddressFormProps {
   onCancel?: () => void;
 }
 
-export default function AddressForm({ 
-  initialValues = {},
-  onSubmit,
-  onCancel 
-}: AddressFormProps) {
+export default function AddressForm({ initialValues = {}, onSubmit, onCancel }: AddressFormProps) {
   const {
     values,
     handleChange,
@@ -26,7 +22,7 @@ export default function AddressForm({
     getFieldError,
     isSubmitting,
     touchedFields,
-    dirtyFields
+    dirtyFields,
   } = useForm<AddressFields>({
     initialValues: {
       name: '',
@@ -36,10 +32,10 @@ export default function AddressForm({
       state: '',
       zipCode: '',
       isDefault: false,
-      ...initialValues
+      ...initialValues,
     },
     validationRules: addressValidation,
-    onSubmit
+    onSubmit,
   });
 
   return (
@@ -115,19 +111,11 @@ export default function AddressForm({
       </div>
       <div className="flex justify-end space-x-4">
         {onCancel && (
-          <Button
-            type="button"
-            variant="secondary"
-            onClick={onCancel}
-          >
+          <Button type="button" variant="secondary" onClick={onCancel}>
             Cancel
           </Button>
         )}
-        <Button
-          type="submit"
-          variant="primary"
-          disabled={isSubmitting}
-        >
+        <Button type="submit" variant="primary" disabled={isSubmitting}>
           {isSubmitting ? 'Saving...' : 'Save Address'}
         </Button>
       </div>

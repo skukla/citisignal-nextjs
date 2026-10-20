@@ -10,7 +10,7 @@ interface FooterRootProps extends BaseComponentProps {
 /**
  * Root component for Footer compound component.
  * Provides the base footer structure and Container for all Footer sub-components.
- * 
+ *
  * @example
  * ```tsx
  * <Footer.Root>
@@ -24,9 +24,7 @@ interface FooterRootProps extends BaseComponentProps {
 export function FooterRoot({ children }: FooterRootProps) {
   return (
     <footer className="bg-gray-900 text-white">
-      <Container className="py-12">
-        {children}
-      </Container>
+      <Container className="py-12">{children}</Container>
     </footer>
   );
 }

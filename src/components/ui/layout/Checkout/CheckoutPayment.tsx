@@ -10,14 +10,8 @@ import { useFieldValidation } from './hooks/useFieldValidation';
 import type { CheckoutPaymentProps, PaymentDetails, ValidationResult } from './types';
 
 export default function CheckoutPayment({ className }: CheckoutPaymentProps) {
-  const { 
-    paymentDetails, 
-    updatePayment, 
-    setStep, 
-    isStepComplete,
-    validateStep,
-    touchedFields
-  } = useCheckoutContext();
+  const { paymentDetails, updatePayment, setStep, isStepComplete, validateStep, touchedFields } =
+    useCheckoutContext();
 
   const validation = validateStep('payment') as ValidationResult<PaymentDetails>;
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -78,10 +72,10 @@ export default function CheckoutPayment({ className }: CheckoutPaymentProps) {
                 id="expiryDate"
                 label="Expiry Date"
                 placeholder="MM/YY"
-                              value={paymentDetails?.expiryDate || ''}
-              onChange={(e) => updatePayment({ expiryDate: e.target.value }, 'expiryDate')}
-              required
-              error={getFieldError('expiryDate', validation.errors)}
+                value={paymentDetails?.expiryDate || ''}
+                onChange={(e) => updatePayment({ expiryDate: e.target.value }, 'expiryDate')}
+                required
+                error={getFieldError('expiryDate', validation.errors)}
               />
             </div>
 
@@ -93,9 +87,9 @@ export default function CheckoutPayment({ className }: CheckoutPaymentProps) {
                 label="CVV"
                 placeholder="Enter CVV"
                 value={paymentDetails?.cvv || ''}
-              onChange={(e) => updatePayment({ cvv: e.target.value }, 'cvv')}
-              required
-              error={getFieldError('cvv', validation.errors)}
+                onChange={(e) => updatePayment({ cvv: e.target.value }, 'cvv')}
+                required
+                error={getFieldError('cvv', validation.errors)}
               />
             </div>
           </div>
@@ -109,16 +103,10 @@ export default function CheckoutPayment({ className }: CheckoutPaymentProps) {
         </div>
 
         <div className="flex justify-between">
-          <Button
-            variant="outline"
-            onClick={() => setStep('shipping')}
-          >
+          <Button variant="outline" onClick={() => setStep('shipping')}>
             Back to Shipping
           </Button>
-          <Button 
-            type="submit"
-            disabled={!isStepComplete('payment')}
-          >
+          <Button type="submit" disabled={!isStepComplete('payment')}>
             Continue to Review
           </Button>
         </div>

@@ -12,7 +12,7 @@ export default function VideoPreview({
   image,
   href = '#',
   className,
-  placeholder = 'Review Video'
+  placeholder = 'Review Video',
 }: VideoPreviewProps) {
   return (
     <a href={href} className={twMerge('group block', className)}>
@@ -32,17 +32,14 @@ export default function VideoPreview({
           </div>
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-purple-100 to-purple-50 flex items-center justify-center group-hover:bg-opacity-90 transition-opacity">
-            <span className="text-purple-600 font-medium group-hover:opacity-0 transition-opacity">{placeholder}</span>
+            <span className="text-purple-600 font-medium group-hover:opacity-0 transition-opacity">
+              {placeholder}
+            </span>
             <PlayIcon className="w-12 h-12 text-purple-600 opacity-0 group-hover:opacity-60 absolute transition-opacity" />
           </div>
         )}
       </div>
-      <PreviewContent
-        title={title}
-        description={description}
-        titleSize="md"
-        className="mt-4"
-      />
+      <PreviewContent title={title} description={description} titleSize="md" className="mt-4" />
     </a>
   );
 }

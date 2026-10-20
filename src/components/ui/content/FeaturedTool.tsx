@@ -40,21 +40,19 @@ function FeaturedTool({
   buttonText,
   buttonHref,
   features,
-  className
+  className,
 }: FeaturedToolProps) {
   return (
-    <div className={twMerge(
-      'bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 md:p-12',
-      className
-    )}>
+    <div
+      className={twMerge(
+        'bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 md:p-12',
+        className
+      )}
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
         <div>
-          <h3 className="text-2xl font-bold text-gray-900 mb-4">
-            {title}
-          </h3>
-          <p className="text-lg text-gray-600 mb-6">
-            {description}
-          </p>
+          <h3 className="text-2xl font-bold text-gray-900 mb-4">{title}</h3>
+          <p className="text-lg text-gray-600 mb-6">{description}</p>
           <Link
             href={buttonHref}
             variant="button"
@@ -72,4 +70,4 @@ function FeaturedTool({
   );
 }
 
-export default memo(FeaturedTool); 
+export default memo(FeaturedTool);

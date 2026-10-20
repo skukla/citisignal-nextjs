@@ -25,7 +25,7 @@ const Navigation: NavigationComponent = {
   Root: NavigationRoot,
   Desktop: NavigationDesktop,
   Mobile: NavigationMobile,
-  Link: NavigationLink
+  Link: NavigationLink,
 };
 
 export default Navigation;

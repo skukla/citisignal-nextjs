@@ -17,17 +17,13 @@ export default function TechReviewGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 3
+    lg: 3,
   },
   gap = 'lg',
-  className
+  className,
 }: TechReviewGridProps) {
   return (
-    <Grid
-      columns={columns}
-      gap={gap}
-      className={className}
-    >
+    <Grid columns={columns} gap={gap} className={className}>
       {reviews.map((review, index) => (
         <VideoPreview
           key={index}

@@ -15,10 +15,8 @@ export interface LifestyleSolutionsSectionProps {
 
 function LifestyleSolutionsSection({
   content = lifestyleSolutionsContent,
-  className
+  className,
 }: LifestyleSolutionsSectionProps) {
-
-
   return (
     <ContentSection background="bg-gray-50" className={className}>
       <SectionHeader
@@ -44,4 +42,4 @@ function LifestyleSolutionsSection({
   );
 }
 
-export default memo(LifestyleSolutionsSection); 
+export default memo(LifestyleSolutionsSection);

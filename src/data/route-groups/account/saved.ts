@@ -12,14 +12,14 @@ export interface WishlistItem {
 export const savedConfig = {
   wishlist: {
     title: 'Wishlist',
-    description: 'Products and plans you\'ve saved for later',
+    description: "Products and plans you've saved for later",
     emptyState: {
       title: 'Your wishlist is empty',
-      description: 'Save items for later by clicking the heart icon on any product'
+      description: 'Save items for later by clicking the heart icon on any product',
     },
     grid: {
       columns: { sm: 1, md: 2, lg: 3 },
-      gap: 'lg' as const
-    }
-  }
+      gap: 'lg' as const,
+    },
+  },
 } as const;

@@ -10,17 +10,20 @@ export interface UseWishlistReturn {
 
 export function useWishlist(): UseWishlistReturn {
   const [wishlisted, setWishlisted] = useState<Record<string, boolean>>({});
-  
+
   const toggleWishlist = useCallback((productId: string) => {
-    setWishlisted(prev => ({
+    setWishlisted((prev) => ({
       ...prev,
-      [productId]: !prev[productId]
+      [productId]: !prev[productId],
     }));
   }, []);
 
-  const isWishlisted = useCallback((productId: string) => {
-    return wishlisted[productId] || false;
-  }, [wishlisted]);
+  const isWishlisted = useCallback(
+    (productId: string) => {
+      return wishlisted[productId] || false;
+    },
+    [wishlisted]
+  );
 
   return { isWishlisted, toggleWishlist };
 }

@@ -37,6 +37,6 @@ export function useOrderSubmission() {
   return {
     isSubmitting,
     submitOrder,
-    canSubmit
+    canSubmit,
   };
 }

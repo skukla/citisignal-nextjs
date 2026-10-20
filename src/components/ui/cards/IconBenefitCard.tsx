@@ -16,7 +16,7 @@ export interface IconBenefitCardProps {
 
 /**
  * IconBenefitCard component for displaying benefit information with HeroIcon.
- * 
+ *
  * @example
  * ```tsx
  * <IconBenefitCard
@@ -34,24 +34,20 @@ function IconBenefitCard({
   description,
   iconColor = 'text-purple-600',
   iconBgColor = 'bg-purple-100',
-  className
+  className,
 }: IconBenefitCardProps) {
   return (
-    <Card 
-      className={twMerge('p-6 shadow-sm', className)}
-    >
-      <div className={twMerge(
-        'w-12 h-12 rounded-lg flex items-center justify-center mb-4',
-        iconBgColor
-      )}>
+    <Card className={twMerge('p-6 shadow-sm', className)}>
+      <div
+        className={twMerge(
+          'w-12 h-12 rounded-lg flex items-center justify-center mb-4',
+          iconBgColor
+        )}
+      >
         <IconComponent className={twMerge('w-6 h-6', iconColor)} />
       </div>
-      <h3 className="text-xl font-semibold text-gray-900 mb-2">
-        {title}
-      </h3>
-      <p className="text-gray-600">
-        {description}
-      </p>
+      <h3 className="text-xl font-semibold text-gray-900 mb-2">{title}</h3>
+      <p className="text-gray-600">{description}</p>
     </Card>
   );
 }

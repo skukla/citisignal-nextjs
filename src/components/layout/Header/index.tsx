@@ -17,7 +17,7 @@ import { HeaderTopBar } from './HeaderTopBar';
  * // Simple usage (recommended):
  * import Header from '@/components/layout/Header';
  * <Header />
- * 
+ *
  * // Custom usage:
  * import { Header } from '@/components/layout/Header';
  * <Header.Root>

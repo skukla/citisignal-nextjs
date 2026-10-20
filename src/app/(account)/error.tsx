@@ -17,9 +17,7 @@ export default function AccountError({
   return (
     <div className="flex items-center justify-center min-h-96">
       <div className="text-center max-w-md px-4">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
-          Account Error
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Account Error</h2>
         <p className="text-gray-600 mb-6">
           We&apos;re having trouble accessing your account information. Please try again.
         </p>
@@ -27,10 +25,7 @@ export default function AccountError({
           <Button onClick={reset} variant="primary">
             Try again
           </Button>
-          <Button 
-            onClick={() => window.location.href = '/account/auth'} 
-            variant="outline"
-          >
+          <Button onClick={() => (window.location.href = '/account/auth')} variant="outline">
             Sign in again
           </Button>
         </div>

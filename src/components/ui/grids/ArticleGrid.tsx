@@ -17,17 +17,13 @@ export default function ArticleGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 3
+    lg: 3,
   },
   gap = 'xl',
-  className
+  className,
 }: ArticleGridProps) {
   return (
-    <Grid
-      columns={columns}
-      gap={gap}
-      className={className}
-    >
+    <Grid columns={columns} gap={gap} className={className}>
       {articles.map((article, index) => (
         <ArticlePreview
           key={index}

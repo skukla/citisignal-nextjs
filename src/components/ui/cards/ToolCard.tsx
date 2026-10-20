@@ -23,33 +23,33 @@ function ToolCard({
   href,
   className,
   iconClassName,
-  iconContainerClassName
+  iconContainerClassName,
 }: ToolCardProps) {
   return (
-    <Card 
+    <Card
       as={Link}
       href={href}
       interactive
-      className={twMerge('group p-6 bg-white border-2 border-gray-100 hover:border-purple-200 transition-colors', className)}
+      className={twMerge(
+        'group p-6 bg-white border-2 border-gray-100 hover:border-purple-200 transition-colors',
+        className
+      )}
     >
-      <div className={twMerge(
-        'w-16 h-16 rounded-lg bg-purple-50 flex items-center justify-center mb-6',
-        'group-hover:bg-purple-100 transition-colors',
-        iconContainerClassName
-      )}>
-        <Icon className={twMerge(
-          'w-8 h-8 text-purple-600',
-          iconClassName
-        )} />
+      <div
+        className={twMerge(
+          'w-16 h-16 rounded-lg bg-purple-50 flex items-center justify-center mb-6',
+          'group-hover:bg-purple-100 transition-colors',
+          iconContainerClassName
+        )}
+      >
+        <Icon className={twMerge('w-8 h-8 text-purple-600', iconClassName)} />
       </div>
       <h3 className="text-xl font-bold text-gray-900 mb-2 group-hover:text-purple-600 transition-colors">
         {title}
       </h3>
-      <p className="text-gray-600">
-        {description}
-      </p>
+      <p className="text-gray-600">{description}</p>
     </Card>
   );
 }
 
-export default memo(ToolCard); 
+export default memo(ToolCard);

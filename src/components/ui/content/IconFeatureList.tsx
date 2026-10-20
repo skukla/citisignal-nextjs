@@ -6,7 +6,7 @@ import type { FeatureListProps } from '@/types/section';
 
 /**
  * IconFeatureList component for displaying a list of features with optional icons.
- * 
+ *
  * @example
  * ```tsx
  * <IconFeatureList
@@ -18,11 +18,7 @@ import type { FeatureListProps } from '@/types/section';
  * />
  * ```
  */
-function IconFeatureList({
-  features,
-  iconColor = 'text-green-500',
-  className
-}: FeatureListProps) {
+function IconFeatureList({ features, iconColor = 'text-green-500', className }: FeatureListProps) {
   if (!features.length) return null;
 
   return (
@@ -30,10 +26,7 @@ function IconFeatureList({
       {features.map((feature, index) => (
         <li key={index} className="flex items-center">
           {feature.icon && (
-            <feature.icon 
-              className={twMerge('w-5 h-5 mr-3', iconColor)}
-              aria-hidden
-            />
+            <feature.icon className={twMerge('w-5 h-5 mr-3', iconColor)} aria-hidden />
           )}
           {feature.text}
         </li>

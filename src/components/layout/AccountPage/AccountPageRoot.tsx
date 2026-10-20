@@ -10,16 +10,14 @@ interface AccountPageRootProps {
   className?: string;
 }
 
-export function AccountPageRoot({ 
-  children, 
+export function AccountPageRoot({
+  children,
   background = 'gray',
-  className 
+  className,
 }: AccountPageRootProps) {
   return (
     <Page background={background} className={className}>
-      <Content>
-        {children}
-      </Content>
+      <Content>{children}</Content>
     </Page>
   );
 }

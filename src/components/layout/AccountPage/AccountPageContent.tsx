@@ -8,9 +8,5 @@ interface AccountPageContentProps {
 }
 
 export function AccountPageContent({ children, className }: AccountPageContentProps) {
-  return (
-    <div className={className}>
-      {children}
-    </div>
-  );
+  return <div className={className}>{children}</div>;
 }

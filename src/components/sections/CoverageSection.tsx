@@ -10,11 +10,7 @@ import StatsList from '@/components/ui/content/StatsList';
 import { coverageContent } from '@/data/sections/coverage';
 import type { CoverageSectionProps } from '@/types/section';
 
-function CoverageSection({
-  content = coverageContent,
-  className
-}: CoverageSectionProps) {
-
+function CoverageSection({ content = coverageContent, className }: CoverageSectionProps) {
   return (
     <ContentSection background="bg-white" className={className}>
       <SectionHeader
@@ -24,33 +20,23 @@ function CoverageSection({
         className="mb-12"
       />
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {/* Coverage Stats */}
-          <StatsCard
-            icon={SignalIcon}
-            title="5G Coverage"
-          >
-            <div className="space-y-4">
-              {content.coverageStats.map((stat, index) => (
-                <ProgressBar
-                  key={index}
-                  label={stat.label}
-                  value={stat.value}
-                />
-              ))}
-            </div>
-          </StatsCard>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Coverage Stats */}
+        <StatsCard icon={SignalIcon} title="5G Coverage">
+          <div className="space-y-4">
+            {content.coverageStats.map((stat, index) => (
+              <ProgressBar key={index} label={stat.label} value={stat.value} />
+            ))}
+          </div>
+        </StatsCard>
 
-          {/* Network Stats */}
-          <StatsCard
-            icon={GlobeAmericasIcon}
-            title="Network Stats"
-          >
-            <StatsList items={content.networkStats} />
-          </StatsCard>
-        </div>
+        {/* Network Stats */}
+        <StatsCard icon={GlobeAmericasIcon} title="Network Stats">
+          <StatsList items={content.networkStats} />
+        </StatsCard>
+      </div>
     </ContentSection>
   );
 }
 
-export default memo(CoverageSection); 
+export default memo(CoverageSection);

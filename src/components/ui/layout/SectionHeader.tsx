@@ -6,7 +6,7 @@ import type { SectionHeaderProps } from '@/types/header';
 /**
  * SectionHeader component for consistent section headings across the application.
  * Provides standardized typography and spacing with optional centered alignment.
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
@@ -14,7 +14,7 @@ import type { SectionHeaderProps } from '@/types/header';
  *   title="Featured Products"
  *   description="Explore our latest collection"
  * />
- * 
+ *
  * // Large centered header
  * <SectionHeader
  *   title="Our Mission"
@@ -22,7 +22,7 @@ import type { SectionHeaderProps } from '@/types/header';
  *   size="lg"
  *   centered
  * />
- * 
+ *
  * // Custom styling
  * <SectionHeader
  *   title="Get Started"
@@ -39,14 +39,8 @@ export default function SectionHeader({
   'aria-level': ariaLevel = 2,
 }: SectionHeaderProps) {
   return (
-    <div 
-      className={twMerge(
-        'mb-16',
-        centered && 'text-center',
-        className
-      )}
-    >
-      <h2 
+    <div className={twMerge('mb-16', centered && 'text-center', className)}>
+      <h2
         className={twMerge(
           'font-bold mb-4 text-gray-900',
           size === 'sm' && 'text-2xl md:text-3xl',
@@ -59,7 +53,7 @@ export default function SectionHeader({
         {title}
       </h2>
       {description && (
-        <p 
+        <p
           className={twMerge(
             'text-gray-600',
             size === 'sm' && 'text-base',

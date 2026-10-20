@@ -31,24 +31,22 @@ export function useNavigationContext() {
  *   <Header />
  * </NavigationRoot>
  */
-export const NavigationRoot: FC<NavigationRootProps> = ({ 
-  children, 
+export const NavigationRoot: FC<NavigationRootProps> = ({
+  children,
   className,
   isOpen,
   onToggle,
-  onClose
+  onClose,
 }) => {
   const { isMenuOpen, closeMenu, menuRef } = useNavigation({
     isOpen,
     onToggle,
-    onClose
+    onClose,
   });
 
   return (
     <NavigationContext.Provider value={{ isMenuOpen, closeMenu, menuRef }}>
-      <div className={className}>
-        {children}
-      </div>
+      <div className={className}>{children}</div>
     </NavigationContext.Provider>
   );
 };

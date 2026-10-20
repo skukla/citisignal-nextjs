@@ -2,7 +2,11 @@
  * Utility functions for filter-related business logic
  */
 
-import type { FilterOption, FilterSection, ActiveFilterEntry } from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
+import type {
+  FilterOption,
+  FilterSection,
+  ActiveFilterEntry,
+} from '@/components/ui/search/FilterSidebar/FilterSidebar.types';
 
 /**
  * Check if any filters are currently active
@@ -10,7 +14,7 @@ import type { FilterOption, FilterSection, ActiveFilterEntry } from '@/component
  * @returns True if any filters have selected values
  */
 export function hasActiveFilters(activeFilters: Record<string, string[]>): boolean {
-  return Object.values(activeFilters).some(values => values.length > 0);
+  return Object.values(activeFilters).some((values) => values.length > 0);
 }
 
 /**
@@ -21,12 +25,12 @@ export function hasActiveFilters(activeFilters: Record<string, string[]>): boole
  * @returns The filter option if found, undefined otherwise
  */
 export function findFilterOption(
-  filters: FilterSection[], 
-  filterKey: string, 
+  filters: FilterSection[],
+  filterKey: string,
   optionId: string
 ): FilterOption | undefined {
-  const filterSection = filters.find(f => f.key === filterKey);
-  return filterSection?.options.find(o => o.id === optionId);
+  const filterSection = filters.find((f) => f.key === filterKey);
+  return filterSection?.options.find((o) => o.id === optionId);
 }
 
 /**
@@ -40,7 +44,7 @@ export function getActiveFilterEntries(
   filters: FilterSection[]
 ): ActiveFilterEntry[] {
   const entries: ActiveFilterEntry[] = [];
-  
+
   Object.entries(activeFilters).forEach(([filterKey, values]) => {
     values.forEach((optionId) => {
       const option = findFilterOption(filters, filterKey, optionId);
@@ -49,7 +53,7 @@ export function getActiveFilterEntries(
       }
     });
   });
-  
+
   return entries;
 }
 
@@ -60,11 +64,14 @@ export function getActiveFilterEntries(
  * @returns Record mapping filter keys to expanded state
  */
 export function initializeExpandedSections(
-  filters: FilterSection[], 
+  filters: FilterSection[],
   defaultExpanded: boolean = true
 ): Record<string, boolean> {
-  return filters.reduce((acc, filter) => ({ 
-    ...acc, 
-    [filter.key]: defaultExpanded 
-  }), {});
+  return filters.reduce(
+    (acc, filter) => ({
+      ...acc,
+      [filter.key]: defaultExpanded,
+    }),
+    {}
+  );
 }

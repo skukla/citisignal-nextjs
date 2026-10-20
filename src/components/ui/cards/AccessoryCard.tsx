@@ -17,7 +17,7 @@ export interface AccessoryCardProps {
 /**
  * AccessoryCard component for displaying essential accessories with minimal design.
  * Built on the base Card component following our established architecture.
- * 
+ *
  * @example
  * ```tsx
  * <AccessoryCard
@@ -34,7 +34,7 @@ function AccessoryCard({
   price,
   href,
   className,
-  onClick
+  onClick,
 }: AccessoryCardProps) {
   const handleClick = () => {
     if (onClick) {
@@ -45,13 +45,10 @@ function AccessoryCard({
   };
 
   return (
-    <Card 
+    <Card
       as="div"
       interactive
-      className={twMerge(
-        'group p-4 text-center cursor-pointer',
-        className
-      )}
+      className={twMerge('group p-4 text-center cursor-pointer', className)}
       onClick={handleClick}
     >
       {/* Icon Container */}

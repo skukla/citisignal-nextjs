@@ -38,19 +38,19 @@ export default function ToolGrid({
   columns = {
     sm: 1,
     md: 2,
-    lg: 4
+    lg: 4,
   },
   gap = 'lg',
   className,
-  emptyState
+  emptyState,
 }: ToolGridProps) {
   // Handle empty state
   if (tools.length === 0) {
     return (
       <EmptyState
         icon={WrenchScrewdriverIcon}
-        title={emptyState?.title || "No tools found"}
-        description={emptyState?.description || "There are no tools to display at the moment."}
+        title={emptyState?.title || 'No tools found'}
+        description={emptyState?.description || 'There are no tools to display at the moment.'}
         actionLabel={emptyState?.actionLabel}
         onAction={emptyState?.onAction}
       />
@@ -70,4 +70,4 @@ export default function ToolGrid({
       ))}
     </Grid>
   );
-} 
+}

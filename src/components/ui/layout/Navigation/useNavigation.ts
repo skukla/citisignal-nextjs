@@ -40,15 +40,18 @@ export function useNavigation(props?: UseNavigationProps): UseNavigationReturn {
     }
   }, [props, close]);
 
-  const isActive = useCallback((href: string) => {
-    return pathname === href;
-  }, [pathname]);
+  const isActive = useCallback(
+    (href: string) => {
+      return pathname === href;
+    },
+    [pathname]
+  );
 
   return {
     isMenuOpen,
     closeMenu,
     toggleMenu,
     isActive,
-    menuRef: panelRef
+    menuRef: panelRef,
   };
-} 
+}

@@ -10,7 +10,7 @@ interface ProductUIContextValue {
   viewMode: ViewMode;
   setViewMode: (mode: ViewMode) => void;
   isTransitioning: boolean;
-  
+
   // Mobile UI
   showMobileFilters: boolean;
   setShowMobileFilters: (show: boolean) => void;

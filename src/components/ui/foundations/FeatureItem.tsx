@@ -22,84 +22,63 @@ export default function FeatureItem({
   children,
   layout = 'horizontal',
   size = 'md',
-  className
+  className,
 }: FeatureItemProps) {
   const Icon = iconVariant === 'check' ? CheckIcon : CustomIcon;
-  
+
   const sizeStyles = {
     sm: {
       icon: 'sm',
       title: 'text-sm font-medium',
       description: 'text-xs text-gray-600',
-      spacing: 'gap-2'
+      spacing: 'gap-2',
     },
     md: {
       icon: 'md',
       title: 'text-base font-medium',
       description: 'text-sm text-gray-600',
-      spacing: 'gap-3'
+      spacing: 'gap-3',
     },
     lg: {
       icon: 'lg',
       title: 'text-lg font-semibold',
       description: 'text-base text-gray-600',
-      spacing: 'gap-4'
-    }
+      spacing: 'gap-4',
+    },
   };
 
-  const layoutClasses = layout === 'vertical' 
-    ? 'flex-col items-center text-center'
-    : 'flex-row items-start';
+  const layoutClasses =
+    layout === 'vertical' ? 'flex-col items-center text-center' : 'flex-row items-start';
 
   const styles = sizeStyles[size];
 
   if (children) {
     return (
-      <div className={twMerge(
-        'flex',
-        layoutClasses,
-        styles.spacing,
-        className
-      )}>
+      <div className={twMerge('flex', layoutClasses, styles.spacing, className)}>
         {Icon && (
-          <IconContainer 
+          <IconContainer
             icon={Icon}
             size={styles.icon as 'sm' | 'md' | 'lg'}
             variant={iconVariant === 'check' ? 'primary' : 'secondary'}
           />
         )}
-        <div className="flex-1">
-          {children}
-        </div>
+        <div className="flex-1">{children}</div>
       </div>
     );
   }
 
   return (
-    <div className={twMerge(
-      'flex',
-      layoutClasses,
-      styles.spacing,
-      className
-    )}>
+    <div className={twMerge('flex', layoutClasses, styles.spacing, className)}>
       {Icon && (
-        <IconContainer 
+        <IconContainer
           icon={Icon}
           size={styles.icon as 'sm' | 'md' | 'lg'}
           variant={iconVariant === 'check' ? 'primary' : 'secondary'}
         />
       )}
       <div className="flex-1">
-        {title && (
-          <h3 className={styles.title}>
-            {title}
-          </h3>
-        )}
-        {description && (
-          <p className={styles.description}>
-            {description}
-          </p>
-        )}
+        {title && <h3 className={styles.title}>{title}</h3>}
+        {description && <p className={styles.description}>{description}</p>}
       </div>
     </div>
   );

@@ -9,18 +9,18 @@ interface ProductBadgeProps {
 /**
  * A specialized badge component for displaying product status information.
  * Built on the base Badge component with product-specific styling.
- * 
+ *
  * @example
  * ```tsx
  * // New product badge
  * <ProductBadge variant="new" />
- * 
+ *
  * // Discount badge with percentage
- * <ProductBadge 
- *   variant="discount" 
- *   discountPercent={20} 
+ * <ProductBadge
+ *   variant="discount"
+ *   discountPercent={20}
  * />
- * 
+ *
  * // Out of stock badge
  * <ProductBadge variant="out-of-stock" />
  * ```
@@ -57,4 +57,4 @@ export default function ProductBadge({ variant, discountPercent }: ProductBadgeP
       {content}
     </Badge>
   );
-} 
+}

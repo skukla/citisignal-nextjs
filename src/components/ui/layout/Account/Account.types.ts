@@ -54,7 +54,13 @@ export interface AccountMenuItem {
 }
 
 // Dashboard types
-export type DashboardSectionId = 'profile' | 'orders' | 'addresses' | 'payment' | 'wishlists' | 'rewards';
+export type DashboardSectionId =
+  | 'profile'
+  | 'orders'
+  | 'addresses'
+  | 'payment'
+  | 'wishlists'
+  | 'rewards';
 
 export interface DashboardSection {
   title: string;

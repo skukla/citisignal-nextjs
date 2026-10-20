@@ -6,10 +6,10 @@ import EmptyState from '@/components/ui/feedback/EmptyState';
 
 export default function SavedItemsPage() {
   const hasItems = false; // This will come from a hook later
-  
+
   const pageData = {
     title: savedConfig.wishlist.title,
-    description: savedConfig.wishlist.description
+    description: savedConfig.wishlist.description,
   };
 
   return (
@@ -17,7 +17,7 @@ export default function SavedItemsPage() {
       <AccountPage.Root>
         <AccountPage.Layout>
           <AccountPage.Navigation />
-          
+
           <AccountPage.Main>
             <AccountPage.Section>
               <AccountPage.Header />

@@ -22,7 +22,7 @@ export function useFieldValidation<T>({ isSubmitted, touchedFields }: UseFieldVa
     errors: ValidationErrors<T> | undefined
   ): string | undefined => {
     if (!errors) return undefined;
-    
+
     const shouldShowError = isSubmitted || touchedFields[fieldName as string];
     return shouldShowError ? errors[fieldName]?.message : undefined;
   };

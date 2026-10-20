@@ -31,7 +31,7 @@ const Search: SearchComponent = {
   Trigger: SearchTrigger,
   Panel: SearchPanel,
   Input: SearchInput,
-  Results: SearchResults
+  Results: SearchResults,
 };
 
 export default Search;

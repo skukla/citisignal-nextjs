@@ -14,11 +14,7 @@ export interface TechNewsSectionProps {
   className?: string;
 }
 
-function TechNewsSection({
-  content = techNewsContent,
-  className
-}: TechNewsSectionProps) {
-
+function TechNewsSection({ content = techNewsContent, className }: TechNewsSectionProps) {
   return (
     <ContentSection background="bg-gray-50" className={className}>
       {/* Section Header with View All Link */}
@@ -40,7 +36,7 @@ function TechNewsSection({
       </div>
 
       {/* Articles Grid */}
-      <ArticleGrid 
+      <ArticleGrid
         articles={content.articles}
         columns={{ sm: 1, md: 2, lg: 3 }}
         gap="xl"
@@ -63,4 +59,4 @@ function TechNewsSection({
   );
 }
 
-export default memo(TechNewsSection); 
+export default memo(TechNewsSection);

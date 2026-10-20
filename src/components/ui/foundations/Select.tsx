@@ -9,10 +9,7 @@ import { SelectProps, SelectOption as SelectOptionType } from '@/types/form';
  */
 function SelectOption({ option }: { option: SelectOptionType }) {
   return (
-    <option 
-      value={option.value}
-      disabled={option.disabled}
-    >
+    <option value={option.value} disabled={option.disabled}>
       {option.label}
     </option>
   );
@@ -21,7 +18,7 @@ function SelectOption({ option }: { option: SelectOptionType }) {
 /**
  * Select component for choosing from a list of options.
  * Supports option groups, placeholder, and clearable selection.
- * 
+ *
  * @example
  * ```tsx
  * // Basic usage
@@ -31,7 +28,7 @@ function SelectOption({ option }: { option: SelectOptionType }) {
  *     { value: '2', label: 'Option 2' }
  *   ]}
  * />
- * 
+ *
  * // With groups
  * <Select
  *   options={[
@@ -61,38 +58,30 @@ export default function Select({
     'px-4 py-3 pr-10',
     'focus:outline-none transition-colors',
     'cursor-pointer',
-    
+
     // Default style
     'border-2 border-gray-300',
     'bg-white text-gray-900',
     'focus:ring-2 focus:ring-purple-500 focus:border-purple-500',
     'shadow-sm',
-    
+
     // Disabled state
     props.disabled && 'opacity-50 cursor-not-allowed bg-gray-100',
-    
+
     className
   );
 
-  const containerClasses = twMerge(
-    'relative inline-block w-full',
-    containerClassName
-  );
+  const containerClasses = twMerge('relative inline-block w-full', containerClassName);
 
   return (
     <div className={containerClasses}>
-      <select 
-        className={selectClasses}
-        {...props}
-      >
-        {(placeholder || clearable) && (
-          <option value="">{placeholder || 'Select...'}</option>
-        )}
-        
-        {options.map((item, index) => 
+      <select className={selectClasses} {...props}>
+        {(placeholder || clearable) && <option value="">{placeholder || 'Select...'}</option>}
+
+        {options.map((item, index) =>
           'options' in item ? (
             <optgroup key={index} label={item.label}>
-              {item.options.map(option => (
+              {item.options.map((option) => (
                 <SelectOption key={option.value} option={option} />
               ))}
             </optgroup>
@@ -101,7 +90,7 @@ export default function Select({
           )
         )}
       </select>
-      
+
       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-3 text-gray-500">
         <ChevronDownIcon className="w-5 h-5" aria-hidden />
       </div>

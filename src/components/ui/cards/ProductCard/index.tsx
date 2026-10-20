@@ -38,7 +38,7 @@ const ProductCard: ProductCardComponent = {
   Info: ProductCardInfo,
   Price: ProductCardPrice,
   Colors: ProductCardColors,
-  Actions: ProductCardActions
+  Actions: ProductCardActions,
 };
 
 export default ProductCard;

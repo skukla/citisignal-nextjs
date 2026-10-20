@@ -17,9 +17,7 @@ export default function ProductsError({
   return (
     <div className="flex items-center justify-center min-h-96">
       <div className="text-center max-w-md px-4">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">
-          Unable to load products
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-4">Unable to load products</h2>
         <p className="text-gray-600 mb-6">
           We&apos;re having trouble loading our product catalog. Please try again.
         </p>
@@ -27,10 +25,7 @@ export default function ProductsError({
           <Button onClick={reset} variant="primary">
             Retry
           </Button>
-          <Button 
-            onClick={() => window.location.href = '/'} 
-            variant="outline"
-          >
+          <Button onClick={() => (window.location.href = '/')} variant="outline">
             Back to home
           </Button>
         </div>

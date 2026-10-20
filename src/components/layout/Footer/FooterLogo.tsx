@@ -12,8 +12,8 @@ interface FooterLogoProps extends BaseComponentProps {
 export function FooterLogo({
   description,
   width = 180,
-  height = 80,  // Maintains 2.24:1 aspect ratio
-  className
+  height = 80, // Maintains 2.24:1 aspect ratio
+  className,
 }: FooterLogoProps) {
   return (
     <div className={className}>
@@ -24,17 +24,13 @@ export function FooterLogo({
           width={width}
           height={height}
           className="object-contain"
-          style={{ 
+          style={{
             width: `${width}px`,
-            height: `${height}px`
+            height: `${height}px`,
           }}
         />
       </div>
-      {description && (
-        <p className="text-gray-300 text-sm mb-4">
-          {description}
-        </p>
-      )}
+      {description && <p className="text-gray-300 text-sm mb-4">{description}</p>}
     </div>
   );
-} 
+}
