@@ -245,3 +245,5 @@ For questions or support:
 ---
 
 **Built with ❤️ using Next.js and modern web technologies**
+
+**Releasing:** a push to `main` reaches nobody; a published release does. See [RELEASING.md](RELEASING.md).
